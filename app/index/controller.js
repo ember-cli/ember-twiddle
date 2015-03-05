@@ -3,8 +3,11 @@ import dedent from "npm:dedent";
 
 var File = Em.Object.extend({
   compiled: Em.computed('content', function () {
-    var res = Babel.transform(this.get('content'));
-    return res.code;
+    try {
+      return Babel.transform(this.get('content')).code;
+    } catch (e) {
+      return e.message;
+    }
   })
 });
 

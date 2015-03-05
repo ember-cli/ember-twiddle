@@ -4,7 +4,12 @@ Index
   <h2>{{file.name}}</h2>
 
   <code>
-    <pre>{{file.content}}</pre>
+    <pre>{{ivy-codemirror
+        value         = file.content
+        mode          = 'javascript'
+        theme         = 'solarized'
+        lineNumbers   = true
+    }}</pre>
   </code>
 
   <h2>Compiled</h2>
