@@ -1,7 +1,7 @@
 Index
 
 {{#each files as |file|}}
-  <h2>{{file.name}}</h2>
+  <h2>Path: {{input value=file.name}}</h2>
 
   <code>
     <pre>{{ivy-codemirror
@@ -11,10 +11,20 @@ Index
         lineNumbers   = true
     }}</pre>
   </code>
+  {{#if file.errorMessage}}
+    <h2>Error Message</h2>
+    <code>
+      <pre>{{file.errorMessage}}</pre>
+    </code>
+  {{else}}
+    <h2>Compiled</h2>
 
-  <h2>Compiled</h2>
-
-  <code>
-    <pre>{{file.compiled}}</pre>
-  </code>
+    <code>
+      <pre>{{file.compiled}}</pre>
+    </code>
+  {{/if}}
+  <hr>
 {{/each}}
+
+<button {{action 'addFile'}}>Add file</button>
+<h1>Demo:</h1>
