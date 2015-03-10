@@ -6,6 +6,9 @@ var app = new EmberApp({
   codemirror: {
     modes: ['javascript'],
     themes: ['solarized']
+  },
+  'ember-cli-bootstrap-sassy': {
+    'js': false
   }
 });
 

@@ -1,0 +1,12 @@
+$screen-md:                  950px !default;
+
+@import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap";
+
+button {
+  @extend .btn;
+  @extend .btn-default;
+}
+
+#demo-app {
+  position: absolute;
+}

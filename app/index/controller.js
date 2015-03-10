@@ -39,6 +39,10 @@ export default Em.Controller.extend({
   actions: {
     addFile () {
       this.get('files').pushObject(File.create());
+    },
+
+    removeFile (file) {
+      this.get('files').removeObject(file);
     }
   }
 });

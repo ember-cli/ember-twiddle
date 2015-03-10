@@ -1,30 +1,36 @@
-Index
+<div class="row">
+  <div class="col-md-6">
+    <button {{action 'addFile'}}>Add file</button>
 
-{{#each files as |file|}}
-  <h2>Path: {{input value=file.name}}</h2>
+    {{#each files as |file|}}
+      <h2>
+        <button class='pull-right' {{action 'removeFile' file}}>
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+        Path: {{input value=file.name}}
+      </h2>
 
-  <code>
-    <pre>{{ivy-codemirror
-        value         = file.content
-        mode          = 'javascript'
-        theme         = 'solarized'
-        lineNumbers   = true
-    }}</pre>
-  </code>
-  {{#if file.errorMessage}}
-    <h2>Error Message</h2>
-    <code>
-      <pre>{{file.errorMessage}}</pre>
-    </code>
-  {{else}}
-    <h2>Compiled</h2>
+      {{ivy-codemirror
+          value         = file.content
+          mode          = 'javascript'
+          theme         = 'solarized'
+          lineNumbers   = true}}
 
-    <code>
-      <pre>{{file.compiled}}</pre>
-    </code>
-  {{/if}}
-  <hr>
-{{/each}}
+      {{#if file.errorMessage}}
+        <h2>Error Message</h2>
+        <code>
+          <pre>{{file.errorMessage}}</pre>
+        </code>
+      {{else}}
+        <h2>Compiled</h2>
 
-<button {{action 'addFile'}}>Add file</button>
-<h1>Demo:</h1>
+        <pre><code>{{file.compiled}}</code></pre>
+      {{/if}}
+      <hr>
+    {{/each}}
+  </div>
+  <div class="col-md-6">
+    <h2>Demo App</h2>
+    {{dummy-demo-app}}
+  </div>
+</div>
