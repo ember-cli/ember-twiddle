@@ -1,36 +1,5 @@
 import Resolver from 'ember/resolver';
 
-// Todo: patch ember cli resolver to make this function not a closure
-function chooseModuleName(moduleEntries, moduleName) {
-  var underscoredModuleName = Em.String.underscore(moduleName);
-
-  if (moduleName !== underscoredModuleName && moduleEntries[moduleName] && moduleEntries[underscoredModuleName]) {
-    throw new TypeError("Ambiguous module names: `" + moduleName + "` and `" + underscoredModuleName + "`");
-  }
-
-  if (moduleEntries[moduleName]) {
-    return moduleName;
-  } else if (moduleEntries[underscoredModuleName]) {
-    return underscoredModuleName;
-  } else {
-    // workaround for dasherized partials:
-    // something/something/-something => something/something/_something
-    var partializedModuleName = moduleName.replace(/\/-([^\/]*)$/, '/_$1');
-
-    if (moduleEntries[partializedModuleName]) {
-      Em.deprecate('Modules should not contain underscores. ' +
-                      'Attempted to lookup "'+moduleName+'" which ' +
-                      'was not found. Please rename "'+partializedModuleName+'" '+
-                      'to "'+moduleName+'" instead.', false);
-
-      return partializedModuleName;
-    } else {
-      return moduleName;
-    }
-  }
-}
-
-
 export default Resolver.extend({
   resolveTemplate (parsedName) {
     let templateName = parsedName.fullNameWithoutType.replace(/\./g, '/') + '.hbs';
@@ -57,7 +26,7 @@ export default Resolver.extend({
         let moduleName = item.call(this, parsedName);
 
         if(moduleName) {
-          moduleName = chooseModuleName(jsModules, moduleName);
+          moduleName = this.chooseModuleName(jsModules, moduleName);
           if (moduleName && ~jsModules.indexOf(moduleName)) {
             foundName = moduleName;
             return moduleName;
