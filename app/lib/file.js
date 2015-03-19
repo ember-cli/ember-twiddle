@@ -20,7 +20,6 @@ export default Em.Object.extend({
       this.set('errorMessage', null);
       return result;
     } catch (e) {
-      this.set('isError', true);
       this.set('errorMessage', e.message);
     }
   },
