@@ -1,7 +1,11 @@
 <div class="row">
   <div class="col-md-6">
     <button {{action 'addFile'}}>Add file</button>
-
+    {{#if session.isAuthenticated}}
+    Signed in as {{session.currentUser.login}}
+    {{else}}
+    <button {{action "signInViaGithub"}}>Sign in</button>
+    {{/if}}
     {{#each files as |file|}}
       <h2>
         <button class='pull-right' {{action 'removeFile' file}}>

@@ -17,7 +17,17 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
       rootElement: '#main-app'
+    },
+
+    torii: {
+      sessionServiceName: 'session',
+      providers: {
+        'github-oauth2': {
+          apiKey: '2999fbfe342248c88a91'
+        }
+      }
     }
+
   };
 
   if (environment === 'development') {
