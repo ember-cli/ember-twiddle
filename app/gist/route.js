@@ -4,8 +4,7 @@ export default Em.Route.extend({
   github: Ember.inject.service('github'),
 
   beforeModel () {
-    var github = this.get('github'),
-        session = this.get('session');
+    var session = this.get('session');
 
     return session.fetch('github-oauth2').catch(function() {
       // Swallow error for now
@@ -22,5 +21,5 @@ export default Em.Route.extend({
         alert('Could not sign you in: ' + error.message);
       });
     }
-	}
+  }
 });

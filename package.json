@@ -21,7 +21,6 @@
   "devDependencies": {
     "babel": "^4.6.6",
     "broccoli-asset-rev": "^2.0.0",
-    "broccoli-sass": "git://github.com/ef4/broccoli-sass",
     "dedent": "^0.3.0",
     "ember-browserify": "^0.6.2",
     "ember-cli": "0.2.0",

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ajax from 'ic-ajax';
 
 export default Ember.Object.extend({
   _token: null,
@@ -8,27 +9,23 @@ export default Ember.Object.extend({
   },
 
   find (url) {
-    return this.apiCall(url, 'get');
+    return this.request(url, 'get');
   },
 
   create (url) {
-    return this.apiCall(url, 'post');
+    return this.request(url, 'post');
   },
 
-	apiCall (url, method) {
+  request (url, method) {
     var token = this.get('_token');
 
-    return new Ember.RSVP.Promise(function(resolve, reject){
-      Ember.$.ajax({
-        url: 'https://api.github.com' + url,
-        dataType: 'json',
-        method: method,
-        headers: {
-        	'Authorization': 'token ' + token
-        },
-        success: Ember.run.bind(null, resolve),
-        error: Ember.run.bind(null, reject)
-      });
+    return ajax({
+      url: 'https://api.github.com' + url,
+      dataType: 'json',
+      method: method,
+      headers: {
+        'Authorization': 'token ' + token
+      },
     });
-	}
+  }
 });

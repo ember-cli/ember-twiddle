@@ -1,8 +1,9 @@
 import config from '../config/environment';
 import Ember from 'ember';
+import ajax from 'ic-ajax';
 
 export default Ember.Object.extend({
-	github: Ember.inject.service('github'),
+  github: Ember.inject.service('github'),
 
   /**
    * Resolve the user over the Github API using the token
@@ -37,31 +38,27 @@ export default Ember.Object.extend({
    * Try loading the user from cookie
    * @return Promise
    */
-	fetch () {
+  fetch () {
     var self = this;
 
-		return new Ember.RSVP.Promise(function(resolve, reject){
+    return new Ember.RSVP.Promise(function(resolve, reject){
       var token = self.loadFromCookie();
-			if(token) { resolve(token); } else {reject();}
-		}).then(function(token) {
+      if(token) { resolve(token); } else {reject();}
+    }).then(function(token) {
       return self.resolveUser(token);
     });
-	},
+  },
 
   /**
    * Open a new session, authenticate with Github
    * @return Promise
    */
   open (authorization) {
-  	var self = this;
+    var self = this;
 
-    return new Ember.RSVP.Promise(function(resolve, reject){
-      Ember.$.ajax({
-        url: config.githubOauthUrl + authorization.authorizationCode,
-        dataType: 'json',
-        success: Ember.run.bind(null, resolve),
-        error: Ember.run.bind(null, reject)
-      });
+    return ajax({
+      url: config.githubOauthUrl + authorization.authorizationCode,
+      dataType: 'json',
     }).then(function(data) {
       return self.resolveUser(data.token);
     });
