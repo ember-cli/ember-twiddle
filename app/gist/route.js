@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 export default Em.Route.extend({
   github: Ember.inject.service('github'),
 
@@ -5,22 +7,18 @@ export default Em.Route.extend({
     var github = this.get('github'),
         session = this.get('session');
 
-    return session.fetch('github-oauth2').then(function(user) {
-      github.setToken(session.get('currentUser.token'));
+    return session.fetch('github-oauth2').catch(function() {
+      // Swallow error for now
     });
   },
 
   loadGists () {
-    return this.get('github').apiCall('/gists')
+    return this.get('github').apiCall('/gists');
   },
 
   actions: {
     signInViaGithub () {
-      var self = this;
-
-      this.get('session').open('github-oauth2').then(function(){
-        self.loadGists();
-      }, function(error) {
+      this.get('session').open('github-oauth2').catch(function(error) {
         alert('Could not sign you in: ' + error.message);
       });
     }

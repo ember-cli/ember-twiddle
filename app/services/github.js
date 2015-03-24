@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 export default Ember.Object.extend({
   _token: null,
 
@@ -5,13 +7,22 @@ export default Ember.Object.extend({
     this.set('_token', token);
   },
 
-	apiCall (url, token) {
-		var token  = token || this.get('_token');
+  find (url) {
+    return this.apiCall(url, 'get');
+  },
+
+  create (url) {
+    return this.apiCall(url, 'post');
+  },
+
+	apiCall (url, method) {
+    var token = this.get('_token');
 
     return new Ember.RSVP.Promise(function(resolve, reject){
       Ember.$.ajax({
         url: 'https://api.github.com' + url,
         dataType: 'json',
+        method: method,
         headers: {
         	'Authorization': 'token ' + token
         },
