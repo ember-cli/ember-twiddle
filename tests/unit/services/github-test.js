@@ -18,9 +18,3 @@ test('it exists', function(assert) {
 });
 
 // Replace this with your real tests.
-test('deserialize works', function(assert) {
-  var service = this.subject();
-
-  var gist = service.deserializeGist(gistFixtures['f2c90713bdfdf54a262b']);
-  assert.ok(gist instanceof Gist, 'deserializeGist should return a Gist instance');
-});

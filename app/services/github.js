@@ -38,6 +38,8 @@ export default Ember.Object.extend({
    * @return {Gist}
    */
   buildGist (attrs) {
+    attrs = attrs || {};
+    attrs['files'] = [];
     return Gist.create(attrs);
   },
   /**
@@ -58,14 +60,6 @@ export default Ember.Object.extend({
   patchGist (gist) {
     var payload = this.serializeGist(gist);
     return this.request('/gists/%@'.fmt(gist.get('id')), 'patch', payload);
-  },
-
-  deserializeGist (payload) {
-    return this.buildGist(payload);
-  },
-
-  serializeGist (gist) {
-    return JSON.stringify(gist);
   },
 
   /**
