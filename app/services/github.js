@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import ajax from 'ic-ajax';
 
+import Gist from '../lib/gist';
+
 export default Ember.Object.extend({
   _token: null,
 
@@ -8,14 +10,71 @@ export default Ember.Object.extend({
     this.set('_token', token);
   },
 
-  find (url) {
-    return this.request(url, 'get');
+  /**
+   * Top-level method to find a gist by ID
+   * @param  id
+   * @return {Promise} resolving to a {Gist}
+   */
+  findGist (id) {
+    return this.request('/gists/%@'.fmt(id), 'get').then((payload) => {
+      return this.deserializeGist(payload);
+    });
   },
 
-  create (url) {
-    return this.request(url, 'post');
+  /**
+   * Create a new {Gist} instance
+   * @param {Object} Arguments
+   * @return {Gist}
+   */
+  createGist (attrs) {
+    return this.buildGist(attrs);
   },
 
+  // Lower level API
+
+  /**
+   * Create a new {Gist} instance
+   * @param {Object} Arguments
+   * @return {Gist}
+   */
+  buildGist (attrs) {
+    return Gist.create(attrs);
+  },
+  /**
+   * Post a gist (creating a new gist)
+   * @param  gist
+   * @return {Promise} resolving to a {Gist}
+   */
+  postGist (gist) {
+    var payload = this.serializeGist(gist);
+    return this.request('/gists/', 'post', payload);
+  },
+
+  /**
+   * Patch a gist (updating an existing gist)
+   * @param  gist
+   * @return {Promise} resolving to a {Gist}
+   */
+  patchGist (gist) {
+    var payload = this.serializeGist(gist);
+    return this.request('/gists/%@'.fmt(gist.get('id')), 'patch', payload);
+  },
+
+  deserializeGist (payload) {
+    return this.buildGist(payload);
+  },
+
+  serializeGist (gist) {
+    return JSON.stringify(gist);
+  },
+
+  /**
+   * Send a request to the github API
+   * @param  {String} url
+   * @param  {String} method
+   * @param  {Object} payload
+   * @return {Promise}
+   */
   request (url, method) {
     var token = this.get('_token');
 

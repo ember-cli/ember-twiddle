@@ -1,36 +1,17 @@
 
 export default Em.Object.extend({
-  github: Ember.inject.service('github'),
+  github: Em.inject.service('github'),
+  id: null,
 
-  /**
-   * Finds a gist by id
-   * @return Promise
-   */
-  find (id) {
-    var self = this;
-
-    return this.github.find('/gists/' + id).then(function (json) {
-      return self.deserialize(json);
-    });
-  },
+  isNew: Em.computed(() => {
+    return this.get('id')===null;
+  }),
 
   /**
    * Saves the current gist
    * @return Promise
    */
   save () {
-    var self = this;
-
-    return this.serialize().then(function(json) {
-      self.github.update('/gists/' + self.get('id'), json);
-    });
-  },
-
-  deserialize (json) {
-
-  },
-
-  serialize () {
-
+    return this.get('isNew') ? this.github.postGist(this) : this.github.patchGist(this);
   }
 });
