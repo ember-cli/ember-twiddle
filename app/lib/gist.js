@@ -24,8 +24,18 @@ var Gist = Em.Object.extend({
 });
 
 Gist.reopenClass({
-  build () {
+  build (attrs) {
+    var model = Gist.create({
+      files: []
+    });
 
+    if (attrs.files) {
+      attrs.files.forEach((file) => {
+        model.get('files').pushObject(File.create(file));
+      });
+    }
+
+    return model;
   },
 
   deserialize (payload) {

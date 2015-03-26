@@ -6,7 +6,7 @@
     {{else}}
     <button {{action "signInViaGithub"}}>Sign in</button>
     {{/if}}
-    {{#each files as |file|}}
+    {{#each model.files as |file|}}
       <h2>
         <button class='pull-right' {{action 'removeFile' file}}>
           <span class="glyphicon glyphicon-remove"></span>

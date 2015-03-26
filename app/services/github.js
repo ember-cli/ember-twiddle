@@ -17,7 +17,7 @@ export default Ember.Object.extend({
    */
   findGist (id) {
     return this.request('/gists/%@'.fmt(id), 'get').then((payload) => {
-      return this.deserializeGist(payload);
+      return Gist.deserialize(payload);
     });
   },
 
@@ -27,7 +27,7 @@ export default Ember.Object.extend({
    * @return {Gist}
    */
   createGist (attrs) {
-    return this.buildGist(attrs);
+    return Gist.build(attrs);
   },
 
   // Lower level API
