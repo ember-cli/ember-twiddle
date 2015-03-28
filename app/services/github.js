@@ -80,13 +80,17 @@ export default Ember.Object.extend({
   request (url, method) {
     var token = this.get('_token');
 
-    return ajax({
+    var options = {
       url: 'https://api.github.com' + url,
       dataType: 'json',
-      method: method,
-      headers: {
+      method: method
+    };
+
+    if (token) {
+      options.headers = {
         'Authorization': 'token ' + token
-      },
-    });
+      };
+    }
+    return ajax(options);
   }
 });
