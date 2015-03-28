@@ -11,13 +11,12 @@ export default Ember.Object.extend({
    * @return Promise
    */
   resolveUser (token) {
-    var self = this,
-        github = this.get('github');
+    var github = this.get('github');
 
     github.setToken(token);
 
-    return github.find('/user').then(function(user) {
-      return self.persistToCookie(token).then(function() {
+    return github.request('/user', 'get').then((user) => {
+      return this.persistToCookie(token).then(() => {
         return {currentUser: user};
       });
     });
@@ -39,13 +38,11 @@ export default Ember.Object.extend({
    * @return Promise
    */
   fetch () {
-    var self = this;
-
-    return new Ember.RSVP.Promise(function(resolve, reject){
-      var token = self.loadFromCookie();
+    return new Ember.RSVP.Promise((resolve, reject) => {
+      var token = this.loadFromCookie();
       if(token) { resolve(token); } else {reject();}
-    }).then(function(token) {
-      return self.resolveUser(token);
+    }).then((token) => {
+      return this.resolveUser(token);
     });
   },
 
@@ -54,13 +51,11 @@ export default Ember.Object.extend({
    * @return Promise
    */
   open (authorization) {
-    var self = this;
-
     return ajax({
       url: config.githubOauthUrl + authorization.authorizationCode,
       dataType: 'json',
-    }).then(function(data) {
-      return self.resolveUser(data.token);
+    }).then((data) => {
+      return this.resolveUser(data.token);
     });
   }
 });

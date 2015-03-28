@@ -15,6 +15,7 @@ export default Em.Route.extend({
     signInViaGithub () {
       this.get('session').open('github-oauth2').catch(function(error) {
         alert('Could not sign you in: ' + error.message);
+        throw error;
       });
     }
   }
