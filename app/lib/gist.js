@@ -1,10 +1,9 @@
 import File from './file';
 
 var Gist = Em.Object.extend({
-  github: Em.inject.service('github'),
   id: null,
 
-  isNew: Em.computed(() => {
+  isNew: Em.computed(function () {
     return this.get('id')===null;
   }),
 
@@ -14,13 +13,9 @@ var Gist = Em.Object.extend({
     }));
   },
 
-  /**
-   * Saves the current gist
-   * @return Promise
-   */
-  save () {
-    return this.get('isNew') ? this.github.postGist(this) : this.github.patchGist(this);
-  },
+  serialize (gist) {
+    return JSON.stringify(gist);
+  }
 });
 
 Gist.reopenClass({
@@ -66,10 +61,6 @@ Gist.reopenClass({
 
   serializeFileName (fileName) {
     return fileName.replace(/\//gi, '.');
-  },
-
-  serialize (gist) {
-    return JSON.stringify(gist);
   }
 });
 

@@ -12,6 +12,10 @@ export default Em.Route.extend({
   },
 
   actions: {
+    saveGist (gist) {
+      this.get('github').saveGist(gist);
+    },
+
     signInViaGithub () {
       this.get('session').open('github-oauth2').catch(function(error) {
         alert('Could not sign you in: ' + error.message);

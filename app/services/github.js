@@ -30,6 +30,14 @@ export default Ember.Object.extend({
     return Gist.build(attrs);
   },
 
+  /**
+   * Saves the current gist
+   * @return Promise
+   */
+  saveGist (gist) {
+    return gist.get('isNew') ? this.postGist(gist) : this.patchGist(gist);
+  },
+
   // Lower level API
 
   /**
@@ -48,7 +56,7 @@ export default Ember.Object.extend({
    * @return {Promise} resolving to a {Gist}
    */
   postGist (gist) {
-    var payload = this.serializeGist(gist);
+    var payload = gist.serialize();
     return this.request('/gists/', 'post', payload);
   },
 
@@ -58,7 +66,7 @@ export default Ember.Object.extend({
    * @return {Promise} resolving to a {Gist}
    */
   patchGist (gist) {
-    var payload = this.serializeGist(gist);
+    var payload = gist.serialize();
     return this.request('/gists/%@'.fmt(gist.get('id')), 'patch', payload);
   },
 
