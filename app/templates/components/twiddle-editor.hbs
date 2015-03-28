@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-6">
     <button {{action 'addFile'}}>Add file</button>
-
-    {{#each files as |file|}}
+    <button {{action 'save' model}}>Save</button>
+    {{#each model.files as |file|}}
       <h2>
         <button class='pull-right' {{action 'removeFile' file}}>
           <span class="glyphicon glyphicon-remove"></span>

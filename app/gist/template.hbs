@@ -1,0 +1,8 @@
+{{#if session.isAuthenticated}}
+Signed in as {{session.currentUser.login}}
+{{else}}
+<button {{action "signInViaGithub"}}>Sign in</button>
+{{/if}}
+
+
+{{outlet}}
