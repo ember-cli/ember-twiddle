@@ -9,7 +9,6 @@ export default Ember.Object.extend({  /**
    */
   resolveUser (token) {
     this.github.setToken(token);
-
     return this.github.request('/user', 'get').then((user) => {
       localStorage.setItem('fiddle_gh_session', token);
       return { currentUser: user };
@@ -36,6 +35,16 @@ export default Ember.Object.extend({  /**
     return ajax({
       url: config.githubOauthUrl + authorization.authorizationCode,
       dataType: 'json',
-    }).then(this.resolveUser);
+    }).then(result => this.resolveUser(result.token));
+  },
+
+
+  /**
+   * Close a session
+   * @return Promise
+   */
+  close () {
+    localStorage.removeItem('fiddle_gh_session');
+    return Em.RSVP.resolve();
   }
 });
