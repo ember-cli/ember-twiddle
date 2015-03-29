@@ -12,6 +12,11 @@
   <div class="col-md-6">
     <button {{action 'addFile'}}>Add file</button>
     <button {{action 'saveGist' model}}>Save</button>
+    <label>Name: {{input value=model.description}}</label>
+    {{#unless model.isNew}}
+    <label>Revision: <span>{{model.shortRevision}}</span></label>
+    <label>Gist URL: <span>{{model.url}}</span></label>
+    {{/unless}}
     {{#each model.files as |file|}}
       <h2>
         <button class='pull-right' {{action 'removeFile' file}}>

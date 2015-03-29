@@ -3,8 +3,12 @@ import File from './file';
 export default Em.Object.extend({
   id: null,
 
-  isNew: Em.computed(function () {
+  isNew: Em.computed('id', function () {
     return this.get('id')===null;
+  }),
+
+  shortRevision: Em.computed('revision', function () {
+    return (this.get('revision')||'').substring(0,7);
   }),
 
   addFile (filePath) {
@@ -47,8 +51,14 @@ export default Em.Object.extend({
     var model = this.create({
       id: payload.id,
       description: payload.description,
+      revision: payload.history[0].version,
+      url: payload.url,
       files: []
     });
+
+    if(!payload.public) {
+      throw new Error('Private Gists are not supported at this point');
+    }
 
     for (var fileName in payload.files) {
       model.get('files').pushObject(this.deserializeFile(fileName, payload.files[fileName].content));

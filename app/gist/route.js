@@ -9,7 +9,12 @@ export default Ember.Route.extend({
 
   actions: {
     saveGist (gist) {
-      this.github.saveGist(gist);
+      var newGist = gist.get('isNew');
+      this.github.saveGist(gist).then(() => {
+        if(newGist) {
+          this.transitionTo('gist.edit', gist);
+        }
+      });
     },
 
     signInViaGithub () {
