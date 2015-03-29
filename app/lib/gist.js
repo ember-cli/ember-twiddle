@@ -18,7 +18,7 @@ export default Em.Object.extend({
   },
 
   serialize () {
-    var json = {files:{}, description:'twiddle', public:true};
+    var json = {files:{}, description:this.get('description')||'twiddle', public:true};
 
     this.get('files').forEach(file => {
       json.files[this.serializeFileName(file.get('name'))] = {
