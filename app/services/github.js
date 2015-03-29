@@ -57,7 +57,7 @@ export default Ember.Object.extend({
    */
   postGist (gist) {
     var payload = gist.serialize();
-    return this.request('/gists/', 'post', payload);
+    return this.request('/gists', 'post', payload);
   },
 
   /**
@@ -77,7 +77,7 @@ export default Ember.Object.extend({
    * @param  {Object} payload
    * @return {Promise}
    */
-  request (url, method) {
+  request (url, method, payload) {
     var token = this.get('_token');
 
     var options = {
@@ -85,6 +85,11 @@ export default Ember.Object.extend({
       dataType: 'json',
       method: method
     };
+
+    if(payload) {
+      options.data = payload;
+      options.contentType = 'json';
+    }
 
     if (token) {
       options.headers = {

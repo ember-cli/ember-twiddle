@@ -24,6 +24,7 @@ module.exports = function(environment) {
       sessionServiceName: 'session',
       providers: {
         'github-oauth2': {
+          scope: 'gist',
           apiKey: '2999fbfe342248c88a91'
         }
       }

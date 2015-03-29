@@ -13,8 +13,20 @@ export default Em.Object.extend({
     }));
   },
 
-  serialize (gist) {
-    return JSON.stringify(gist);
+  serialize () {
+    var json = {files:{}, description:'twiddle', public:true};
+
+    this.get('files').forEach(file => {
+      json.files[this.serializeFileName(file.get('name'))] = {
+        content: file.get('content')
+      };
+    });
+
+    return JSON.stringify(json);
+  },
+
+  serializeFileName (fileName) {
+    return fileName.replace(/\//gi, '.');
   }
 }).reopenClass({
   build (attrs) {
@@ -55,9 +67,5 @@ export default Em.Object.extend({
   deserializeFileName (fileName) {
     var parts = fileName.split('.');
     return parts.slice(0,-1).join('/') + '.' + parts.slice(-1);
-  },
-
-  serializeFileName (fileName) {
-    return fileName.replace(/\//gi, '.');
   }
 });
