@@ -1,4 +1,6 @@
-{{#if session.isAuthenticated}}
+{{#if session.isOpening}}
+  Signing in&hellip;
+{{else if session.isAuthenticated}}
   Signed in as {{session.currentUser.login}}
   <button {{action 'signOut'}}>Sign out</button>
 {{else}}
