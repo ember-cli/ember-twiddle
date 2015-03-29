@@ -1,6 +1,6 @@
 import File from './file';
 
-var Gist = Em.Object.extend({
+export default Em.Object.extend({
   id: null,
 
   isNew: Em.computed(function () {
@@ -16,11 +16,9 @@ var Gist = Em.Object.extend({
   serialize (gist) {
     return JSON.stringify(gist);
   }
-});
-
-Gist.reopenClass({
+}).reopenClass({
   build (attrs) {
-    var model = Gist.create({
+    var model = this.create({
       files: []
     });
 
@@ -34,7 +32,7 @@ Gist.reopenClass({
   },
 
   deserialize (payload) {
-    var model = Gist.create({
+    var model = this.create({
       id: payload.id,
       description: payload.description,
       files: []
@@ -63,5 +61,3 @@ Gist.reopenClass({
     return fileName.replace(/\//gi, '.');
   }
 });
-
-export default Gist;

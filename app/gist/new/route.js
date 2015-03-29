@@ -1,18 +1,20 @@
-export default Em.Route.extend({
-  github: Em.inject.service('github'),
+import GistRoute from "ember-twiddle/routes/gist-base-route";
+
+export default GistRoute.extend({
   model () {
-    return this.get('github').createGist({
+    return this.github.createGist({
       files: [
-        {name: 'application.hbs', content:
+        {
+          name: 'app/application/template.hbs',content:
           "Welcome to EmberTwiddle! {{foo}} {{outlet}}"
         },
-        {name: 'index.hbs', content:
+        {name: 'app/index/template.hbs', content:
           "Index is: {{bar}}"
         },
-        {name: 'application/controller.js', content:
+        {name: 'app/application/controller.js', content:
           "export default Em.Controller.extend({foo: 'foo'});"
         },
-        {name: 'controllers/index.js', content:
+        {name: 'app/controllers/index.js', content:
           "export default Em.Controller.extend({bar: 'bar'});"
         }
       ]

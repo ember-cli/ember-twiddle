@@ -1,8 +1,6 @@
 import Ember from 'ember';
 
-export default Em.Route.extend({
-  github: Ember.inject.service('github'),
-
+export default Ember.Route.extend({
   beforeModel () {
     var session = this.get('session');
 

@@ -2,35 +2,18 @@ import config from '../config/environment';
 import Ember from 'ember';
 import ajax from 'ic-ajax';
 
-export default Ember.Object.extend({
-  github: Ember.inject.service('github'),
-
-  /**
+export default Ember.Object.extend({  /**
    * Resolve the user over the Github API using the token
    * @param  token      API token (either from Cookie or Oauth)
    * @return Promise
    */
   resolveUser (token) {
-    var github = this.get('github');
+    this.github.setToken(token);
 
-    github.setToken(token);
-
-    return github.request('/user', 'get').then((user) => {
-      return this.persistToCookie(token).then(() => {
-        return {currentUser: user};
-      });
+    return this.github.request('/user', 'get').then((user) => {
+      localStorage.setItem('fiddle_gh_session', token);
+      return { currentUser: user };
     });
-  },
-
-  persistToCookie (token) {
-    var cookie = this.get('cookie');
-
-    return cookie.setCookie('fiddle_gh_session', token);
-  },
-
-  loadFromCookie () {
-    var cookie = this.get('cookie');
-    return cookie.getCookie('fiddle_gh_session');
   },
 
   /**
@@ -38,12 +21,11 @@ export default Ember.Object.extend({
    * @return Promise
    */
   fetch () {
-    return new Ember.RSVP.Promise((resolve, reject) => {
-      var token = this.loadFromCookie();
-      if(token) { resolve(token); } else {reject();}
-    }).then((token) => {
-      return this.resolveUser(token);
-    });
+    var token = localStorage.getItem('fiddle_gh_session');
+
+    if(Em.isBlank(token)) { return Em.RSVP.reject(); }
+
+    return this.resolveUser(token);
   },
 
   /**
@@ -54,8 +36,6 @@ export default Ember.Object.extend({
     return ajax({
       url: config.githubOauthUrl + authorization.authorizationCode,
       dataType: 'json',
-    }).then((data) => {
-      return this.resolveUser(data.token);
-    });
+    }).then(this.resolveUser);
   }
 });

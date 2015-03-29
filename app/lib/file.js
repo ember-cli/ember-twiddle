@@ -40,7 +40,8 @@ export default Em.Object.extend({
   }),
 
   nameWithModule: Em.computed('name', function () {
-    let name = this.get('name');
+    // Remove app prefix if present
+    let name = this.get('name').replace(/^app\//, '');
 
     return Path.join('demo-app',
       Path.dirname(name), Path.basename(name, Path.extname(name)));

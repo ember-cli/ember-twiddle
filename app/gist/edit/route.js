@@ -1,9 +1,7 @@
-import Ember from 'ember';
+import GistRoute from "ember-twiddle/routes/gist-base-route";
 
-export default Em.Route.extend({
-  github: Ember.inject.service('github'),
-
+export default GistRoute.extend({
   model: function(params) {
-    return this.get('github').findGist(params.id);
+    return this.github.findGist(params.id);
   }
 });

@@ -1,8 +1,7 @@
 import TwiddleResolver from "ember-twiddle/lib/twiddle-resolver";
 import File from "ember-twiddle/lib/file";
 
-export default Em.Component.extend({
-  saveGist: 'saveGist',
+export default Em.Controller.extend({
   contentObserver: Em.observer('model.files.@each.compiled', function () {
     Em.run.debounce(this, 'setupApplication', 500);
   }.on('init')),
@@ -12,14 +11,12 @@ export default Em.Component.extend({
       Em.run(this.currentApp, 'destroy');
     }
 
-    var App = Em.Application.create({
+    this.currentApp = Em.Application.create({
       name:         "App",
       rootElement:  '#demo-app',
       modulePrefix: 'demo-app',
       Resolver:     TwiddleResolver.extend({files: this.get('model.files')})
     });
-
-    this.currentApp = App;
   },
 
   actions: {
@@ -28,11 +25,9 @@ export default Em.Component.extend({
     },
 
     removeFile (file) {
-      this.get('model.files').removeObject(file);
-    },
-
-    save (model) {
-      this.sendAction('saveGist', model);
+      if(confirm(`Are you sure you want to remove this file?\n\n${file.get('name')}`)) {
+        this.get('model.files').removeObject(file);
+      }
     }
   }
 });

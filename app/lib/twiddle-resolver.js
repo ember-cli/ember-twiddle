@@ -2,10 +2,7 @@ import Resolver from 'ember/resolver';
 
 export default Resolver.extend({
   resolveTemplate (parsedName) {
-    let templateName = parsedName.fullNameWithoutType.replace(/\./g, '/') + '.hbs';
-    Em.Logger.debug('Looking up template', templateName);
-    let template = this.files.findBy('name', templateName);
-    if (template) { return template.get('compiled'); }
+    return this.resolveOther(parsedName);
   },
 
   resolveOther (parsedName) {
@@ -19,7 +16,7 @@ export default Resolver.extend({
 
       return Router;
     } else {
-      let jsFiles = this.files.filterBy('extension', '.js'),
+      let jsFiles = this.files,
           jsModules = jsFiles.mapBy('nameWithModule'), foundName;
 
       this.get('moduleNameLookupPatterns').find((item) => {
@@ -35,11 +32,16 @@ export default Resolver.extend({
       });
 
       if (foundName) {
-        let foundFile = jsFiles.findBy('nameWithModule', foundName);
+        let foundFile = jsFiles.findBy('nameWithModule', foundName),
+          compiled = foundFile.get('compiled');
+
+        if(parsedName.type === 'template') {
+          return compiled;
+        }
 
         var module = {}, exports;
 
-        eval(foundFile.get('compiled'));
+        eval(compiled);
 
         exports = module.exports;
 
