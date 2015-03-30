@@ -18,7 +18,10 @@ export default Em.Object.extend({
   },
 
   serialize () {
-    var json = {files:{}, description:this.get('description')||'twiddle', public:true};
+    var json = {
+      files: {},
+      public: true
+    };
 
     this.get('files').forEach(file => {
       json.files[this.serializeFileName(file.get('name'))] = {
@@ -50,7 +53,6 @@ export default Em.Object.extend({
   deserialize (payload) {
     var model = this.create({
       id: payload.id,
-      description: payload.description,
       revision: payload.history[0].version,
       url: payload.url,
       files: []

@@ -11,8 +11,7 @@
 <div class="row">
   <div class="col-md-6">
     <button {{action 'addFile'}}>Add file</button>
-    <button {{action 'saveGist' model}}>Save</button>
-    <label>Name: {{input value=model.description}}</label>
+    <button {{action 'saveGist' model}}>{{#if model.isNew}}Create{{else}}Save{{/if}}</button>
     {{#unless model.isNew}}
     <label>Revision: <span>{{model.shortRevision}}</span></label>
     <label>Gist URL: <span>{{model.url}}</span></label>
