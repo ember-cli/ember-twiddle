@@ -19,9 +19,27 @@ export default Em.Controller.extend({
     });
   },
 
+  templateFiles: Em.computed('model.files.length', 'model.files.@each.name', function() {
+    return this.get('model.files').filter(item => {
+      return item.get('name').indexOf('hbs')!==-1;
+    }).sortBy('name');  }),
+
+  jsFiles: Em.computed('model.files.length', 'model.files.@each.name', function() {
+    return this.get('model.files').filter(item => {
+      return item.get('name').indexOf('js')!==-1;
+    }).sortBy('name');
+  }),
+
+  cssFiles: Em.computed('model.files.length', 'model.files.@each.name', function() {
+    return this.get('model.files').filter(item => {
+      return item.get('name').indexOf('css')!==-1;
+    }).sortBy('name');
+  }),
+
   actions: {
     addFile () {
-      this.get('model').addFile('');
+      let fileName = prompt('File name');
+      if (fileName) {this.get('model').addFile(fileName);}
     },
 
     removeFile (file) {

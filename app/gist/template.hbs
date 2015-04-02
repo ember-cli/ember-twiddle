@@ -1,49 +1,106 @@
-{{#if session.isOpening}}
-  Signing in&hellip;
-{{else if session.isAuthenticated}}
-  Signed in as {{session.currentUser.login}}
-  <button {{action 'signOut'}}>Sign out</button>
-{{else}}
-  <button {{action "signInViaGithub"}}>Sign in</button>
-{{/if}}
+
 
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="user">
+    {{#if session.isOpening}}
+      Signing in&hellip;
+    {{else if session.isAuthenticated}}
+      Signed in as {{session.currentUser.login}}
+      <button {{action 'signOut'}}>Sign out</button>
+    {{else}}
+      <button {{action "signInViaGithub"}}>Sign in</button>
+    {{/if}}
+  </div>
+  <div class="toolbar">
     <button {{action 'addFile'}}>Add file</button>
     <button {{action 'saveGist' model}}>{{#if model.isNew}}Create{{else}}Save{{/if}}</button>
     {{#unless model.isNew}}
     <label>Revision: <span>{{model.shortRevision}}</span></label>
     <label>Gist URL: <span>{{model.url}}</span></label>
     {{/unless}}
-    {{#each model.files as |file|}}
-      <h2>
-        <button class='pull-right' {{action 'removeFile' file}}>
-          <span class="glyphicon glyphicon-remove"></span>
-        </button>
-        Path: {{input value=file.name}}
-      </h2>
-
-      {{ivy-codemirror
-          value         = file.content
-          mode          = 'javascript'
-          theme         = 'solarized'
-          lineNumbers   = true}}
-
-      {{#if file.errorMessage}}
-        <h2>Error Message</h2>
-        <code>
-          <pre>{{file.errorMessage}}</pre>
-        </code>
-      {{else}}
-        <h2>Compiled</h2>
-
-        <pre><code>{{file.compiled}}</code></pre>
-      {{/if}}
-      <hr>
-    {{/each}}
   </div>
-  <div class="col-md-6">
+</div>
+
+<div class="row">
+  <div class="col-md-4 code">
+  {{#dc-tabs}}
+    {{#dc-tab-list}}
+      {{#each controller.jsFiles as |file|}}
+        {{#dc-tab}}{{file.name}}{{/dc-tab}}
+      {{/each}}
+    {{/dc-tab-list}}
+
+    {{#each controller.jsFiles as |file|}}
+      {{#dc-tab-panel}}
+        <h2>
+          <button class='pull-right' {{action 'removeFile' file}}>
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </h2>
+
+        {{ivy-codemirror
+            value         = file.content
+            mode          = 'javascript'
+            theme         = 'solarized'
+            lineNumbers   = true}}
+
+        {{#if file.errorMessage}}
+          <h2>Error Message</h2>
+          <code>
+            <pre>{{file.errorMessage}}</pre>
+          </code>
+        {{else}}
+          <h2>Compiled</h2>
+
+          <pre><code>{{file.compiled}}</code></pre>
+        {{/if}}
+        <hr>
+      {{/dc-tab-panel}}
+    {{/each}}
+  {{/dc-tabs}}
+  </div>
+
+  <div class="col-md-4 templates">
+  {{#dc-tabs}}
+    {{#dc-tab-list}}
+      {{#each controller.templateFiles as |file|}}
+        {{#dc-tab}}{{file.name}}{{/dc-tab}}
+      {{/each}}
+    {{/dc-tab-list}}
+
+    {{#each controller.templateFiles as |file|}}
+      {{#dc-tab-panel}}
+        <h2>
+          <button class='pull-right' {{action 'removeFile' file}}>
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </h2>
+
+        {{ivy-codemirror
+            value         = file.content
+            mode          = 'javascript'
+            theme         = 'solarized'
+            lineNumbers   = true}}
+
+        {{#if file.errorMessage}}
+          <h2>Error Message</h2>
+          <code>
+            <pre>{{file.errorMessage}}</pre>
+          </code>
+        {{else}}
+          <h2>Compiled</h2>
+
+          <pre><code>{{file.compiled}}</code></pre>
+        {{/if}}
+        <hr>
+      {{/dc-tab-panel}}
+    {{/each}}
+  {{/dc-tabs}}
+  </div>
+
+
+  <div class="col-md-4 output">
     <h2>Demo App</h2>
     {{dummy-demo-app}}
   </div>
