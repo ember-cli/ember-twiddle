@@ -1,7 +1,13 @@
-
-
-
 <div class="row">
+  <div class="toolbar">
+    {{#unless model.isNew}}
+    <label>Gist URL: <span>{{model.url}}</span></label>
+    <label>Revision: <span>{{model.shortRevision}}</span></label>
+    <button {{action 'saveGist' model}}>{{#if model.isNew}}Create{{else}}Commit{{/if}}</button>
+
+    {{/unless}}
+  </div>
+
   <div class="user">
     {{#if session.isOpening}}
       Signing in&hellip;
@@ -12,14 +18,6 @@
       <button {{action "signInViaGithub"}}>Sign in</button>
     {{/if}}
   </div>
-  <div class="toolbar">
-    <button {{action 'addFile'}}>Add file</button>
-    <button {{action 'saveGist' model}}>{{#if model.isNew}}Create{{else}}Save{{/if}}</button>
-    {{#unless model.isNew}}
-    <label>Revision: <span>{{model.shortRevision}}</span></label>
-    <label>Gist URL: <span>{{model.url}}</span></label>
-    {{/unless}}
-  </div>
 </div>
 
 <div class="row">
@@ -27,35 +25,22 @@
   {{#dc-tabs}}
     {{#dc-tab-list}}
       {{#each controller.jsFiles as |file|}}
-        {{#dc-tab}}{{file.name}}{{/dc-tab}}
+        {{#dc-tab}}
+          {{file.name}}
+          <button class="rename-file" {{action 'renameFile' file}}>&#9998;</button>
+          <button class="remove-file" {{action 'removeFile' file}}>X</button>
+        {{/dc-tab}}
       {{/each}}
     {{/dc-tab-list}}
+    <button class="add-file" {{action 'addFile'}}>+</button>
 
     {{#each controller.jsFiles as |file|}}
       {{#dc-tab-panel}}
-        <h2>
-          <button class='pull-right' {{action 'removeFile' file}}>
-            <span class="glyphicon glyphicon-remove"></span>
-          </button>
-        </h2>
-
         {{ivy-codemirror
             value         = file.content
             mode          = 'javascript'
             theme         = 'solarized'
             lineNumbers   = true}}
-
-        {{#if file.errorMessage}}
-          <h2>Error Message</h2>
-          <code>
-            <pre>{{file.errorMessage}}</pre>
-          </code>
-        {{else}}
-          <h2>Compiled</h2>
-
-          <pre><code>{{file.compiled}}</code></pre>
-        {{/if}}
-        <hr>
       {{/dc-tab-panel}}
     {{/each}}
   {{/dc-tabs}}
@@ -65,35 +50,22 @@
   {{#dc-tabs}}
     {{#dc-tab-list}}
       {{#each controller.templateFiles as |file|}}
-        {{#dc-tab}}{{file.name}}{{/dc-tab}}
+        {{#dc-tab}}
+          {{file.name}}
+          <button class="rename-file" {{action 'renameFile' file}}>&#9998;</button>
+          <button class="remove-file" {{action 'removeFile' file}}>X</button>
+        {{/dc-tab}}
       {{/each}}
     {{/dc-tab-list}}
+    <button class="add-file" {{action 'addFile'}}>+</button>
 
     {{#each controller.templateFiles as |file|}}
       {{#dc-tab-panel}}
-        <h2>
-          <button class='pull-right' {{action 'removeFile' file}}>
-            <span class="glyphicon glyphicon-remove"></span>
-          </button>
-        </h2>
-
         {{ivy-codemirror
             value         = file.content
             mode          = 'javascript'
             theme         = 'solarized'
             lineNumbers   = true}}
-
-        {{#if file.errorMessage}}
-          <h2>Error Message</h2>
-          <code>
-            <pre>{{file.errorMessage}}</pre>
-          </code>
-        {{else}}
-          <h2>Compiled</h2>
-
-          <pre><code>{{file.compiled}}</code></pre>
-        {{/if}}
-        <hr>
       {{/dc-tab-panel}}
     {{/each}}
   {{/dc-tabs}}

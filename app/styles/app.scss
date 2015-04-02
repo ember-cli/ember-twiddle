@@ -2,11 +2,36 @@ $screen-md:                  950px !default;
 
 @import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap";
 
-button {
+.user {
+	position:absolute;
+	right:10px;
+	top:10px;
+}
+
+.toolbar button {
   @extend .btn;
   @extend .btn-default;
 }
 
 #demo-app {
   position: absolute;
+}
+
+dc-tab {
+	background: #333;
+	font-size:10pt;
+	color:#EEE;
+	text-overflow: ellipsis;
+	text-align:right;
+	max-width:100%;
+	display:inline-block;
+	margin-left: 5px;
+	cursor:pointer;
+}
+
+dc-tab button {
+	border:0;
+	background: #333;
+	color: #EEE;
+	padding:0;
 }

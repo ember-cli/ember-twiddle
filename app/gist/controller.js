@@ -37,6 +37,11 @@ export default Em.Controller.extend({
   }),
 
   actions: {
+    renameFile (file) {
+      let newFileName = prompt('File name', file.get('name'));
+      if (newFileName) {file.set('name', newFileName);}
+    },
+
     addFile () {
       let fileName = prompt('File name');
       if (fileName) {this.get('model').addFile(fileName);}

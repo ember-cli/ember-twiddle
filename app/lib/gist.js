@@ -74,7 +74,7 @@ export default Em.Object.extend({
     model.setProperties({
       id: payload.id,
       revision: payload.history[0].version,
-      url: payload.url,
+      url: payload.html_url,
       files: [],
       deletedFiles: []
     });
