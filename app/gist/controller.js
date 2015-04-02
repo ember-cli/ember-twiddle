@@ -21,12 +21,12 @@ export default Em.Controller.extend({
 
   actions: {
     addFile () {
-      this.get('model.files').pushObject(File.create());
+      this.get('model').addFile('');
     },
 
     removeFile (file) {
       if(confirm(`Are you sure you want to remove this file?\n\n${file.get('name')}`)) {
-        this.get('model.files').removeObject(file);
+        this.get('model').removeFile(file);
       }
     }
   }

@@ -11,10 +11,15 @@ export default Em.Object.extend({
     return (this.get('revision')||'').substring(0,7);
   }),
 
-  addFile (filePath) {
+  addFile (fileName) {
     this.get('files').pushObject(File.create({
-      path: filePath
+      name: fileName
     }));
+  },
+
+  removeFile (file) {
+    this.get('deletedFiles').pushObject(file);
+    this.get('files').removeObject(file);
   },
 
   serialize () {
@@ -24,9 +29,11 @@ export default Em.Object.extend({
     };
 
     this.get('files').forEach(file => {
-      json.files[this.serializeFileName(file.get('name'))] = {
-        content: file.get('content')
-      };
+      json.files[file.get('nameKey')] = this.serializeFile(file);
+    });
+
+    this.get('deletedFiles').forEach(file => {
+      json.files[file.get('nameKey')] = null;
     });
 
     return JSON.stringify(json);
@@ -34,6 +41,13 @@ export default Em.Object.extend({
 
   serializeFileName (fileName) {
     return fileName.replace(/\//gi, '.');
+  },
+
+  serializeFile (file) {
+    return {
+      filename: this.serializeFileName(file.get('name')),
+      content: file.get('content')
+    };
   }
 }).reopenClass({
   build (attrs) {
@@ -50,27 +64,36 @@ export default Em.Object.extend({
     return model;
   },
 
-  deserialize (payload) {
-    var model = this.create({
-      id: payload.id,
-      revision: payload.history[0].version,
-      url: payload.url,
-      files: []
-    });
-
+  deserialize (payload, model) {
     if(!payload.public) {
       throw new Error('Private Gists are not supported at this point');
     }
 
-    for (var fileName in payload.files) {
-      model.get('files').pushObject(this.deserializeFile(fileName, payload.files[fileName].content));
-    }
+    model = model || this.create({});
+
+    model.setProperties({
+      id: payload.id,
+      revision: payload.history[0].version,
+      url: payload.url,
+      files: [],
+      deletedFiles: []
+    });
+
+    this.deserializeFiles(model, payload.files);
 
     return model;
   },
 
-  deserializeFile (fileName, fileContent) {
+  deserializeFiles (gist, filesPayload) {
+    for (var fileName in filesPayload) {
+      gist.get('files').pushObject(this.deserializeFile(fileName, filesPayload[fileName].content, gist));
+    }
+  },
+
+  deserializeFile (fileName, fileContent, gist) {
     return File.create({
+      gist: gist,
+      nameKey: fileName,
       content: fileContent,
       name: this.deserializeFileName(fileName)
     });

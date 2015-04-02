@@ -1,5 +1,6 @@
 import Path from 'npm:path';
 import Babel from "npm:babel";
+import Gist from './gist';
 
 export default Em.Object.extend({
   errorMessage: null,

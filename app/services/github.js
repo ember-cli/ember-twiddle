@@ -57,10 +57,8 @@ export default Ember.Object.extend({
    */
   postGist (gist) {
     var payload = gist.serialize();
-    return this.request('/gists', 'post', payload).then(response => {
-      gist.set('id', response.id);
-      gist.set('url', response.url);
-      gist.set('revision', response.history[0].version);
+    return this.request('/gists', 'post', payload).then(payload => {
+      Gist.deserialize(payload, gist);
     });
   },
 
@@ -71,8 +69,8 @@ export default Ember.Object.extend({
    */
   patchGist (gist) {
     var payload = gist.serialize();
-    return this.request('/gists/%@'.fmt(gist.get('id')), 'patch', payload).then(response => {
-      gist.set('revision', response.history[0].version);
+    return this.request('/gists/%@'.fmt(gist.get('id')), 'patch', payload).then(payload => {
+      Gist.deserialize(payload, gist);
     });
   },
 
