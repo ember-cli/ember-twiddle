@@ -26,10 +26,45 @@ export default ApplicationSerializer.extend({
     payload.files = normalizedFiles;
   },
 
+  serializeFiles (snapshot, json, relationship) {
+    var files = snapshot.hasMany(relationship.key);
+    var key = this.keyForRelationship(relationship.key);
+    var filesJson = {};
+
+    files.forEach((fileSnapshot) => {
+      let fileKey = fileSnapshot.get('id') || fileSnapshot.attr('fileName');
+
+      filesJson[fileKey] = {
+        filename: fileSnapshot.attr('fileName'),
+        content: fileSnapshot.attr('content'),
+        type: fileSnapshot.attr('fileType'),
+      };
+    });
+
+    json[key] = filesJson;
+  },
+
   normalizeHistory (payload) {
     for(var i in payload.history) {
       payload.history[i].id = payload.history[i].version;
       delete payload.history[i].version;
     }
-  }
+  },
+
+  serializeHistory (snapshot, json, relationship) {
+
+  },
+
+  serializeHasMany: function(snapshot, json, relationship) {
+    console.log(relationship);
+    if(relationship.key === 'files') {
+      this.serializeFiles(snapshot, json, relationship);
+    }
+    else if(relationship.key === 'history') {
+      this.serializeHistory(snapshot, json, relationship);
+    }
+    else {
+      this._super.apply(this, arguments);
+    }
+  },
 });
