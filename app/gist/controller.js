@@ -19,21 +19,21 @@ export default Em.Controller.extend({
     });
   },
 
-  templateFiles: Em.computed('model.files.length', 'model.files.@each.name', function() {
+  templateFiles: Em.computed('model.files.length', 'model.files.@each.fileName', function() {
     return this.get('model.files').filter(item => {
-      return item.get('name').indexOf('hbs')!==-1;
-    }).sortBy('name');  }),
+      return item.get('fileName').indexOf('hbs')!==-1;
+    }).sortBy('fileName');  }),
 
-  jsFiles: Em.computed('model.files.length', 'model.files.@each.name', function() {
+  jsFiles: Em.computed('model.files.length', 'model.files.@each.fileName', function() {
     return this.get('model.files').filter(item => {
-      return item.get('name').indexOf('js')!==-1;
-    }).sortBy('name');
+      return item.get('fileName').indexOf('js')!==-1;
+    }).sortBy('fileName');
   }),
 
-  cssFiles: Em.computed('model.files.length', 'model.files.@each.name', function() {
+  cssFiles: Em.computed('model.files.length', 'model.files.@each.fileName', function() {
     return this.get('model.files').filter(item => {
-      return item.get('name').indexOf('css')!==-1;
-    }).sortBy('name');
+      return item.get('fileName').indexOf('css')!==-1;
+    }).sortBy('fileName');
   }),
 
   actions: {
