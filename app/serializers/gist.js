@@ -65,15 +65,11 @@ export default ApplicationSerializer.extend({
 
   // Not implemented yet.
   normalizeHistory (payload) {
-    for(var i in payload.history) {
+    for(var i=0; i<payload.history.length; i++) {
       payload.history[i].id = payload.history[i].version;
+      payload.history[i].short_id = payload.history[i].version.substring(0,7);
       delete payload.history[i].version;
     }
-  },
-
-  // Not implemented yet.
-  serializeHistory () {
-
   },
 
   serializeHasMany: function(snapshot, json, relationship) {
@@ -81,7 +77,7 @@ export default ApplicationSerializer.extend({
       this.serializeFiles(snapshot, json, relationship);
     }
     else if(relationship.key === 'history') {
-      this.serializeHistory(snapshot, json, relationship);
+      // Do nuthin'
     }
     else {
       this._super.apply(this, arguments);

@@ -6,6 +6,7 @@ export default DS.Model.extend({
   htmlUrl: DS.attr('string'),
   files: DS.hasMany('gistFile'),
   history: DS.hasMany('gistRevision'),
+  currentRevision: Em.computed.oneWay('history.firstObject.shortId'),
 
   /**
     Called by GistFile.registerDeleteOnGist to make sure we
