@@ -1,5 +1,4 @@
 import TwiddleResolver from "ember-twiddle/lib/twiddle-resolver";
-import File from "ember-twiddle/lib/file";
 
 export default Em.Controller.extend({
   contentObserver: Em.observer('model.files.@each.compiled', function () {

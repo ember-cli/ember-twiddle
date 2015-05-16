@@ -14,13 +14,17 @@ export default ApplicationSerializer.extend({
 
   normalizeFiles (payload) {
     var normalizedFiles = [];
+
     for(var origName in payload.files) {
       let file = payload.files[origName];
       file.id = origName;
+      file.clientId = origName;
       file.file_type = file.type;
       file.file_name = file.filename;
+
       delete file.type;
       delete file.filename;
+
       normalizedFiles.push(file);
     }
     payload.files = normalizedFiles;
@@ -32,7 +36,7 @@ export default ApplicationSerializer.extend({
     var filesJson = {};
 
     files.forEach((fileSnapshot) => {
-      let fileKey = fileSnapshot.get('id') || fileSnapshot.attr('fileName');
+      let fileKey = fileSnapshot.id;
 
       filesJson[fileKey] = {
         filename: fileSnapshot.attr('fileName'),

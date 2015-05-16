@@ -7,7 +7,11 @@ export default DS.Model.extend({
   fileName: DS.attr('string'),
   content: DS.attr('string'),
 
-  filePath: Em.computed('fileName', function() {
+  filePath: Em.computed('fileName', function(key, value) {
+    if(value) {
+      this.set('fileName', value.replace(/\//gi, '.'));
+    }
+
     var fileName = this.get('fileName');
     var parts = fileName.split('.');
     return parts.slice(0,-1).join('/') + '.' + parts.slice(-1);

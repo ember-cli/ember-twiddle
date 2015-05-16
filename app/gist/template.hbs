@@ -27,7 +27,7 @@
   {{#dc-tabs}}
     {{#dc-tab-list}}
       {{#each controller.jsFiles as |file|}}
-        {{#dc-tab}}{{file.filePath}}{{/dc-tab}}
+        {{#dc-tab}}{{file.filePath}} ({{file.id}}){{/dc-tab}}
       {{/each}}
     {{/dc-tab-list}}
 
@@ -65,7 +65,7 @@
   {{#dc-tabs}}
     {{#dc-tab-list}}
       {{#each controller.templateFiles as |file|}}
-        {{#dc-tab}}{{file.filePath}}{{/dc-tab}}
+        {{#dc-tab}}{{file.filePath}} ({{file.id}}){{/dc-tab}}
       {{/each}}
     {{/dc-tab-list}}
 
