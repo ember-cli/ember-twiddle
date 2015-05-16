@@ -16,7 +16,7 @@
     <button {{action 'addFile'}}>Add file</button>
     <button {{action 'saveGist' model}}>{{#if model.isNew}}Create{{else}}Save{{/if}}</button>
     {{#unless model.isNew}}
-    <label>Revision: <span>{{model.shortRevision}}</span></label>
+    <label>Revision: <span>{{model.currentRevision}}</span></label>
     <label>Gist URL: <span>{{model.url}}</span></label>
     {{/unless}}
   </div>
@@ -27,7 +27,7 @@
   {{#dc-tabs}}
     {{#dc-tab-list}}
       {{#each controller.jsFiles as |file|}}
-        {{#dc-tab}}{{file.name}}{{/dc-tab}}
+        {{#dc-tab}}{{file.filePath}} ({{input value=file.filePath}}){{/dc-tab}}
       {{/each}}
     {{/dc-tab-list}}
 
@@ -65,7 +65,7 @@
   {{#dc-tabs}}
     {{#dc-tab-list}}
       {{#each controller.templateFiles as |file|}}
-        {{#dc-tab}}{{file.name}}{{/dc-tab}}
+        {{#dc-tab}}{{file.filePath}} ({{file.id}}){{/dc-tab}}
       {{/each}}
     {{/dc-tab-list}}
 

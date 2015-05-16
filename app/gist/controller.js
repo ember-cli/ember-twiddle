@@ -1,5 +1,4 @@
 import TwiddleResolver from "ember-twiddle/lib/twiddle-resolver";
-import File from "ember-twiddle/lib/file";
 
 export default Em.Controller.extend({
   contentObserver: Em.observer('model.files.@each.compiled', function () {
@@ -19,32 +18,34 @@ export default Em.Controller.extend({
     });
   },
 
-  templateFiles: Em.computed('model.files.length', 'model.files.@each.name', function() {
+  templateFiles: Em.computed('model.files.length', 'model.files.@each.fileName', function() {
     return this.get('model.files').filter(item => {
-      return item.get('name').indexOf('hbs')!==-1;
-    }).sortBy('name');  }),
+      return item.get('fileName').indexOf('hbs')!==-1;
+    }).sortBy('fileName');  }),
 
-  jsFiles: Em.computed('model.files.length', 'model.files.@each.name', function() {
+  jsFiles: Em.computed('model.files.length', 'model.files.@each.fileName', function() {
     return this.get('model.files').filter(item => {
-      return item.get('name').indexOf('js')!==-1;
-    }).sortBy('name');
+      return item.get('fileName').indexOf('js')!==-1;
+    }).sortBy('fileName');
   }),
 
-  cssFiles: Em.computed('model.files.length', 'model.files.@each.name', function() {
+  cssFiles: Em.computed('model.files.length', 'model.files.@each.fileName', function() {
     return this.get('model.files').filter(item => {
-      return item.get('name').indexOf('css')!==-1;
-    }).sortBy('name');
+      return item.get('fileName').indexOf('css')!==-1;
+    }).sortBy('fileName');
   }),
 
   actions: {
     addFile () {
-      let fileName = prompt('File name');
-      if (fileName) {this.get('model').addFile(fileName);}
+      let filePath = prompt('File path');
+      if (filePath) {this.get('model.files').pushObject(this.store.createRecord('gistFile', {
+        filePath: filePath
+      }));}
     },
 
     removeFile (file) {
       if(confirm(`Are you sure you want to remove this file?\n\n${file.get('name')}`)) {
-        this.get('model').removeFile(file);
+        file.deleteRecord();
       }
     }
   }
