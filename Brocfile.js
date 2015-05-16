@@ -4,8 +4,7 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 var app = new EmberApp({
   codemirror: {
-    modes: ['javascript'],
-    themes: ['solarized']
+    modes: ['xml', 'javascript', 'htmlmixed'],
   },
   'ember-cli-bootstrap-sassy': {
     'js': false

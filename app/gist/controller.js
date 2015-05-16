@@ -5,6 +5,9 @@ export default Em.Controller.extend({
     Em.run.debounce(this, 'setupApplication', 500);
   }.on('init')),
 
+  col1File: Em.computed.alias('model.files.firstObject'),
+  col2File: Em.computed.alias('model.files.lastObject'),
+
   setupApplication () {
     if(this.currentApp) {
       Em.run(this.currentApp, 'destroy');

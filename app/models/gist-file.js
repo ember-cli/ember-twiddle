@@ -53,6 +53,17 @@ export default DS.Model.extend({
     }
   },
 
+  editorMode: Em.computed('extension', function () {
+    switch(this.get('extension')) {
+      case '.js':
+        return 'javascript';
+      case '.hbs':
+        return 'htmlmixed';
+      default:
+        return 'html';
+    }
+  }),
+
   compiled: Em.computed('content', 'extension', function () {
     switch(this.get('extension')) {
       case '.js':

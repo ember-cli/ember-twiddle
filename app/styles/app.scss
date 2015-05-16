@@ -10,3 +10,38 @@ button {
 #demo-app {
   position: absolute;
 }
+
+
+.submenu {
+	display:none;
+}
+
+.toolbar {
+	height: 50px;
+}
+
+.code .CodeMirror {
+	font-family: Monaco;
+}
+
+.user-menu {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 200px;
+	text-align:right;
+}
+
+.file-menu {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 200px;
+	text-align:left;
+}
+
+.toolbar .title {
+	width:400px;
+	margin: 0 auto;
+	text-align:center;
+}
