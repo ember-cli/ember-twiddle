@@ -6,7 +6,11 @@ export default DS.Model.extend({
   fileType: DS.attr('string'),
   fileName: DS.attr('string'),
   content: DS.attr('string'),
+  gist: DS.belongsTo('gist'),
 
+  /*
+    Replace dots with slashes, Gists can't have directories
+   */
   filePath: Em.computed('fileName', function(key, value) {
     if(value) {
       this.set('fileName', value.replace(/\//gi, '.'));
@@ -58,5 +62,12 @@ export default DS.Model.extend({
       default:
         return '<Unknown file type>';
     }
+  }),
+
+  /**
+    We need to register deletes.
+   */
+  registerDeleteOnGist: Em.observer('isDeleted', function() {
+    this.get('gist').registerDeletedFile(this.get('id'));
   })
 });

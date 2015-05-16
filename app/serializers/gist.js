@@ -18,7 +18,6 @@ export default ApplicationSerializer.extend({
     for(var origName in payload.files) {
       let file = payload.files[origName];
       file.id = origName;
-      file.clientId = origName;
       file.file_type = file.type;
       file.file_name = file.filename;
 
@@ -32,11 +31,27 @@ export default ApplicationSerializer.extend({
 
   serializeFiles (snapshot, json, relationship) {
     var files = snapshot.hasMany(relationship.key);
+    var deletedFiles = snapshot.record.get('deletedFiles');
     var key = this.keyForRelationship(relationship.key);
     var filesJson = {};
 
+    // Deleted files need to be given a null value
+    if(deletedFiles) {
+      deletedFiles.forEach((fileId) => {
+        filesJson[fileId] = null;
+      });
+    }
+
     files.forEach((fileSnapshot) => {
       let fileKey = fileSnapshot.id;
+      let record = fileSnapshot.record;
+      let changedAttrs = record.changedAttributes();
+
+      // If the name was changed, we need to update the ID
+      // because the server will echo a different ID.
+      if('fileName' in changedAttrs && changedAttrs.fileName[0]) {
+        record.set('id', changedAttrs.fileName[1]);
+      }
 
       filesJson[fileKey] = {
         filename: fileSnapshot.attr('fileName'),
@@ -48,6 +63,7 @@ export default ApplicationSerializer.extend({
     json[key] = filesJson;
   },
 
+  // Not implemented yet.
   normalizeHistory (payload) {
     for(var i in payload.history) {
       payload.history[i].id = payload.history[i].version;
@@ -55,12 +71,12 @@ export default ApplicationSerializer.extend({
     }
   },
 
-  serializeHistory (snapshot, json, relationship) {
+  // Not implemented yet.
+  serializeHistory () {
 
   },
 
   serializeHasMany: function(snapshot, json, relationship) {
-    console.log(relationship);
     if(relationship.key === 'files') {
       this.serializeFiles(snapshot, json, relationship);
     }

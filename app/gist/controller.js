@@ -37,13 +37,15 @@ export default Em.Controller.extend({
 
   actions: {
     addFile () {
-      let fileName = prompt('File name');
-      if (fileName) {this.get('model').addFile(fileName);}
+      let filePath = prompt('File path');
+      if (filePath) {this.get('model.files').pushObject(this.store.createRecord('gistFile', {
+        filePath: filePath
+      }));}
     },
 
     removeFile (file) {
       if(confirm(`Are you sure you want to remove this file?\n\n${file.get('name')}`)) {
-        this.get('model').removeFile(file);
+        file.deleteRecord();
       }
     }
   }
