@@ -24,6 +24,7 @@
     "broccoli-sass": "git://github.com/ef4/broccoli-sass",
     "dc-tabs": "0.1.0",
     "dedent": "^0.3.0",
+    "ember-autoresize": "0.4.1",
     "ember-browserify": "^0.6.2",
     "ember-cli": "0.2.0",
     "ember-cli-app-version": "0.3.1",

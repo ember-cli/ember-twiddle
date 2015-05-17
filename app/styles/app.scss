@@ -7,6 +7,10 @@ button {
   @extend .btn-default;
 }
 
+body {
+	font-family: 'Maven Pro', sans-serif;
+}
+
 #demo-app {
   position: absolute;
 }
@@ -17,11 +21,42 @@ button {
 }
 
 .toolbar {
-	height: 50px;
+	height: 60px;
+	border-bottom: 1px solid #e4e2e2;
+	font-size:16px;
+}
+.toolbar>div {
+	margin:17px 20px;
 }
 
 .code .CodeMirror {
 	font-family: Monaco;
+	font-size:13px;
+	line-height: 1.6;
+	height:100%;
+	position:absolute;
+}
+.twiddle-panes {
+	position:absolute;
+	top:60px;
+	bottom:0;
+	left:0;
+	right:0;
+	margin-left:0;
+}
+.twiddle-panes .col-md-4 {
+	padding:0;
+	height:100%;
+	border-right: 1px solid #e4e2e2;
+}
+.twiddle-panes .output {
+	border-right: none;
+}
+
+.twiddle-panes .header {
+	height: 60px;
+	border-bottom: 1px solid #e4e2e2;
+	font-size:16px;
 }
 
 .user-menu {
@@ -42,6 +77,17 @@ button {
 
 .toolbar .title {
 	width:400px;
-	margin: 0 auto;
+	margin: 17px auto;
 	text-align:center;
+}
+.toolbar .title input {
+	border:0;
+	padding: 3px 6px;
+	border-radius:3px;
+	transition: background .3s;
+}
+.toolbar .title input:hover,
+.toolbar .title input:focus {
+	background: #efefef;
+	outline:0;
 }

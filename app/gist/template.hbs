@@ -1,37 +1,49 @@
 <div class="row toolbar">
-
-  <div class="user-menu">
+  <ul class="nav nav-pills user-menu">
     {{#if session.isOpening}}
-      Signing in&hellip;
+    <li>Signing in...</li>
     {{else if session.isAuthenticated}}
-      {{session.currentUser.login}}
-      <div class="submenu">
-      <button {{action 'signOut'}}>Sign out</button>
-      </div>
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        {{session.currentUser.login}} <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li><a {{action 'signOut'}}>Sign out</a></li>
+      </ul>
+    </li>
     {{else}}
-      Anonymous user
-      <div class="submenu">
-      <button {{action "signInViaGithub"}}>Sign in</button>
-      </div>
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Anonymous <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a {{action 'signInViaGithub'}}>Sign in</a></li>
+      </ul>
+    </li>
     {{/if}}
-  </div>
+  </ul>
 
   <div class="title">
-    {{model.description}}
+    {{!-- {{#if isEditingDescription}} --}}
+    {{input value=model.description autoresize=true}}
+    {{!-- {{model.description}} --}}
     {{#unless model.isNew}} @ {{model.currentRevision}}{{/unless}}
   </div>
 
-  <div class="file-menu">
-    <span>File</span>
-    <div class="submenu">
-      <button {{action 'addFile'}}>Add file</button>
-      <button {{action 'saveGist' model}}>{{#if model.isNew}}Create{{else}}Save{{/if}}</button>
-    </div>
-  </div>
-
+  <ul class="nav nav-pills file-menu">
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        File <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a {{action 'addFile'}}>Add file</a></li>
+        <li><a {{action 'saveGist' model}}>Save to Github Gist</a></li>
+      </ul>
+    </li>
+  </ul>
 </div>
 
-<div class="row">
+<div class="row twiddle-panes">
 
   <div class="col-md-4 code">
     {{file-editor-column file=controller.col1File allFiles=model.files}}
@@ -42,6 +54,9 @@
   </div>
 
   <div class="col-md-4 output">
+    <div class="header">
+      Output
+    </div>
     {{dummy-demo-app}}
   </div>
 
