@@ -110,6 +110,16 @@ body {
 	margin-left:-3px;
 }
 
+.user-avatar {
+	display:inline-block;
+	border-radius:16px;
+	width:32px;
+	height:32px;
+	overflow:hidden;
+	float:left;
+	margin-right:10px;
+	margin-top:-4px;
+}
 
 .file-picker {
 	margin-left:15px;

@@ -1,35 +1,4 @@
 <div class="row toolbar">
-  <ul class="nav nav-pills user-menu">
-    {{#if session.isOpening}}
-    <li>Signing in...</li>
-    {{else if session.isAuthenticated}}
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        {{session.currentUser.login}} <b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-right">
-        <li><a {{action 'signOut'}}>Sign out</a></li>
-      </ul>
-    </li>
-    {{else}}
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        Anonymous <b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu">
-        <li><a {{action 'signInViaGithub'}}>Sign in</a></li>
-      </ul>
-    </li>
-    {{/if}}
-  </ul>
-
-  <div class="title">
-    {{!-- {{#if isEditingDescription}} --}}
-    {{input value=model.description autoresize=true}}
-    {{!-- {{model.description}} --}}
-    <a class="gist-link" href="{{model.htmlUrl}}" target="_blank">{{#unless model.isNew}}saved to Gist {{model.shortId}}, rev {{model.currentRevision}}{{/unless}}</a>
-  </div>
-
   <ul class="nav nav-pills file-menu">
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -45,6 +14,38 @@
         {{/if}}
       </ul>
     </li>
+  </ul>
+
+  <div class="title">
+    {{!-- {{#if isEditingDescription}} --}}
+    {{input value=model.description autoresize=true}}
+    {{!-- {{model.description}} --}}
+    <a class="gist-link" href="{{model.htmlUrl}}" target="_blank">{{#unless model.isNew}}saved to Gist {{model.shortId}}, rev {{model.currentRevision}}{{/unless}}</a>
+  </div>
+
+  <ul class="nav nav-pills user-menu">
+    {{#if session.isOpening}}
+    <li>Signing in...</li>
+    {{else if session.isAuthenticated}}
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        {{session.currentUser.login}} <b class="caret"></b>
+<span class="user-avatar"><img src="{{session.currentUser.avatarUrl32}}" /></span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li><a {{action 'signOut'}}>Sign out</a></li>
+      </ul>
+    </li>
+    {{else}}
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Anonymous <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li><a {{action 'signInViaGithub'}}>Sign in</a></li>
+      </ul>
+    </li>
+    {{/if}}
   </ul>
 </div>
 
