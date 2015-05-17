@@ -6,7 +6,17 @@
       </a>
       <ul class="dropdown-menu">
         <li>{{#link-to 'gist.new'}}New Twiddle{{/link-to}}</li>
-        <li><a {{action 'addFile'}}>Add file</a></li>
+        <li role="presentation" class="divider"></li>
+        <li class="dropdown-submenu">
+          <a tabindex="-1" href="#">Add...</a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Component</a></li>
+            <li><a href="#">Controller</a></li>
+            <li><a href="#">Model</a></li>
+            <li><a href="#">Resource (pod)</a></li>
+            <li><a href="#">Template</a></li>
+          </ul>
+        </li>
         {{#if session.isAuthenticated}}
         <li><a {{action 'saveGist' model}}>Save to Github Gist</a></li>
         {{else}}
