@@ -36,6 +36,7 @@
         File <b class="caret"></b>
       </a>
       <ul class="dropdown-menu">
+        <li>{{#link-to 'gist.new'}}New Twiddle{{/link-to}}</li>
         <li><a {{action 'addFile'}}>Add file</a></li>
         {{#if session.isAuthenticated}}
         <li><a {{action 'saveGist' model}}>Save to Github Gist</a></li>

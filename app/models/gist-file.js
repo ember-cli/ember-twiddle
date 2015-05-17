@@ -79,6 +79,10 @@ export default DS.Model.extend({
     We need to register deletes.
    */
   registerDeleteOnGist: Em.observer('isDeleted', function() {
+    if(!this.get('gist')) {
+      return;
+    }
+
     this.get('gist').registerDeletedFile(this.get('id'));
   })
 });
