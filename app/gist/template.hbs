@@ -37,7 +37,11 @@
       </a>
       <ul class="dropdown-menu">
         <li><a {{action 'addFile'}}>Add file</a></li>
+        {{#if session.isAuthenticated}}
         <li><a {{action 'saveGist' model}}>Save to Github Gist</a></li>
+        {{else}}
+        <li><a {{action 'signInViaGithub'}}>Sign in with Github to Save</a></li>
+        {{/if}}
       </ul>
     </li>
   </ul>
