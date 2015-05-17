@@ -1,6 +1,6 @@
 <div class="header">
 
-  <ul class="nav nav-pills file-menu">
+  <ul class="nav nav-pills file-picker">
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         {{file.filePath}} <b class="caret"></b>
@@ -13,6 +13,7 @@
     </li>
   </ul>
 </div>
+
 {{ivy-codemirror
     value         = file.content
     mode          = file.editorMode

@@ -7,6 +7,9 @@ export default DS.Model.extend({
   files: DS.hasMany('gistFile'),
   history: DS.hasMany('gistRevision'),
   currentRevision: Em.computed.oneWay('history.firstObject.shortId'),
+  shortId: Em.computed('id', function() {
+    return (this.get('id')||'').substring(0,7);
+  }),
 
   /**
     Called by GistFile.registerDeleteOnGist to make sure we

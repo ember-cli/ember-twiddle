@@ -5,8 +5,20 @@ export default Em.Controller.extend({
     Em.run.debounce(this, 'setupApplication', 500);
   }.on('init')),
 
-  col1File: Em.computed.alias('model.files.firstObject'),
-  col2File: Em.computed.alias('model.files.lastObject'),
+  initializeColumns: Em.observer('model', function() {
+    var files = this.get('model.files');
+
+    if(files.objectAt(0)) {
+      this.set('col1File', files.objectAt(0));
+    }
+
+    if(files.objectAt(1)) {
+      this.set('col2File', files.objectAt(1));
+    }
+  }),
+
+  col1File: null,
+  col2File: null,
 
   setupApplication () {
     if(this.currentApp) {
@@ -41,9 +53,13 @@ export default Em.Controller.extend({
   actions: {
     addFile () {
       let filePath = prompt('File path');
-      if (filePath) {this.get('model.files').pushObject(this.store.createRecord('gistFile', {
-        filePath: filePath
-      }));}
+      if (filePath) {
+        let file = this.store.createRecord('gistFile', {
+          filePath: filePath
+        });
+        this.get('model.files').pushObject(file);
+        this.set('col1File', file);
+      }
     },
 
     removeFile (file) {

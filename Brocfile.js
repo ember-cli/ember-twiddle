@@ -7,7 +7,7 @@ var app = new EmberApp({
     modes: ['xml', 'javascript', 'htmlmixed'],
   },
   'ember-cli-bootstrap-sassy': {
-    'js': true
+    'js': ['dropdown.js']
   }
 });
 

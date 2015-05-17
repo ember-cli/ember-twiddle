@@ -1,4 +1,15 @@
+$brand-primary:              #000;
 $screen-md:                  950px !default;
+$ember-orange: 							 #f67862;
+$dropdown-link-hover-bg:     $ember-orange;
+$dropdown-link-hover-color:  #fff;
+$dropdown-link-color:        #000;
+$navbar-default-link-color:                #777 !default;
+$navbar-default-link-hover-color:          #333 !default;
+$navbar-default-link-hover-bg:             transparent !default;
+$navbar-default-link-active-color:         #555 !default;
+
+
 
 @import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap";
 
@@ -52,6 +63,10 @@ body {
 .twiddle-panes .output {
 	border-right: none;
 }
+.twiddle-panes .output span {
+	margin:16px 25px;
+	display:inline-block;
+}
 
 .twiddle-panes .header {
 	height: 60px;
@@ -61,28 +76,26 @@ body {
 
 .user-menu {
 	position: absolute;
-	right: 0;
-	top: 0;
-	width: 200px;
+	right: 7px;
+	top: 7px;
 	text-align:right;
 }
 
 .file-menu {
 	position: absolute;
-	left: 0;
-	top: 0;
-	width: 200px;
+	left: 8px;;
+	top: 8px;
 	text-align:left;
 }
 
 .toolbar .title {
 	width:400px;
-	margin: 17px auto;
+	margin: 13px auto;
 	text-align:center;
 }
 .toolbar .title input {
 	border:0;
-	padding: 3px 6px;
+	padding: 5px 10px;
 	border-radius:3px;
 	transition: background .3s;
 }
@@ -90,4 +103,17 @@ body {
 .toolbar .title input:focus {
 	background: #efefef;
 	outline:0;
+}
+.toolbar .title .gist-link {
+	color: #aaa;
+	display:inline-block;
+	margin-left:-3px;
+}
+
+
+.file-picker {
+	margin-left:15px;
+	margin-top:8px;
+	margin-bottom:0;
+	position:absolute;
 }

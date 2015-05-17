@@ -27,7 +27,7 @@
     {{!-- {{#if isEditingDescription}} --}}
     {{input value=model.description autoresize=true}}
     {{!-- {{model.description}} --}}
-    {{#unless model.isNew}} @ {{model.currentRevision}}{{/unless}}
+    <a class="gist-link" href="{{model.htmlUrl}}" target="_blank">{{#unless model.isNew}}saved to Gist {{model.shortId}}, rev {{model.currentRevision}}{{/unless}}</a>
   </div>
 
   <ul class="nav nav-pills file-menu">
@@ -55,7 +55,7 @@
 
   <div class="col-md-4 output">
     <div class="header">
-      Output
+      <span>Output</span>
     </div>
     {{dummy-demo-app}}
   </div>
