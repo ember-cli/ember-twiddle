@@ -10,7 +10,8 @@
         <li class="dropdown-submenu">
           <a tabindex="-1" href="#">Add...</a>
           <ul class="dropdown-menu">
-            <li><a {{action 'addFile' 'component'}}>Component</a></li>
+            <li><a {{action 'addFile' 'component-hbs'}}>Component (hbs)</a></li>
+            <li><a {{action 'addFile' 'component-js'}}>Component (js)</a></li>
             <li><a {{action 'addFile' 'controller'}}>Controller</a></li>
             <li><a {{action 'addFile' 'template'}}>Template</a></li>
           </ul>
@@ -22,6 +23,8 @@
         <li role="presentation" class="divider"></li>
         {{#if session.isAuthenticated}}
         <li><a {{action 'saveGist' model}}>Save to Github Gist</a></li>
+        <li><a {{action 'share'}}>Share Twiddle</a></li>
+        <li><a {{action 'deleteGist' model}}>Delete Twiddle</a></li>
         {{else}}
         <li><a {{action 'signInViaGithub'}}>Sign in with Github to Save</a></li>
         {{/if}}
@@ -77,7 +80,13 @@
 
   <div class="col-md-4 output">
     <div class="header">
-      <span>Output</span>
+      <span>Output
+      ({{#if controller.buildErrors}}
+        <a {{action 'showErrors'}}>{{controller.buildErrors.length}} build errors</a>
+      {{else}}
+        build ok.
+      {{/if}})
+      </span>
     </div>
     {{dummy-demo-app}}
   </div>

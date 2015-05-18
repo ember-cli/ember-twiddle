@@ -46,10 +46,13 @@ export default DS.Model.extend({
   tryCompile(compile) {
     try {
       var result = compile();
+      this.set('buildError', null);
       this.set('errorMessage', null);
       return result;
     } catch (e) {
       this.set('errorMessage', e.message);
+      e.file = this.get('filePath');
+      this.set('buildError', e);
     }
   },
 

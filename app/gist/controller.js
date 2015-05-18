@@ -17,6 +17,17 @@ export default Em.Controller.extend({
     }
   }),
 
+  buildErrors: Em.computed('model.files.@each.buildError', function() {
+    var files = this.get('model.files');
+    var errors = [];
+    files.forEach((file) => {
+      if (file.get('buildError')) {errors.push(file.get('buildError'));}
+    });
+    console.log(errors);
+    return errors;
+  }),
+
+  activeEditor: null,
   col1File: null,
   col2File: null,
   col1Active: Em.computed.equal('activeEditor.col','1'),
@@ -57,10 +68,24 @@ export default Em.Controller.extend({
       this.set('activeEditor', editor);
     },
 
+    deleteGist (gist) {
+      gist.destroyRecord();
+      this.transitionToRoute('gist.new');
+      this.notify.info('Gist %@ was deleted from Github'.fmt(gist.get('id')));
+    },
+
+    share () {
+      prompt('Ctrl + C ;-)', window.location.href);
+    },
+
     addFile (type) {
       var template = '<b>Hi!</b>';
       var filePath = 'tempaltes/foo.hbs';
-      if(type==='component') {
+      if(type==='component-hbs') {
+        template = '<b class="foo">{{yield}}</b>';
+        filePath = 'templates/components/foo.hbs';
+      }
+      if(type==='component-js') {
         template = 'export default Ember.Component.extend({\n});';
         filePath = 'components/foo.js';
       }
@@ -83,6 +108,7 @@ export default Em.Controller.extend({
         });
 
         this.get('model.files').pushObject(file);
+        this.notify.info('File %@ was added'.fmt(file.get('filePath')));
         this.set('col1File', file);
       }
     },
@@ -91,12 +117,21 @@ export default Em.Controller.extend({
       let filePath = prompt('File path', file.get('filePath'));
       if (filePath) {
         file.set('filePath', filePath);
+        this.notify.info('File %@ was added'.fmt(file.get('filePath')));
       }
+    },
+
+    showErrors () {
+      this.get('buildErrors').forEach((error) => {
+        console.error(error);
+      });
+      this.notify.info('Errors were dumped to console');
     },
 
     removeFile (file) {
       if(confirm(`Are you sure you want to remove this file?\n\n${file.get('filePath')}`)) {
         file.deleteRecord();
+        this.notify.info('File %@ was deleted'.fmt(file.get('filePath')));
         this.set('activeEditor.file',null);
       }
     }
