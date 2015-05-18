@@ -78,8 +78,8 @@ export default Em.Controller.extend({
     },
 
     addFile (type) {
-      var template = '<b>Hi!</b>';
-      var filePath = 'tempaltes/foo.hbs';
+      var template = '';
+      var filePath = '';
       if(type==='component-hbs') {
         template = '<b class="foo">{{yield}}</b>';
         filePath = 'templates/components/foo.hbs';
@@ -91,6 +91,10 @@ export default Em.Controller.extend({
       else if(type==='controller') {
         template = 'export default Ember.Controller.extend({\n});';
         filePath = 'controllers/foo.js';
+      }
+      else if(type==='template') {
+        template = '<b>Hi!</b>';
+        filePath = 'templates/foo.hbs';
       }
 
       filePath = prompt('File path', filePath);
@@ -115,6 +119,11 @@ export default Em.Controller.extend({
     renameFile (file) {
       let filePath = prompt('File path', file.get('filePath'));
       if (filePath) {
+        if(this.get('model.files').findBy('filePath', filePath)) {
+          alert('A file with the name %@ already exists'.fmt(filePath));
+          return;
+        }
+
         file.set('filePath', filePath);
         this.notify.info('File %@ was added'.fmt(file.get('filePath')));
       }
