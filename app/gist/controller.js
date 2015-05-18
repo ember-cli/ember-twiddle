@@ -150,7 +150,7 @@ export default Em.Controller.extend({
       });
 
       this.controllerFor('gist').set('fork', newGist);
-
+      this.notify.info('Succesfully created %@'.fmt(newGist.get('description')));
       this.transitionToRoute('gist.new');
     },
 
