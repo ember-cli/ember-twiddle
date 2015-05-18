@@ -128,6 +128,32 @@ export default Em.Controller.extend({
       this.notify.info('Errors were dumped to console');
     },
 
+    fork (gist) {
+      var newGistData = {
+        description: 'Fork of %@'.fmt(gist.get('description'))
+      };
+
+      var filesBuffer = [];
+
+      gist.get('files').forEach(file => {
+        filesBuffer.pushObject({
+          filePath: file.get('filePath'),
+          content: file.get('content'),
+        });
+      });
+
+      this.store.unloadAll('gistFile');
+
+      var newGist = this.store.createRecord('gist', newGistData);
+      filesBuffer.forEach(fileData => {
+        newGist.get('files').pushObject(this.store.createRecord('gistFile', fileData));
+      });
+
+      this.controllerFor('gist').set('fork', newGist);
+
+      this.transitionToRoute('gist.new');
+    },
+
     removeFile (file) {
       if(confirm(`Are you sure you want to remove this file?\n\n${file.get('filePath')}`)) {
         file.deleteRecord();

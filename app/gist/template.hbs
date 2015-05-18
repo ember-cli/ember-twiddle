@@ -24,6 +24,7 @@
         {{#if session.isAuthenticated}}
         <li><a {{action 'saveGist' model}}>Save to Github Gist</a></li>
         <li><a {{action 'share'}}>Share Twiddle</a></li>
+        <li><a {{action 'fork' model}}>Fork Twiddle</a></li>
         <li><a {{action 'deleteGist' model}}>Delete Twiddle</a></li>
         {{else}}
         <li><a {{action 'signInViaGithub'}}>Sign in with Github to Save</a></li>
