@@ -10,16 +10,14 @@
         <li class="dropdown-submenu">
           <a tabindex="-1" href="#">Add...</a>
           <ul class="dropdown-menu">
-            <li><a href="#">Component</a></li>
-            <li><a href="#">Controller</a></li>
-            <li><a href="#">Model</a></li>
-            <li><a href="#">Resource (pod)</a></li>
-            <li><a href="#">Template</a></li>
+            <li><a {{action 'addFile' 'component'}}>Component</a></li>
+            <li><a {{action 'addFile' 'controller'}}>Controller</a></li>
+            <li><a {{action 'addFile' 'template'}}>Template</a></li>
           </ul>
         </li>
         {{#if controller.activeEditor}}
         <li><a {{action 'renameFile' controller.activeEditor.file}}>Move {{controller.activeEditor.file.filePath}}</a></li>
-        <li><a {{action 'deleteFile' controller.activeEditor.file}}>Delete {{controller.activeEditor.file.filePath}}</a></li>
+        <li><a {{action 'removeFile' controller.activeEditor.file}}>Delete {{controller.activeEditor.file.filePath}}</a></li>
         {{/if}}
         <li role="presentation" class="divider"></li>
         {{#if session.isAuthenticated}}
@@ -35,7 +33,10 @@
     {{!-- {{#if isEditingDescription}} --}}
     {{input value=model.description autoresize=true}}
     {{!-- {{model.description}} --}}
-    <a class="gist-link" href="{{model.htmlUrl}}" target="_blank">{{#unless model.isNew}}saved to Gist {{model.shortId}}, rev {{model.currentRevision}}{{/unless}}</a>
+    {{#unless model.isNew}}
+    <span>{{model.files.length}} files</span>
+    <a class="gist-link" href="{{model.htmlUrl}}" target="_blank">saved to Gist, rev {{model.currentRevision}}</a>
+    {{/unless}}
   </div>
 
   <ul class="nav nav-pills user-menu">

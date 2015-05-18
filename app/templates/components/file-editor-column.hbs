@@ -13,7 +13,7 @@
     </li>
   </ul>
 </div>
-
+{{#if file}}
 {{ivy-codemirror
     value         = file.content
     mode          = file.editorMode
@@ -21,3 +21,4 @@
     fixedGutter   = true
     lineWrapping	= true
     tabSize				= 2}}
+{{/if}}

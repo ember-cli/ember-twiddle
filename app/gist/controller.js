@@ -57,20 +57,47 @@ export default Em.Controller.extend({
       this.set('activeEditor', editor);
     },
 
-    addFile () {
-      let filePath = prompt('File path');
+    addFile (type) {
+      var template = '<b>Hi!</b>';
+      var filePath = 'tempaltes/foo.hbs';
+      if(type==='component') {
+        template = 'export default Ember.Component.extend({\n});';
+        filePath = 'components/foo.js';
+      }
+      else if(type==='controller') {
+        template = 'export default Ember.Controller.extend({\n});';
+        filePath = 'controllers/foo.js';
+      }
+
+      filePath = prompt('File path', filePath);
+
       if (filePath) {
+        if(this.get('model.files').findBy('filePath', filePath)) {
+          alert('A file with the name %@ already exists'.fmt(filePath));
+          return;
+        }
+
         let file = this.store.createRecord('gistFile', {
-          filePath: filePath
+          filePath: filePath,
+          content: template
         });
+
         this.get('model.files').pushObject(file);
         this.set('col1File', file);
       }
     },
 
+    renameFile (file) {
+      let filePath = prompt('File path', file.get('filePath'));
+      if (filePath) {
+        file.set('filePath', filePath);
+      }
+    },
+
     removeFile (file) {
-      if(confirm(`Are you sure you want to remove this file?\n\n${file.get('name')}`)) {
+      if(confirm(`Are you sure you want to remove this file?\n\n${file.get('filePath')}`)) {
         file.deleteRecord();
+        this.set('activeEditor.file',null);
       }
     }
   }
