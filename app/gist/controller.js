@@ -23,7 +23,6 @@ export default Em.Controller.extend({
     files.forEach((file) => {
       if (file.get('buildError')) {errors.push(file.get('buildError'));}
     });
-    console.log(errors);
     return errors;
   }),
 
