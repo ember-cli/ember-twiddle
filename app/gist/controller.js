@@ -19,6 +19,8 @@ export default Em.Controller.extend({
 
   col1File: null,
   col2File: null,
+  col1Active: Em.computed.equal('activeEditor.col','1'),
+  col2Active: Em.computed.equal('activeEditor.col','2'),
 
   setupApplication () {
     if(this.currentApp) {
@@ -51,6 +53,10 @@ export default Em.Controller.extend({
   }),
 
   actions: {
+    focusEditor (editor) {
+      this.set('activeEditor', editor);
+    },
+
     addFile () {
       let filePath = prompt('File path');
       if (filePath) {

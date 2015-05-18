@@ -17,6 +17,11 @@
             <li><a href="#">Template</a></li>
           </ul>
         </li>
+        {{#if controller.activeEditor}}
+        <li><a {{action 'renameFile' controller.activeEditor.file}}>Move {{controller.activeEditor.file.filePath}}</a></li>
+        <li><a {{action 'deleteFile' controller.activeEditor.file}}>Delete {{controller.activeEditor.file.filePath}}</a></li>
+        {{/if}}
+        <li role="presentation" class="divider"></li>
         {{#if session.isAuthenticated}}
         <li><a {{action 'saveGist' model}}>Save to Github Gist</a></li>
         {{else}}
@@ -61,12 +66,12 @@
 
 <div class="row twiddle-panes">
 
-  <div class="col-md-4 code">
-    {{file-editor-column file=controller.col1File allFiles=model.files}}
+  <div class="col-md-4 code {{if controller.col1Active 'active' ''}}">
+    {{file-editor-column col="1" file=controller.col1File allFiles=model.files}}
   </div>
 
-  <div class="col-md-4 code">
-    {{file-editor-column file=controller.col2File allFiles=model.files}}
+  <div class="col-md-4 code {{if controller.col2Active 'active' ''}}">
+    {{file-editor-column col="2" file=controller.col2File allFiles=model.files}}
   </div>
 
   <div class="col-md-4 output">

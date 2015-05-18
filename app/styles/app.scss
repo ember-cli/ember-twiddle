@@ -39,12 +39,14 @@ body {
 .toolbar>div {
 	margin:17px 20px;
 }
-
+.code .CodeMirror, .code .header ul {opacity:.3; transition: opacity .3s;}
+.code.active .CodeMirror, .code.active .header ul  {opacity:1}
 .code .CodeMirror {
 	font-family: Monaco;
 	font-size:13px;
 	line-height: 1.6;
 	height:100%;
+	width:100%;
 	position:absolute;
 }
 .twiddle-panes {
