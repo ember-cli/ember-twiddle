@@ -2,14 +2,22 @@ import GistRoute from "ember-twiddle/routes/gist-base-route";
 
 export default GistRoute.extend({
   model () {
-    var model = this.store.createRecord('gist', {description: 'Twiddle'});
+    var fork = this.controllerFor('gist').get('fork');
+    if(fork) {
+      this.controllerFor('gist').set('fork', null);
+      return fork;
+    }
+
+    this.store.unloadAll('gistFile');
+
+    var model = this.store.createRecord('gist', {description: 'New Twiddle'});
     model.get('files').pushObject(this.store.createRecord('gistFile', {
       filePath: 'templates/application.hbs',
-      content: 'Demo :-)',
+      content: '<h1>Welcome to {{appName}}</h1><br><br>',
     }));
     model.get('files').pushObject(this.store.createRecord('gistFile', {
       filePath: 'controllers/application.js',
-      content: 'export default Ember.Controller.extend({});',
+      content: 'export default Ember.Controller.extend({\n  appName:\'Ember Twiddle\'\n});',
     }));
 
     return model;

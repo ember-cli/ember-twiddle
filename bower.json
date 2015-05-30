@@ -14,6 +14,7 @@
     "qunit": "~1.17.1",
     "codemirror": "~4.8.0",
     "ember-cli-codemirror-shim": "~0.0.1",
-    "bootstrap-sass-official": "~3.3.3"
+    "bootstrap-sass-official": "~3.3.3",
+    "dom-ruler": "0.1.5"
   }
 }

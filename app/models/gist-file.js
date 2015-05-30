@@ -46,12 +46,26 @@ export default DS.Model.extend({
   tryCompile(compile) {
     try {
       var result = compile();
+      this.set('buildError', null);
       this.set('errorMessage', null);
       return result;
     } catch (e) {
       this.set('errorMessage', e.message);
+      e.file = this.get('filePath');
+      this.set('buildError', e);
     }
   },
+
+  editorMode: Em.computed('extension', function () {
+    switch(this.get('extension')) {
+      case '.js':
+        return 'javascript';
+      case '.hbs':
+        return 'htmlmixed';
+      default:
+        return 'html';
+    }
+  }),
 
   compiled: Em.computed('content', 'extension', function () {
     switch(this.get('extension')) {
@@ -68,6 +82,10 @@ export default DS.Model.extend({
     We need to register deletes.
    */
   registerDeleteOnGist: Em.observer('isDeleted', function() {
+    if(!this.get('gist')) {
+      return;
+    }
+
     this.get('gist').registerDeletedFile(this.get('id'));
   })
 });

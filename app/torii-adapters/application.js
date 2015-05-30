@@ -9,7 +9,7 @@ export default Ember.Object.extend({  /**
    */
   resolveUser (token) {
     this.github.setToken(token);
-    return this.github.request('/user', 'get').then((user) => {
+    return this.store.find('user', 'current').then((user) => {
       localStorage.setItem('fiddle_gh_session', token);
       return { currentUser: user };
     });

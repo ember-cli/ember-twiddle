@@ -4,9 +4,14 @@ export default DS.RESTAdapter.extend({
   github: Em.inject.service('github'),
   host:'https://api.github.com',
   headers: Em.computed('github._token', function() {
-    return {
-      'Authorization': 'token ' + this.get('github._token')
-    };
+    var token  = this.get('github._token');
+    if (token) {
+      return {
+        'Authorization': 'token ' + this.get('github._token')
+      };
+    }
+
+    return {};
   }),
 
 

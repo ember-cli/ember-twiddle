@@ -1,4 +1,18 @@
+$brand-primary:              #000;
 $screen-md:                  950px !default;
+$ember-orange: 							 #f67862;
+$dropdown-link-hover-bg:     $ember-orange;
+$dropdown-link-hover-color:  #fff;
+$dropdown-link-color:        #000;
+$navbar-default-link-color:                #777 !default;
+$navbar-default-link-hover-color:          #333 !default;
+$navbar-default-link-hover-bg:             transparent !default;
+$navbar-default-link-active-color:         #555 !default;
+
+.dropdown-submenu:hover>a {
+	background: $dropdown-link-hover-bg;
+	color: $dropdown-link-hover-color;
+}
 
 @import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap";
 
@@ -7,6 +21,165 @@ button {
   @extend .btn-default;
 }
 
+body {
+	font-family: 'Maven Pro', sans-serif;
+}
+
 #demo-app {
   position: absolute;
+}
+
+
+.submenu {
+	display:none;
+}
+
+.toolbar {
+	height: 60px;
+	border-bottom: 1px solid #e4e2e2;
+	font-size:16px;
+}
+.toolbar>div {
+	margin:17px 20px;
+}
+.code .CodeMirror, .code .header ul {opacity:.3; transition: opacity .3s;}
+.code.active .CodeMirror, .code.active .header ul  {opacity:1}
+.code .CodeMirror {
+	font-family: Monaco;
+	font-size:13px;
+	line-height: 1.6;
+	height:100%;
+	width:100%;
+	position:absolute;
+}
+.twiddle-panes {
+	position:absolute;
+	top:60px;
+	bottom:0;
+	left:0;
+	right:0;
+	margin-left:0;
+}
+.twiddle-panes .col-md-4 {
+	padding:0;
+	height:100%;
+	border-right: 1px solid #e4e2e2;
+}
+.twiddle-panes .output {
+	border-right: none;
+}
+.twiddle-panes .output span {
+	margin:16px 25px;
+	display:inline-block;
+}
+
+.twiddle-panes .header {
+	height: 60px;
+	border-bottom: 1px solid #e4e2e2;
+	font-size:16px;
+}
+
+.user-menu {
+	position: absolute;
+	right: 7px;
+	top: 7px;
+	text-align:right;
+}
+
+.file-menu {
+	position: absolute;
+	left: 8px;;
+	top: 8px;
+	text-align:left;
+}
+
+.toolbar .title {
+	width:800px;
+	margin: 13px auto;
+	text-align:center;
+}
+.toolbar .title input {
+	border:0;
+	padding: 5px 10px;
+	border-radius:3px;
+	transition: background .3s;
+}
+.toolbar .title input:hover,
+.toolbar .title input:focus {
+	background: #efefef;
+	outline:0;
+}
+.toolbar .title .gist-link,
+.toolbar .title span {
+	color: #aaa;
+	display:inline-block;
+}
+
+.user-avatar {
+	display:inline-block;
+	border-radius:16px;
+	width:32px;
+	height:32px;
+	overflow:hidden;
+	float:left;
+	margin-right:10px;
+	margin-top:-4px;
+}
+
+.file-picker {
+	margin-left:15px;
+	margin-top:8px;
+	margin-bottom:0;
+	position:absolute;
+}
+
+
+
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
 }

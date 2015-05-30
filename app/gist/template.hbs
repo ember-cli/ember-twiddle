@@ -1,107 +1,98 @@
+<div class="row toolbar">
+  <ul class="nav nav-pills file-menu">
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        File <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li>{{#link-to 'gist.new'}}New Twiddle{{/link-to}}</li>
+        <li role="presentation" class="divider"></li>
+        <li class="dropdown-submenu">
+          <a tabindex="-1" href="#">Add...</a>
+          <ul class="dropdown-menu">
+            <li><a {{action 'addFile' 'component-hbs'}}>Component (hbs)</a></li>
+            <li><a {{action 'addFile' 'component-js'}}>Component (js)</a></li>
+            <li><a {{action 'addFile' 'controller'}}>Controller</a></li>
+            <li><a {{action 'addFile' 'template'}}>Template</a></li>
+            <li><a {{action 'addFile' ''}}>Other (empty file)</a></li>
+          </ul>
+        </li>
+        {{#if controller.activeEditor}}
+        <li><a {{action 'renameFile' controller.activeEditor.file}}>Move {{controller.activeEditor.file.filePath}}</a></li>
+        <li><a {{action 'removeFile' controller.activeEditor.file}}>Delete {{controller.activeEditor.file.filePath}}</a></li>
+        {{/if}}
+        {{#unless model.isNew}}
+        <li role="presentation" class="divider"></li>
+        {{#if session.isAuthenticated}}
+        <li><a {{action 'saveGist' model}}>Save to Github Gist</a></li>
+        <li><a {{action 'share'}}>Share Twiddle</a></li>
+        <li><a {{action 'fork' model}}>Fork Twiddle</a></li>
+        <li><a {{action 'deleteGist' model}}>Delete Twiddle</a></li>
+        {{else}}
+        <li><a {{action 'signInViaGithub'}}>Sign in with Github to Save</a></li>
+        {{/if}}
+        {{/unless}}
+      </ul>
+    </li>
+  </ul>
 
-
-
-<div class="row">
-  <div class="user">
-    {{#if session.isOpening}}
-      Signing in&hellip;
-    {{else if session.isAuthenticated}}
-      Signed in as {{session.currentUser.login}}
-      <button {{action 'signOut'}}>Sign out</button>
-    {{else}}
-      <button {{action "signInViaGithub"}}>Sign in</button>
-    {{/if}}
-  </div>
-  <div class="toolbar">
-    <button {{action 'addFile'}}>Add file</button>
-    <button {{action 'saveGist' model}}>{{#if model.isNew}}Create{{else}}Save{{/if}}</button>
+  <div class="title">
+    {{!-- {{#if isEditingDescription}} --}}
+    {{input value=model.description autoresize=true}}
+    {{!-- {{model.description}} --}}
     {{#unless model.isNew}}
-    <label>Revision: <span>{{model.currentRevision}}</span></label>
-    <label>Gist URL: <span>{{model.url}}</span></label>
+    <span>{{model.files.length}} files</span>
+    <a class="gist-link" href="{{model.htmlUrl}}" target="_blank">saved to Gist, rev {{model.currentRevision}}</a>
     {{/unless}}
   </div>
+
+  <ul class="nav nav-pills user-menu">
+    {{#if session.isOpening}}
+    <li><a href='#'>Signing in...</a></li>
+    {{else if session.isAuthenticated}}
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        {{session.currentUser.login}} <b class="caret"></b>
+<span class="user-avatar"><img src="{{session.currentUser.avatarUrl32}}" /></span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li><a {{action 'signOut'}}>Sign out</a></li>
+      </ul>
+    </li>
+    {{else}}
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Anonymous <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li><a {{action 'signInViaGithub'}}>Sign in</a></li>
+      </ul>
+    </li>
+    {{/if}}
+  </ul>
 </div>
 
-<div class="row">
-  <div class="col-md-4 code">
-  {{#dc-tabs}}
-    {{#dc-tab-list}}
-      {{#each controller.jsFiles as |file|}}
-        {{#dc-tab}}{{file.filePath}} ({{input value=file.filePath}}){{/dc-tab}}
-      {{/each}}
-    {{/dc-tab-list}}
+<div class="row twiddle-panes">
 
-    {{#each controller.jsFiles as |file|}}
-      {{#dc-tab-panel}}
-        <h2>
-          <button class='pull-right' {{action 'removeFile' file}}>
-            <span class="glyphicon glyphicon-remove"></span>
-          </button>
-        </h2>
-
-        {{ivy-codemirror
-            value         = file.content
-            mode          = 'javascript'
-            theme         = 'solarized'
-            lineNumbers   = true}}
-
-        {{#if file.errorMessage}}
-          <h2>Error Message</h2>
-          <code>
-            <pre>{{file.errorMessage}}</pre>
-          </code>
-        {{else}}
-          <h2>Compiled</h2>
-
-          <pre><code>{{file.compiled}}</code></pre>
-        {{/if}}
-        <hr>
-      {{/dc-tab-panel}}
-    {{/each}}
-  {{/dc-tabs}}
+  <div class="col-md-4 code {{if controller.col1Active 'active' ''}}">
+    {{file-editor-column col="1" file=controller.col1File allFiles=model.files}}
   </div>
 
-  <div class="col-md-4 templates">
-  {{#dc-tabs}}
-    {{#dc-tab-list}}
-      {{#each controller.templateFiles as |file|}}
-        {{#dc-tab}}{{file.filePath}} ({{file.id}}){{/dc-tab}}
-      {{/each}}
-    {{/dc-tab-list}}
-
-    {{#each controller.templateFiles as |file|}}
-      {{#dc-tab-panel}}
-        <h2>
-          <button class='pull-right' {{action 'removeFile' file}}>
-            <span class="glyphicon glyphicon-remove"></span>
-          </button>
-        </h2>
-
-        {{ivy-codemirror
-            value         = file.content
-            mode          = 'javascript'
-            theme         = 'solarized'
-            lineNumbers   = true}}
-
-        {{#if file.errorMessage}}
-          <h2>Error Message</h2>
-          <code>
-            <pre>{{file.errorMessage}}</pre>
-          </code>
-        {{else}}
-          <h2>Compiled</h2>
-
-          <pre><code>{{file.compiled}}</code></pre>
-        {{/if}}
-        <hr>
-      {{/dc-tab-panel}}
-    {{/each}}
-  {{/dc-tabs}}
+  <div class="col-md-4 code {{if controller.col2Active 'active' ''}}">
+    {{file-editor-column col="2" file=controller.col2File allFiles=model.files}}
   </div>
-
 
   <div class="col-md-4 output">
-    <h2>Demo App</h2>
+    <div class="header">
+      <span>Output
+      ({{#if controller.buildErrors}}
+        <a {{action 'showErrors'}}>{{controller.buildErrors.length}} build errors</a>
+      {{else}}
+        build ok.
+      {{/if}})
+      </span>
+    </div>
     {{dummy-demo-app}}
   </div>
+
 </div>

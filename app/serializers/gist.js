@@ -3,7 +3,7 @@ import ApplicationSerializer from './application';
 export default ApplicationSerializer.extend({
   attrs: {
     files: { embedded: 'always' },
-    history: { embedded: 'always' },
+    history: { deserialize: 'records', serialize: false },
   },
 
   normalizePayload: function(payload) {
@@ -75,9 +75,6 @@ export default ApplicationSerializer.extend({
   serializeHasMany: function(snapshot, json, relationship) {
     if(relationship.key === 'files') {
       this.serializeFiles(snapshot, json, relationship);
-    }
-    else if(relationship.key === 'history') {
-      // Do nuthin'
     }
     else {
       this._super.apply(this, arguments);
