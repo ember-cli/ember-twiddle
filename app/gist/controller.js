@@ -82,11 +82,11 @@ export default Em.Controller.extend({
       var filePath = '';
       if(type==='component-hbs') {
         template = '<b class="foo">{{yield}}</b>';
-        filePath = 'templates/components/foo.hbs';
+        filePath = 'templates/components/foo-component.hbs';
       }
       if(type==='component-js') {
         template = 'export default Ember.Component.extend({\n});';
-        filePath = 'components/foo.js';
+        filePath = 'components/foo-component.js';
       }
       else if(type==='controller') {
         template = 'export default Ember.Controller.extend({\n});';
