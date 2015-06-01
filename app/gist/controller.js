@@ -1,9 +1,9 @@
-import TwiddleResolver from "ember-twiddle/lib/twiddle-resolver";
-
 export default Em.Controller.extend({
-  contentObserver: Em.observer('model.files.@each.compiled', function () {
-    Em.run.debounce(this, 'setupApplication', 500);
-  }.on('init')),
+  emberCli: Em.inject.service('ember-cli'),
+
+  rebuildApp: Em.observer('model.files.@each.content', function() {
+    Em.run.debounce(this, this.updateIframe, 333);
+  }),
 
   initializeColumns: Em.observer('model', function() {
     var files = this.get('model.files');
@@ -26,41 +26,29 @@ export default Em.Controller.extend({
     return errors;
   }),
 
+  updateIframe () {
+    var ifrm = document.getElementById('demo');
+    if(!ifrm) {return;}
+
+    var compiled = this.get('emberCli').compileGist(this.get('model'));
+
+    console.log('found if');
+    var vendorjs = '<script type="text/javascript" src="assets/vendor.js"></script>';
+    var appjs = '<script type="text/javascript">%@</script>'.fmt(compiled);
+
+    ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
+    ifrm.document.open();
+    ifrm.document.write('Hello World!');
+    ifrm.document.write(vendorjs);
+    ifrm.document.write(appjs);
+    ifrm.document.close();
+  },
+
   activeEditor: null,
   col1File: null,
   col2File: null,
   col1Active: Em.computed.equal('activeEditor.col','1'),
   col2Active: Em.computed.equal('activeEditor.col','2'),
-
-  setupApplication () {
-    if(this.currentApp) {
-      Em.run(this.currentApp, 'destroy');
-    }
-
-    this.currentApp = Em.Application.create({
-      name:         "App",
-      rootElement:  '#demo-app',
-      modulePrefix: 'demo-app',
-      Resolver:     TwiddleResolver.extend({files: this.get('model.files')})
-    });
-  },
-
-  templateFiles: Em.computed('model.files.length', 'model.files.@each.fileName', function() {
-    return this.get('model.files').filter(item => {
-      return item.get('fileName').indexOf('hbs')!==-1;
-    }).sortBy('fileName');  }),
-
-  jsFiles: Em.computed('model.files.length', 'model.files.@each.fileName', function() {
-    return this.get('model.files').filter(item => {
-      return item.get('fileName').indexOf('js')!==-1;
-    }).sortBy('fileName');
-  }),
-
-  cssFiles: Em.computed('model.files.length', 'model.files.@each.fileName', function() {
-    return this.get('model.files').filter(item => {
-      return item.get('fileName').indexOf('css')!==-1;
-    }).sortBy('fileName');
-  }),
 
   actions: {
     focusEditor (editor) {
