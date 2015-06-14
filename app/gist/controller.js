@@ -1,8 +1,9 @@
 export default Em.Controller.extend({
   emberCli: Em.inject.service('ember-cli'),
 
+  buildOutput: '',
   rebuildApp: Em.observer('model.files.@each.content', function() {
-    Em.run.debounce(this, this.updateIframe, 333);
+    Em.run.debounce(this, this.buildApp, 1000);
   }),
 
   initializeColumns: Em.observer('model', function() {
@@ -26,26 +27,8 @@ export default Em.Controller.extend({
     return errors;
   }),
 
-  updateIframe () {
-    var ifrm = document.getElementById('demo');
-    if(!ifrm) {return;}
-
-    var parent = ifrm.parentElement;
-    parent.removeChild(ifrm);
-
-    ifrm = document.createElement('iframe');
-    ifrm.id='demo';
-    parent.appendChild(ifrm);
-    var compiled = this.get('emberCli').compileGist(this.get('model'));
-
-    var vendorjs = '<script type="text/javascript" src="assets/vendor.js"></script>';
-    var appjs = '<script type="text/javascript">%@</script>'.fmt(compiled);
-
-    ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
-    ifrm.document.open();
-    ifrm.document.write(vendorjs);
-    ifrm.document.write(appjs);
-    ifrm.document.close();
+  buildApp () {
+    this.set('buildOutput', this.get('emberCli').compileGist(this.get('model')));
   },
 
   activeEditor: null,
