@@ -2,6 +2,10 @@
 var fs = require('fs');
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
+// This copies code out of ember-cli's blueprints into
+// app/lib/blueprints so we don't have to maintain our
+// own blueprints
+var fileMap = {};
 var cliPath = 'node_modules/ember-cli';
 var cliBlueprintFiles = {
   'app': 'app/files/app/app.js',
@@ -11,7 +15,6 @@ var cliBlueprintFiles = {
   'route': 'route/files/__root__/__path__/__name__.js',
   'controller': 'controller/files/__root__/__path__/__name__.js'
 };
-var fileMap = {};
 
 for (var blueprintName in cliBlueprintFiles) {
   var filePath = cliPath + '/blueprints/' + cliBlueprintFiles[blueprintName];
@@ -20,6 +23,7 @@ for (var blueprintName in cliBlueprintFiles) {
 
 var mapContent = 'export default ' + JSON.stringify(fileMap);
 
+
 var app = new EmberApp({
   codemirror: {
     modes: ['xml', 'javascript', 'htmlmixed'],
@@ -27,12 +31,7 @@ var app = new EmberApp({
   'ember-cli-bootstrap-sassy': {
     'js': ['dropdown']
   },
-  fileCreator: [
-      {
-          filename: '/lib/blueprints.js',
-          content: mapContent
-      }
-  ]
+  fileCreator: [{filename: '/lib/blueprints.js', content: mapContent}]
 });
 
 // Use `app.import` to add additional libraries to the generated

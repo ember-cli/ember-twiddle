@@ -13,9 +13,12 @@ export default Em.Service.extend({
       }
     });
 
+    // Add app, router, config
     out.push(this.compileJs(blueprints.app, 'demo-app/app'));
     out.push(this.compileJs(blueprints.router, 'demo-app/router'));
     out.push(this.compileJs('export default {modulePrefix:"demo-app"}', 'demo-app/config/environment'));
+
+    // Add boot code
     contentForAppBoot(out, {modulePrefix:'demo-app'});
     return out.join('\n');
   },
@@ -39,6 +42,8 @@ function babelOpts(moduleName) {
 }
 
 function contentForAppBoot (content, config) {
+  // Some modules are not actually transpiled so Babel
+  // doesn't recognize them properly...
   var monkeyPatchModules = [
     'ember',
     'ember/resolver',
