@@ -17,7 +17,7 @@ export default GistRoute.extend({
     }));
     model.get('files').pushObject(this.store.createRecord('gistFile', {
       filePath: 'controllers/application.js',
-      content: 'import Ember from \'ember\';alert(Ember);\n\nexport default Ember.Controller.extend({\n  appName:\'Ember Twiddle\'\n});',
+      content: 'import Ember from \'ember\';\n\nexport default Ember.Controller.extend({\n  appName:\'Ember Twiddle\'\n});',
     }));
 
     return model;
