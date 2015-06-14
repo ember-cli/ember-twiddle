@@ -39,7 +39,7 @@ export default Resolver.extend({
           return compiled;
         }
 
-        var module = {}, exports;
+        var module = {}, exports = {};
 
         eval(compiled);
 
