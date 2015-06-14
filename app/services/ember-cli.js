@@ -1,12 +1,6 @@
 import Babel from "npm:babel";
 import blueprints from '../lib/blueprints';
 
-var boilerPlateFiles = [
-  'application.hbs',
-  'router.js',
-  'app.js',
-];
-
 export default Em.Service.extend({
 
   compileGist (gist) {
