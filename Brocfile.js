@@ -6,6 +6,7 @@ var cliPath = 'node_modules/ember-cli';
 var cliBlueprintFiles = {
   'app': 'app/files/app/app.js',
   'router': 'app/files/app/router.js',
+  'config': 'app/files/config/environment.js',
   'component-js': 'component/files/__root__/__path__/__name__.js',
   'route': 'route/files/__root__/__path__/__name__.js',
   'controller': 'controller/files/__root__/__path__/__name__.js'

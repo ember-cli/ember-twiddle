@@ -30,17 +30,34 @@ export default Em.Controller.extend({
     var ifrm = document.getElementById('demo');
     if(!ifrm) {return;}
 
+    var parent = ifrm.parentElement;
+    parent.removeChild(ifrm);
+
+    ifrm = document.createElement('iframe');
+    ifrm.id='demo';
+    parent.appendChild(ifrm);
     var compiled = this.get('emberCli').compileGist(this.get('model'));
 
-    console.log('found if');
+    // console.log('found if');
     var vendorjs = '<script type="text/javascript" src="assets/vendor.js"></script>';
     var appjs = '<script type="text/javascript">%@</script>'.fmt(compiled);
 
+
+    // var vendorjs = document.createElement('script');
+    // vendorjs.src='assets/vendor.js';
+    // vendorjs.type='text/javascript';
+    // var appjs = document.createElement('script');
+    // appjs.type='text/javascript';
+    // appjs.innerHTML=compiled;
+
+    ifrm.src="about:blank";
     ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
     ifrm.document.open();
     ifrm.document.write('Hello World!');
     ifrm.document.write(vendorjs);
     ifrm.document.write(appjs);
+    // ifrm.document.head.appendChild(vendorjs);
+    // ifrm.document.body.appendChild(appjs);
     ifrm.document.close();
   },
 

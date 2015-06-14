@@ -1,4 +1,5 @@
 import Babel from "npm:babel";
+import blueprints from '../lib/blueprints';
 
 var boilerPlateFiles = [
   'application.hbs',
@@ -18,7 +19,10 @@ export default Em.Service.extend({
       }
     });
 
-    contentForAppBoot(out, {modulePrefix:'ember-twiddle'});
+    out.push(this.compileJs(blueprints.app, 'demo-app/app'));
+    out.push(this.compileJs(blueprints.router, 'demo-app/router'));
+    out.push(this.compileJs('export default {modulePrefix:"demo-app"}', 'demo-app/config/environment'));
+    contentForAppBoot(out, {modulePrefix:'demo-app'});
     return out.join('\n');
   },
 
@@ -41,6 +45,16 @@ function babelOpts(moduleName) {
 }
 
 function contentForAppBoot (content, config) {
+  var monkeyPatchModules = [
+    'ember',
+    'ember/resolver',
+    'ember/load-initializers'
+  ];
+
+  monkeyPatchModules.forEach(function(mod) {
+    content.push('  require("'+mod+'").__esModule=true;');
+  });
+
   content.push('  require("' +
     config.modulePrefix +
     '/app")["default"].create(' +
