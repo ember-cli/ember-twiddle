@@ -11,6 +11,7 @@ You will need the following things properly installed on your computer.
 * [Bower](http://bower.io/)
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
+* [Gatekeeper](https://github.com/prose/gatekeeper)
 
 ## Installation
 
@@ -18,6 +19,7 @@ You will need the following things properly installed on your computer.
 * change into the new directory
 * `npm install`
 * `bower install`
+* [Install and run gatekeeper](https://github.com/prose/gatekeeper)
 
 ## Running / Development
 
