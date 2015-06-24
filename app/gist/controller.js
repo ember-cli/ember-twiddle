@@ -166,8 +166,17 @@ export default Em.Controller.extend({
       if(confirm(`Are you sure you want to remove this file?\n\n${file.get('filePath')}`)) {
         file.deleteRecord();
         this.notify.info('File %@ was deleted'.fmt(file.get('filePath')));
-        this.set('activeEditor.file',null);
+        this._removeFileFromColumns(file);
       }
+    }
+  },
+
+  _removeFileFromColumns (file) {
+    if(this.get('col1File') === file) {
+      this.set('col1File', null);
+    }
+    if(this.get('col2File') === file) {
+      this.set('col2File', null);
     }
   }
 });
