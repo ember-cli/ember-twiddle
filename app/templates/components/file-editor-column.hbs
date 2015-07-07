@@ -2,12 +2,23 @@
 
   <ul class="nav nav-pills file-picker">
     <li class="dropdown">
+      {{#if allFiles.length}}
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        {{file.filePath}} <b class="caret"></b>
+        {{#if file}}
+          {{file.filePath}}
+        {{else}}
+          No file selected
+        {{/if}}
+        <b class="caret"></b>
       </a>
+      {{else}}
+      <a>No files available</a>
+      {{/if}}
       <ul class="dropdown-menu">
       {{#each file in allFiles}}
 	      <li><a {{action 'selectFile' file}}>{{file.filePath}}</a></li>
+      {{else}}
+        <li class="disabled"><a>No files available</a></li>
       {{/each}}
       </ul>
     </li>
