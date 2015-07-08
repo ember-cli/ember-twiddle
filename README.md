@@ -1,4 +1,4 @@
-# Ember-twiddle
+# [ember-twiddle](http://ember-twiddle.com)
 
 An ember cli like web based javascript sharing tool
 
