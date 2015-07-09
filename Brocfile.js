@@ -6,7 +6,7 @@ var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
 var prepend = null;
 
 if(isProductionLikeBuild) {
-  prepend = env==='production' ? '//assets.ember-twiddle.com' : '//staging-assets.ember-twiddle.com';
+  prepend = env==='production' ? '//assets.ember-twiddle.com/' : '//staging-assets.ember-twiddle.com/';
 }
 
 var app = new EmberApp({
