@@ -30,9 +30,6 @@ var app = new EmberApp({
   hinting: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
 
   vendorFiles: {
-    'handlebars.js': {
-      staging:  'bower_components/handlebars/handlebars.runtime.js'
-    },
     'ember.js': {
       staging:  'bower_components/ember/ember.prod.js'
     }
