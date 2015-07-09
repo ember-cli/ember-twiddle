@@ -1,4 +1,4 @@
-/* global require, module */
+/* global require, module, process */
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 var env = EmberApp.env();
@@ -19,6 +19,23 @@ var app = new EmberApp({
   },
   'ember-cli-bootstrap-sassy': {
     'js': ['dropdown']
+  },
+  sourcemaps: {
+    enabled: !isProductionLikeBuild,
+  },
+  minifyCSS: { enabled: isProductionLikeBuild },
+  minifyJS: { enabled: isProductionLikeBuild },
+
+  tests: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
+  hinting: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
+
+  vendorFiles: {
+    'handlebars.js': {
+      staging:  'bower_components/handlebars/handlebars.runtime.js'
+    },
+    'ember.js': {
+      staging:  'bower_components/ember/ember.prod.js'
+    }
   }
 });
 
