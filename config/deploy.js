@@ -2,6 +2,7 @@
 
 module.exports = {
   staging: {
+    buildEnv: "staging",
     store: {
       type: "S3",
       accessKeyId: process.env['AWS_ACCESS_KEY_ID'],
