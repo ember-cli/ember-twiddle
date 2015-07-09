@@ -1,8 +1,19 @@
 /* global require, module */
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var env = EmberApp.env();
+var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
+var prepend = null;
+
+if(isProductionLikeBuild) {
+  prepend = env==='production' ? '//assets.ember-twiddle.com' : '//staging-assets.ember-twiddle.com';
+}
 
 var app = new EmberApp({
+  fingerprint: {
+    enabled: isProductionLikeBuild,
+    prepend: prepend
+  },
   codemirror: {
     modes: ['xml', 'javascript', 'htmlmixed'],
   },

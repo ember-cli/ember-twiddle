@@ -1,7 +1,23 @@
 /* jshint node: true */
 
 module.exports = {
-   production: {
+  staging: {
+    store: {
+      type: "S3",
+      accessKeyId: process.env['AWS_ACCESS_KEY_ID'],
+      secretAccessKey: process.env['AWS_ACCESS_KEY_SECRET'],
+      bucket: "staging.ember-twiddle.com",
+      region: "us-west-2"
+    },
+    assets: {
+      type: "s3",
+      accessKeyId: process.env['AWS_ACCESS_KEY_ID'],
+      secretAccessKey: process.env['AWS_ACCESS_KEY_SECRET'],
+      bucket: "staging-assets.ember-twiddle.com",
+      region: "us-west-2"
+    }
+  },
+  production: {
     store: {
       type: "S3",
       accessKeyId: process.env['AWS_ACCESS_KEY_ID'],
@@ -13,7 +29,7 @@ module.exports = {
       type: "s3",
       accessKeyId: process.env['AWS_ACCESS_KEY_ID'],
       secretAccessKey: process.env['AWS_ACCESS_KEY_SECRET'],
-      bucket: "ember-twiddle.com",
+      bucket: "assets.ember-twiddle.com",
       region: "us-west-2"
     }
   }
