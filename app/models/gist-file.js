@@ -35,7 +35,10 @@ export default DS.Model.extend({
 
   compileJs () {
     return this.tryCompile(() =>
-      Babel.transform(this.get('content')).code);
+      Babel.transform(this.get('content'), {
+        modules: 'amd',
+        moduleId: this.get('nameWithModule')
+      }).code);
   },
 
   compileHbs() {
