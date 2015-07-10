@@ -6,7 +6,7 @@ export default DS.Model.extend({
   fileType: DS.attr('string'),
   fileName: DS.attr('string'),
   content: DS.attr('string'),
-  gist: DS.belongsTo('gist'),
+  gist: DS.belongsTo('gist', {async:false}),
 
   /*
     Replace dots with slashes, Gists can't have directories

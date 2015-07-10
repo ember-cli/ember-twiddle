@@ -4,8 +4,8 @@ export default DS.Model.extend({
   url: DS.attr('string'),
   description: DS.attr('string'),
   htmlUrl: DS.attr('string'),
-  files: DS.hasMany('gistFile'),
-  history: DS.hasMany('gistRevision'),
+  files: DS.hasMany('gistFile', {async:false}),
+  history: DS.hasMany('gistRevision', {async:false}),
   public: DS.attr('boolean', {defaultValue: true}),
   currentRevision: Em.computed.oneWay('history.firstObject.shortId'),
   shortId: Em.computed('id', function() {
