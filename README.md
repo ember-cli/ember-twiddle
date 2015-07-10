@@ -1,8 +1,12 @@
-# Ember-twiddle
+# [ember-twiddle](http://ember-twiddle.com)
 
-An ember cli like web based javascript sharing tool
+An ember cli like web based javascript sharing tool. http://ember-twiddle.com
 
-## Prerequisites
+![ember-twiddle.com](https://cloud.githubusercontent.com/assets/3824616/8574337/6feeaee6-2596-11e5-8ea7-17421ce77691.png)
+
+## Contributing
+
+### Prerequisites
 
 You will need the following things properly installed on your computer.
 
@@ -11,15 +15,17 @@ You will need the following things properly installed on your computer.
 * [Bower](http://bower.io/)
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
+* [Gatekeeper](https://github.com/prose/gatekeeper)
 
-## Installation
+### Installation
 
 * `git clone <repository-url>` this repository
 * change into the new directory
 * `npm install`
 * `bower install`
+* [Install and run gatekeeper](https://github.com/prose/gatekeeper)
 
-## Running / Development
+### Running / Development
 
 * `ember server`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
@@ -37,16 +43,3 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 * `ember build` (development)
 * `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](http://emberjs.com/)
-* [ember-cli](http://www.ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
-

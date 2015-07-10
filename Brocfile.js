@@ -1,6 +1,14 @@
-/* global require, module */
+/* global require, module, process */
+
 var fs = require('fs');
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var env = EmberApp.env();
+var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
+var prepend = null;
+
+if(isProductionLikeBuild) {
+  prepend = env==='production' ? '//assets.ember-twiddle.com/' : '//staging-assets.ember-twiddle.com/';
+}
 
 // This copies code out of ember-cli's blueprints into
 // app/lib/blueprints so we don't have to maintain our
@@ -25,13 +33,31 @@ var mapContent = 'export default ' + JSON.stringify(fileMap);
 
 
 var app = new EmberApp({
+  fingerprint: {
+    enabled: isProductionLikeBuild,
+    prepend: prepend
+  },
   codemirror: {
     modes: ['xml', 'javascript', 'htmlmixed'],
   },
   'ember-cli-bootstrap-sassy': {
     'js': ['dropdown']
   },
-  fileCreator: [{filename: '/lib/blueprints.js', content: mapContent}]
+  fileCreator: [{filename: '/lib/blueprints.js', content: mapContent}],
+  sourcemaps: {
+    enabled: !isProductionLikeBuild,
+  },
+  minifyCSS: { enabled: isProductionLikeBuild },
+  minifyJS: { enabled: isProductionLikeBuild },
+
+  tests: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
+  hinting: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
+
+  vendorFiles: {
+    'ember.js': {
+      staging:  'bower_components/ember/ember.prod.js'
+    }
+  }
 });
 
 // Use `app.import` to add additional libraries to the generated

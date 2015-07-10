@@ -45,5 +45,10 @@
     "ivy-codemirror": "^1.1.0",
     "liquid-fire": "^0.20.0",
     "torii": "^0.3.5"
+  },
+  "devDependencies": {
+    "ember-cli-deploy": "^0.4.2",
+    "ember-deploy-s3": "0.0.4",
+    "ember-deploy-s3-index": "^0.4.0"
   }
 }
