@@ -1,5 +1,5 @@
 /* global require, module, process */
-module.exports = function(defaults) {
+module.exports = function() {
   var fs = require('fs');
   var EmberApp = require('ember-cli/lib/broccoli/ember-app');
   var env = EmberApp.env();
