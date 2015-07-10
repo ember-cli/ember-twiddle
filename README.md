@@ -1,4 +1,4 @@
-# [ember-twiddle](http://ember-twiddle.com) ![travis](https://travis-ci.org/alexspeller/ember-twiddle.svg?branch=master)
+# [ember-twiddle](http://ember-twiddle.com) [![Build Status][travis-badge]][travis-badge-url]
 
 An ember cli like web based javascript sharing tool. http://ember-twiddle.com
 
@@ -43,3 +43,7 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 * `ember build` (development)
 * `ember build --environment production` (production)
+
+
+[travis-badge]: https://travis-ci.org/alexspeller/ember-twiddle.svg?branch=master
+[travis-badge-url]: https://travis-ci.org/alexspeller/ember-twiddle
