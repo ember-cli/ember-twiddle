@@ -39,16 +39,9 @@ export default Resolver.extend({
           return compiled;
         }
 
-        var module = {}, exports = {};
-
         eval(compiled);
 
-        exports = module.exports;
-
-        if (exports['default']) { exports = exports['default']; }
-
-        return exports;
-
+        return window.require(foundName);
       }
     }
   }
