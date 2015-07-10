@@ -1,4 +1,4 @@
-# [ember-twiddle](http://ember-twiddle.com)
+# [ember-twiddle](http://ember-twiddle.com) ![travis](https://travis-ci.org/alexspeller/ember-twiddle.svg?branch=master)
 
 An ember cli like web based javascript sharing tool. http://ember-twiddle.com
 
