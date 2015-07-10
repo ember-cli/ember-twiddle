@@ -3,7 +3,7 @@ import ResizeMixin from 'ember-twiddle/lib/resize-mixin';
 export default Em.Component.extend(ResizeMixin, {
   iframeId: 'dummy-content-iframe',
 
-  updateJs: Em.observer('code', function() {
+  updateJs: Em.observer('attrs.code', function() {
     if(!this.element) {
       return;
     }

@@ -1,11 +1,41 @@
 export default Em.Controller.extend({
   emberCli: Em.inject.service('ember-cli'),
 
+  /**
+   * Output from the build, sets the `code` attr on the component
+   * @type {String}
+   */
   buildOutput: '',
-  rebuildApp: Em.observer('model.files.@each.content', function() {
-    Em.run.debounce(this, this.buildApp, 1000);
+  activeEditor: null,
+  col1File: null,
+  col2File: null,
+  col1Active: Em.computed.equal('activeEditor.col','1'),
+  col2Active: Em.computed.equal('activeEditor.col','2'),
+
+  /**
+   * Errors during build
+   * @return {Array}     Array of errors
+   */
+  buildErrors: Em.computed('model.files.@each.buildError', function() {
+    var files = this.get('model.files');
+    var errors = [];
+    files.forEach((file) => {
+      if (file.get('buildError')) {errors.push(file.get('buildError'));}
+    });
+
+    return errors;
   }),
 
+  /**
+   * Build the application and set the iframe code
+   */
+  buildApp () {
+    this.set('buildOutput', this.get('emberCli').compileGist(this.get('model')));
+  },
+
+  /**
+   * Set the initial file columns
+   */
   initializeColumns: Em.observer('model', function() {
     var files = this.get('model.files');
 
@@ -18,25 +48,9 @@ export default Em.Controller.extend({
     }
   }),
 
-  buildErrors: Em.computed('model.files.@each.buildError', function() {
-    var files = this.get('model.files');
-    var errors = [];
-    files.forEach((file) => {
-      if (file.get('buildError')) {errors.push(file.get('buildError'));}
-    });
-    return errors;
+  rebuildApp: Em.observer('model.files.@each.content', function() {
+    Em.run.debounce(this, this.buildApp, 1000);
   }),
-
-  buildApp () {
-    console.log('buildApp');
-    this.set('buildOutput', this.get('emberCli').compileGist(this.get('model')));
-  },
-
-  activeEditor: null,
-  col1File: null,
-  col2File: null,
-  col1Active: Em.computed.equal('activeEditor.col','1'),
-  col2Active: Em.computed.equal('activeEditor.col','2'),
 
   actions: {
     focusEditor (editor) {
