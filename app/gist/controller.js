@@ -28,6 +28,7 @@ export default Em.Controller.extend({
   }),
 
   buildApp () {
+    console.log('buildApp');
     this.set('buildOutput', this.get('emberCli').compileGist(this.get('model')));
   },
 
