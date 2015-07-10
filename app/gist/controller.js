@@ -6,6 +6,7 @@ export default Em.Controller.extend({
    * @type {String}
    */
   buildOutput: '',
+  isBuilding: false,
   activeEditor: null,
   col1File: null,
   col2File: null,
@@ -14,23 +15,28 @@ export default Em.Controller.extend({
 
   /**
    * Errors during build
-   * @return {Array}     Array of errors
+   * @type {Array}     Array of errors
    */
-  buildErrors: Em.computed('model.files.@each.buildError', function() {
-    var files = this.get('model.files');
-    var errors = [];
-    files.forEach((file) => {
-      if (file.get('buildError')) {errors.push(file.get('buildError'));}
-    });
-
-    return errors;
-  }),
+  buildErrors: null,
 
   /**
    * Build the application and set the iframe code
    */
   buildApp () {
-    this.set('buildOutput', this.get('emberCli').compileGist(this.get('model')));
+    this.set('isBuilding', true);
+    this.set('buildErrors', []);
+
+    this.get('emberCli').compileGist(this.get('model')).then((buildOutput) => {
+      this.set('isBuilding', false);
+      this.set('buildOutput', buildOutput);
+    })
+    .catch((errors) => {
+      this.set('isBuilding', false);
+      this.set('buildErrors', errors);
+      errors.forEach(error => {
+        console.error(error);
+      });
+    });
   },
 
   /**
@@ -49,7 +55,7 @@ export default Em.Controller.extend({
   }),
 
   rebuildApp: Em.observer('model.files.@each.content', function() {
-    Em.run.debounce(this, this.buildApp, 1000);
+    Em.run.debounce(this, this.buildApp, 500);
   }),
 
   actions: {

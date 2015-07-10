@@ -17,24 +17,37 @@ export default Em.Service.extend({
    * @return {String}       Source code for built Ember app
    */
   compileGist (gist) {
-    var out = gist.get('files').map(file => {
-      switch(file.get('extension')) {
-        case '.js':
-          return this.compileJs(file.get('content'), file.get('nameWithModule'));
-        case '.hbs':
-          return this.compileHbs(file.get('content'), file.get('nameWithModule'));
-      }
+    var promise = new Em.RSVP.Promise((resolve, reject) => {
+      var errors = [];
+      var out = gist.get('files').map(file => {
+        try {
+          switch(file.get('extension')) {
+            case '.js':
+              return this.compileJs(file.get('content'), file.get('nameWithModule'));
+            case '.hbs':
+              return this.compileHbs(file.get('content'), file.get('nameWithModule'));
+          }
+        }
+        catch(e) {
+          e.message = '%@: %@'.fmt(file.get('nameWithModule'), e.message);
+          errors.push(e);
+        }
+      });
+
+      if (errors.length) {return reject(errors);}
+
+      // Add app, router, config
+      out.push(this.compileJs(blueprints.app, 'demo-app/app'));
+      out.push(this.compileJs(blueprints.router, 'demo-app/router'));
+      out.push(this.compileJs('export default {modulePrefix:"demo-app"}', 'demo-app/config/environment'));
+
+      // Add boot code
+      contentForAppBoot(out, {modulePrefix:'demo-app'});
+
+      resolve(out.join('\n'));
     });
 
-    // Add app, router, config
-    out.push(this.compileJs(blueprints.app, 'demo-app/app'));
-    out.push(this.compileJs(blueprints.router, 'demo-app/router'));
-    out.push(this.compileJs('export default {modulePrefix:"demo-app"}', 'demo-app/config/environment'));
-
-    // Add boot code
-    contentForAppBoot(out, {modulePrefix:'demo-app'});
-
-    return out.join('\n');
+    return promise;
   },
 
   /**
