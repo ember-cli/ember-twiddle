@@ -8,7 +8,8 @@ var app = new EmberApp({
   },
   'ember-cli-bootstrap-sassy': {
     'js': ['dropdown']
-  }
+  },
+  loader: 'vendor/loader.js'
 });
 
 // Use `app.import` to add additional libraries to the generated

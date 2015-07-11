@@ -39,6 +39,8 @@ export default Resolver.extend({
           return compiled;
         }
 
+        delete window.requirejs.seen[foundName];
+
         eval(compiled);
 
         return window.require(foundName);
