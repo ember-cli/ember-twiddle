@@ -48,6 +48,7 @@
     "ember-autoresize": "0.4.1",
     "ember-notify": "3.3.4",
     "ivy-codemirror": "^1.1.0",
+    "phantomjs2": "2.0.0",
     "torii": "^0.3.5"
   }
 }
