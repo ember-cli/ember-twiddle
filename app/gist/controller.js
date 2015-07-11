@@ -43,6 +43,12 @@ export default Em.Controller.extend({
       modulePrefix: 'demo-app',
       Resolver:     TwiddleResolver.extend({files: this.get('model.files')})
     });
+
+    Ember.run(function() {
+        this.get('jsFiles').forEach(function(jsFile) {
+            jsFile.updateRegistry();
+        });
+    }.bind(this));
   },
 
   templateFiles: Em.computed('model.files.length', 'model.files.@each.fileName', function() {

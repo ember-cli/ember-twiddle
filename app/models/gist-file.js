@@ -81,6 +81,15 @@ export default DS.Model.extend({
     }
   }),
 
+  updateRegistry: Ember.observer('content', 'nameWithModule', function() {
+      var name = this.get('nameWithModule');
+      var compiled = this.get('compiled');
+      if (name && compiled) {
+        delete window.requirejs.seen[name];
+        eval(compiled);
+      }
+  }),
+
   /**
     We need to register deletes.
    */
