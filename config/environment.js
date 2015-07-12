@@ -3,6 +3,7 @@
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'ember-twiddle',
+    version: '1.0.0-pre',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
