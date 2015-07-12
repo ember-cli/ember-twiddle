@@ -15,7 +15,7 @@
       <a>No files available</a>
       {{/if}}
       <ul class="dropdown-menu">
-      {{#each file in allFiles}}
+      {{#each allFiles as |file|}}
 	      <li><a {{action 'selectFile' file}}>{{file.filePath}}</a></li>
       {{else}}
         <li class="disabled"><a>No files available</a></li>

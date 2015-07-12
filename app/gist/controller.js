@@ -1,10 +1,47 @@
-import TwiddleResolver from "ember-twiddle/lib/twiddle-resolver";
-
 export default Em.Controller.extend({
-  contentObserver: Em.observer('model.files.@each.compiled', function () {
-    Em.run.debounce(this, 'setupApplication', 500);
-  }.on('init')),
+  emberCli: Em.inject.service('ember-cli'),
 
+  /**
+   * Output from the build, sets the `code` attr on the component
+   * @type {String}
+   */
+  buildOutput: '',
+  isBuilding: false,
+  activeEditor: null,
+  col1File: null,
+  col2File: null,
+  col1Active: Em.computed.equal('activeEditor.col','1'),
+  col2Active: Em.computed.equal('activeEditor.col','2'),
+
+  /**
+   * Errors during build
+   * @type {Array}     Array of errors
+   */
+  buildErrors: null,
+
+  /**
+   * Build the application and set the iframe code
+   */
+  buildApp () {
+    this.set('isBuilding', true);
+    this.set('buildErrors', []);
+
+    this.get('emberCli').compileGist(this.get('model')).then((buildOutput) => {
+      this.set('isBuilding', false);
+      this.set('buildOutput', buildOutput);
+    })
+    .catch((errors) => {
+      this.set('isBuilding', false);
+      this.set('buildErrors', errors);
+      errors.forEach(error => {
+        console.error(error);
+      });
+    });
+  },
+
+  /**
+   * Set the initial file columns
+   */
   initializeColumns: Em.observer('model', function() {
     var files = this.get('model.files');
 
@@ -17,49 +54,8 @@ export default Em.Controller.extend({
     }
   }),
 
-  buildErrors: Em.computed('model.files.@each.buildError', function() {
-    var files = this.get('model.files');
-    var errors = [];
-    files.forEach((file) => {
-      if (file.get('buildError')) {errors.push(file.get('buildError'));}
-    });
-    return errors;
-  }),
-
-  activeEditor: null,
-  col1File: null,
-  col2File: null,
-  col1Active: Em.computed.equal('activeEditor.col','1'),
-  col2Active: Em.computed.equal('activeEditor.col','2'),
-
-  setupApplication () {
-    if(this.currentApp) {
-      Em.run(this.currentApp, 'destroy');
-    }
-
-    this.currentApp = Em.Application.create({
-      name:         "App",
-      rootElement:  '#demo-app',
-      modulePrefix: 'demo-app',
-      Resolver:     TwiddleResolver.extend({files: this.get('model.files')})
-    });
-  },
-
-  templateFiles: Em.computed('model.files.length', 'model.files.@each.fileName', function() {
-    return this.get('model.files').filter(item => {
-      return item.get('fileName').indexOf('hbs')!==-1;
-    }).sortBy('fileName');  }),
-
-  jsFiles: Em.computed('model.files.length', 'model.files.@each.fileName', function() {
-    return this.get('model.files').filter(item => {
-      return item.get('fileName').indexOf('js')!==-1;
-    }).sortBy('fileName');
-  }),
-
-  cssFiles: Em.computed('model.files.length', 'model.files.@each.fileName', function() {
-    return this.get('model.files').filter(item => {
-      return item.get('fileName').indexOf('css')!==-1;
-    }).sortBy('fileName');
+  rebuildApp: Em.observer('model.files.@each.content', function() {
+    Em.run.debounce(this, this.buildApp, 500);
   }),
 
   actions: {

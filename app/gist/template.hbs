@@ -85,15 +85,20 @@
 
   <div class="col-md-4 output">
     <div class="header">
-      <span>Output
-      ({{#if controller.buildErrors}}
-        <a {{action 'showErrors'}}>{{controller.buildErrors.length}} build errors</a>
+      <span>
+      {{#if controller.isBuilding}}
+      Building...
       {{else}}
-        build ok.
-      {{/if}})
+        Output
+        ({{#if controller.buildErrors}}
+          <a {{action 'showErrors'}}>{{controller.buildErrors.length}} build errors</a>
+        {{else}}
+          build ok.
+        {{/if}})
+      {{/if}}
       </span>
     </div>
-    {{dummy-demo-app}}
+    {{dummy-demo-app code=controller.buildOutput}}
   </div>
 
 </div>

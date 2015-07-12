@@ -72,6 +72,12 @@ body {
 	margin:16px 25px;
 	display:inline-block;
 }
+.twiddle-panes .output iframe {
+  border:0;
+  width:100%;
+  height:100%;
+  position:absolute;
+}
 
 .twiddle-panes .header {
 	height: 60px;

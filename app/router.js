@@ -9,7 +9,6 @@ Router.map(function() {
   this.route('gist', {path: '/'}, function() {
     this.route('new', {path: '/'});
     this.route('edit', {path: '/:id'});
-    // this.route('fork', {path: '/:id'});
   });
 });
 
