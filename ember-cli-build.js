@@ -37,7 +37,7 @@ module.exports = function() {
       prepend: prepend
     },
     codemirror: {
-      modes: ['xml', 'javascript', 'htmlmixed'],
+      modes: ['xml', 'javascript', 'handlebars', 'htmlmixed'],
     },
     'ember-cli-bootstrap-sassy': {
       'js': ['dropdown']
