@@ -2,47 +2,34 @@
 
 An ember cli like web based javascript sharing tool. http://ember-twiddle.com
 
-![ember-twiddle.com](https://cloud.githubusercontent.com/assets/3824616/8574337/6feeaee6-2596-11e5-8ea7-17421ce77691.png)
+* Ember Twiddle uses [Github Gists](https://gist.github.com) as persistence layer. Once you hit `Save` on a newly created Twiddle, it will create a public Gist under your Github account.
+* Right now, Ember Twiddle only runs Ember 1.13 code, but we're in the process of making that customizable.
+* If you'd like to help out, check out [CONTRIBUTING.md](CONTRIBUTING.md)
 
-## Contributing
+### Roadmap
 
-### Prerequisites
+At the moment, active development is going on and there's a pretty big list of issues we want to nail before calling it a `1.0`. If you have ideas we should add, please [open an issue](https://github.com/alexspeller/ember-twiddle/issues) if it's not on the list yet.
 
-You will need the following things properly installed on your computer.
+There are a few major items on the roadmap for 1.0. This list is prioritized because the issues are more or less blocking each other.
 
-* [Git](http://git-scm.com/)
-* [Node.js](http://nodejs.org/) (with NPM)
-* [Bower](http://bower.io/)
-* [Ember CLI](http://www.ember-cli.com/)
-* [PhantomJS 2](http://phantomjs.org/)
-* [Gatekeeper](https://github.com/prose/gatekeeper)
+#### #38 [Configurable dependencies](https://github.com/alexspeller/ember-twiddle/issues/38)
 
-### Installation
+Basically the option to specify which version of `ember` and `ember-data` should be used. Right now, your Twiddle will use the same version as Ember Twiddle (1.13 at the moment).
 
-* `git clone <repository-url>` this repository
-* change into the new directory
-* `npm install`
-* `bower install`
-* [Install and run gatekeeper](https://github.com/prose/gatekeeper)
 
-### Running / Development
+#### #11 [Support routing](https://github.com/alexspeller/ember-twiddle/issues/11)
 
-* `ember server`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+Right now, routing is not supported is your twiddle because it's not possible to define your own router.
 
-### Code Generators
 
-Make use of the many generators for code, try `ember help generate` for more details
+#### #10 [Major UX iteration (filetree)](https://github.com/alexspeller/ember-twiddle/issues/10)
 
-### Running Tests
+A next iteration on the UX, adding a filetree column and polising the interface.
 
-* `ember test`
-* `ember test --server`
 
-### Building
+#### #13 [Embed support](https://github.com/alexspeller/ember-twiddle/issues/13)
 
-* `ember build` (development)
-* `ember build --environment production` (production)
+Offering an easy way to embed a twiddle into your own site.
 
 
 [travis-badge]: https://travis-ci.org/alexspeller/ember-twiddle.svg?branch=master
