@@ -17,9 +17,9 @@
             <li><a {{action 'addFile' ''}}>Other (empty file)</a></li>
           </ul>
         </li>
-        {{#if controller.activeEditor}}
-        <li><a {{action 'renameFile' controller.activeEditor.file}}>Move {{controller.activeEditor.file.filePath}}</a></li>
-        <li><a {{action 'removeFile' controller.activeEditor.file}}>Delete {{controller.activeEditor.file.filePath}}</a></li>
+        {{#if activeEditor}}
+        <li><a {{action 'renameFile' activeEditor.file}}>Move {{activeEditor.file.filePath}}</a></li>
+        <li><a {{action 'removeFile' activeEditor.file}}>Delete {{activeEditor.file.filePath}}</a></li>
         {{/if}}
         {{#if session.isAuthenticated}}
         <li role="presentation" class="divider"></li>
@@ -85,30 +85,30 @@
 
 <div class="row twiddle-panes">
 
-  <div class="col-md-4 code {{if controller.col1Active 'active' ''}}">
-    {{file-editor-column col="1" file=controller.col1File allFiles=model.files}}
+  <div class="col-md-4 code {{if col1Active 'active' ''}}">
+    {{file-editor-column col="1" file=col1File allFiles=model.files}}
   </div>
 
-  <div class="col-md-4 code {{if controller.col2Active 'active' ''}}">
-    {{file-editor-column col="2" file=controller.col2File allFiles=model.files}}
+  <div class="col-md-4 code {{if col2Active 'active' ''}}">
+    {{file-editor-column col="2" file=col2File allFiles=model.files}}
   </div>
 
   <div class="col-md-4 output">
     <div class="header">
       <span>
-      {{#if controller.isBuilding}}
+      {{#if isBuilding}}
       Building...
       {{else}}
         Output
-        ({{#if controller.buildErrors}}
-          <a {{action 'showErrors'}}>{{controller.buildErrors.length}} build errors</a>
+        ({{#if buildErrors}}
+          <a {{action 'showErrors'}}>{{buildErrors.length}} build errors</a>
         {{else}}
           build ok.
         {{/if}})
       {{/if}}
       </span>
     </div>
-    {{dummy-demo-app code=controller.buildOutput}}
+    {{dummy-demo-app code=buildOutput}}
   </div>
 
 </div>
