@@ -62,6 +62,15 @@
     {{else}}
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Anonymous <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li><a {{action 'signInViaGithub'}}>Sign in</a></li>
+      </ul>
+    </li>
+    {{/if}}
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         Help <b class="caret"></b>
       </a>
       <ul class="dropdown-menu dropdown-menu-right">
@@ -70,15 +79,6 @@
         <li><a href="https://github.com/alexspeller/ember-twiddle/issues" target="_blank">Issue tracker</a></li>
       </ul>
     </li>
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        Anonymous <b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-right">
-        <li><a {{action 'signInViaGithub'}}>Sign in</a></li>
-      </ul>
-    </li>
-    {{/if}}
   </ul>
 </div>
 
