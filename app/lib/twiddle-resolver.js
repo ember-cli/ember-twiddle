@@ -13,8 +13,9 @@ export default Resolver.extend({
     this.get('moduleNameLookupPatterns').find((item) => {
       let moduleName = item.call(this, parsedName);
 
-      if (parsedName.fullName === 'router:main')
+      if (parsedName.fullName === 'router:main') {
         moduleName = "router.js";
+      }
 
       if(moduleName) {
         moduleName = this.chooseModuleName(jsModules, moduleName);
