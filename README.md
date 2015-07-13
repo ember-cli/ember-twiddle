@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/alexspeller/ember-twiddle.png?label=ready&title=Ready)](https://waffle.io/alexspeller/ember-twiddle)
 # [ember-twiddle](http://ember-twiddle.com) [![Build Status][travis-badge]][travis-badge-url]
 
 An ember cli like web based javascript sharing tool. http://ember-twiddle.com
