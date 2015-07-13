@@ -184,6 +184,6 @@ export default Em.Controller.extend({
   setupWindowUpdate: Ember.on('init', function() {
     window.updateDemoAppUrl = function() {
       this.set('applicationUrl', window.demoAppUrl || "/");
-    }.bind(this)
+    }.bind(this);
   })
 });
