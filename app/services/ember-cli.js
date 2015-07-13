@@ -36,9 +36,8 @@ export default Em.Service.extend({
 
       if (errors.length) {return reject(errors);}
 
-      // Add app, router, config
+      // Add app, config
       out.push(this.compileJs(blueprints.app, 'demo-app/app'));
-      out.push(this.compileJs(blueprints.router, 'demo-app/router'));
       out.push(this.compileJs('export default {modulePrefix:"demo-app"}', 'demo-app/config/environment'));
 
       // Add boot code
