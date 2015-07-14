@@ -39,6 +39,12 @@ test('deleting a gist loaded in two columns', function(assert) {
       assert.equal(find('.code .CodeMirror').length, 0, 'No code mirror editors active');
       assert.equal(find('.dropdown-toggle:contains(No file selected)').length, 2, 'Shows message when no file is selected.');
     });
+
+    click(firstFilePicker);
+    click(anyFile);
+    click(fileMenu);
+    click(deleteAction);
+
     click(firstFilePicker);
     click(anyFile);
     click(fileMenu);

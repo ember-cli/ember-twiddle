@@ -13,11 +13,15 @@ export default GistRoute.extend({
     var model = this.store.createRecord('gist', {description: 'New Twiddle'});
     model.get('files').pushObject(this.store.createRecord('gistFile', {
       filePath: 'templates/application.hbs',
-      content: '<h1>Welcome to {{appName}}</h1><br><br>',
+      content: '<h1>Welcome to {{appName}}</h1><br><br>'
     }));
     model.get('files').pushObject(this.store.createRecord('gistFile', {
       filePath: 'controllers/application.js',
-      content: 'import Ember from \'ember\';\n\nexport default Ember.Controller.extend({\n  appName:\'Ember Twiddle\'\n});',
+      content: 'import Ember from \'ember\';\n\nexport default Ember.Controller.extend({\n  appName:\'Ember Twiddle\'\n});'
+    }));
+    model.get('files').pushObject(this.store.createRecord('gistFile', {
+      filePath: 'styles/app.css',
+      content: 'body { margin: 12px 16px }'
     }));
 
     return model;
