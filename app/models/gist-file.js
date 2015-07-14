@@ -62,6 +62,8 @@ export default DS.Model.extend({
         return 'javascript';
       case '.hbs':
         return 'handlebars';
+      case '.css':
+        return 'css';
       default:
         return 'html';
     }

@@ -1,3 +1,4 @@
+import Ember from "ember";
 import config from '../config/environment';
 
 export default Em.Controller.extend({
@@ -9,7 +10,7 @@ export default Em.Controller.extend({
    * Output from the build, sets the `code` attr on the component
    * @type {String}
    */
-  buildOutput: '',
+  buildOutput: Ember.Object.create({ code: '', styles: ''}),
   isBuilding: false,
   activeEditor: null,
   col1File: null,
