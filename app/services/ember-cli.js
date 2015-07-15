@@ -42,9 +42,16 @@ export default Em.Service.extend({
 
       if (errors.length) {return reject(errors);}
 
-      // Add app, config
+      // Add app
       out.push(this.compileJs(blueprints.app, 'demo-app/app'));
+
+      // Add router
+      if (!gist.get('files').findBy('nameWithModule', 'demo-app/router')) {
+        out.push(this.compileJs(blueprints.router, 'demo-app/router'));
+      }
       out.push(this.compileJs('import Router from \'demo-app/router\';\nRouter.reopen({\n  updateUrlBar: Ember.on(\'didTransition\', function() {\n    window.parent.demoAppUrl = this.get(\'url\');\n    window.parent.updateDemoAppUrl();\n  })\n});\nexport default {name: \'router\',\n initialize: function() {}\n};\n', 'demo-app/initializers/router'));
+
+      // Add config
       out.push(this.compileJs('export default {modulePrefix:"demo-app"}', 'demo-app/config/environment'));
 
       // Add boot code
