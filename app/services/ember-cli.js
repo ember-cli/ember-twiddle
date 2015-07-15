@@ -1,3 +1,4 @@
+import Ember from "ember";
 import Babel from "npm:babel";
 import blueprints from '../lib/blueprints';
 
@@ -14,18 +15,23 @@ export default Em.Service.extend({
    * Build a gist into an Ember app.
    *
    * @param  {Gist} gist    Gist to build
-   * @return {String}       Source code for built Ember app
+   * @return {Ember Object}       Source code for built Ember app
    */
   compileGist (gist) {
     var promise = new Em.RSVP.Promise((resolve, reject) => {
-      var errors = [];
-      var out = gist.get('files').map(file => {
+      var errors = [], out = [], cssOut = [];
+      gist.get('files').forEach(file => {
         try {
           switch(file.get('extension')) {
             case '.js':
-              return this.compileJs(file.get('content'), file.get('nameWithModule'));
+              out.push(this.compileJs(file.get('content'), file.get('nameWithModule')));
+              break;
             case '.hbs':
-              return this.compileHbs(file.get('content'), file.get('nameWithModule'));
+              out.push(this.compileHbs(file.get('content'), file.get('nameWithModule')));
+              break;
+            case '.css':
+              cssOut.push(this.compileCss(file.get('content'), file.get('nameWithModule')));
+              break;
           }
         }
         catch(e) {
@@ -44,7 +50,7 @@ export default Em.Service.extend({
       // Add boot code
       contentForAppBoot(out, {modulePrefix:'demo-app'});
 
-      resolve(out.join('\n'));
+      resolve(Ember.Object.create({ code: out.join('\n'), styles: cssOut.join('\n') }));
     });
 
     return promise;
@@ -72,6 +78,14 @@ export default Em.Service.extend({
   compileHbs (code, moduleName) {
     var templateCode = Em.HTMLBars.precompile(code || '');
     return this.compileJs('export default Ember.HTMLBars.template(' + templateCode + ');', moduleName);
+  },
+
+  compileCss(code, moduleName) {
+    var prefix = "demo-app/styles/";
+    if (moduleName.substring(0, prefix.length) === prefix) {
+        return code;
+    }
+    return '';
   }
 });
 
