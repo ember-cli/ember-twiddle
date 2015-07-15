@@ -17,11 +17,6 @@ There are a few major items on the roadmap for 1.0. This list is prioritized bec
 Basically the option to specify which version of `ember` and `ember-data` should be used. Right now, your Twiddle will use the same version as Ember Twiddle (1.13 at the moment).
 
 
-#### #11 [Support routing](https://github.com/ember-cli/ember-twiddle/issues/11)
-
-Right now, routing is not supported is your twiddle because it's not possible to define your own router.
-
-
 #### #10 [Major UX iteration (filetree)](https://github.com/ember-cli/ember-twiddle/issues/10)
 
 A next iteration on the UX, adding a filetree column and polising the interface.
