@@ -58,6 +58,7 @@ body {
 	bottom:0;
 	left:0;
 	right:0;
+  margin:0;
 	margin-left:0;
 }
 .twiddle-panes .col-md-4 {
@@ -191,5 +192,14 @@ body {
 }
 
 .url-bar {
-    width: 100%;
+    background: #eee;
+    border-bottom:1px solid #ddd;
+    padding:6px;
+}
+.url-bar>div {
+    display:block;
+    height:25px;
+    padding:3px;
+    background: #fff;
+    border: 1px solid #ddd;
 }
