@@ -179,5 +179,11 @@ export default Em.Controller.extend({
     if(this.get('col2File') === file) {
       this.set('col2File', null);
     }
-  }
+  },
+
+  setupWindowUpdate: Ember.on('init', function() {
+    window.updateDemoAppUrl = function() {
+      this.set('applicationUrl', window.demoAppUrl || "/");
+    }.bind(this);
+  })
 });
