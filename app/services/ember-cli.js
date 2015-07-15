@@ -48,6 +48,7 @@ export default Em.Service.extend({
       // Add router
       if (!gist.get('files').findBy('nameWithModule', 'demo-app/router')) {
         out.push(this.compileJs(blueprints.router, 'demo-app/router'));
+        console.error('Missing a router.js See issue https://github.com/ember-cli/ember-twiddle/issues/55#issuecomment-121724317');
       }
       out.push(this.compileJs('import Router from \'demo-app/router\';\nRouter.reopen({\n  updateUrlBar: Ember.on(\'didTransition\', function() {\n    window.parent.demoAppUrl = this.get(\'url\');\n    window.parent.updateDemoAppUrl();\n  })\n});\nexport default {name: \'router\',\n initialize: function() {}\n};\n', 'demo-app/initializers/router'));
 
