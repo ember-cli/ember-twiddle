@@ -81,6 +81,8 @@ export default Em.Controller.extend({
     addFile (type) {
       var template = '';
       var filePath = '';
+      var canChangePath = true;
+
       if(type==='component-hbs') {
         template = '<b class="foo">{{yield}}</b>';
         filePath = 'templates/components/foo-component.hbs';
@@ -93,12 +95,23 @@ export default Em.Controller.extend({
         template = 'export default Ember.Controller.extend({\n});';
         filePath = 'controllers/foo.js';
       }
+      else if(type==='route') {
+        template = 'export default Ember.Route.extend({\n});';
+        filePath = 'routes/foo.js';
+      }
       else if(type==='template') {
         template = '<b>Hi!</b>';
         filePath = 'templates/foo.hbs';
       }
+      else if(type==='router') {
+        template = 'import Ember from \'ember\';\nvar Router = Ember.Router.extend({\n  location: \'none\'\n});\n\nRouter.map(function() {\n});\n\nexport default Router;\n';
+        filePath = 'router.js';
+        canChangePath = false;
+      }
 
-      filePath = prompt('File path', filePath);
+      if (canChangePath) {
+        filePath = prompt('File path', filePath);
+      }
 
       if (filePath) {
         if(this.get('model.files').findBy('filePath', filePath)) {
