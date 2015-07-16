@@ -49,10 +49,12 @@ test('deleting a gist loaded in two columns', function(assert) {
     click(anyFile);
     click(fileMenu);
     click(deleteAction);
+
     click(firstFilePicker);
     click(anyFile);
     click(fileMenu);
     click(deleteAction);
+
     andThen(function() {
       assert.equal(find('a:contains(No files available)').length, 4, 'Shows message when all files are removed.');
     });
