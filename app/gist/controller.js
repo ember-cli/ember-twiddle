@@ -25,6 +25,12 @@ export default Em.Controller.extend({
   buildErrors: null,
 
   /**
+   * Whether user wishes the code to automatically run
+   * @type {boolean}
+   */
+  isAutorun: true,
+
+  /**
    * Build the application and set the iframe code
    */
   buildApp () {
@@ -60,12 +66,18 @@ export default Em.Controller.extend({
   }),
 
   rebuildApp: Em.observer('model.files.@each.content', function() {
-    Em.run.debounce(this, this.buildApp, 500);
+    if (this.get('isAutorun')) {
+      Em.run.debounce(this, this.buildApp, 500);
+    }
   }),
 
   actions: {
     focusEditor (editor) {
       this.set('activeEditor', editor);
+    },
+
+    runNow () {
+      this.buildApp();
     },
 
     deleteGist (gist) {
