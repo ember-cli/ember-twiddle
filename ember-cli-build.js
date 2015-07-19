@@ -2,6 +2,8 @@
 module.exports = function() {
   var fs = require('fs');
   var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+  var funnel = require('broccoli-funnel');
+  var mergeTrees = require('broccoli-merge-trees');
   var env = EmberApp.env();
   var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
   var prepend = null;
@@ -73,5 +75,10 @@ module.exports = function() {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  return app.toTree();
+  var bowerTree = funnel('bower_components', {
+    srcDir: "/",
+    destDir: "/assets/bower_components"
+  });
+
+  return mergeTrees([app.toTree(), bowerTree]);
 };

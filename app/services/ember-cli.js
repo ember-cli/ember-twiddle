@@ -32,6 +32,8 @@ export default Em.Service.extend({
             case '.css':
               cssOut.push(this.compileCss(file.get('content'), file.get('nameWithModule')));
               break;
+            case '.json':
+              break;
           }
         }
         catch(e) {
@@ -57,7 +59,15 @@ export default Em.Service.extend({
       // Add boot code
       contentForAppBoot(out, {modulePrefix:'demo-app'});
 
-      resolve(Ember.Object.create({ code: out.join('\n'), styles: cssOut.join('\n') }));
+      var twiddleJson = gist.get('files').findBy('twiddle.json');
+      if (twiddleJson) {
+        twiddleJson = twiddleJson.get('content');
+      } else {
+        twiddleJson = '{\n  "dependencies": {\n  "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js",\n  "ember": "http://builds.emberjs.com/tags/v1.13.4/ember.js",\n  "ember-data": "http://builds.emberjs.com/tags/v1.13.4/ember-data.js"\n  }\n}';
+      }
+      twiddleJson = JSON.parse(twiddleJson);
+
+      resolve(Ember.Object.create({ code: out.join('\n'), styles: cssOut.join('\n'), twiddleJson: twiddleJson }));
     });
 
     return promise;

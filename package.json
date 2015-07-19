@@ -19,13 +19,14 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "babel": "^5.0.0",
     "broccoli-asset-rev": "^2.0.2",
+    "broccoli-funnel": "^0.2.3",
+    "broccoli-merge-trees": "^0.2.2",
     "broccoli-sass": "^0.6.6",
     "dc-tabs": "0.1.0",
     "dedent": "^0.4.0",
     "ember-autoresize": "0.4.1",
-    "ember-browserify": "^1.0.0",
+    "ember-browserify": "1.0.1",
     "ember-cli": "1.13.1",
     "ember-cli-app-version": "0.4.0",
     "ember-cli-babel": "^5.0.0",
@@ -50,5 +51,8 @@
     "ember-notify": "3.3.4",
     "ivy-codemirror": "inDream/ivy-codemirror",
     "torii": "^0.3.5"
+  },
+  "dependencies": {
+    "babel": "^5.0.0"
   }
 }
