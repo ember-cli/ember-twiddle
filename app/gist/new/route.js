@@ -27,6 +27,10 @@ export default GistRoute.extend({
       filePath: 'router.js',
       content: 'import Ember from \'ember\';\nvar Router = Ember.Router.extend({\n  location: \'none\'\n});\n\nRouter.map(function() {\n});\n\nexport default Router;\n'
     }));
+    model.get('files').pushObject(this.store.createRecord('gistFile', {
+      filePath: 'twiddle.json',
+      content: '{\n  "dependencies": {\n    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js",\n    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.5/ember.js",\n    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.5/ember-data.js"\n  }\n}'
+    }));
 
     return model;
   }

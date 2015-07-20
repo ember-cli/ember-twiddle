@@ -124,6 +124,11 @@ export default Em.Controller.extend({
         filePath = 'router.js';
         canChangePath = false;
       }
+      else if(type==='twiddle.json') {
+        template = '{\n  "dependencies": {\n    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js",\n    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.5/ember.js",\n    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.5/ember-data.js"\n  }\n}';
+        filePath = 'twiddle.json';
+        canChangePath = false;
+      }
 
       if (canChangePath) {
         filePath = prompt('File path', filePath);
