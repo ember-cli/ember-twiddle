@@ -40,20 +40,13 @@ test('deleting a gist loaded in two columns', function(assert) {
       assert.equal(find('.dropdown-toggle:contains(No file selected)').length, 2, 'Shows message when no file is selected.');
     });
 
-    click(firstFilePicker);
-    click(anyFile);
-    click(fileMenu);
-    click(deleteAction);
-
-    click(firstFilePicker);
-    click(anyFile);
-    click(fileMenu);
-    click(deleteAction);
-
-    click(firstFilePicker);
-    click(anyFile);
-    click(fileMenu);
-    click(deleteAction);
+    // TODO: Replace brittle for loop test code with "while there are files left..."
+    for (var i = 0; i < 4; ++i) {
+      click(firstFilePicker);
+      click(anyFile);
+      click(fileMenu);
+      click(deleteAction);
+    }
 
     andThen(function() {
       assert.equal(find('a:contains(No files available)').length, 4, 'Shows message when all files are removed.');
