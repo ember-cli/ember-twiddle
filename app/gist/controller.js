@@ -5,6 +5,10 @@ export default Em.Controller.extend({
   emberCli: Em.inject.service('ember-cli'),
   version: config.version,
   revision: config.currentRevision.substring(0,7),
+  init() {
+    this._super(...arguments);
+    this.setupWindowUpdate();
+  },
 
   /**
    * Output from the build, sets the `code` attr on the component
@@ -194,9 +198,12 @@ export default Em.Controller.extend({
     }
   },
 
-  setupWindowUpdate: Ember.on('init', function() {
-    window.updateDemoAppUrl = function() {
-      this.set('applicationUrl', window.demoAppUrl || "/");
-    }.bind(this);
-  })
+  setupWindowUpdate: function() {
+    // TODO: this in a controller seems suspect, rather this should likely be
+    // part of some handshake, to ensure no races exist. This should likley not
+    // be something a controller would handle - (SP)
+    window.updateDemoAppUrl = Ember.run.bind(this, function() {
+      this.set('applicationUrl', window.demoAppUrl || '/');
+    });
+  }
 });
