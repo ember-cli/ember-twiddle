@@ -65,7 +65,7 @@ export default Em.Controller.extend({
     }
   }),
 
-  rebuildApp: Em.observer('model.files.@each.content', function() {
+  rebuildApp: Em.observer('model.files.@each.content', 'isAutorun', function() {
     if (this.get('isAutorun')) {
       Em.run.debounce(this, this.buildApp, 500);
     }
