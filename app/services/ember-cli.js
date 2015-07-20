@@ -63,7 +63,7 @@ export default Em.Service.extend({
       if (twiddleJson) {
         twiddleJson = twiddleJson.get('content');
       } else {
-        twiddleJson = '{\n  "dependencies": {\n  "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js",\n  "ember": "http://builds.emberjs.com/tags/v1.13.4/ember.js",\n  "ember-data": "http://builds.emberjs.com/tags/v1.13.4/ember-data.js"\n  }\n}';
+        twiddleJson = '{\n  "dependencies": {\n    "jquery": "assets/bower_components/jquery/dist/jquery.js",\n    "ember": "assets/bower_components/ember/ember.js",\n    "ember-data": "assets/bower_components/ember-data/ember-data.js"\n  }\n}';
       }
       twiddleJson = JSON.parse(twiddleJson);
 
