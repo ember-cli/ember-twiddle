@@ -59,7 +59,7 @@ export default Em.Service.extend({
       // Add boot code
       contentForAppBoot(out, {modulePrefix:'demo-app'});
 
-      var twiddleJson = gist.get('files').findBy('twiddle.json');
+      var twiddleJson = gist.get('files').findBy('nameWithModule', 'twiddle.json');
       if (twiddleJson) {
         twiddleJson = twiddleJson.get('content');
       } else {
