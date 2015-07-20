@@ -97,7 +97,7 @@
 
   <div class="col-md-4 output">
     <div class="header">
-      <span>
+      <span class="build-msgs">
       {{#if isBuilding}}
       Building...
       {{else}}
@@ -109,6 +109,12 @@
         {{/if}})
       {{/if}}
       </span>
+    </div>
+    <div class="run-or-autorun">
+      <label class="checkbox-inline">{{input type="checkbox" id="autorun" checked=isAutorun}}Autorun</label>
+      {{#unless isAutorun}}
+          <button class="btn-default run-now" {{action "runNow"}}>Run Now</button>
+      {{/unless}}
     </div>
     <div class="url-bar">
       <div>{{applicationUrl}}</div>
