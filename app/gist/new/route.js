@@ -1,4 +1,5 @@
 import GistRoute from "ember-twiddle/routes/gist-base-route";
+import config from "../../../config/environment";
 
 export default GistRoute.extend({
   model () {
@@ -29,7 +30,7 @@ export default GistRoute.extend({
     }));
     model.get('files').pushObject(this.store.createRecord('gistFile', {
       filePath: 'twiddle.json',
-      content: '{\n  "dependencies": {\n    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js",\n    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.5/ember.js",\n    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.5/ember-data.js"\n  }\n}'
+      content: '{\n  "version": ' + config.version + ',\n  "dependencies": {\n    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js",\n    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.5/ember.js",\n    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.5/ember-data.js"\n  }\n}'
     }));
 
     return model;
