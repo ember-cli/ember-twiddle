@@ -5,5 +5,11 @@ export default GistRoute.extend({
     this.store.unloadAll('gistFile');
 
     return this.store.find('gist', params.id);
+  },
+  afterModel (model) {
+    if (!model) {
+      alert('The gist was missing or secret.');
+      this.transitionTo('gist.new');
+    }
   }
 });
