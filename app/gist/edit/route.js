@@ -4,7 +4,7 @@ export default GistRoute.extend({
   model (params) {
     this.store.unloadAll('gistFile');
 
-    return this.store.find('gist', params.id).catch((error) => { return null; });
+    return this.store.find('gist', params.id).catch(() => { return null; });
   },
   afterModel (model) {
     if (!model) {
