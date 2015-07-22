@@ -104,15 +104,19 @@ export default Em.Controller.extend({
         filePath = 'templates/components/foo-component.hbs';
       }
       if(type==='component-js') {
-        template = 'export default Ember.Component.extend({\n});';
+        template = 'import Ember from \'ember\';\nexport default Ember.Component.extend({\n});';
         filePath = 'components/foo-component.js';
       }
+      else if(type==='model') {
+        template = 'import DS from \'ember-data\';\nexport default DS.Model.extend({\n});';
+        filePath = 'models/foo.js';
+      }
       else if(type==='controller') {
-        template = 'export default Ember.Controller.extend({\n});';
+        template = 'import Ember from \'ember\';\nexport default Ember.Controller.extend({\n});';
         filePath = 'controllers/foo.js';
       }
       else if(type==='route') {
-        template = 'export default Ember.Route.extend({\n});';
+        template = 'import Ember from \'ember\';\nexport default Ember.Route.extend({\n});';
         filePath = 'routes/foo.js';
       }
       else if(type==='template') {
