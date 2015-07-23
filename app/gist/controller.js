@@ -76,8 +76,9 @@ export default Em.Controller.extend({
   }),
 
   actions: {
-    focusEditor (editorCol) {
-      this.set('activeEditorCol', editorCol);
+    focusEditor (editor) {
+      this.set('activeEditorCol', editor.get('col'));
+      this.set('activeFile', editor.get('file'));
     },
 
     selectFile (file) {
