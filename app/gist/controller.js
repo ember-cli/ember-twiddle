@@ -3,8 +3,7 @@ import config from '../config/environment';
 
 export default Em.Controller.extend({
   emberCli: Em.inject.service('ember-cli'),
-  version: config.version,
-  revision: config.currentRevision.substring(0,7),
+  version: config.APP.version,
   init() {
     this._super(...arguments);
     this.setupWindowUpdate();
@@ -134,7 +133,7 @@ export default Em.Controller.extend({
         canChangePath = false;
       }
       else if(type==='twiddle.json') {
-        template = '{\n  "version": "' + config.version + '",\n  "dependencies": {\n    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js",\n    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.5/ember.js",\n    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.5/ember-data.js"\n  }\n}';
+        template = '{\n  "version": "' + config.APP.version + '",\n  "dependencies": {\n    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js",\n    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.5/ember.js",\n    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.5/ember-data.js"\n  }\n}';
         filePath = 'twiddle.json';
         canChangePath = false;
       }
