@@ -59,7 +59,7 @@ module.exports = function(environment) {
       providers: {
         'github-oauth2': {
           scope: 'gist',
-          apiKey: 'ce757a68eba4c4400b96'
+          apiKey: '3df37009938c0790d952'
         }
       }
     };
