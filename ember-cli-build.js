@@ -21,7 +21,7 @@ module.exports = function() {
       prepend: prepend
     },
     codemirror: {
-      modes: ['xml', 'javascript', 'handlebars', 'htmlmixed'],
+      modes: ['xml', 'javascript', 'handlebars', 'htmlmixed', 'css'],
     },
     'ember-cli-bootstrap-sassy': {
       'js': ['dropdown']
@@ -91,6 +91,7 @@ function getEmberCLIBlueprints() {
   fileMap['initializers/router'] = fs.readFileSync('blueprints/router_initializer.js').toString();
   fileMap['controllers/application'] = fs.readFileSync('blueprints/application_controller.js').toString();
   fileMap['templates/application'] = fs.readFileSync('blueprints/application_template.hbs').toString();
+  fileMap['app.css'] = fs.readFileSync('blueprints/app.css').toString();
 
   return 'export default ' + JSON.stringify(fileMap);
 }

@@ -27,6 +27,10 @@ const availableBlueprints = {
     blueprint: 'controllers/application',
     filePath: 'controllers/application.js',
   },
+  'css': {
+    blueprint: 'app.css',
+    filePath: 'styles/app.css',
+  },
   'component-hbs': {
     blueprint: 'component-hbs',
     filePath: 'templates/components/my-component.hbs',

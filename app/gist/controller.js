@@ -103,7 +103,7 @@ export default Em.Controller.extend({
       let file = this.get('emberCli').generate(type);
       let filePath = file.get('filePath');
 
-      if (['twiddle.json','router.js'].indexOf(type)===-1) {
+      if (['twiddle.json','router', 'css'].indexOf(type)===-1) {
         filePath = prompt('File path', filePath);
       }
 
