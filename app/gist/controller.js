@@ -104,19 +104,19 @@ export default Em.Controller.extend({
         filePath = 'templates/components/foo-component.hbs';
       }
       if(type==='component-js') {
-        template = 'import Ember from \'ember\';\nexport default Ember.Component.extend({\n});';
+        template = 'import Ember from \'ember\';\n\nexport default Ember.Component.extend({\n});';
         filePath = 'components/foo-component.js';
       }
       else if(type==='model') {
-        template = 'import DS from \'ember-data\';\nexport default DS.Model.extend({\n});';
+        template = 'import DS from \'ember-data\';\n\nexport default DS.Model.extend({\n});';
         filePath = 'models/foo.js';
       }
       else if(type==='controller') {
-        template = 'import Ember from \'ember\';\nexport default Ember.Controller.extend({\n});';
+        template = 'import Ember from \'ember\';\n\nexport default Ember.Controller.extend({\n});';
         filePath = 'controllers/foo.js';
       }
       else if(type==='route') {
-        template = 'import Ember from \'ember\';\nexport default Ember.Route.extend({\n});';
+        template = 'import Ember from \'ember\';\n\nexport default Ember.Route.extend({\n});';
         filePath = 'routes/foo.js';
       }
       else if(type==='template') {
@@ -124,7 +124,7 @@ export default Em.Controller.extend({
         filePath = 'templates/foo.hbs';
       }
       else if(type==='router') {
-        template = 'import Ember from \'ember\';\nvar Router = Ember.Router.extend({\n  location: \'none\'\n});\n\nRouter.map(function() {\n});\n\nexport default Router;\n';
+        template = 'import Ember from \'ember\';\n\nvar Router = Ember.Router.extend({\n  location: \'none\'\n});\n\nRouter.map(function() {\n});\n\nexport default Router;\n';
         filePath = 'router.js';
         canChangePath = false;
       }
