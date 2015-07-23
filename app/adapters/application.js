@@ -1,13 +1,13 @@
 import DS from 'ember-data';
+import config from '../config/environment';
 
 export default DS.RESTAdapter.extend({
-  github: Em.inject.service('github'),
   host:'https://api.github.com',
-  headers: Em.computed('github._token', function() {
-    var token  = this.get('github._token');
+  headers: Em.computed('session.token', function() {
+    var token  = this.get('session.token') || config.TMP_TORII_TOKEN;
     if (token) {
       return {
-        'Authorization': 'token ' + this.get('github._token')
+        'Authorization': 'token ' + token
       };
     }
 
