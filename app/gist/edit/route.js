@@ -9,9 +9,12 @@ export default GistRoute.extend({
 
   actions: {
     error(error) {
-      if (error && error.status === 404) {
-        alert('The gist is missing or secret.');
-        return this.transitionTo('gist.new');
+      if (error && error.errors && error.errors.length > 0) {
+        let error1 = error.errors[0];
+        if (error1.status === 404) {
+          alert('The gist is missing or secret.');
+          return this.transitionTo('gist.new');
+        }
       }
 
       return true;
