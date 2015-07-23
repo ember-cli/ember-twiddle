@@ -1,4 +1,5 @@
 import DS from 'ember-data';
+import { memberAction } from 'ember-api-actions';
 
 export default DS.Model.extend({
   url: DS.attr('string'),
@@ -11,6 +12,14 @@ export default DS.Model.extend({
   shortId: Em.computed('id', function() {
     return (this.get('id')||'').substring(0,7);
   }),
+
+  /**
+   * Just call this action to fork
+   * See https://developer.github.com/v3/gists/#fork-a-gist
+   *
+   * @return promise
+   */
+  fork: memberAction({ path: "forks", type: 'POST' }),
 
   /**
     Called by GistFile.registerDeleteOnGist to make sure we

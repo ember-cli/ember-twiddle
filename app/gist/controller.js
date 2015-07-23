@@ -176,29 +176,9 @@ export default Em.Controller.extend({
     },
 
     fork (gist) {
-      var newGistData = {
-        description: 'Fork of %@'.fmt(gist.get('description'))
-      };
-
-      var filesBuffer = [];
-
-      gist.get('files').forEach(file => {
-        filesBuffer.pushObject({
-          filePath: file.get('filePath'),
-          content: file.get('content'),
-        });
+      gist.fork().then((response) => {
+        this.transitionToRoute('gist.edit', response.id);
       });
-
-      this.store.unloadAll('gistFile');
-
-      var newGist = this.store.createRecord('gist', newGistData);
-      filesBuffer.forEach(fileData => {
-        newGist.get('files').pushObject(this.store.createRecord('gistFile', fileData));
-      });
-
-      this.controllerFor('gist').set('fork', newGist);
-      this.notify.info('Succesfully created %@'.fmt(newGist.get('description')));
-      this.transitionToRoute('gist.new');
     },
 
     removeFile (file) {

@@ -3,12 +3,6 @@ import config from "../../config/environment";
 
 export default GistRoute.extend({
   model () {
-    var fork = this.controllerFor('gist').get('fork');
-    if(fork) {
-      this.controllerFor('gist').set('fork', null);
-      return fork;
-    }
-
     this.store.unloadAll('gistFile');
 
     var model = this.store.createRecord('gist', {description: 'New Twiddle'});
