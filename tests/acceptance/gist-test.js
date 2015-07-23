@@ -41,7 +41,7 @@ test('deleting a gist loaded in two columns', function(assert) {
     });
 
     // TODO: Replace brittle for loop test code with "while there are files left..."
-    for (var i = 0; i < 4; ++i) {
+    for (var i = 0; i < 2; ++i) {
       click(firstFilePicker);
       click(anyFile);
       click(fileMenu);
@@ -49,7 +49,8 @@ test('deleting a gist loaded in two columns', function(assert) {
     }
 
     andThen(function() {
-      assert.equal(find('a:contains(No files available)').length, 4, 'Shows message when all files are removed.');
+      click(firstFilePicker);
+      assert.ok(find(anyFile).text().indexOf('twiddle.json')!==-1, 'twiddle.json remains');
     });
   });
 });

@@ -2,8 +2,8 @@ export default Em.Component.extend({
   focusEditor: 'focusEditor',
   selectFile: 'selectFile',
 
-  editorMode: Em.computed('extension', function () {
-    switch(this.get('file')) {
+  editorMode: Em.computed('file.extension', function () {
+    switch(this.get('file.extension')) {
       case '.js':
         return 'javascript';
       case '.hbs':
