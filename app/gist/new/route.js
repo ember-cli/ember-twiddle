@@ -1,5 +1,4 @@
 import GistRoute from "ember-twiddle/routes/gist-base-route";
-import config from "../../config/environment";
 
 export default GistRoute.extend({
   emberCli: Em.inject.service('ember-cli'),
