@@ -198,7 +198,7 @@ export default Em.Service.extend({
   },
 
   compileCss(code, moduleName) {
-    var prefix = "app/styles/";
+    var prefix = "styles/";
     if (moduleName.substring(0, prefix.length) === prefix) {
         return code;
     }
