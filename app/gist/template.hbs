@@ -21,9 +21,9 @@
             <li><a {{action 'addFile' 'twiddle.json'}}>twiddle.json</a></li>
           </ul>
         </li>
-        {{#if activeEditor}}
-        <li><a {{action 'renameFile' activeEditor.file}}>Move {{activeEditor.file.filePath}}</a></li>
-        <li><a {{action 'removeFile' activeEditor.file}}>Delete {{activeEditor.file.filePath}}</a></li>
+        {{#if activeEditorCol}}
+        <li><a {{action 'renameFile' activeFile}}>Move {{activeFile.filePath}}</a></li>
+        <li><a {{action 'removeFile' activeFile}}>Delete {{activeFile.filePath}}</a></li>
         {{/if}}
         {{#if session.isAuthenticated}}
         <li role="presentation" class="divider"></li>

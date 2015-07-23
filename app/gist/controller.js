@@ -16,11 +16,12 @@ export default Em.Controller.extend({
    */
   buildOutput: Ember.Object.create({ code: '', styles: ''}),
   isBuilding: false,
-  activeEditor: null,
+  activeFile: null,
+  activeEditorCol: null,
   col1File: null,
   col2File: null,
-  col1Active: Em.computed.equal('activeEditor.col','1'),
-  col2Active: Em.computed.equal('activeEditor.col','2'),
+  col1Active: Em.computed.equal('activeEditorCol','1'),
+  col2Active: Em.computed.equal('activeEditorCol','2'),
 
   /**
    * Errors during build
@@ -76,8 +77,12 @@ export default Em.Controller.extend({
   }),
 
   actions: {
-    focusEditor (editor) {
-      this.set('activeEditor', editor);
+    focusEditor (editorCol) {
+      this.set('activeEditorCol', editorCol);
+    },
+
+    selectFile (file) {
+      this.set('activeFile', file);
     },
 
     runNow () {
@@ -152,6 +157,7 @@ export default Em.Controller.extend({
         this.get('model.files').pushObject(file);
         this.notify.info('File %@ was added'.fmt(file.get('filePath')));
         this.set('col1File', file);
+        this.set('activeEditorCol', '1');
       }
     },
 
