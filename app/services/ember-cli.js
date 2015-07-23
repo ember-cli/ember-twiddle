@@ -1,6 +1,7 @@
 import Ember from "ember";
 import Babel from "npm:babel";
 import blueprints from '../lib/blueprints';
+import config from "../config/environment";
 
 /**
  * A tiny browser version of the CLI build chain.
@@ -63,7 +64,7 @@ export default Em.Service.extend({
       if (twiddleJson) {
         twiddleJson = twiddleJson.get('content');
       } else {
-        twiddleJson = '{\n  "dependencies": {\n    "jquery": "assets/bower_components/jquery/dist/jquery.js",\n    "ember": "assets/bower_components/ember/ember.js",\n    "ember-data": "assets/bower_components/ember-data/ember-data.js"\n  }\n}';
+        twiddleJson = '{\n  "version": "' + config.version + '",\n  "dependencies": {\n    "jquery": "assets/bower_components/jquery/dist/jquery.js",\n    "ember": "assets/bower_components/ember/ember.js",\n    "ember-data": "assets/bower_components/ember-data/ember-data.js"\n  }\n}';
       }
       twiddleJson = JSON.parse(twiddleJson);
 
