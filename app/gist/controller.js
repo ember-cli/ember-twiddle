@@ -173,7 +173,7 @@ export default Em.Controller.extend({
 
     fork (gist) {
       gist.fork().then((response) => {
-        this.transtionToRoute('gist.edit', response.id);
+        this.transitionToRoute('gist.edit', response.id);
       });
     },
 
