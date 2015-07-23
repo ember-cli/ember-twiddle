@@ -2,7 +2,6 @@ import Ember from "ember";
 import Babel from "npm:babel";
 import Path from 'npm:path';
 import blueprints from '../lib/blueprints';
-import config from "../config/environment";
 
 const twiddleAppName = 'demo-app';
 
@@ -10,7 +9,8 @@ const twiddleAppName = 'demo-app';
 const boilerPlateJs = [
   'app',
   'config/environment',
-  // 'router'
+  'router',
+  'initializers/router'
 ];
 
 // These files have to be present
@@ -135,9 +135,8 @@ export default Em.Service.extend({
    * @return {String}            AMD module code
    */
   compileHbs (code, filePath) {
-    let moduleName = this.nameWithModule(filePath);
     let templateCode = Em.HTMLBars.precompile(code || '');
-    return this.compileJs('export default Ember.HTMLBars.template(' + templateCode + ');', moduleName);
+    return this.compileJs('export default Ember.HTMLBars.template(' + templateCode + ');', filePath);
   },
 
   compileCss(code, moduleName) {
