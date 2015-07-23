@@ -73,17 +73,24 @@ function getEmberCLIBlueprints() {
   var cliBlueprintFiles = {
     'app': 'app/files/app/app.js',
     'router': 'app/files/app/router.js',
-    'config': 'app/files/config/environment.js',
     'component-js': 'component/files/__root__/__path__/__name__.js',
+    'component-hbs': 'component/files/__root__/__templatepath__/__templatename__.hbs',
     'model': 'model/files/__root__/__path__/__name__.js',
     'route': 'route/files/__root__/__path__/__name__.js',
-    'controller': 'controller/files/__root__/__path__/__name__.js'
+    'controller': 'controller/files/__root__/__path__/__name__.js',
+    'template': 'template/files/__root__/__path__/__name__.hbs',
   };
 
   for (var blueprintName in cliBlueprintFiles) {
     var filePath = cliPath + '/blueprints/' + cliBlueprintFiles[blueprintName];
     fileMap[blueprintName] = fs.readFileSync(filePath).toString();
   }
+
+  fileMap['twiddle.json'] = fs.readFileSync('blueprints/twiddle.json').toString();
+  fileMap['config/environment'] = fs.readFileSync('blueprints/config_environment.js').toString();
+  fileMap['initializers/router'] = fs.readFileSync('blueprints/router_initializer.js').toString();
+  fileMap['controllers/application'] = fs.readFileSync('blueprints/application_controller.js').toString();
+  fileMap['templates/application'] = fs.readFileSync('blueprints/application_template.hbs').toString();
 
   return 'export default ' + JSON.stringify(fileMap);
 }

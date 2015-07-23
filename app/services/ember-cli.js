@@ -1,7 +1,65 @@
 import Ember from "ember";
 import Babel from "npm:babel";
+import Path from 'npm:path';
 import blueprints from '../lib/blueprints';
-import config from "../config/environment";
+
+const twiddleAppName = 'demo-app';
+
+// These files will be included if not present
+const boilerPlateJs = [
+  'app',
+  'config/environment',
+  'router',
+  'initializers/router'
+];
+
+// These files have to be present
+const requiredFiles = [
+  'twiddle.json'
+];
+
+const availableBlueprints = {
+  'templates/application': {
+    blueprint: 'templates/application',
+    filePath: 'templates/application.hbs',
+  },
+  'controllers/application': {
+    blueprint: 'controllers/application',
+    filePath: 'controllers/application.js',
+  },
+  'component-hbs': {
+    blueprint: 'component-hbs',
+    filePath: 'templates/components/my-component.hbs',
+  },
+  'component-js': {
+    blueprint: 'component-js',
+    filePath: 'components/my-component.js',
+  },
+  'controller': {
+    blueprint: 'controller',
+    filePath: 'my-route/controller.js',
+  },
+  'model': {
+    blueprint: 'model',
+    filePath: 'models/my-model.js',
+  },
+  'route': {
+    blueprint: 'route',
+    filePath: 'my-route/route.js',
+  },
+  'template': {
+    blueprint: 'template',
+    filePath: 'my-route/template.hbs',
+  },
+  'router': {
+    blueprint: 'router',
+    filePath: 'router.js'
+  },
+  'twiddle.json': {
+    blueprint: 'twiddle.json',
+    filePath: 'twiddle.json'
+  }
+};
 
 /**
  * A tiny browser version of the CLI build chain.
@@ -11,6 +69,29 @@ import config from "../config/environment";
  * source code at https://github.com/ember-cli/ember-cli
  */
 export default Em.Service.extend({
+  init () {
+    this._super();
+    this.set('store', this.container.lookup("store:main"));
+  },
+
+  generate(type) {
+    if (type in availableBlueprints) {
+      let blueprint = availableBlueprints[type];
+
+      return this.store.createRecord('gistFile', {
+        filePath: blueprint.filePath,
+        content: blueprints[blueprint.blueprint].replace(/<\%\=(.*)\%\>/gi,'')
+      });
+    }
+  },
+
+  nameWithModule: function (filePath) {
+    // Remove app prefix if present
+    let name = filePath.replace(/^app\//, '');
+
+    return Path.join(twiddleAppName,
+      Path.dirname(name), Path.basename(name, Path.extname(name)));
+  },
 
   /**
    * Build a gist into an Ember app.
@@ -20,58 +101,75 @@ export default Em.Service.extend({
    */
   compileGist (gist) {
     var promise = new Em.RSVP.Promise((resolve, reject) => {
-      var errors = [], out = [], cssOut = [];
+      let errors = [];
+      let out = [];
+      let cssOut = [];
+
+      this.checkRequiredFiles(out, gist);
+
       gist.get('files').forEach(file => {
         try {
           switch(file.get('extension')) {
             case '.js':
-              out.push(this.compileJs(file.get('content'), file.get('nameWithModule')));
+              out.push(this.compileJs(file.get('content'), file.get('filePath')));
               break;
             case '.hbs':
-              out.push(this.compileHbs(file.get('content'), file.get('nameWithModule')));
+              out.push(this.compileHbs(file.get('content'), file.get('filePath')));
               break;
             case '.css':
-              cssOut.push(this.compileCss(file.get('content'), file.get('nameWithModule')));
+              cssOut.push(this.compileCss(file.get('content'), file.get('filePath')));
               break;
             case '.json':
               break;
           }
         }
         catch(e) {
-          e.message = '%@: %@'.fmt(file.get('nameWithModule'), e.message);
+          e.message = '%@: %@'.fmt(file.get('filePath'), e.message);
           errors.push(e);
         }
       });
 
-      if (errors.length) {return reject(errors);}
-
-      // Add app
-      out.push(this.compileJs(blueprints.app, 'demo-app/app'));
-
-      // Add router
-      if (!gist.get('files').findBy('nameWithModule', 'demo-app/router')) {
-        out.push(this.compileJs(blueprints.router, 'demo-app/router'));
+      if (errors.length) {
+        return reject(errors);
       }
-      out.push(this.compileJs('import Router from \'demo-app/router\';\nRouter.reopen({\n  updateUrlBar: Ember.on(\'didTransition\', function() {\n    window.parent.demoAppUrl = this.get(\'url\');\n    window.parent.updateDemoAppUrl();\n  })\n});\nexport default {name: \'router\',\n initialize: function() {}\n};\n', 'demo-app/initializers/router'));
 
-      // Add config
-      out.push(this.compileJs('export default {modulePrefix:"demo-app"}', 'demo-app/config/environment'));
+      this.addBoilerPlateFiles(out, gist);
 
       // Add boot code
-      contentForAppBoot(out, {modulePrefix:'demo-app'});
+      contentForAppBoot(out, {modulePrefix: twiddleAppName});
 
-      var twiddleJson = gist.get('files').findBy('nameWithModule', 'demo-app/twiddle');
-      if (twiddleJson) {
-        twiddleJson = twiddleJson.get('content');
-      } else {
-        twiddleJson = '{\n  "version": "' + config.APP.version + '",\n  "dependencies": {\n    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",\n    "ember": "assets/bower_components/ember/ember.js",\n    "ember-data": "assets/bower_components/ember-data/ember-data.js"\n  }\n}';
-      }
-      twiddleJson = JSON.parse(twiddleJson);
-
-      resolve(Ember.Object.create({ code: out.join('\n'), styles: cssOut.join('\n'), twiddleJson: twiddleJson }));
+      resolve(Ember.Object.create({
+        code: out.join('\n'),
+        styles: cssOut.join('\n'),
+        twiddleJson: this.getTwiddleJson(gist)
+      }));
     });
 
     return promise;
+  },
+
+  checkRequiredFiles (out, gist) {
+    requiredFiles.forEach(filePath => {
+      var file = gist.get('files').findBy('filePath', filePath);
+      if(!file) {
+        gist.get('files').pushObject(this.store.createRecord('gistFile', {
+          filePath: filePath,
+          content: blueprints[filePath]
+        }));
+      }
+    });
+  },
+
+  addBoilerPlateFiles (out, gist) {
+    boilerPlateJs.forEach(filePath => {
+      if(!gist.get('files').findBy('filePath', filePath)) {
+        out.push(this.compileJs(blueprints[filePath], filePath));
+      }
+    });
+  },
+
+  getTwiddleJson (gist) {
+    return JSON.parse(gist.get('files').findBy('filePath', 'twiddle.json').get('content'));
   },
 
   /**
@@ -79,10 +177,11 @@ export default Em.Service.extend({
    * transform it using Babel.
    *
    * @param  {String} code       ES6 module code
-   * @param  {String} moduleName Name for the module
+   * @param  {String} filePath   File path (will be used for module name)
    * @return {String}            Transpiled module code
    */
-  compileJs (code, moduleName) {
+  compileJs (code, filePath) {
+    let moduleName = this.nameWithModule(filePath);
     return Babel.transform(code, babelOpts(moduleName)).code;
   },
 
@@ -90,16 +189,16 @@ export default Em.Service.extend({
    * Compile a Handlebars template into an AMD module.
    *
    * @param  {String} code       hbs code
-   * @param  {String} moduleName Name for the module
+   * @param  {String} filePath   File path (will be used for module name)
    * @return {String}            AMD module code
    */
-  compileHbs (code, moduleName) {
-    var templateCode = Em.HTMLBars.precompile(code || '');
-    return this.compileJs('export default Ember.HTMLBars.template(' + templateCode + ');', moduleName);
+  compileHbs (code, filePath) {
+    let templateCode = Em.HTMLBars.precompile(code || '');
+    return this.compileJs('export default Ember.HTMLBars.template(' + templateCode + ');', filePath);
   },
 
   compileCss(code, moduleName) {
-    var prefix = "demo-app/styles/";
+    var prefix = "styles/";
     if (moduleName.substring(0, prefix.length) === prefix) {
         return code;
     }
