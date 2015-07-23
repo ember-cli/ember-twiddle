@@ -18,6 +18,49 @@ const requiredFiles = [
   'twiddle.json'
 ];
 
+const availableBlueprints = {
+  'templates/application': {
+    blueprint: 'templates/application',
+    filePath: 'templates/application.hbs',
+  },
+  'controllers/application': {
+    blueprint: 'controllers/application',
+    filePath: 'controllers/application.js',
+  },
+  'component-hbs': {
+    blueprint: 'component-hbs',
+    filePath: 'templates/components/my-component.hbs',
+  },
+  'component-js': {
+    blueprint: 'component-js',
+    filePath: 'components/my-component.js',
+  },
+  'controller': {
+    blueprint: 'controller',
+    filePath: 'my-route/controller.js',
+  },
+  'model': {
+    blueprint: 'model',
+    filePath: 'models/my-model.js',
+  },
+  'route': {
+    blueprint: 'route',
+    filePath: 'my-route/route.js',
+  },
+  'template': {
+    blueprint: 'template',
+    filePath: 'my-route/template.hbs',
+  },
+  'router': {
+    blueprint: 'router',
+    filePath: 'router.js'
+  },
+  'twiddle.json': {
+    blueprint: 'twiddle.json',
+    filePath: 'twiddle.json'
+  }
+};
+
 /**
  * A tiny browser version of the CLI build chain.
  * or more realistically: a hacked reconstruction of it.
@@ -26,6 +69,21 @@ const requiredFiles = [
  * source code at https://github.com/ember-cli/ember-cli
  */
 export default Em.Service.extend({
+  init () {
+    this._super();
+    this.set('store', this.container.lookup("store:main"));
+  },
+
+  generate(type) {
+    if (type in availableBlueprints) {
+      let blueprint = availableBlueprints[type];
+
+      return this.store.createRecord('gistFile', {
+        filePath: blueprint.filePath,
+        content: blueprints[blueprint.blueprint].replace(/<\%\=(.*)\%\>/gi,'')
+      });
+    }
+  },
 
   nameWithModule: function (filePath) {
     // Remove app prefix if present
@@ -46,6 +104,8 @@ export default Em.Service.extend({
       let errors = [];
       let out = [];
       let cssOut = [];
+
+      this.checkRequiredFiles(out, gist);
 
       gist.get('files').forEach(file => {
         try {
@@ -73,13 +133,11 @@ export default Em.Service.extend({
         return reject(errors);
       }
 
-      this.checkRequiredFiles(out, gist);
       this.addBoilerPlateFiles(out, gist);
 
       // Add boot code
       contentForAppBoot(out, {modulePrefix: twiddleAppName});
 
-      console.log(out.join('\n'));
       resolve(Ember.Object.create({
         code: out.join('\n'),
         styles: cssOut.join('\n'),
@@ -94,10 +152,10 @@ export default Em.Service.extend({
     requiredFiles.forEach(filePath => {
       var file = gist.get('files').findBy('filePath', filePath);
       if(!file) {
-        this.store.createRecord('gistFile', {
+        gist.get('files').pushObject(this.store.createRecord('gistFile', {
           filePath: filePath,
           content: blueprints[filePath]
-        });
+        }));
       }
     });
   },

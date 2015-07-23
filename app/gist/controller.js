@@ -99,64 +99,29 @@ export default Em.Controller.extend({
     },
 
     addFile (type) {
-      var template = '';
-      var filePath = '';
-      var canChangePath = true;
+      let file = this.get('emberCli').generate(type);
+      let filePath = file.get('filePath');
 
-      if(type==='component-hbs') {
-        template = '<b class="foo">{{yield}}</b>';
-        filePath = 'templates/components/foo-component.hbs';
-      }
-      if(type==='component-js') {
-        template = 'import Ember from \'ember\';\n\nexport default Ember.Component.extend({\n});';
-        filePath = 'components/foo-component.js';
-      }
-      else if(type==='model') {
-        template = 'import DS from \'ember-data\';\n\nexport default DS.Model.extend({\n});';
-        filePath = 'models/foo.js';
-      }
-      else if(type==='controller') {
-        template = 'import Ember from \'ember\';\n\nexport default Ember.Controller.extend({\n});';
-        filePath = 'controllers/foo.js';
-      }
-      else if(type==='route') {
-        template = 'import Ember from \'ember\';\n\nexport default Ember.Route.extend({\n});';
-        filePath = 'routes/foo.js';
-      }
-      else if(type==='template') {
-        template = '<b>Hi!</b>';
-        filePath = 'templates/foo.hbs';
-      }
-      else if(type==='router') {
-        template = 'import Ember from \'ember\';\n\nvar Router = Ember.Router.extend({\n  location: \'none\'\n});\n\nRouter.map(function() {\n});\n\nexport default Router;\n';
-        filePath = 'router.js';
-        canChangePath = false;
-      }
-      else if(type==='twiddle.json') {
-        template = '{\n  "version": "' + config.APP.version + '",\n  "dependencies": {\n    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js",\n    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.5/ember.js",\n    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.5/ember-data.js"\n  }\n}';
-        filePath = 'twiddle.json';
-        canChangePath = false;
-      }
-
-      if (canChangePath) {
+      if (['twiddle.json','router.js'].indexOf(type)===-1) {
         filePath = prompt('File path', filePath);
       }
 
       if (filePath) {
         if(this.get('model.files').findBy('filePath', filePath)) {
           alert('A file with the name %@ already exists'.fmt(filePath));
+          file.destroyRecord();
           return;
         }
 
-        let file = this.store.createRecord('gistFile', {
-          filePath: filePath,
-          content: template
-        });
+        file.set('filePath', filePath);
 
         this.get('model.files').pushObject(file);
         this.notify.info('File %@ was added'.fmt(file.get('filePath')));
         this.set('col1File', file);
         this.set('activeEditorCol', '1');
+      }
+      else {
+        file.destroyRecord();
       }
     },
 
