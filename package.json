@@ -21,8 +21,10 @@
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",
     "broccoli-funnel": "0.2.3",
+    "broccoli-concat": "0.0.13",
     "broccoli-merge-trees": "0.2.2",
     "broccoli-sass": "^0.6.6",
+    "broccoli-static-compiler": "0.2.1",
     "dc-tabs": "0.1.0",
     "dedent": "^0.4.0",
     "ember-api-actions": "0.0.5",

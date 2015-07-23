@@ -1,9 +1,10 @@
 /* global require, module, process */
 module.exports = function() {
-  var fs = require('fs');
   var EmberApp = require('ember-cli/lib/broccoli/ember-app');
   var funnel = require('broccoli-funnel');
+  var concat = require('broccoli-concat');
   var mergeTrees = require('broccoli-merge-trees');
+  var pickFiles = require('broccoli-static-compiler');
   var env = EmberApp.env();
   var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
   var prepend = null;
@@ -12,26 +13,7 @@ module.exports = function() {
     prepend = env==='production' ? '//assets.ember-twiddle.com/' : '//staging-assets.ember-twiddle.com/';
   }
 
-  // This copies code out of ember-cli's blueprints into
-  // app/lib/blueprints so we don't have to maintain our
-  // own blueprints
-  var fileMap = {};
-  var cliPath = 'node_modules/ember-cli';
-  var cliBlueprintFiles = {
-    'app': 'app/files/app/app.js',
-    'router': 'app/files/app/router.js',
-    'config': 'app/files/config/environment.js',
-    'component-js': 'component/files/__root__/__path__/__name__.js',
-    'route': 'route/files/__root__/__path__/__name__.js',
-    'controller': 'controller/files/__root__/__path__/__name__.js'
-  };
-
-  for (var blueprintName in cliBlueprintFiles) {
-    var filePath = cliPath + '/blueprints/' + cliBlueprintFiles[blueprintName];
-    fileMap[blueprintName] = fs.readFileSync(filePath).toString();
-  }
-
-  var mapContent = 'export default ' + JSON.stringify(fileMap);
+  var blueprintsCode = getEmberCLIBlueprints();
 
   var app = new EmberApp({
     fingerprint: {
@@ -44,7 +26,7 @@ module.exports = function() {
     'ember-cli-bootstrap-sassy': {
       'js': ['dropdown']
     },
-    fileCreator: [{filename: '/lib/blueprints.js', content: mapContent}],
+    fileCreator: [{filename: '/lib/blueprints.js', content: blueprintsCode}],
     sourcemaps: {
       enabled: !isProductionLikeBuild,
     },
@@ -61,24 +43,47 @@ module.exports = function() {
     }
   });
 
-  // Use `app.import` to add additional libraries to the generated
-  // output files.
   app.import('bower_components/ember/ember-template-compiler.js');
 
-  // If you need to use different assets in different
-  // environments, specify an object as the first parameter. That
-  // object's keys should be the environment name and the values
-  // should be the asset to use in that environment.
-  //
-  // If the library that you are including contains AMD or ES6
-  // modules that you would like to import into your application
-  // please specify an object with the list of modules as keys
-  // along with the exports of each module as its value.
-
-  var bowerTree = funnel('bower_components', {
-    srcDir: "/",
-    destDir: "/assets/bower_components"
+  var loaderTree = pickFiles('bower_components', {
+    srcDir: '/loader.js',
+    files: ['loader.js'],
+    destDir: '/assets'
   });
 
-  return mergeTrees([app.toTree(), bowerTree]);
+  var twiddleVendorTree = concat(funnel('bower_components'),{
+    inputFiles: [
+      'ember-resolver/dist/modules/ember-resolver.js',
+      'ember-cli-shims/app-shims.js',
+      'ember-load-initializers/ember-load-initializers.js',
+    ],
+    outputFile: '/assets/twiddle-vendor.js',
+  });
+
+  return mergeTrees([app.toTree(), twiddleVendorTree, loaderTree]);
 };
+
+// This copies code out of ember-cli's blueprints into
+// app/lib/blueprints so we don't have to maintain our
+// own blueprints
+function getEmberCLIBlueprints() {
+  var fs = require('fs');
+  var fileMap = {};
+  var cliPath = 'node_modules/ember-cli';
+  var cliBlueprintFiles = {
+    'app': 'app/files/app/app.js',
+    'router': 'app/files/app/router.js',
+    'config': 'app/files/config/environment.js',
+    'component-js': 'component/files/__root__/__path__/__name__.js',
+    'model': 'model/files/__root__/__path__/__name__.js',
+    'route': 'route/files/__root__/__path__/__name__.js',
+    'controller': 'controller/files/__root__/__path__/__name__.js'
+  };
+
+  for (var blueprintName in cliBlueprintFiles) {
+    var filePath = cliPath + '/blueprints/' + cliBlueprintFiles[blueprintName];
+    fileMap[blueprintName] = fs.readFileSync(filePath).toString();
+  }
+
+  return 'export default ' + JSON.stringify(fileMap);
+}
