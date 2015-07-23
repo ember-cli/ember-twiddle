@@ -16,7 +16,7 @@ export default Em.Component.extend({
   }),
 
   focusIn () {
-    this.sendAction('focusEditor', this.get('col'));
+    this.sendAction('focusEditor', this);
   },
 
   actions: {
