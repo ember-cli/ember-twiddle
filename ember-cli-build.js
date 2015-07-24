@@ -58,7 +58,7 @@ module.exports = function() {
       'ember-cli-shims/app-shims.js',
       'ember-load-initializers/ember-load-initializers.js',
     ],
-    outputFile: '/assets/twiddle-vendor.js',
+    outputFile: '/assets/twiddle-deps.js',
   });
 
   return mergeTrees([app.toTree(), twiddleVendorTree, loaderTree]);
