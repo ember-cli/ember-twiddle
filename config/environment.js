@@ -7,6 +7,7 @@ module.exports = function(environment) {
     baseURL: '/',
     locationType: 'auto',
     githubOauthUrl: 'http://localhost:9999/authenticate/',
+    assetsHost: environment==='production' ? '//assets.ember-twiddle.com/' : '',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
