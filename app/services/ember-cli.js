@@ -1,7 +1,8 @@
-import Ember from "ember";
 import Babel from "npm:babel";
 import Path from 'npm:path';
 import blueprints from '../lib/blueprints';
+import config from '../config/environment';
+
 
 const twiddleAppName = 'demo-app';
 
@@ -154,14 +155,36 @@ export default Em.Service.extend({
       // Add boot code
       contentForAppBoot(out, {modulePrefix: twiddleAppName});
 
-      resolve(Ember.Object.create({
-        code: out.join('\n'),
-        styles: cssOut.join('\n'),
-        twiddleJson: this.getTwiddleJson(gist)
-      }));
+      resolve(this.buildHtml(gist, out.join('\n'), cssOut.join('\n')));
     });
 
     return promise;
+  },
+
+  buildHtml (gist, appJS, appCSS) {
+    let index = blueprints['index.html'];
+    let deps = this.getTwiddleJson(gist).dependencies;
+
+    let depCssLinkTags = '';
+    let depScriptTags ='';
+    let appScriptTag = '<script type="text/javascript">%@</script>'.fmt(appJS);
+    let appStyleTag = '<style type="text/css">%@</style>'.fmt(appCSS);
+
+    Object.keys(deps).forEach(function(depKey) {
+      let dep = deps[depKey];
+      if (dep.substr(dep.lastIndexOf(".")) === '.css') {
+        depCssLinkTags += '<link rel="stylesheet" type="text/css" href="%@">'.fmt(dep);
+      } else {
+        depScriptTags += '<script type="text/javascript" src="%@"></script>'.fmt(dep);
+      }
+    });
+
+    depScriptTags += '<script type="text/javascript" src="%@assets/twiddle-deps.js?%@"></script>'.fmt(config.assetsHost, config.APP.version);
+
+    index = index.replace('{{content-for \'head\'}}', '%@\n%@'.fmt(depCssLinkTags, appStyleTag));
+    index = index.replace('{{content-for \'body\'}}', '%@\n%@'.fmt(depScriptTags, appScriptTag));
+
+    return index;
   },
 
   checkRequiredFiles (out, gist) {
