@@ -99,8 +99,12 @@ export default Em.Controller.extend({
       prompt('Ctrl + C ;-)', window.location.href);
     },
 
+    /**
+     * Add a new file to the model
+     * @param {String|null} type Blueprint name or null for empty file
+     */
     addFile (type) {
-      let file = this.get('emberCli').generate(type);
+      let file = type ? this.get('emberCli').generate(type) : this.store.createRecord('gistFile', {filePath:'file.js'});
       let filePath = file.get('filePath');
 
       if (['twiddle.json','router', 'css'].indexOf(type)===-1) {
