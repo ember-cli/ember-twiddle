@@ -16,8 +16,7 @@ export default Em.Component.extend(ResizeMixin, {
     ifrm.id=this.iframeId;
     this.element.appendChild(ifrm);
 
-    var depsTags =
-      '<script type="text/javascript" src="assets/loader.js"></script>';
+    var depsTags = '';
 
     var deps = this.get('twiddleJson').dependencies;
     Object.keys(deps).forEach(function(depKey) {

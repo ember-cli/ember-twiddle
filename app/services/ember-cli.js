@@ -23,9 +23,17 @@ const availableBlueprints = {
     blueprint: 'templates/application',
     filePath: 'templates/application.hbs',
   },
+  'config/environment': {
+    blueprint: 'config/environment',
+    filePath: 'config/environment.js',
+  },
   'controllers/application': {
     blueprint: 'controllers/application',
     filePath: 'controllers/application.js',
+  },
+  'app': {
+    blueprint: 'app',
+    filePath: 'app.js',
   },
   'css': {
     blueprint: 'app.css',
@@ -42,6 +50,10 @@ const availableBlueprints = {
   'controller': {
     blueprint: 'controller',
     filePath: 'my-route/controller.js',
+  },
+  'initializers/router': {
+    blueprint: 'initializers/router',
+    filePath: 'initializers/router.js',
   },
   'model': {
     blueprint: 'model',
@@ -165,9 +177,10 @@ export default Em.Service.extend({
   },
 
   addBoilerPlateFiles (out, gist) {
-    boilerPlateJs.forEach(filePath => {
-      if(!gist.get('files').findBy('filePath', filePath)) {
-        out.push(this.compileJs(blueprints[filePath], filePath));
+    boilerPlateJs.forEach(blueprintName => {
+      let blueprint = availableBlueprints[blueprintName];
+      if(!gist.get('files').findBy('filePath', blueprint.filePath)) {
+        out.push(this.compileJs(blueprints[blueprint.blueprint], blueprint.filePath));
       }
     });
   },

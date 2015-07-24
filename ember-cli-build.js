@@ -53,6 +53,7 @@ module.exports = function() {
 
   var twiddleVendorTree = concat(funnel('bower_components'),{
     inputFiles: [
+      'loader.js/loader.js',
       'ember-resolver/dist/modules/ember-resolver.js',
       'ember-cli-shims/app-shims.js',
       'ember-load-initializers/ember-load-initializers.js',
