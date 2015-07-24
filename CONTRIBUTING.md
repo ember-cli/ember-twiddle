@@ -17,11 +17,26 @@ You will need the following things properly installed on your computer.
 * change into the new directory
 * `npm install`
 * `bower install`
-* [Install and run gatekeeper](https://github.com/prose/gatekeeper)
+* Create a new github application
+  - Go to github.com
+  - click top right portrait
+  - click on 'Settings'
+  - select 'Applications'
+  - click the 'Developer Applications' tab
+  - click 'Register New Appliction' button
+  - name it whatever you want (ember-twiddle-dev if you can't think of anything)
+  - set the homepage url to any valid URL (http://google.com, since it doesn't actually matter)
+  - set the 'Authorization callback URL' to: http://localhost:4200/
+  - click 'Register application'
+  - leave this tab open, we're going to need to id and secret later
+* [Install gatekeeper](https://github.com/prose/gatekeeper)
+* Edit the gatekeeper config.json to have the client_id and client_secret from your new github application
+* Edit the config/environment.js in ember twiddle (find the apiKey and set it to the client_id of your github application)
 
 ### Running / Development
 
-* `ember server`
+* `node server.js` from your gatekeeper folder
+* `ember server` from ember twiddle folder
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
 ### Code Generators
