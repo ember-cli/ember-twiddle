@@ -9,14 +9,19 @@ const firstFilePicker = '.code:first-of-type .dropdown-toggle';
 const secondFile = '.code:first-of-type .dropdown-menu li:nth-child(2) a';
 const anyFile = '.code:first-of-type .dropdown-menu li:nth-child(1) a';
 const fileMenu = '.file-menu .dropdown-toggle';
-// const firstColumn = '.code:first-of-type';
+//const firstColumn = '.code:first-of-type';
 const deleteAction = '.file-menu a:contains(Delete)';
+const addTemplateAction = '.test-template-action';
+const firstFilePickerFiles = '.code:first-of-type .dropdown-menu>li';
+
+let promptValue = '';
 
 module('Acceptance | gist', {
   beforeEach: function() {
     application = startApp();
     cacheConfirm = window.confirm;
     window.confirm = () => true;
+    window.prompt = () => promptValue;
   },
 
   afterEach: function() {
@@ -52,5 +57,38 @@ test('deleting a gist loaded in two columns', function(assert) {
       click(firstFilePicker);
       assert.ok(find(anyFile).text().indexOf('twiddle.json')!==-1, 'twiddle.json remains');
     });
+  });
+});
+
+test('can add two templates with different names', function(assert) {
+  visit('/');
+  let origFiles;
+
+  andThen(function() {
+    click(firstFilePicker);
+  });
+
+  andThen(function() {
+    origFiles = find(firstFilePickerFiles).length;
+    promptValue = "foo/template.hbs";
+    click(fileMenu);
+    click(addTemplateAction);
+    click(firstFilePicker);
+  });
+
+  let numFiles;
+
+  andThen(function() {
+    numFiles = find(firstFilePickerFiles).length;
+    assert.equal(numFiles, origFiles + 1, 'Added first file');
+    promptValue = "bar/template.hbs";
+    click(fileMenu);
+    click(addTemplateAction);
+    click(firstFilePicker);
+  });
+
+  andThen(function() {
+    numFiles = find(firstFilePickerFiles).length;
+    assert.equal(numFiles, origFiles + 2, 'Added second file');
   });
 });
