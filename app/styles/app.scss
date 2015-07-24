@@ -45,7 +45,7 @@ body {
 .code .CodeMirror, .code .header ul {opacity:.3; transition: opacity .3s;}
 .code.active .CodeMirror, .code.active .header ul  {opacity:1}
 .code .CodeMirror {
-	font-family: Monaco;
+	font-family: Monaco, monospace;
 	font-size:13px;
 	line-height: 1.6;
 	height:100%;
