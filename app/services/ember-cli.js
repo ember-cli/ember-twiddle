@@ -77,6 +77,12 @@ const availableBlueprints = {
   }
 };
 
+const requiredDependencies = [
+  'jquery',
+  'ember',
+  'ember-template-compiler'
+];
+
 /**
  * A tiny browser version of the CLI build chain.
  * or more realistically: a hacked reconstruction of it.
@@ -186,7 +192,17 @@ export default Em.Service.extend({
   },
 
   getTwiddleJson (gist) {
-    return JSON.parse(gist.get('files').findBy('filePath', 'twiddle.json').get('content'));
+    var twiddleJson = JSON.parse(gist.get('files').findBy('filePath', 'twiddle.json').get('content'));
+
+    // Fill in any missing required dependencies
+    var dependencies = JSON.parse(blueprints['twiddle.json']).dependencies;
+    requiredDependencies.forEach(function(dep) {
+      if (!twiddleJson.dependencies[dep] && dependencies[dep]) {
+        twiddleJson.dependencies[dep] = dependencies[dep];
+      }
+    });
+
+    return twiddleJson;
   },
 
   /**
@@ -210,8 +226,11 @@ export default Em.Service.extend({
    * @return {String}            AMD module code
    */
   compileHbs (code, filePath) {
-    let templateCode = Em.HTMLBars.precompile(code || '');
-    return this.compileJs('export default Ember.HTMLBars.template(' + templateCode + ');', filePath);
+    // TODO: Is there a way to precompile using the template compiler brought in via twiddle.json?
+    // let templateCode = Em.HTMLBars.precompile(code || '');
+
+    // Compiles all templates at runtime.
+    return this.compileJs('export default Ember.HTMLBars.compile(`' + (code || '') + '`);', filePath);
   },
 
   compileCss(code, moduleName) {
