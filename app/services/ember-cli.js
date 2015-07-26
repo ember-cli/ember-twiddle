@@ -210,8 +210,11 @@ export default Em.Service.extend({
    * @return {String}            AMD module code
    */
   compileHbs (code, filePath) {
-    let templateCode = Em.HTMLBars.precompile(code || '');
-    return this.compileJs('export default Ember.HTMLBars.template(' + templateCode + ');', filePath);
+    // TODO: Is there a way to precompile using the template compiler brought in via twiddle.json?
+    // let templateCode = Em.HTMLBars.precompile(code || '');
+
+    // Compiles all templates at runtime.
+    return this.compileJs('export default Ember.HTMLBars.compile(`' + (code || '') + '`);', filePath);
   },
 
   compileCss(code, moduleName) {
