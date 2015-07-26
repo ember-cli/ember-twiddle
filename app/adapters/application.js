@@ -38,5 +38,5 @@ export default DS.RESTAdapter.extend({
     var url = this.buildURL(type.typeKey, id, snapshot, 'updateRecord');
 
     return this.ajax(url, "PATCH", { data: data });
-  },
+  }
 });
