@@ -196,7 +196,7 @@ export default Em.Service.extend({
 
     // Fill in any missing required dependencies
     var dependencies = JSON.parse(blueprints['twiddle.json']).dependencies;
-    Object.keys(requiredDependencies).forEach(function(dep) {
+    requiredDependencies.forEach(function(dep) {
       if (!twiddleJson.dependencies[dep] && dependencies[dep]) {
         twiddleJson.dependencies[dep] = dependencies[dep];
       }
