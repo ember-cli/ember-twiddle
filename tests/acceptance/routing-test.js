@@ -4,7 +4,7 @@ import startApp from 'ember-twiddle/tests/helpers/start-app';
 
 let application;
 
-module('Acceptance | gist-load', {
+module('Acceptance | routing', {
   beforeEach: function() {
     application = startApp();
   },
@@ -100,8 +100,7 @@ test('Able to do routing in a gist', function(assert) {
   andThen(function() {
     iframe_window.visit('/');
   });
-
-  /* TODO: The following does not work! */
+  
   andThen(function() {
     iframe_window.click(find(iframe).contents().find(aboutLink));
   });

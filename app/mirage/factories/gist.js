@@ -37,7 +37,7 @@ export default Mirage.Factory.extend({
   history: []
 });
 
-/*
+/* Sample
 {
   "url": "https://api.github.com/gists/35de43cb81fc35ddffb2",
   "forks_url": "https://api.github.com/gists/35de43cb81fc35ddffb2/forks",

@@ -46,7 +46,7 @@ export default Mirage.Factory.extend({
   site_admin: false
 });
 
-/*
+/* Sample
  "owner": {
    "login": "Gaurav0",
    "id": 313960,
