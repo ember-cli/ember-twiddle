@@ -97,13 +97,17 @@ export default Em.Service.extend({
   },
 
   generate(type) {
+    return this.store.createRecord('gistFile', this.buildProperties(type));
+  },
+
+  buildProperties(type) {
     if (type in availableBlueprints) {
       let blueprint = availableBlueprints[type];
 
-      return this.store.createRecord('gistFile', {
+      return {
         filePath: blueprint.filePath,
         content: blueprints[blueprint.blueprint].replace(/<\%\=(.*)\%\>/gi,'')
-      });
+      };
     }
   },
 
