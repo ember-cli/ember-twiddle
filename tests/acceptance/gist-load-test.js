@@ -64,7 +64,16 @@ test('Able to do routing in a gist', function(assert) {
         "size": 303,
         "truncated": false,
         "content": "{\n  \"version\": \"0.4.0\",\n  \"dependencies\": {\n    \"jquery\": \"https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js\",\n    \"ember\": \"https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.5/ember.js\",\n    \"ember-data\": \"https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.5/ember-data.js\"\n  }\n}"
-      }
+      },
+      "initializers/setup-test.js": {
+        "filename": "initializers.setup-test.js",
+        "type": "application/javascript",
+        "language": "JavaScript",
+        "raw_url": "https://gist.githubusercontent.com/Gaurav0/35de43cb81fc35ddffb2/raw/0ef881458f8154407d50509be3598b31392d8153/app.js",
+        "size": 218,
+        "truncated": false,
+        "content": "import Ember from 'ember';\n\nexport default {\n  name: 'setup-test',\n  initialize: function(container, app) {\n    app.setupForTesting();\n     app.injectTestHelpers();\n    window.QUnit = window.parent.QUnit;\n  }\n};"
+      },
     }
   });
 
@@ -72,17 +81,34 @@ test('Able to do routing in a gist', function(assert) {
   const aboutLink = '.ember-application .test-about-link';
   const indexLink = '.ember-application .test-index-link';
   const outletText = '.ember-application p';
+  let iframe_window;
 
   visit('/35de43cb81fc35ddffb2');
 
+  andThen(function() {
+    iframe_window = find(iframe)[0].contentWindow;
+
+    // Wait until iframe loads
+    return new Ember.RSVP.Promise(function (resolve) {
+      iframe_window.addEventListener('load', function () {
+        iframe_window.removeEventListener('load');
+        return resolve();
+      });
+    });
+  });
+
+  andThen(function() {
+    iframe_window.visit('/');
+  });
+
   /* TODO: The following does not work! */
   andThen(function() {
-    click(find(iframe).contents().find(aboutLink));
+    iframe_window.click(find(iframe).contents().find(aboutLink));
   });
   andThen(function() {
     assert.equal(find(iframe).contents().find(outletText).text().trim(), 'About Page', 'About Link leads to About Page being displayed');
 
-    click(find(iframe).contents().find(indexLink));
+    iframe_window.click(find(iframe).contents().find(indexLink));
   });
   andThen(function() {
     assert.equal(find(iframe).contents().find(outletText).text().trim(), 'Main Page', 'Index Link leads to Main Page being displayed');
