@@ -94,9 +94,11 @@ export default Em.Controller.extend({
     },
 
     deleteGist (gist) {
-      gist.destroyRecord();
-      this.transitionToRoute('gist.new');
-      this.notify.info('Gist %@ was deleted from Github'.fmt(gist.get('id')));
+      if(confirm(`Are you sure you want to remove this gist from Github?\n\n${gist.get('description')}`)) {
+        gist.destroyRecord();
+        this.transitionToRoute('gist.new');
+        this.notify.info('Gist %@ was deleted from Github'.fmt(gist.get('id')));
+      }
     },
 
     share () {
