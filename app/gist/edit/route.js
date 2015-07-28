@@ -7,6 +7,12 @@ export default GistRoute.extend({
     return this.store.find('gist', params.id);
   },
 
+  setupController() {
+    this._super.apply(this, arguments);
+
+    this.controllerFor('gist').set('unsaved', false);
+  },
+
   actions: {
     error(error) {
       if (error && error.errors && error.errors.length > 0) {

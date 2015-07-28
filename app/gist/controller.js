@@ -15,6 +15,7 @@ export default Em.Controller.extend({
    */
   buildOutput: Ember.Object.create({ code: '', styles: ''}),
   isBuilding: false,
+  unsaved: true,
   activeFile: null,
   activeEditorCol: null,
   col1File: null,
@@ -74,6 +75,11 @@ export default Em.Controller.extend({
   }),
 
   rebuildApp: Em.observer('model.files.@each.content', 'isAutorun', function() {
+    if (!this.get('unsaved')) {
+      Em.run.scheduleOnce(function() {
+        this.set('unsaved', true);
+      }.bind(this));
+    }
     if (this.get('isAutorun')) {
       Em.run.debounce(this, this.buildApp, 500);
     }

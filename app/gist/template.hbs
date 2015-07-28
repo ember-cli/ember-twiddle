@@ -44,10 +44,12 @@
     {{!-- {{#if isEditingDescription}} --}}
     {{input value=model.description autoresize=true}}
     {{!-- {{model.description}} --}}
-    {{#unless model.isNew}}
-    <span>{{model.files.length}} files</span>
-    <a class="gist-link" href="{{model.htmlUrl}}" target="_blank">saved to Gist, rev {{model.currentRevision}}</a>
-    {{/unless}}
+    {{#if unsaved}}
+      <span class="test-unsaved-indicator">Unsaved</span>
+    {{else}}
+      <span>{{model.files.length}} files</span>
+      <a class="gist-link" href="{{model.htmlUrl}}" target="_blank">saved to Gist, rev {{model.currentRevision}}</a>
+    {{/if}}
   </div>
 
   <ul class="nav nav-pills user-menu">
