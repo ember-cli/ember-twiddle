@@ -22,7 +22,8 @@
     "andThen",
     "currentURL",
     "currentPath",
-    "currentRouteName"
+    "currentRouteName",
+    "runGist"
   ],
   "node": false,
   "browser": false,

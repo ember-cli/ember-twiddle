@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
+import runGist from "./run-gist";
 
 export default function startApp(attrs) {
   var application;
@@ -10,6 +11,7 @@ export default function startApp(attrs) {
 
   Ember.run(function() {
     application = Application.create(attributes);
+    Ember.Test.registerAsyncHelper('runGist', runGist);
     application.setupForTesting();
     application.injectTestHelpers();
   });
