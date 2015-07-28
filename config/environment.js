@@ -6,6 +6,7 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
+    host: 'https://api.github.com',
     githubOauthUrl: 'http://localhost:9999/authenticate/',
     assetsHost: environment==='production' ? '//assets.ember-twiddle.com/' : '/',
     EmberENV: {
@@ -55,6 +56,8 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+
+    ENV.host = undefined;
   }
 
   if (environment === 'production') {

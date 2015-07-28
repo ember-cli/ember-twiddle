@@ -1,13 +1,9 @@
 import DS from 'ember-data';
-import Ember from 'ember';
 import config from '../config/environment';
 
 export default DS.RESTAdapter.extend({
 
-  // Hack because Pretender / Mirage don't support mocking a third party api
-  host: Ember.computed('', function() {
-    return Ember.testing ? undefined : 'https://api.github.com';
-  }),
+  host: config.host,
 
   headers: Em.computed('session.token', function() {
     var token  = this.get('session.token') || config.TMP_TORII_TOKEN;
