@@ -30,13 +30,12 @@ export default function(app, files) {
     files: gistFiles
   });
 
-  const iframe = '#dummy-content-iframe';
   let iframe_window;
 
   visit('/35de43cb81fc35ddffb2');
 
   andThen(function() {
-    iframe_window = find(iframe)[0].contentWindow;
+    iframe_window = outputPane();
 
     // Wait until iframe loads
     return new Ember.RSVP.Promise(function (resolve) {
