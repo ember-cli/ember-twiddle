@@ -23,7 +23,9 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
-    "runGist"
+    "runGist",
+    "outputPane",
+    "outputContents"
   ],
   "node": false,
   "browser": false,

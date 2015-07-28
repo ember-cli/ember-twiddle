@@ -26,10 +26,8 @@ test('Able to do load a minimal gist', function(assert) {
   runGist(files);
 
   andThen(function() {
-    const iframe = '#dummy-content-iframe';
-    const iframe_window = find(iframe)[0].contentWindow;
     const outputDiv = 'div';
 
-    assert.equal(iframe_window.find(outputDiv).text().trim(), 'Hello, World!', 'Minimal gist is displayed');
+    assert.equal(outputContents(outputDiv), 'Hello, World!', 'Minimal gist is displayed');
   });
 });

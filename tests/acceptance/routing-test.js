@@ -38,8 +38,7 @@ test('Able to do routing in a gist', function(assert) {
       content: "{\n  \"version\": \"0.4.0\",\n  \"dependencies\": {\n    \"jquery\": \"https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js\",\n    \"ember\": \"https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.5/ember.js\",\n    \"ember-data\": \"https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.5/ember-data.js\"\n  }\n}"
     }
   ];
-
-  const iframe = '#dummy-content-iframe';
+  
   const aboutLink = '.test-about-link';
   const indexLink = '.test-index-link';
   const outletText = 'p';
@@ -48,18 +47,18 @@ test('Able to do routing in a gist', function(assert) {
   runGist(files);
 
   andThen(function() {
-    iframe_window = find(iframe)[0].contentWindow;
+    iframe_window = outputPane();
 
     iframe_window.click(iframe_window.find(aboutLink));
   });
 
   andThen(function() {
-    assert.equal(iframe_window.find(outletText).text().trim(), 'About Page', 'About Link leads to About Page being displayed');
+    assert.equal(outputContents(outletText), 'About Page', 'About Link leads to About Page being displayed');
 
     iframe_window.click(iframe_window.find(indexLink));
   });
 
   andThen(function() {
-    assert.equal(iframe_window.find(outletText).text().trim(), 'Main Page', 'Index Link leads to Main Page being displayed');
+    assert.equal(outputContents(outletText), 'Main Page', 'Index Link leads to Main Page being displayed');
   });
 });
