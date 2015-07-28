@@ -76,7 +76,7 @@ export default Em.Controller.extend({
 
   rebuildApp: Em.observer('model.files.@each.content', 'isAutorun', function() {
     if (!this.get('unsaved')) {
-      Em.run.scheduleOnce(function() {
+      Em.run.scheduleOnce('sync', function() {
         this.set('unsaved', true);
       }.bind(this));
     }
