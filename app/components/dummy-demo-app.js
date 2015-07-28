@@ -1,8 +1,9 @@
+import Ember from 'ember';
 import ResizeMixin from 'ember-twiddle/lib/resize-mixin';
 import config from '../config/environment';
 
 
-export default Em.Component.extend(ResizeMixin, {
+export default Ember.Component.extend(ResizeMixin, {
   iframeId: 'dummy-content-iframe',
 
   didReceiveAttrs: function() {
