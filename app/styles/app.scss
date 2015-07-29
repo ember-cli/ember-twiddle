@@ -36,8 +36,13 @@ body {
 
 .toolbar {
 	height: 60px;
-	border-bottom: 1px solid #e4e2e2;
-	font-size:16px;
+	font-size: 13px;
+  background: #e1563f top center;
+	background-image: url("http://emberjs.com/images/navigation_background.png");
+	border-bottom: 1px solid #aa412f;
+	-moz-box-shadow: rgba(0,0,0,0.3) 0 0 3px;
+	-webkit-box-shadow: rgba(0,0,0,0.3) 0 0 3px;
+	box-shadow: rgba(0,0,0,0.3) 0 0 3px
 }
 .toolbar>div {
 	margin:17px 20px;
@@ -88,16 +93,16 @@ body {
 
 .user-menu {
 	position: absolute;
-	right: 7px;
-	top: 7px;
-	text-align:right;
+	right: 17px;
+	top: 17px;
+	text-align: right;
 }
 
 .file-menu {
 	position: absolute;
-	left: 8px;;
-	top: 8px;
-	text-align:left;
+	left: 17px;;
+	top: 17px;
+	text-align: left;
 }
 
 .toolbar .title {
@@ -108,14 +113,21 @@ body {
 .toolbar .title input {
 	border:0;
 	padding: 5px 10px;
-	border-radius:3px;
 	transition: background .3s;
+
+	font-size: 15px;
+	text-shadow: rgba(255,255,255,0.2) 0 1px 0px;
+  background-color: rgba(0,0,0,0.2);
+	border-radius: 3px;
+	border: 1px solid #923c2e;
+	box-shadow: rgba(255,255,255,0.15) 0 1px 0px,inset rgba(0,0,0,0.17) 0 1px 1px;
 }
 .toolbar .title input:hover,
 .toolbar .title input:focus {
-	background: #efefef;
+	background: #faf4f1;
 	outline:0;
 }
+
 .toolbar .title .gist-link,
 .toolbar .title span {
 	color: #aaa;
@@ -140,8 +152,34 @@ body {
 	position:absolute;
 }
 
+.toolbar .dropdown-toggle {
+	padding: 0px 1em;
+	height: 26px;
+	line-height: 24px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #faf2ee;
+  text-shadow: rgba(0,0,0,0.3) 0px 1px 0px;
+	border: 1px solid transparent;
 
+	&:hover, &:focus {
+		color: #ffffff;
+		background-color: inherit;
+	}
+}
 
+.toolbar .dropdown {
+	line-height: 26px;
+
+	&.open .dropdown-toggle {
+		color: #331915;
+	  text-shadow: rgba(255,255,255,0.2) 0 1px 0px;
+		background-color: rgba(0,0,0,0.2);
+		border-radius: 3px;
+	  border: 1px solid #923c2e;
+		box-shadow: rgba(255,255,255,0.15) 0 1px 0px,inset rgba(0,0,0,0.17) 0 1px 1px;
+	}
+}
 
 .dropdown-submenu {
     position: relative;
