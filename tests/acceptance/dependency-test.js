@@ -14,7 +14,7 @@ module('Acceptance | external dependency', {
   }
 });
 
-test('Able to load a gist without a template compiler', function(assert) {
+test('Able to run a gist using an external dependency', function(assert) {
 
   const files = [
     {
