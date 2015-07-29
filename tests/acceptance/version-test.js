@@ -12,7 +12,7 @@ module('Acceptance | older version', {
   }
 });
 
-test('Able to load a gist without a template compiler', function(assert) {
+test('Able to run a gist using an older version of Ember', function(assert) {
 
   const files = [
     {
