@@ -2,15 +2,13 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from 'ember-twiddle/tests/helpers/start-app';
 
-let application;
-
 module('Acceptance | older version', {
   beforeEach: function() {
-    application = startApp();
+    this.application = startApp();
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
+    Ember.run(this.application, 'destroy');
   }
 });
 

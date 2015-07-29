@@ -2,9 +2,6 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from 'ember-twiddle/tests/helpers/start-app';
 
-let application;
-let cacheConfirm;
-
 const firstFilePicker = '.code:first-of-type .dropdown-toggle';
 const secondFile = '.code:first-of-type .dropdown-menu li:nth-child(2) a';
 const anyFile = '.code:first-of-type .dropdown-menu li:nth-child(1) a';
@@ -18,15 +15,17 @@ let promptValue = '';
 
 module('Acceptance | gist', {
   beforeEach: function() {
-    application = startApp();
-    cacheConfirm = window.confirm;
+    this.application = startApp();
+    this.cacheConfirm = window.confirm;
+    this.cachePrompt = window.prompt;
     window.confirm = () => true;
     window.prompt = () => promptValue;
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
-    window.confirm = cacheConfirm;
+    Ember.run(this.application, 'destroy');
+    window.confirm = this.cacheConfirm;
+    window.prompt = this.cachePrompt;
   }
 });
 
