@@ -80,7 +80,8 @@ const availableBlueprints = {
 const requiredDependencies = [
   'jquery',
   'ember',
-  'ember-template-compiler'
+  'ember-template-compiler',
+  'ember-data'
 ];
 
 /**

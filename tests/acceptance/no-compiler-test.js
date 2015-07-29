@@ -23,7 +23,7 @@ test('Able to load a gist without a template compiler', function(assert) {
     },
     {
       filename: 'twiddle.json',
-      content: "{\n  \"version\": \"0.4.0\",\n  \"dependencies\": {\n    \"jquery\": \"https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js\",\n    \"ember\": \"https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.5/ember.js\",\n  }\n}"
+      content: "{\n  \"version\": \"0.4.0\",\n  \"dependencies\": {\n    \"jquery\": \"https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js\",\n    \"ember\": \"https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.5/ember.js\"\n  }\n}"
     }
   ];
 
@@ -32,6 +32,6 @@ test('Able to load a gist without a template compiler', function(assert) {
   andThen(function() {
     const outputDiv = 'div';
 
-    assert.equal(outputContents(outputDiv), 'Hello, World!', 'Minimal gist is displayed');
+    assert.equal(outputContents(outputDiv), 'Hello, World!', 'Gist with no template compiler is displayed');
   });
 });
