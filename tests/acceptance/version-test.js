@@ -4,7 +4,7 @@ import startApp from 'ember-twiddle/tests/helpers/start-app';
 
 let application;
 
-module('Acceptance | no template compiler', {
+module('Acceptance | older version', {
   beforeEach: function() {
     application = startApp();
   },
