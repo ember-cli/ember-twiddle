@@ -2,7 +2,9 @@ import DS from 'ember-data';
 import config from '../config/environment';
 
 export default DS.RESTAdapter.extend({
-  host:'https://api.github.com',
+
+  host: config.host,
+
   headers: Em.computed('session.token', function() {
     var token  = this.get('session.token') || config.TMP_TORII_TOKEN;
     if (token) {
@@ -38,5 +40,5 @@ export default DS.RESTAdapter.extend({
     var url = this.buildURL(type.typeKey, id, snapshot, 'updateRecord');
 
     return this.ajax(url, "PATCH", { data: data });
-  },
+  }
 });

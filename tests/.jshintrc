@@ -1,5 +1,6 @@
 {
   "predef": [
+    "server",
     "document",
     "window",
     "location",
@@ -21,7 +22,10 @@
     "andThen",
     "currentURL",
     "currentPath",
-    "currentRouteName"
+    "currentRouteName",
+    "runGist",
+    "outputPane",
+    "outputContents"
   ],
   "node": false,
   "browser": false,

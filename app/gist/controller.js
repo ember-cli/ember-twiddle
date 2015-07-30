@@ -38,6 +38,10 @@ export default Em.Controller.extend({
    * Build the application and set the iframe code
    */
   buildApp () {
+    if (this.get('isDestroyed')) {
+      return;
+    }
+
     this.set('isBuilding', true);
     this.set('buildErrors', []);
 
@@ -90,9 +94,11 @@ export default Em.Controller.extend({
     },
 
     deleteGist (gist) {
-      gist.destroyRecord();
-      this.transitionToRoute('gist.new');
-      this.notify.info('Gist %@ was deleted from Github'.fmt(gist.get('id')));
+      if(confirm(`Are you sure you want to remove this gist from Github?\n\n${gist.get('description')}`)) {
+        gist.destroyRecord();
+        this.transitionToRoute('gist.new');
+        this.notify.info('Gist %@ was deleted from Github'.fmt(gist.get('id')));
+      }
     },
 
     share () {
@@ -104,8 +110,8 @@ export default Em.Controller.extend({
      * @param {String|null} type Blueprint name or null for empty file
      */
     addFile (type) {
-      let file = type ? this.get('emberCli').generate(type) : this.store.createRecord('gistFile', {filePath:'file.js'});
-      let filePath = file.get('filePath');
+      let fileProperties = type ? this.get('emberCli').buildProperties(type) : {filePath:'file.js'};
+      let filePath = fileProperties.filePath;
 
       if (['twiddle.json','router', 'css'].indexOf(type)===-1) {
         filePath = prompt('File path', filePath);
@@ -114,19 +120,16 @@ export default Em.Controller.extend({
       if (filePath) {
         if(this.get('model.files').findBy('filePath', filePath)) {
           alert('A file with the name %@ already exists'.fmt(filePath));
-          file.destroyRecord();
           return;
         }
 
-        file.set('filePath', filePath);
+        fileProperties.filePath = filePath;
+        let file = this.store.createRecord('gistFile', fileProperties);
 
         this.get('model.files').pushObject(file);
         this.notify.info('File %@ was added'.fmt(file.get('filePath')));
         this.set('col1File', file);
         this.set('activeEditorCol', '1');
-      }
-      else {
-        file.destroyRecord();
       }
     },
 
