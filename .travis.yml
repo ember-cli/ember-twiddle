@@ -32,7 +32,7 @@ install:
 
 script:
   - npm test
-  - script/travis-deploy.sh
+  - scripts/travis-deploy.sh
 
 env:
   AWS_ACCESS_KEY_ID: b1ugrISCMawg4LDOEnj91Eu3eb8EnxwOD63Y9owfxdaclmp/K4wOUdRXLE8Gmv0FXbzPJXbMld6a4wx0qfq95pQMy22gut0o4e9IAxPguhIeF9wFzZdw2nQFTEV2+T4Y52QIhPXnV403bt4hZZbIzfniwVRsdHoac60t9NoyBOI=
