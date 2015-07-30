@@ -15,12 +15,9 @@ export default Ember.Component.extend(ResizeMixin, {
 
     var ifrm = document.createElement('iframe');
     ifrm.id=this.iframeId;
+    ifrm.sandbox='allow-scripts allow-forms';
+    ifrm.srcdoc = this.get('html');
     this.element.appendChild(ifrm);
-
-    ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
-    ifrm.document.open();
-    ifrm.document.write(this.get('html'));
-    ifrm.document.close();
   },
 
   didResize: function () {

@@ -1,4 +1,3 @@
-import Ember from "ember";
 import config from '../config/environment';
 
 export default Em.Controller.extend({
@@ -50,6 +49,7 @@ export default Em.Controller.extend({
       this.set('buildOutput', buildOutput);
     })
     .catch(errors => {
+      console.log(errors);
       this.set('isBuilding', false);
       this.set('buildErrors', errors);
       errors.forEach(error => {
@@ -181,8 +181,10 @@ export default Em.Controller.extend({
     // TODO: this in a controller seems suspect, rather this should likely be
     // part of some handshake, to ensure no races exist. This should likley not
     // be something a controller would handle - (SP)
-    window.updateDemoAppUrl = Ember.run.bind(this, function() {
-      this.set('applicationUrl', window.demoAppUrl || '/');
+    window.addEventListener('message',m => {
+      if(typeof m.data==='object' && 'setDemoAppUrl' in m.data) {
+        this.set('applicationUrl', m.data.setDemoAppUrl || '/');
+      }
     });
   }
 });
