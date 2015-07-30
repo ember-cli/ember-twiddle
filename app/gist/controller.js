@@ -49,7 +49,6 @@ export default Em.Controller.extend({
       this.set('buildOutput', buildOutput);
     })
     .catch(errors => {
-      console.log(errors);
       this.set('isBuilding', false);
       this.set('buildErrors', errors);
       errors.forEach(error => {
