@@ -1,39 +1,31 @@
----
-
 language: node_js
 node_js:
-  - "0.12"
-
+- '0.12'
 notifications:
   email: false
-
 branches:
   only:
-    - master
-
+  - master
 sudo: false
-
 cache:
   directories:
-    - node_modules
-
+  - node_modules
 before_install:
-  - "npm config set spin false"
-  - "npm install -g npm@^2"
-
+- npm config set spin false
+- npm install -g npm@^2
 install:
-  - mkdir travis-phantomjs
-  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
-  - tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
-  - export PATH=$PWD/travis-phantomjs:$PATH
-  - npm install -g bower
-  - npm install
-  - bower install
-
+- mkdir travis-phantomjs
+- wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+  -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+- tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
+- export PATH=$PWD/travis-phantomjs:$PATH
+- npm install -g bower
+- npm install
+- bower install
 script:
-  - npm test
-  - scripts/travis-deploy.sh
-
+- npm test
+- scripts/travis-deploy.sh
 env:
-  AWS_ACCESS_KEY_ID: b1ugrISCMawg4LDOEnj91Eu3eb8EnxwOD63Y9owfxdaclmp/K4wOUdRXLE8Gmv0FXbzPJXbMld6a4wx0qfq95pQMy22gut0o4e9IAxPguhIeF9wFzZdw2nQFTEV2+T4Y52QIhPXnV403bt4hZZbIzfniwVRsdHoac60t9NoyBOI=
-  AWS_ACCESS_KEY_SECRET: X1tocl6D1nwzVtUjlR9n/PbtkhtgyGjmK0qUyL5DeTX8bY6pcIMZU3g5S1yoseMzV3DnjyoRrO1vZibFFRTPPa2iDVtMAjuVyKeQVhkMl++hslcF4QsO/qlFJJg2B2twlanKQDmiRG14dM032wyQcbHLQKVFW6yF6XoW4ZTUYBk=
+  global:
+  - secure: Dwthqo6GaXQt7erj89xMa/2GRua9PTzcSKXYmxjE0O46DMuBR80JjPges0hGCWwPcdMFqsaMshSaTVF5eHc49vhaziB2sqWwLZndkRFIAsNGnBZkBpeZc9MsTNMbPP5KyJh/pG03nJLXUSz6xzMoxDNU/QHWyBYBxTlfxVGewLE=
+  - secure: H3EtrTdcXIDOjp59Mu/7KA7N2UrVgKjt2YVtW6dqby/Oa5q/jpfnomE70fhIpFTle6MavhAIujQ5awMRC/80EJXlZp5hnSd9DKyCpk70I1KoT6vm34RjZfSP9kAyRyokLwfjEkovCFltY3/i8y+8QFEVr8RkNt1VP2hY1ScFzys=
