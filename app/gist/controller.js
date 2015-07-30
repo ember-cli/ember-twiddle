@@ -1,7 +1,8 @@
+import Ember from "ember";
 import config from '../config/environment';
 
-export default Em.Controller.extend({
-  emberCli: Em.inject.service('ember-cli'),
+export default Ember.Controller.extend({
+  emberCli: Ember.inject.service('ember-cli'),
   version: config.APP.version,
   init() {
     this._super(...arguments);
@@ -60,7 +61,7 @@ export default Em.Controller.extend({
   /**
    * Set the initial file columns
    */
-  initializeColumns: Em.observer('model', function() {
+  initializeColumns: Ember.observer('model', function() {
     var files = this.get('model.files');
 
     if(files.objectAt(0)) {
@@ -72,7 +73,7 @@ export default Em.Controller.extend({
     }
   }),
 
-  rebuildApp: Em.observer('model.files.@each.content', 'isAutorun', function() {
+  rebuildApp: Ember.observer('model.files.@each.content', 'isAutorun', function() {
     if (this.get('isAutorun')) {
       Em.run.debounce(this, this.buildApp, 500);
     }
@@ -180,10 +181,14 @@ export default Em.Controller.extend({
     // TODO: this in a controller seems suspect, rather this should likely be
     // part of some handshake, to ensure no races exist. This should likley not
     // be something a controller would handle - (SP)
-    window.addEventListener('message',m => {
-      if(typeof m.data==='object' && 'setDemoAppUrl' in m.data) {
-        this.set('applicationUrl', m.data.setDemoAppUrl || '/');
-      }
+    window.addEventListener('message', (m) => {
+      Ember.run(() => {
+        if(typeof m.data==='object' && 'setDemoAppUrl' in m.data) {
+          if (!this.get('isDestroyed')) {
+            this.set('applicationUrl', m.data.setDemoAppUrl || '/');
+          }
+        }
+      });
     });
   }
 });

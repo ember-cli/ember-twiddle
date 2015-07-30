@@ -41,7 +41,7 @@ export default function(app, files) {
     return new Ember.RSVP.Promise(function (resolve) {
       iframe_window.addEventListener('load', function () {
         iframe_window.removeEventListener('load');
-        return resolve();
+        resolve();
       });
     });
   });

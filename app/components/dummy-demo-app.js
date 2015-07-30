@@ -14,10 +14,21 @@ export default Ember.Component.extend(ResizeMixin, {
     }
 
     var ifrm = document.createElement('iframe');
-    ifrm.id=this.iframeId;
-    ifrm.sandbox='allow-scripts allow-forms';
-    ifrm.srcdoc = this.get('html');
+    ifrm.id = this.iframeId;
+
+    if (!Ember.testing) {
+      ifrm.sandbox = 'allow-scripts allow-forms';
+      ifrm.srcdoc = this.get('html');
+    }
+
     this.element.appendChild(ifrm);
+
+    if (Ember.testing) {
+      ifrm = ifrm.contentWindow;
+      ifrm.document.open();
+      ifrm.document.write(this.get('html'));
+      ifrm.document.close();
+    }
   },
 
   didResize: function () {
