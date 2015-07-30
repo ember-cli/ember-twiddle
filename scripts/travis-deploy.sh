@@ -10,8 +10,17 @@ fi
 
 if [ "$TRAVIS_BRANCH" == "master" ]; then
   # Deploy to staging on a merge to master
-  ember deploy -e staging
+  ember deploy --environment staging
+  list=`ember deploy:list --environment staging`
+  rev=`echo $list | sed -n "s/.*revisions: | [=>[:space:]]*\([^[:space:]]*\).*/\1/p"`
+  printf "Activating $rev \n"
+  ember deploy:activate --revision $rev --environment staging
+
 elif [ "$TRAVIS_TAG" != "false" ]; then
   # Deploy to production on a merge to release
-  ember deploy -e production
+  ember deploy --environment production
+  list=`ember deploy:list --environment production`
+  rev=`echo $list | sed -n "s/.*revisions: | [=>[:space:]]*\([^[:space:]]*\).*/\1/p"`
+  printf "Activating $rev \n"
+  ember deploy:activate --revision $rev --environment production
 fi
