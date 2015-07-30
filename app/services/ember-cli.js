@@ -161,13 +161,15 @@ export default Em.Service.extend({
 
       this.addBoilerPlateFiles(out, gist);
 
+      let twiddleJson = this.getTwiddleJson(gist);
+
       // Add boot code
-      contentForAppBoot(out, {modulePrefix: twiddleAppName});
+      contentForAppBoot(out, {modulePrefix: twiddleAppName, dependencies: twiddleJson.dependencies});
 
       resolve(Ember.Object.create({
         code: out.join('\n'),
         styles: cssOut.join('\n'),
-        twiddleJson: this.getTwiddleJson(gist)
+        twiddleJson: twiddleJson
       }));
     });
 
@@ -270,10 +272,13 @@ function contentForAppBoot (content, config) {
   // doesn't recognize them properly...
   var monkeyPatchModules = [
     'ember',
-    'ember-data',
     'ember/resolver',
     'ember/load-initializers'
   ];
+
+  if ("ember-data" in config.dependencies) {
+    monkeyPatchModules.push('ember-data');
+  }
 
   monkeyPatchModules.forEach(function(mod) {
     content.push('  require("'+mod+'").__esModule=true;');
