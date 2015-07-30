@@ -76,14 +76,16 @@ export default Em.Controller.extend({
 
   rebuildApp: Em.observer('model.files.@each.content', 'isAutorun', function() {
     if (!this.get('unsaved')) {
-      Em.run.scheduleOnce('sync', function() {
-        this.set('unsaved', true);
-      }.bind(this));
+      Em.run.scheduleOnce('sync', this, this.setUnsaved);
     }
     if (this.get('isAutorun')) {
       Em.run.debounce(this, this.buildApp, 500);
     }
   }),
+
+  setUnsaved() {
+    this.set('unsaved', true);
+  },
 
   actions: {
     focusEditor (editor) {
