@@ -13,7 +13,7 @@ export default Em.Controller.extend({
    * Output from the build, sets the `code` attr on the component
    * @type {String}
    */
-  buildOutput: Ember.Object.create({ code: '', styles: ''}),
+  buildOutput: '',
   isBuilding: false,
   activeFile: null,
   activeEditorCol: null,
@@ -45,11 +45,11 @@ export default Em.Controller.extend({
     this.set('isBuilding', true);
     this.set('buildErrors', []);
 
-    this.get('emberCli').compileGist(this.get('model')).then((buildOutput) => {
+    this.get('emberCli').compileGist(this.get('model')).then(buildOutput => {
       this.set('isBuilding', false);
       this.set('buildOutput', buildOutput);
     })
-    .catch((errors) => {
+    .catch(errors => {
       this.set('isBuilding', false);
       this.set('buildErrors', errors);
       errors.forEach(error => {

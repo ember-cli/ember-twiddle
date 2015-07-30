@@ -93,6 +93,7 @@ function getEmberCLIBlueprints() {
   fileMap['controllers/application'] = fs.readFileSync('blueprints/application_controller.js').toString();
   fileMap['templates/application'] = fs.readFileSync('blueprints/application_template.hbs').toString();
   fileMap['app.css'] = fs.readFileSync('blueprints/app.css').toString();
+  fileMap['index.html'] = fs.readFileSync('blueprints/index.html').toString();
 
   return 'export default ' + JSON.stringify(fileMap);
 }
