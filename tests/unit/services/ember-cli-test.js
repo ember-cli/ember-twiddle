@@ -30,7 +30,6 @@ test('compiling a gist works', function(assert) {
   Ember.run(function() {
     service.compileGist(gist).then(function(output) {
       output = output.replace(/define\('([a-z0-9\-\/]+)'/gi,'define("$1"');
-      console.log(output);
       assert.ok(output.indexOf('define("demo-app/router"')>-1, 'build contains router');
       assert.ok(output.indexOf('define("demo-app/initializers/router"')>-1, 'build contains router initializer');
       assert.ok(output.indexOf('define("demo-app/app"')>-1, 'build contains app');
