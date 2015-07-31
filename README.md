@@ -7,7 +7,9 @@ An ember cli like web based javascript sharing tool. http://ember-twiddle.com
 
 ### Browser support
 
-To make using Ember Twiddle secure, we use the [sandbox](http://caniuse.com/#feat=iframe-sandbox) and [srcdoc](http://caniuse.com/#feat=iframe-srcdoc) attributes of the `<iframe>` element. These are not supported by any version of IE at the moment and older versions of other browsers also lack support. Furthermore, the sandbox prohibits the use of cookies, localstorage, indexdb, WebWoker etc.
+To make using Ember Twiddle secure, we use the [sandbox](http://caniuse.com/#feat=iframe-sandbox) and [srcdoc](http://caniuse.com/#feat=iframe-srcdoc) attributes of the `<iframe>` element. Especially `srcdoc` is not supported by any version of IE at the moment and older versions of other browsers also lack support for `sandbox`. Furthermore, the sandbox prohibits the use of cookies, localstorage, indexdb, WebWoker etc.
+
+We are planning to move to a secure solution with better compatibility soon (most likely one where the twiddle is run on a different domain).
 
 ## Feedback
 
