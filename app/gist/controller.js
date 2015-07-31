@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
    * Whether user wishes the code to automatically run
    * @type {boolean}
    */
-  isAutorun: true,
+  isLiveReload: true,
 
   /**
    * Build the application and set the iframe code
@@ -73,8 +73,8 @@ export default Ember.Controller.extend({
     }
   }),
 
-  rebuildApp: Ember.observer('model.files.@each.content', 'isAutorun', function() {
-    if (this.get('isAutorun')) {
+  rebuildApp: Ember.observer('model.files.@each.content', 'isLiveReload', function() {
+    if (this.get('isLiveReload')) {
       Em.run.debounce(this, this.buildApp, 500);
     }
   }),

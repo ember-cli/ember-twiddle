@@ -112,9 +112,9 @@
       {{/if}}
       </span>
     </div>
-    <div class="run-or-autorun">
-      <label class="checkbox-inline">{{input type="checkbox" id="autorun" checked=isAutorun}}Autorun</label>
-      {{#unless isAutorun}}
+    <div class="run-or-live-reload">
+      <label class="checkbox-inline">{{input type="checkbox" id="live-reload" checked=isLiveReload}}Live Reload</label>
+      {{#unless isLiveReload}}
           <button class="btn-default run-now" {{action "runNow"}}>Run Now</button>
       {{/unless}}
     </div>
