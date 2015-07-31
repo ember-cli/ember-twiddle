@@ -88,7 +88,6 @@ function getEmberCLIBlueprints() {
   }
 
   fileMap['twiddle.json'] = fs.readFileSync('blueprints/twiddle.json').toString();
-  fileMap['config/environment'] = fs.readFileSync('blueprints/config_environment.js').toString();
   fileMap['initializers/router'] = fs.readFileSync('blueprints/router_initializer.js').toString();
   fileMap['controllers/application'] = fs.readFileSync('blueprints/application_controller.js').toString();
   fileMap['templates/application'] = fs.readFileSync('blueprints/application_template.hbs').toString();

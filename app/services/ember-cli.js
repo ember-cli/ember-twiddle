@@ -9,7 +9,6 @@ const twiddleAppName = 'demo-app';
 // These files will be included if not present
 const boilerPlateJs = [
   'app',
-  'config/environment',
   'router',
   'initializers/router'
 ];
@@ -23,10 +22,6 @@ const availableBlueprints = {
   'templates/application': {
     blueprint: 'templates/application',
     filePath: 'templates/application.hbs',
-  },
-  'config/environment': {
-    blueprint: 'config/environment',
-    filePath: 'config/environment.js',
   },
   'controllers/application': {
     blueprint: 'controllers/application',
@@ -161,6 +156,7 @@ export default Em.Service.extend({
       }
 
       this.addBoilerPlateFiles(out, gist);
+      this.addConfig(out, gist);
 
       let twiddleJson = this.getTwiddleJson(gist);
 
@@ -218,6 +214,16 @@ export default Em.Service.extend({
         out.push(this.compileJs(blueprints[blueprint.blueprint], blueprint.filePath));
       }
     });
+  },
+
+  addConfig (out) {
+    let config = {
+      modulePrefix: "demo-app",
+      TWIDDLE_ORIGIN: location.origin
+    };
+
+    let configJs = 'export default ' + JSON.stringify(config);
+    out.push(this.compileJs(configJs, 'config/environment'));
   },
 
   getTwiddleJson (gist) {
