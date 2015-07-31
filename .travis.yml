@@ -3,9 +3,6 @@ node_js:
 - '0.12'
 notifications:
   email: false
-branches:
-  only:
-  - master
 sudo: false
 cache:
   directories:
