@@ -23,6 +23,7 @@ export default function(app, files) {
     gistFiles[gistFile.filename] = gistFile;
   });
 
+  server.create('user', {login: login});
   const owner = server.create('owner', {login: login});
   server.create('gist', {
     id: gist_id,

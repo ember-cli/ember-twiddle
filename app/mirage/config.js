@@ -9,4 +9,8 @@ export function testConfig() {
     let id = request.params.id;
     return db.gists.find(id);
   });
+
+  this.get('/user', function(db) {
+    return db.users.find(1);
+  });
 }
