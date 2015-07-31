@@ -20,6 +20,8 @@ module('Acceptance | gist', {
     this.cachePrompt = window.prompt;
     window.confirm = () => true;
     window.prompt = () => promptValue;
+
+    server.create('user', 'octocat');
   },
 
   afterEach: function() {
