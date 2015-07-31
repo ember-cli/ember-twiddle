@@ -1,5 +1,9 @@
 # Contributing
 
+### Issues / milestones
+
+We try to prioritize issues by assigning them to milestones. The closer a milestone is, the more priority an issue has. When an issue doesn't have a milestone it's not prioritized yet.
+
 ### Prerequisites
 
 You will need the following things properly installed on your computer.
