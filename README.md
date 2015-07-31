@@ -13,7 +13,7 @@ We are planning to move to a secure solution with better compatibility soon (mos
 
 ## Feedback
 
-You can use the [issue tracker](/ember-cli/ember-twiddle/issues) to provide feedback, suggest features or report bugs.  Before you open an issue though, make sure you check [canary.ember-twiddle.com](http://canary.ember-twiddle.com) to see whether it's not already fixed on `master`. Of course, you should also check whether an issue doesn't exist already (if it does, use the comments to provide additional input, or just a simple `+1`).
+You can use the [issue tracker](/ember-cli/ember-twiddle/issues) to provide feedback, suggest features or report bugs.  Before you open an issue though, make sure you check [canary.ember-twiddle.com](http://canary.ember-twiddle.com) to see whether it's not already fixed on `master`. Of course, you should also check whether an issue doesn't exist already (if it does, use the comments to provide additional input).
 
 #### Security-related issues
 
