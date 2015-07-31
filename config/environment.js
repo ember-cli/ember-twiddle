@@ -8,7 +8,7 @@ module.exports = function(environment) {
     locationType: 'auto',
     host: 'https://api.github.com',
     githubOauthUrl: 'http://localhost:9999/authenticate/',
-    assetsHost: environment==='production' ? '//assets.ember-twiddle.com/' : '/',
+    assetsHost: '/',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -62,6 +62,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.githubOauthUrl = 'https://ember-twiddle.herokuapp.com/authenticate/';
+    ENV.assetsHost = '//assets.ember-twiddle.com/';
     ENV.torii = {
       sessionServiceName: 'session',
       providers: {
@@ -71,6 +72,10 @@ module.exports = function(environment) {
         }
       }
     };
+  }
+
+  if (environment === 'staging') {
+    ENV.assetsHost = '//canary-assets.ember-twiddle.com/';
   }
 
   return ENV;

@@ -3,29 +3,21 @@
 An ember cli like web based javascript sharing tool. http://ember-twiddle.com
 
 * Ember Twiddle uses [Github Gists](https://gist.github.com) as persistence layer. Once you hit `Save` on a newly created Twiddle, it will create a public Gist under your Github account.
-* Right now, Ember Twiddle only runs Ember 1.13 code, but we're in the process of making that customizable.
 * If you'd like to help out, check out [CONTRIBUTING.md](CONTRIBUTING.md)
 
-### Roadmap
+### Browser support
 
-At the moment, active development is going on and there's a pretty big list of issues we want to nail before calling it a `1.0`. If you have ideas we should add, please [open an issue](https://github.com/ember-cli/ember-twiddle/issues) if it's not on the list yet.
+To make using Ember Twiddle secure, we use the [sandbox](http://caniuse.com/#feat=iframe-sandbox) and [srcdoc](http://caniuse.com/#feat=iframe-srcdoc) attributes of the `<iframe>` element. Especially `srcdoc` is not supported by any version of IE at the moment and older versions of other browsers also lack support for `sandbox`. Furthermore, the sandbox prohibits the use of cookies, localstorage, indexdb, WebWoker etc.
 
-There are a few major items on the roadmap for 1.0. This list is prioritized because the issues are more or less blocking each other.
+We are planning to move to a secure solution with better compatibility soon (most likely one where the twiddle is run on a different domain).
 
-#### #38 [Configurable dependencies](https://github.com/ember-cli/ember-twiddle/issues/38)
+## Feedback
 
-Basically the option to specify which version of `ember` and `ember-data` should be used. Right now, your Twiddle will use the same version as Ember Twiddle (1.13 at the moment).
+You can use the [issue tracker](/ember-cli/ember-twiddle/issues) to provide feedback, suggest features or report bugs.  Before you open an issue though, make sure you check [canary.ember-twiddle.com](http://canary.ember-twiddle.com) to see whether it's not already fixed on `master`. Of course, you should also check whether an issue doesn't exist already (if it does, use the comments to provide additional input, or just a simple `+1`).
 
+#### Security-related issues
 
-#### #10 [Major UX iteration (filetree)](https://github.com/ember-cli/ember-twiddle/issues/10)
-
-A next iteration on the UX, adding a filetree column and polising the interface.
-
-
-#### #13 [Embed support](https://github.com/ember-cli/ember-twiddle/issues/13)
-
-Offering an easy way to embed a twiddle into your own site.
-
+If you run into a security-related issue, please **do not** open an issue for it but instead email security@emberjs.com (preferably with a twiddle demonstrating the issue).
 
 [travis-badge]: https://travis-ci.org/ember-cli/ember-twiddle.svg?branch=master
 [travis-badge-url]: https://travis-ci.org/ember-cli/ember-twiddle

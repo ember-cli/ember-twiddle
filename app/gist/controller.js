@@ -1,8 +1,8 @@
 import Ember from "ember";
 import config from '../config/environment';
 
-export default Em.Controller.extend({
-  emberCli: Em.inject.service('ember-cli'),
+export default Ember.Controller.extend({
+  emberCli: Ember.inject.service('ember-cli'),
   version: config.APP.version,
   init() {
     this._super(...arguments);
@@ -13,7 +13,7 @@ export default Em.Controller.extend({
    * Output from the build, sets the `code` attr on the component
    * @type {String}
    */
-  buildOutput: Ember.Object.create({ code: '', styles: ''}),
+  buildOutput: '',
   isBuilding: false,
   unsaved: true,
   activeFile: null,
@@ -46,11 +46,11 @@ export default Em.Controller.extend({
     this.set('isBuilding', true);
     this.set('buildErrors', []);
 
-    this.get('emberCli').compileGist(this.get('model')).then((buildOutput) => {
+    this.get('emberCli').compileGist(this.get('model')).then(buildOutput => {
       this.set('isBuilding', false);
       this.set('buildOutput', buildOutput);
     })
-    .catch((errors) => {
+    .catch(errors => {
       this.set('isBuilding', false);
       this.set('buildErrors', errors);
       errors.forEach(error => {
@@ -62,7 +62,7 @@ export default Em.Controller.extend({
   /**
    * Set the initial file columns
    */
-  initializeColumns: Em.observer('model', function() {
+  initializeColumns: Ember.observer('model', function() {
     var files = this.get('model.files');
 
     if(files.objectAt(0)) {
@@ -189,8 +189,14 @@ export default Em.Controller.extend({
     // TODO: this in a controller seems suspect, rather this should likely be
     // part of some handshake, to ensure no races exist. This should likley not
     // be something a controller would handle - (SP)
-    window.updateDemoAppUrl = Ember.run.bind(this, function() {
-      this.set('applicationUrl', window.demoAppUrl || '/');
+    window.addEventListener('message', (m) => {
+      Ember.run(() => {
+        if(typeof m.data==='object' && 'setDemoAppUrl' in m.data) {
+          if (!this.get('isDestroyed')) {
+            this.set('applicationUrl', m.data.setDemoAppUrl || '/');
+          }
+        }
+      });
     });
   }
 });
