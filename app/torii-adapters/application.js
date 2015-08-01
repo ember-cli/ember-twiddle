@@ -23,7 +23,7 @@ export default Ember.Object.extend({  /**
   fetch () {
     var token = localStorage.getItem('fiddle_gh_session');
 
-    if(Em.isBlank(token)) { return Em.RSVP.reject(); }
+    if(Ember.isBlank(token)) { return Ember.RSVP.reject(); }
 
     return this.resolveUser(token);
   },
@@ -46,6 +46,6 @@ export default Ember.Object.extend({  /**
    */
   close () {
     localStorage.removeItem('fiddle_gh_session');
-    return Em.RSVP.resolve();
+    return Ember.RSVP.resolve();
   }
 });

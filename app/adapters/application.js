@@ -1,11 +1,14 @@
 import DS from 'ember-data';
+import Ember from 'ember';
 import config from '../config/environment';
+
+const { computed } = Ember;
 
 export default DS.RESTAdapter.extend({
 
   host: config.host,
 
-  headers: Em.computed('session.token', function() {
+  headers: computed('session.token', function() {
     var token  = this.get('session.token') || config.TMP_TORII_TOKEN;
     if (token) {
       return {

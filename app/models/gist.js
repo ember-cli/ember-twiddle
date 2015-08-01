@@ -1,15 +1,25 @@
 import DS from 'ember-data';
+import Ember from 'ember';
 import { memberAction } from 'ember-api-actions';
 
+const { attr, hasMany } = DS;
+const {
+  computed,
+  computed: { oneWay },
+  on
+} = Ember;
+
 export default DS.Model.extend({
-  url: DS.attr('string'),
-  description: DS.attr('string'),
-  htmlUrl: DS.attr('string'),
-  files: DS.hasMany('gistFile', {async:false}),
-  history: DS.hasMany('gistRevision', {async:false}),
-  public: DS.attr('boolean', {defaultValue: true}),
-  currentRevision: Em.computed.oneWay('history.firstObject.shortId'),
-  shortId: Em.computed('id', function() {
+  url: attr('string'),
+  description: attr('string'),
+  htmlUrl: attr('string'),
+  files: hasMany('gistFile', { async: false }),
+  history: hasMany('gistRevision', { async: false }),
+  public: attr('boolean', { defaultValue: true }),
+
+  currentRevision: oneWay('history.firstObject.shortId'),
+
+  shortId: computed('id', function() {
     return (this.get('id')||'').substring(0,7);
   }),
 
@@ -36,7 +46,7 @@ export default DS.Model.extend({
   /**
     Make sure we don't delete files twice.
    */
-  clearDeletedFiles: Em.on('didUpdate', function() {
+  clearDeletedFiles: on('didUpdate', function() {
     this.set('deletedFiles', null);
   })
 });

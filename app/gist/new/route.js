@@ -1,7 +1,8 @@
+import Ember from 'ember';
 import GistRoute from "ember-twiddle/routes/gist-base-route";
 
 export default GistRoute.extend({
-  emberCli: Em.inject.service('ember-cli'),
+  emberCli: Ember.inject.service('ember-cli'),
 
   model () {
     this.store.unloadAll('gistFile');

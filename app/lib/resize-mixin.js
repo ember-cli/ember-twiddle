@@ -1,13 +1,22 @@
-export default Em.Mixin.create({
-  setupResizeHandler: function () {
-    Em.$(window).on('resize', this.get("resizeHandler"));
-  }.on('didInsertElement'),
+import Ember from 'ember';
 
-  teardownResizeHandler: function () {
-    Em.$(window).off('resize', this.get("resizeHandler"));
-  }.on('willDestroyElement'),
+const {
+  $,
+  computed,
+  on,
+  run
+} = Ember;
 
-  resizeHandler: function () {
-    return Em.run.bind(this, 'didResize');
-  }.property()
+export default Ember.Mixin.create({
+  setupResizeHandler: on('didInsertElement', function() {
+    $(window).on('resize', this.get("resizeHandler"));
+  }),
+
+  teardownResizeHandler: on('willDestroyElement', function() {
+    $(window).off('resize', this.get("resizeHandler"));
+  }),
+
+  resizeHandler: computed(function() {
+    return run.bind(this, 'didResize');
+  })
 });

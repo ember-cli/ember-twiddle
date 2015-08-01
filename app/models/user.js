@@ -1,9 +1,13 @@
 import DS from 'ember-data';
+import Ember from 'ember;';
+
+const { attr } = DS;
+const { computed } = Ember;
 
 export default DS.Model.extend({
-  login: DS.attr('string'),
-  avatarUrl: DS.attr('string'),
-  avatarUrl32: Em.computed('avatarUrl', function() {
+  login: attr('string'),
+  avatarUrl: attr('string'),
+  avatarUrl32: computed('avatarUrl', function() {
     return this.get('avatarUrl') + '&s=32';
   })
 });
