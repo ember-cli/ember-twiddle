@@ -1,8 +1,7 @@
 import Ember from "ember";
 
 export default Ember.Component.extend({
-  tagName: 'ul',
-  classNames: ['nav', 'nav-pills', 'file-menu'],
+  tagName: 'li',
 
   actions: {
     addFile(type) {

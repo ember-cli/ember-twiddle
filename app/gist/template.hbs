@@ -1,16 +1,19 @@
 <div class="row toolbar">
-  {{file-menu model=model
-              session=session
-              activeEditorCol=activeEditorCol
-              activeFile=activeFile
-              addFile=(action "addFile")
-              renameFile=(action "renameFile")
-              removeFile=(action "removeFile")
-              saveGist="saveGist"
-              fork="fork"
-              deleteGist=(action "deleteGist")
-              signInViaGithub="signInViaGithub"
-  }}
+  <ul class="nav nav-pills file-menu">
+    {{file-menu model=model
+                session=session
+                activeEditorCol=activeEditorCol
+                activeFile=activeFile
+                addFile=(action "addFile")
+                renameFile=(action "renameFile")
+                removeFile=(action "removeFile")
+                saveGist="saveGist"
+                fork="fork"
+                deleteGist=(action "deleteGist")
+                signInViaGithub="signInViaGithub"}}
+
+    {{editor-mode-menu setKeyMap=(action "setEditorKeyMap")}}
+  </ul>
 
   <div class="title">
     {{!-- {{#if isEditingDescription}} --}}
@@ -31,11 +34,11 @@
 <div class="row twiddle-panes">
 
   <div class="col-md-4 code {{if col1Active 'active' ''}}">
-    {{file-editor-column col="1" file=col1File allFiles=model.files contentsChanged="contentsChanged"}}
+    {{file-editor-column col="1" file=col1File allFiles=model.files keyMap=settings.keyMap contentsChanged="contentsChanged"}}
   </div>
 
   <div class="col-md-4 code {{if col2Active 'active' ''}}">
-    {{file-editor-column col="2" file=col2File allFiles=model.files contentsChanged="contentsChanged"}}
+    {{file-editor-column col="2" file=col2File allFiles=model.files keyMap=settings.keyMap contentsChanged="contentsChanged"}}
   </div>
 
   <div class="col-md-4 output">

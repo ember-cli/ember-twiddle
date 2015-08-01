@@ -1,5 +1,6 @@
 import Ember from "ember";
 import config from '../config/environment';
+import Settings from '../models/settings';
 
 const {
   computed: { equal },
@@ -28,6 +29,8 @@ export default Ember.Controller.extend({
   col2File: null,
   col1Active: equal('activeEditorCol','1'),
   col2Active: equal('activeEditorCol','2'),
+
+  settings: Settings.create(),
 
   /**
    * Errors during build
@@ -169,6 +172,12 @@ export default Ember.Controller.extend({
 
         this.send('contentsChanged');
       }
+    },
+
+    setEditorKeyMap (keyMap) {
+      const settings = this.get('settings');
+      settings.set('keyMap', keyMap);
+      settings.save();
     }
   },
 
