@@ -1,0 +1,4 @@
+<label class="checkbox-inline">{{input type="checkbox" id="live-reload" checked=isLiveReload}}Live Reload</label>
+{{#unless isLiveReload}}
+  <button class="btn-default run-now" {{action "runNowClicked"}}>Run Now</button>
+{{/unless}}

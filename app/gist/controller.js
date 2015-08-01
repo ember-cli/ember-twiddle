@@ -74,20 +74,23 @@ export default Ember.Controller.extend({
     }
   }),
 
-  rebuildApp: Em.observer('model.files.@each.content', 'isLiveReload', function() {
-    if (!this.get('unsaved')) {
-      Em.run.scheduleOnce('sync', this, this.setUnsaved);
-    }
+  rebuildApp: function() {
     if (this.get('isLiveReload')) {
-      Em.run.debounce(this, this.buildApp, 500);
+      this.buildApp();
     }
-  }),
-
-  setUnsaved() {
-    this.set('unsaved', true);
   },
 
   actions: {
+    contentsChanged() {
+      this.set('unsaved', true);
+      this.rebuildApp();
+    },
+
+    liveReloadChanged(isLiveReload) {
+      this.set('isLiveReload', isLiveReload);
+      this.rebuildApp();
+    },
+
     focusEditor (editor) {
       this.set('activeEditorCol', editor.get('col'));
       this.set('activeFile', editor.get('file'));
