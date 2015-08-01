@@ -7,13 +7,13 @@ An ember cli like web based javascript sharing tool. http://ember-twiddle.com
 
 ### Browser support
 
-To make using Ember Twiddle secure, we use the [sandbox](http://caniuse.com/#feat=iframe-sandbox) and [srcdoc](http://caniuse.com/#feat=iframe-srcdoc) attributes of the `<iframe>` element. Especially `srcdoc` is not supported by any version of IE at the moment and older versions of other browsers also lack support for `sandbox`. Furthermore, the sandbox prohibits the use of cookies, localstorage, indexdb, WebWoker etc.
+To make using Ember Twiddle secure, we use the [sandbox](http://caniuse.com/#feat=iframe-sandbox) and [srcdoc](http://caniuse.com/#feat=iframe-srcdoc) attributes of the `<iframe>` element. Especially `srcdoc` is not supported by any version of IE at the moment and older versions of other browsers also lack support for `sandbox`. Furthermore, the sandbox prohibits the use of cookies, localStorage, IndexedDB, Web Workers, etc.
 
 We are planning to move to a secure solution with better compatibility soon (most likely one where the twiddle is run on a different domain).
 
 ## Feedback
 
-You can use the [issue tracker](/ember-cli/ember-twiddle/issues) to provide feedback, suggest features or report bugs.  Before you open an issue though, make sure you check [canary.ember-twiddle.com](http://canary.ember-twiddle.com) to see whether it's not already fixed on `master`. Of course, you should also check whether an issue doesn't exist already (if it does, use the comments to provide additional input, or just a simple `+1`).
+You can use the [issue tracker](/ember-cli/ember-twiddle/issues) to provide feedback, suggest features or report bugs.  Before you open an issue though, make sure you check [canary.ember-twiddle.com](http://canary.ember-twiddle.com) to see whether it's not already fixed on `master`. Of course, you should also check whether an issue doesn't exist already (if it does, use the comments to provide additional input).
 
 #### Security-related issues
 
