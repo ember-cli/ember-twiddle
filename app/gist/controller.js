@@ -76,9 +76,13 @@ export default Ember.Controller.extend({
 
   rebuildApp: function() {
     if (this.get('isLiveReload')) {
-      this.buildApp();
+      Ember.run.debounce(this, this.buildApp, 500);
     }
   },
+
+  modelDidChange: Ember.observer('model.files.[]', function() {
+    this.rebuildApp();
+  }),
 
   actions: {
     contentsChanged() {

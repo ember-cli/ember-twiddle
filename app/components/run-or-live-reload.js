@@ -1,3 +1,5 @@
+import Ember from "ember";
+
 export default Ember.Component.extend({
   classNames: ['run-or-live-reload'],
 
@@ -7,9 +9,9 @@ export default Ember.Component.extend({
    */
   isLiveReload: true,
 
-  liveReloadDidChange: function() {
+  liveReloadDidChange: Ember.observer('isLiveReload', function() {
     this.sendAction('liveReloadChanged', this.get('isLiveReload'));
-  }.observes('isLiveReload'),
+  }),
 
   actions: {
     runNowClicked() {

@@ -22,9 +22,7 @@ export default Ember.Component.extend({
   },
 
   contentsDidChange: function() {
-    Ember.run.debounce(function() {
-      this.sendAction('contentsChanged');
-    }.bind(this), 500);
+    this.sendAction('contentsChanged');
   }.observes('file.content'),
 
   actions: {
