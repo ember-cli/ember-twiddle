@@ -14,7 +14,7 @@ export default Ember.Component.extend({
       this.sendAction('runNow');
     },
 
-    liveReloadClicked(value, checked) {
+    liveReloadClicked(checked) {
       this.sendAction('liveReloadChanged', checked);
     }
   }
