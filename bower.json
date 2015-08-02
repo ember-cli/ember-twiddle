@@ -11,7 +11,7 @@
     "ember-resolver": "~0.1.18",
     "jquery": "^1.11.1",
     "loader.js": "ember-cli/loader.js#3.2.0",
-    "qunit": "~1.17.1",
+    "qunit": "~1.18.0",
     "codemirror": "~5.5.0",
     "ember-cli-codemirror-shim": "~0.0.1",
     "bootstrap-sass": "~3.3.5",
