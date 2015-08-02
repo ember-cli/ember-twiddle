@@ -9,13 +9,13 @@ export default Ember.Component.extend({
    */
   isLiveReload: true,
 
-  liveReloadDidChange: Ember.observer('isLiveReload', function() {
-    this.sendAction('liveReloadChanged', this.get('isLiveReload'));
-  }),
-
   actions: {
     runNowClicked() {
       this.sendAction('runNow');
+    },
+
+    liveReloadClicked(value, checked) {
+      this.sendAction('liveReloadChanged', checked);
     }
   }
 });
