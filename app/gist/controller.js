@@ -142,8 +142,7 @@ export default Ember.Controller.extend({
         this.set('col1File', file);
         this.set('activeEditorCol', '1');
 
-        this.set('unsaved', true);
-        this.rebuildApp();
+        this.send('contentsChanged');
       }
     },
 
@@ -179,8 +178,7 @@ export default Ember.Controller.extend({
         this.notify.info('File %@ was deleted'.fmt(file.get('filePath')));
         this._removeFileFromColumns(file);
 
-        this.set('unsaved', true);
-        this.rebuildApp();
+        this.send('contentsChanged');
       }
     }
   },
