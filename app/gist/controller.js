@@ -15,6 +15,7 @@ export default Ember.Controller.extend({
    */
   buildOutput: '',
   isBuilding: false,
+  unsaved: true,
   activeFile: null,
   activeEditorCol: null,
   col1File: null,
@@ -73,13 +74,23 @@ export default Ember.Controller.extend({
     }
   }),
 
-  rebuildApp: Ember.observer('model.files.@each.content', 'isLiveReload', function() {
+  rebuildApp: function() {
     if (this.get('isLiveReload')) {
-      Em.run.debounce(this, this.buildApp, 500);
+      Ember.run.debounce(this, this.buildApp, 500);
     }
-  }),
+  },
 
   actions: {
+    contentsChanged() {
+      this.set('unsaved', true);
+      this.rebuildApp();
+    },
+
+    liveReloadChanged(isLiveReload) {
+      this.set('isLiveReload', isLiveReload);
+      this.rebuildApp();
+    },
+
     focusEditor (editor) {
       this.set('activeEditorCol', editor.get('col'));
       this.set('activeFile', editor.get('file'));
@@ -130,6 +141,8 @@ export default Ember.Controller.extend({
         this.notify.info('File %@ was added'.fmt(file.get('filePath')));
         this.set('col1File', file);
         this.set('activeEditorCol', '1');
+
+        this.send('contentsChanged');
       }
     },
 
@@ -164,6 +177,8 @@ export default Ember.Controller.extend({
         file.deleteRecord();
         this.notify.info('File %@ was deleted'.fmt(file.get('filePath')));
         this._removeFileFromColumns(file);
+
+        this.send('contentsChanged');
       }
     }
   },

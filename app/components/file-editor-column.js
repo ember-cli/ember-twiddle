@@ -1,8 +1,10 @@
-export default Em.Component.extend({
+import Ember from "ember";
+
+export default Ember.Component.extend({
   focusEditor: 'focusEditor',
   selectFile: 'selectFile',
 
-  editorMode: Em.computed('file.extension', function () {
+  editorMode: Ember.computed('file.extension', function () {
     switch(this.get('file.extension')) {
       case '.js':
         return 'javascript';
@@ -23,6 +25,10 @@ export default Em.Component.extend({
     selectFile (file) {
       this.set('file', file);
       this.sendAction('selectFile', file);
+    },
+
+    valueUpdated() {
+      this.sendAction('contentsChanged');
     }
   }
 });
