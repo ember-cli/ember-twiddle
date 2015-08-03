@@ -10,7 +10,9 @@ export default GistRoute.extend({
   setupController() {
     this._super.apply(this, arguments);
 
-    this.controllerFor('gist').set('unsaved', false);
+    let gistController = this.controllerFor('gist');
+    gistController.set('unsaved', false);
+    gistController.rebuildApp();
   },
 
   actions: {

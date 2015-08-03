@@ -80,10 +80,6 @@ export default Ember.Controller.extend({
     }
   },
 
-  modelDidChange: Ember.observer('model.files.[]', function() {
-    this.rebuildApp();
-  }),
-
   actions: {
     contentsChanged() {
       this.set('unsaved', true);
@@ -145,6 +141,9 @@ export default Ember.Controller.extend({
         this.notify.info('File %@ was added'.fmt(file.get('filePath')));
         this.set('col1File', file);
         this.set('activeEditorCol', '1');
+
+        this.set('unsaved', true);
+        this.rebuildApp();
       }
     },
 
@@ -179,6 +178,9 @@ export default Ember.Controller.extend({
         file.deleteRecord();
         this.notify.info('File %@ was deleted'.fmt(file.get('filePath')));
         this._removeFileFromColumns(file);
+
+        this.set('unsaved', true);
+        this.rebuildApp();
       }
     }
   },
