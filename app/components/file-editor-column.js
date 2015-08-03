@@ -21,14 +21,14 @@ export default Ember.Component.extend({
     this.sendAction('focusEditor', this);
   },
 
-  contentsDidChange: function() {
-    this.sendAction('contentsChanged');
-  }.observes('file.content'),
-
   actions: {
     selectFile (file) {
       this.set('file', file);
       this.sendAction('selectFile', file);
+    },
+
+    valueUpdated() {
+      this.sendAction('contentsChanged');
     }
   }
 });

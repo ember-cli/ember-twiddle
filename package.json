@@ -54,7 +54,7 @@
     "ember-export-application-global": "^1.0.3",
     "ember-git-version": "0.0.1",
     "ember-notify": "3.4.0",
-    "ivy-codemirror": "inDream/ivy-codemirror",
+    "ivy-codemirror": "gaurav0/ivy-codemirror#ember_cli",
     "torii": "^0.5.1"
   },
   "dependencies": {
