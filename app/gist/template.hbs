@@ -1,44 +1,16 @@
 <div class="row toolbar">
-  <ul class="nav nav-pills file-menu">
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        File <b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu">
-        <li>{{#link-to 'gist.new'}}New Twiddle{{/link-to}}</li>
-        <li role="presentation" class="divider"></li>
-        <li class="dropdown-submenu">
-          <a tabindex="-1" href="#">Add...</a>
-          <ul class="dropdown-menu">
-            <li><a {{action 'addFile' ''}}>Other (empty file)</a></li>
-            <li><a {{action 'addFile' 'component-hbs'}}>Component (hbs)</a></li>
-            <li><a {{action 'addFile' 'component-js'}}>Component (js)</a></li>
-            <li><a {{action 'addFile' 'model'}}>Model</a></li>
-            <li><a {{action 'addFile' 'controller'}}>Controller</a></li>
-            <li><a {{action 'addFile' 'route'}}>Route</a></li>
-            <li><a {{action 'addFile' 'template'}} class="test-template-action">Template</a></li>
-            <li><a {{action 'addFile' 'router'}}>Router</a></li>
-            <li><a {{action 'addFile' 'css'}}>CSS</a></li>
-          </ul>
-        </li>
-        {{#if activeEditorCol}}
-        <li><a {{action 'renameFile' activeFile}}>Move {{activeFile.filePath}}</a></li>
-        <li><a {{action 'removeFile' activeFile}}>Delete {{activeFile.filePath}}</a></li>
-        {{/if}}
-        {{#if session.isAuthenticated}}
-        <li role="presentation" class="divider"></li>
-        <li><a {{action 'saveGist' model}}>Save to Github Gist</a></li>
-        {{#unless model.isNew}}
-        <li><a {{action 'share'}}>Share Twiddle</a></li>
-        <li><a {{action 'fork' model}}>Fork Twiddle</a></li>
-        <li><a {{action 'deleteGist' model}}>Delete Twiddle</a></li>
-        {{/unless}}
-        {{else}}
-        <li><a {{action 'signInViaGithub'}}>Sign in with Github to Save</a></li>
-        {{/if}}
-      </ul>
-    </li>
-  </ul>
+  {{file-menu model=model
+              session=session
+              activeEditorCol=activeEditorCol
+              activeFile=activeFile
+              addFile=(action "addFile")
+              renameFile=(action "renameFile")
+              removeFile=(action "removeFile")
+              saveGist="saveGist"
+              fork=(action "fork")
+              deleteGist=(action "deleteGist")
+              signInViaGithub="signInViaGithub"
+  }}
 
   <div class="title">
     {{!-- {{#if isEditingDescription}} --}}

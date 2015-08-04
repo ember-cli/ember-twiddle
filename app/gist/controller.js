@@ -112,10 +112,6 @@ export default Ember.Controller.extend({
       }
     },
 
-    share () {
-      prompt('Ctrl + C ;-)', window.location.href);
-    },
-
     /**
      * Add a new file to the model
      * @param {String|null} type Blueprint name or null for empty file
