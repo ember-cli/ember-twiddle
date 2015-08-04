@@ -6,13 +6,13 @@ export default Ember.Component.extend({
 
   actions: {
     addFile(type) {
-      this.sendAction('addFile', type);
+      this.attrs.addFile(type);
     },
     renameFile(file) {
-      this.sendAction('renameFile', file);
+      this.attrs.renameFile(file);
     },
     removeFile(file) {
-      this.sendAction('removeFile', file);
+      this.attrs.removeFile(file);
     },
     saveGist(model) {
       this.sendAction('saveGist', model);
@@ -21,13 +21,12 @@ export default Ember.Component.extend({
       prompt('Ctrl + C ;-)', window.location.href);
     },
     fork(model) {
-      this.sendAction('fork', model);
+      this.attrs.fork(model);
     },
     deleteGist(model) {
-      this.sendAction('deleteGist', model);
+      this.attrs.deleteGist(model);
     },
     signInViaGithub() {
-      console.log('here');
       this.sendAction('signInViaGithub');
     }
   }
