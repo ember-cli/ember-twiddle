@@ -2,40 +2,38 @@ import Ember from "ember";
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-let file, model;
-
-let addFileCalled = false;
-let renameFileCalled = false;
-let removeFileCalled = false;
-let saveGistCalled = false;
-let forkCalled = false;
-let deleteGistCalled = false;
-let signInViaGithubCalled = false;
-
-let fileType = null;
-let renamedFile = null;
-let removedFile = null;
-let gistToSave = null;
-let gistToFork = null;
-let gistToDelete = null;
-
 moduleForComponent('file-menu', 'Integration | Component | file menu', {
   integration: true,
   beforeEach() {
 
-    // Set any properties with this.set('myProperty', 'value');
-    file = Ember.Object.create({
+    this.addFileCalled = false;
+    this.renameFileCalled = false;
+    this.removeFileCalled = false;
+    this.saveGistCalled = false;
+    this.forkCalled = false;
+    this.deleteGistCalled = false;
+    this.signInViaGithubCalled = false;
+
+    this.fileType = null;
+    this.renamedFile = null;
+    this.removedFile = null;
+    this.gistToSave = null;
+    this.gistToFork = null;
+    this.gistToDelete = null;
+
+    this.file = Ember.Object.create({
       filePath: "some.path.js"
     });
 
-    model = Ember.Object.create({
+    this.gist = Ember.Object.create({
       id: '74bae9a34142370ff5a3',
-      files: [file],
+      files: [this.file],
       history: [],
       isNew: false
     });
 
-    this.set('model', model);
+    // Set any properties with this.set('myProperty', 'value');
+    this.set('model', this.gist);
 
     this.set('session', Ember.Object.create({
       isAuthenticated: true
@@ -43,16 +41,16 @@ moduleForComponent('file-menu', 'Integration | Component | file menu', {
 
     this.set('activeEditorCol', 1);
 
-    this.set('activeFile', file);
+    this.set('activeFile', this.file);
 
     // Handle any actions with this.on('myAction', function(val) { ... });
-    this.on('addFile', (type) => { addFileCalled = true; fileType = type; });
-    this.on('renameFile', (file) => { renameFileCalled = true; renamedFile = file; });
-    this.on('removeFile', (file) => { removeFileCalled = true; removedFile = file; });
-    this.on('saveGist', (gist) => { saveGistCalled = true; gistToSave = gist; });
-    this.on('fork', (gist) => { forkCalled = true; gistToFork = gist; });
-    this.on('deleteGist', (gist) => { deleteGistCalled = true; gistToDelete = gist; });
-    this.on('signInViaGithub', () => { signInViaGithubCalled = true; });
+    this.on('addFile', (type) => { this.addFileCalled = true; this.fileType = type; });
+    this.on('renameFile', (file) => { this.renameFileCalled = true; this.renamedFile = file; });
+    this.on('removeFile', (file) => { this.removeFileCalled = true; this.removedFile = file; });
+    this.on('saveGist', (gist) => { this.saveGistCalled = true; this.gistToSave = gist; });
+    this.on('fork', (gist) => { this.forkCalled = true; this.gistToFork = gist; });
+    this.on('deleteGist', (gist) => { this.deleteGistCalled = true; this.gistToDelete = gist; });
+    this.on('signInViaGithub', () => { this.signInViaGithubCalled = true; });
 
     this.render(hbs`{{file-menu model=model
                               session=session
@@ -73,8 +71,8 @@ test('it calls addFile on clicking an add file menu item', function(assert) {
 
   this.$('.test-template-action').click();
 
-  assert.ok(addFileCalled, 'addFile was called');
-  assert.equal(fileType, 'template', 'addFile was called with type parameter');
+  assert.ok(this.addFileCalled, 'addFile was called');
+  assert.equal(this.fileType, 'template', 'addFile was called with type parameter');
 });
 
 test("it calls renameFile on clicking 'Rename'", function(assert) {
@@ -82,8 +80,8 @@ test("it calls renameFile on clicking 'Rename'", function(assert) {
 
   this.$('.test-rename-action').click();
 
-  assert.ok(renameFileCalled, 'renameFile was called');
-  assert.equal(renamedFile, file, 'renameFile was called with file to rename');
+  assert.ok(this.renameFileCalled, 'renameFile was called');
+  assert.equal(this.renamedFile, this.file, 'renameFile was called with file to rename');
 });
 
 test("it calls removeFile on clicking 'Remove'", function(assert) {
@@ -91,8 +89,8 @@ test("it calls removeFile on clicking 'Remove'", function(assert) {
 
   this.$('.test-remove-action').click();
 
-  assert.ok(removeFileCalled, 'removeFile was called');
-  assert.equal(removedFile, file, 'removeFile was called with file to remove');
+  assert.ok(this.removeFileCalled, 'removeFile was called');
+  assert.equal(this.removedFile, this.file, 'removeFile was called with file to remove');
 });
 
 test("it calls saveGist on clicking 'Save to Github'", function(assert) {
@@ -100,8 +98,8 @@ test("it calls saveGist on clicking 'Save to Github'", function(assert) {
 
   this.$('.test-save-action').click();
 
-  assert.ok(saveGistCalled, 'saveGist was called');
-  assert.equal(gistToSave, model, 'saveGist was called with gist to save');
+  assert.ok(this.saveGistCalled, 'saveGist was called');
+  assert.equal(this.gistToSave, this.gist, 'saveGist was called with gist to save');
 });
 
 test("it calls fork on clicking 'Fork Twiddle'", function(assert) {
@@ -109,8 +107,8 @@ test("it calls fork on clicking 'Fork Twiddle'", function(assert) {
 
   this.$('.test-fork-action').click();
 
-  assert.ok(forkCalled, 'fork was called');
-  assert.equal(gistToFork, model, 'fork was called with gist to fork');
+  assert.ok(this.forkCalled, 'fork was called');
+  assert.equal(this.gistToFork, this.gist, 'fork was called with gist to fork');
 });
 
 test("it calls deleteGist on clicking 'Delete Twiddle'", function(assert) {
@@ -118,8 +116,8 @@ test("it calls deleteGist on clicking 'Delete Twiddle'", function(assert) {
 
   this.$('.test-delete-action').click();
 
-  assert.ok(deleteGistCalled, 'deleteGist was called');
-  assert.equal(gistToDelete, model, 'deleteGist was called with gist to delete');
+  assert.ok(this.deleteGistCalled, 'deleteGist was called');
+  assert.equal(this.gistToDelete, this.gist, 'deleteGist was called with gist to delete');
 });
 
 test("it calls signInViaGithub when clicking on 'Sign In To Github To Save'", function(assert) {
@@ -128,5 +126,5 @@ test("it calls signInViaGithub when clicking on 'Sign In To Github To Save'", fu
   this.set('session.isAuthenticated', false);
   this.$('.test-sign-in-action').click();
 
-  assert.ok(signInViaGithubCalled, 'signInViaGithub was called');
+  assert.ok(this.signInViaGithubCalled, 'signInViaGithub was called');
 });
