@@ -27,6 +27,7 @@ export default Ember.Component.extend({
       this.sendAction('deleteGist', model);
     },
     signInViaGithub() {
+      console.log('here');
       this.sendAction('signInViaGithub');
     }
   }
