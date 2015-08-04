@@ -2,31 +2,33 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from 'ember-twiddle/tests/helpers/start-app';
 
-let application;
-let cacheConfirm;
-
-const firstFilePicker = '.code:first-of-type .dropdown-toggle';
-const secondFile = '.code:first-of-type .dropdown-menu li:nth-child(2) a';
-const anyFile = '.code:first-of-type .dropdown-menu li:nth-child(1) a';
+const firstColumn = '.code:first-of-type';
+const firstFilePicker = firstColumn + ' .dropdown-toggle';
+const secondFile = firstColumn + ' .dropdown-menu li:nth-child(2) a';
+const anyFile = firstColumn + ' .dropdown-menu li:nth-child(1) a';
 const fileMenu = '.file-menu .dropdown-toggle';
-//const firstColumn = '.code:first-of-type';
 const deleteAction = '.file-menu a:contains(Delete)';
 const addTemplateAction = '.test-template-action';
-const firstFilePickerFiles = '.code:first-of-type .dropdown-menu>li';
+const firstFilePickerFiles = firstColumn + ' .dropdown-menu>li';
+const firstColumnTextarea = firstColumn + ' .CodeMirror textarea';
 
 let promptValue = '';
 
 module('Acceptance | gist', {
   beforeEach: function() {
-    application = startApp();
-    cacheConfirm = window.confirm;
+    this.application = startApp();
+    this.cacheConfirm = window.confirm;
+    this.cachePrompt = window.prompt;
     window.confirm = () => true;
     window.prompt = () => promptValue;
+
+    server.create('user', 'octocat');
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
-    window.confirm = cacheConfirm;
+    Ember.run(this.application, 'destroy');
+    window.confirm = this.cacheConfirm;
+    window.prompt = this.cachePrompt;
   }
 });
 
@@ -90,5 +92,30 @@ test('can add two templates with different names', function(assert) {
   andThen(function() {
     numFiles = find(firstFilePickerFiles).length;
     assert.equal(numFiles, origFiles + 2, 'Added second file');
+  });
+});
+
+test('unsaved indicator', function(assert) {
+  const indicator = ".test-unsaved-indicator";
+
+  visit('/');
+
+  andThen(function() {
+    assert.equal(find(indicator).length, 1, "Unsaved indicator appears when first loading");
+
+    //TODO: implement helper
+    //saveFile();
+  });
+
+  andThen(function() {
+    //assert.equal(find(indicator).length, 0, "Unsaved indicator disappears after saving");
+
+    click(firstColumnTextarea);
+    fillIn(firstColumnTextarea, "some text");
+    triggerEvent(firstColumnTextarea, "blur");
+  });
+
+  andThen(function() {
+    assert.equal(find(indicator).length, 1, "Unsaved indicator reappears after editing");
   });
 });

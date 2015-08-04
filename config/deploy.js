@@ -7,14 +7,14 @@ module.exports = {
       type: "S3",
       accessKeyId: process.env['AWS_ACCESS_KEY_ID'],
       secretAccessKey: process.env['AWS_ACCESS_KEY_SECRET'],
-      bucket: "staging.ember-twiddle.com",
+      bucket: "canary.ember-twiddle.com",
       region: "us-west-2"
     },
     assets: {
       type: "s3",
       accessKeyId: process.env['AWS_ACCESS_KEY_ID'],
       secretAccessKey: process.env['AWS_ACCESS_KEY_SECRET'],
-      bucket: "staging-assets.ember-twiddle.com",
+      bucket: "canary-assets.ember-twiddle.com",
       region: "us-west-2"
     }
   },

@@ -44,10 +44,14 @@
     {{!-- {{#if isEditingDescription}} --}}
     {{title-input value=model.description}}
     {{!-- {{model.description}} --}}
-    {{#unless model.isNew}}
-    <span>{{model.files.length}} files</span>
-    <a class="gist-link" href="{{model.htmlUrl}}" target="_blank">saved to Gist, rev {{model.currentRevision}}</a>
-    {{/unless}}
+    <span class="indicator">
+      {{#if unsaved}}
+        <span class="test-unsaved-indicator">Unsaved</span>
+      {{else}}
+        <span>{{model.files.length}} files</span>
+        <a class="gist-link" href="{{model.htmlUrl}}" target="_blank">saved to Gist, rev {{model.currentRevision}}</a>
+      {{/if}}
+    </span>
   </div>
 
   <ul class="nav nav-pills user-menu">
@@ -90,11 +94,11 @@
 <div class="row twiddle-panes">
 
   <div class="col-md-4 code {{if col1Active 'active' ''}}">
-    {{file-editor-column col="1" file=col1File allFiles=model.files}}
+    {{file-editor-column col="1" file=col1File allFiles=model.files contentsChanged="contentsChanged"}}
   </div>
 
   <div class="col-md-4 code {{if col2Active 'active' ''}}">
-    {{file-editor-column col="2" file=col2File allFiles=model.files}}
+    {{file-editor-column col="2" file=col2File allFiles=model.files contentsChanged="contentsChanged"}}
   </div>
 
   <div class="col-md-4 output">
@@ -112,16 +116,11 @@
       {{/if}}
       </span>
     </div>
-    <div class="run-or-autorun">
-      <label class="checkbox-inline">{{input type="checkbox" id="autorun" checked=isAutorun}}Autorun</label>
-      {{#unless isAutorun}}
-          <button class="btn-default run-now" {{action "runNow"}}>Run Now</button>
-      {{/unless}}
-    </div>
+    {{run-or-live-reload liveReloadChanged="liveReloadChanged" runNow="runNow"}}
     <div class="url-bar">
       <div>{{applicationUrl}}</div>
     </div>
-    {{dummy-demo-app code=buildOutput.code styles=buildOutput.styles twiddleJson=buildOutput.twiddleJson}}
+    {{dummy-demo-app html=buildOutput}}
   </div>
 
 </div>

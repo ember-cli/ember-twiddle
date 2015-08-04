@@ -13,9 +13,17 @@ export default Ember.Route.extend({
       gist.save().then(() => {
         this.notify.info('Saved to Gist %@ on Github'.fmt(gist.get('id')));
         if(newGist) {
-          this.transitionTo('gist.edit', gist);
+          this.transitionTo('gist.edit', gist).then(function() {
+            this.send('setSaved');
+          });
+        } else {
+          this.send('setSaved');
         }
       });
+    },
+
+    setSaved () {
+      this.get('controller').set('unsaved', false);
     },
 
     signInViaGithub () {

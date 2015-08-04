@@ -18,7 +18,7 @@ $code-header-height: 60px;
 	color: $dropdown-link-hover-color;
 }
 
-@import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap";
+@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
 
 button {
   @extend .btn;
@@ -73,6 +73,21 @@ body {
 		margin: 13px auto;
 		text-align: center;
 
+		.indicator {
+			text-transform: uppercase;
+			font-weight: bold;
+			color: #faf2ee;
+			text-shadow: rgba(0, 0, 0, 0.3) 0px 1px 0px;
+
+			a {
+				color: #ffffff;
+		    text-decoration: none;
+				&:hover {
+			    border-bottom: dotted 1px;
+				}
+			}
+		}
+
 		.input-edit {
 			display: inline-block;
 			padding: 5px 10px;
@@ -112,8 +127,7 @@ body {
 		}
 
 		.gist-link, span {
-			color: #aaa;
-			display:inline-block;
+			display: inline-block;
 		}
 
 	}
@@ -294,7 +308,7 @@ body {
   padding: 1px 6px 3px;
 }
 
-.run-or-autorun {
+.run-or-live-reload {
   position: absolute;
   right: 0;
   top: 8px;

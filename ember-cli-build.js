@@ -10,7 +10,7 @@ module.exports = function() {
   var prepend = null;
 
   if(isProductionLikeBuild) {
-    prepend = env==='production' ? '//assets.ember-twiddle.com/' : '//staging-assets.ember-twiddle.com/';
+    prepend = env==='production' ? '//assets.ember-twiddle.com/' : '//canary-assets.ember-twiddle.com/';
   }
 
   var blueprintsCode = getEmberCLIBlueprints();
@@ -88,11 +88,11 @@ function getEmberCLIBlueprints() {
   }
 
   fileMap['twiddle.json'] = fs.readFileSync('blueprints/twiddle.json').toString();
-  fileMap['config/environment'] = fs.readFileSync('blueprints/config_environment.js').toString();
   fileMap['initializers/router'] = fs.readFileSync('blueprints/router_initializer.js').toString();
   fileMap['controllers/application'] = fs.readFileSync('blueprints/application_controller.js').toString();
   fileMap['templates/application'] = fs.readFileSync('blueprints/application_template.hbs').toString();
   fileMap['app.css'] = fs.readFileSync('blueprints/app.css').toString();
+  fileMap['index.html'] = fs.readFileSync('blueprints/index.html').toString();
 
   return 'export default ' + JSON.stringify(fileMap);
 }

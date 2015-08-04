@@ -1,8 +1,8 @@
 import Ember from "ember";
 import config from '../config/environment';
 
-export default Em.Controller.extend({
-  emberCli: Em.inject.service('ember-cli'),
+export default Ember.Controller.extend({
+  emberCli: Ember.inject.service('ember-cli'),
   version: config.APP.version,
   init() {
     this._super(...arguments);
@@ -13,8 +13,9 @@ export default Em.Controller.extend({
    * Output from the build, sets the `code` attr on the component
    * @type {String}
    */
-  buildOutput: Ember.Object.create({ code: '', styles: ''}),
+  buildOutput: '',
   isBuilding: false,
+  unsaved: true,
   activeFile: null,
   activeEditorCol: null,
   col1File: null,
@@ -32,7 +33,7 @@ export default Em.Controller.extend({
    * Whether user wishes the code to automatically run
    * @type {boolean}
    */
-  isAutorun: true,
+  isLiveReload: true,
 
   /**
    * Build the application and set the iframe code
@@ -45,11 +46,11 @@ export default Em.Controller.extend({
     this.set('isBuilding', true);
     this.set('buildErrors', []);
 
-    this.get('emberCli').compileGist(this.get('model')).then((buildOutput) => {
+    this.get('emberCli').compileGist(this.get('model')).then(buildOutput => {
       this.set('isBuilding', false);
       this.set('buildOutput', buildOutput);
     })
-    .catch((errors) => {
+    .catch(errors => {
       this.set('isBuilding', false);
       this.set('buildErrors', errors);
       errors.forEach(error => {
@@ -61,7 +62,7 @@ export default Em.Controller.extend({
   /**
    * Set the initial file columns
    */
-  initializeColumns: Em.observer('model', function() {
+  initializeColumns: Ember.observer('model', function() {
     var files = this.get('model.files');
 
     if(files.objectAt(0)) {
@@ -73,13 +74,23 @@ export default Em.Controller.extend({
     }
   }),
 
-  rebuildApp: Em.observer('model.files.@each.content', 'isAutorun', function() {
-    if (this.get('isAutorun')) {
-      Em.run.debounce(this, this.buildApp, 500);
+  rebuildApp: function() {
+    if (this.get('isLiveReload')) {
+      Ember.run.debounce(this, this.buildApp, 500);
     }
-  }),
+  },
 
   actions: {
+    contentsChanged() {
+      this.set('unsaved', true);
+      this.rebuildApp();
+    },
+
+    liveReloadChanged(isLiveReload) {
+      this.set('isLiveReload', isLiveReload);
+      this.rebuildApp();
+    },
+
     focusEditor (editor) {
       this.set('activeEditorCol', editor.get('col'));
       this.set('activeFile', editor.get('file'));
@@ -130,6 +141,8 @@ export default Em.Controller.extend({
         this.notify.info('File %@ was added'.fmt(file.get('filePath')));
         this.set('col1File', file);
         this.set('activeEditorCol', '1');
+
+        this.send('contentsChanged');
       }
     },
 
@@ -164,6 +177,8 @@ export default Em.Controller.extend({
         file.deleteRecord();
         this.notify.info('File %@ was deleted'.fmt(file.get('filePath')));
         this._removeFileFromColumns(file);
+
+        this.send('contentsChanged');
       }
     }
   },
@@ -181,8 +196,14 @@ export default Em.Controller.extend({
     // TODO: this in a controller seems suspect, rather this should likely be
     // part of some handshake, to ensure no races exist. This should likley not
     // be something a controller would handle - (SP)
-    window.updateDemoAppUrl = Ember.run.bind(this, function() {
-      this.set('applicationUrl', window.demoAppUrl || '/');
+    window.addEventListener('message', (m) => {
+      Ember.run(() => {
+        if(typeof m.data==='object' && 'setDemoAppUrl' in m.data) {
+          if (!this.get('isDestroyed')) {
+            this.set('applicationUrl', m.data.setDemoAppUrl || '/');
+          }
+        }
+      });
     });
   }
 });
