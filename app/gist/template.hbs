@@ -26,41 +26,11 @@
     </span>
   </div>
 
-  <ul class="nav nav-pills user-menu">
-    {{#if session.isOpening}}
-      <li class="dropdown disabled signing-in">Signing in...</li>
-    {{else if session.isAuthenticated}}
-      <span class="user-avatar"><img src="{{session.currentUser.avatarUrl32}}" /></span>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          {{session.currentUser.login}} <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li><a {{action 'signOut'}}>Sign out</a></li>
-        </ul>
-      </li>
-    {{else}}
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          Anonymous <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li><a {{action 'signInViaGithub'}}>Sign in</a></li>
-        </ul>
-      </li>
-    {{/if}}
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        Help <b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-right">
-        <li><a href="https://github.com/ember-cli/ember-twiddle" target="_blank">Ember Twiddle v{{version}}</a></li>
-        <li><a href="https://github.com/ember-cli/ember-twiddle" target="_blank">Github</a></li>
-        <li><a href="https://github.com/ember-cli/ember-twiddle/wiki" target="_blank">Wiki</a></li>
-        <li><a href="https://github.com/ember-cli/ember-twiddle/issues" target="_blank">Issue tracker</a></li>
-      </ul>
-    </li>
-  </ul>
+  {{user-menu session=session
+              version=version
+              signInViaGithub="signInViaGithub"
+              signout="signout"
+  }}
 </div>
 
 <div class="row twiddle-panes">
