@@ -98,12 +98,12 @@ body {
 		  border: 0;
 		  color: #faf2ee;
 			cursor: pointer;
-      box-sizing: content-box;
 
 			input {
 				background-color: transparent;
 				border: 0;
 				outline: 0;
+        box-sizing: content-box;
 			}
 
 			.glyphicon {
