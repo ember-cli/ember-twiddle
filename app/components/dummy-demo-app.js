@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import ResizeMixin from 'ember-twiddle/lib/resize-mixin';
 
+const { $, on } = Ember;
+
 export default Ember.Component.extend(ResizeMixin, {
   iframeId: 'dummy-content-iframe',
 
@@ -39,15 +41,15 @@ export default Ember.Component.extend(ResizeMixin, {
     }
   },
 
-  didResize: function () {
+  didResize: on('didInsertElement', function () {
     let offset = this.$().offset(), width = this.$().width(),
       height = this.$().height();
 
-    Em.$('#demo-app').css({
+    $('#demo-app').css({
       top:    offset.top,
       left:   offset.left,
       width:  width,
       height: height
     });
-  }.on('didInsertElement')
+  })
 });
