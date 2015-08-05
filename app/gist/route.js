@@ -28,10 +28,13 @@ export default Ember.Route.extend({
 
     fork (gist) {
       gist.fork().then((response) => {
-        let id = response.id;
-        let newGist = this.duplicate(gist);
-        return newGist.save().then(() => {
-          this.transitionTo('gist.edit', id);
+        this.get('store').find('gist', response.id).then((newGist) => {
+          gist.get('files').toArray().forEach((file) => {
+            file.set('gist', newGist);
+          });
+          return newGist.save().then((response) => {
+            this.transitionTo('gist.edit', response.id);
+          });
         });
       }).catch((error) => {
         if (error && error.errors) {
@@ -55,20 +58,5 @@ export default Ember.Route.extend({
     signOut () {
       this.session.close();
     }
-  },
-
-  duplicate(gist) {
-    var newGistJson = gist.toJSON();
-    Object.keys(newGistJson).forEach((key) => {
-      if (newGistJson[key] !== gist.get(key)) {
-        newGistJson[key] = gist.get(key);
-      }
-    });
-    newGistJson.id = undefined;
-    var newGist = this.get('store').createRecord('gist', newGistJson);
-    gist.get('files').currentState.forEach((file) => {
-      file.record.set('gist', newGist);
-    });
-    return newGist;
   }
 });
