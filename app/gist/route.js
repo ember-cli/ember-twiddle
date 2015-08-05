@@ -38,8 +38,10 @@ export default Ember.Route.extend({
           let firstError = error.errors[0];
           if (firstError.code === "unprocessable" && firstError.field === "forks") {
             this.notify.info("You already own this gist.");
+            return;
           }
         }
+        throw error;
       });
     },
 
