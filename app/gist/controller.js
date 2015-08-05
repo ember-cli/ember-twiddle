@@ -162,12 +162,6 @@ export default Ember.Controller.extend({
       this.notify.info('Errors were dumped to console');
     },
 
-    fork (gist) {
-      gist.fork().then((response) => {
-        this.transitionToRoute('gist.edit', response.id);
-      });
-    },
-
     removeFile (file) {
       if(confirm(`Are you sure you want to remove this file?\n\n${file.get('filePath')}`)) {
         file.deleteRecord();

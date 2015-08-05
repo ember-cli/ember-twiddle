@@ -26,6 +26,16 @@ export default Ember.Route.extend({
       this.get('controller').set('unsaved', false);
     },
 
+    fork (gist) {
+      gist.fork().then((response) => {
+        var id = response.id;
+        gist.set('id', id);
+        return gist.save().then(() => {
+          this.transitionToRoute('gist.edit', id);
+        });
+      });
+    },
+
     signInViaGithub () {
       this.session.open('github-oauth2').catch(function(error) {
         alert('Could not sign you in: ' + error.message);
