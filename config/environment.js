@@ -30,6 +30,17 @@ module.exports = function(environment) {
           apiKey: '2999fbfe342248c88a91'
         }
       }
+    },
+
+    contentSecurityPolicy: {
+      'default-src': "'none'",
+      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' *",
+      'font-src': "*",
+      'connect-src': "*",
+      'img-src': "*",
+      'style-src': "'self' 'unsafe-inline' *",
+      'media-src': "*",
+      'frame-src': "'self'"
     }
 
   };
