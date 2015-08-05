@@ -14,8 +14,8 @@ $topbar-control-height: 32px;
 $code-header-height: 60px;
 
 .dropdown-submenu:hover > a {
-	background: $dropdown-link-hover-bg;
-	color: $dropdown-link-hover-color;
+  background: $dropdown-link-hover-bg;
+  color: $dropdown-link-hover-color;
 }
 
 @import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
@@ -26,7 +26,7 @@ button {
 }
 
 body {
-	font-family: 'Maven Pro', sans-serif;
+  font-family: 'Maven Pro', sans-serif;
 }
 
 #demo-app {
@@ -34,215 +34,215 @@ body {
 }
 
 .toolbar {
-	height: $topbar-height;
-	font-size: 13px;
+  height: $topbar-height;
+  font-size: 13px;
   background: #e1563f top center;
-	background-image: url("../images/navigation_background.png");
-	border-bottom: 1px solid #aa412f;
-	-moz-box-shadow: rgba(0,0,0,0.3) 0 0 3px;
-	-webkit-box-shadow: rgba(0,0,0,0.3) 0 0 3px;
-	box-shadow: rgba(0,0,0,0.3) 0 0 3px;
+  background-image: url("../images/navigation_background.png");
+  border-bottom: 1px solid #aa412f;
+  -moz-box-shadow: rgba(0,0,0,0.3) 0 0 3px;
+  -webkit-box-shadow: rgba(0,0,0,0.3) 0 0 3px;
+  box-shadow: rgba(0,0,0,0.3) 0 0 3px;
 
-	.user-menu {
-		position: absolute;
-		right: ($topbar-height - $topbar-control-height) / 2;
-		top: ($topbar-height - $topbar-control-height) / 2;
-		text-align: right;
+  .user-menu {
+    position: absolute;
+    right: ($topbar-height - $topbar-control-height) / 2;
+    top: ($topbar-height - $topbar-control-height) / 2;
+    text-align: right;
 
-		.user-avatar {
-			display: inline-block;
-			border-radius: 50%;
-			width: $topbar-control-height;
-			height: $topbar-control-height;
-			overflow: hidden;
-			float: left;
-			margin-right: 10px;
-			line-height: normal;
-		}
-	}
+    .user-avatar {
+      display: inline-block;
+      border-radius: 50%;
+      width: $topbar-control-height;
+      height: $topbar-control-height;
+      overflow: hidden;
+      float: left;
+      margin-right: 10px;
+      line-height: normal;
+    }
+  }
 
-	.file-menu {
-		position: absolute;
-		left: ($topbar-height - $topbar-control-height) / 2;
-		top: ($topbar-height - $topbar-control-height) / 2;
-		text-align: left;
-	}
+  .file-menu {
+    position: absolute;
+    left: ($topbar-height - $topbar-control-height) / 2;
+    top: ($topbar-height - $topbar-control-height) / 2;
+    text-align: left;
+  }
 
-	.title {
-		width: 800px;
-		margin: 13px auto;
-		text-align: center;
+  .title {
+    width: 800px;
+    margin: 13px auto;
+    text-align: center;
 
-		.indicator {
-			text-transform: uppercase;
-			font-weight: bold;
-			color: #faf2ee;
-			text-shadow: rgba(0, 0, 0, 0.3) 0px 1px 0px;
+    .indicator {
+      text-transform: uppercase;
+      font-weight: bold;
+      color: #faf2ee;
+      text-shadow: rgba(0, 0, 0, 0.3) 0px 1px 0px;
 
-			a {
-				color: #ffffff;
-		    text-decoration: none;
-				&:hover {
-			    border-bottom: dotted 1px;
-				}
-			}
-		}
+      a {
+        color: #ffffff;
+        text-decoration: none;
+        &:hover {
+          border-bottom: dotted 1px;
+        }
+      }
+    }
 
-		.input-edit {
-			display: inline-block;
-			padding: 5px 10px;
-		  transition: background .3s;
-		  font-size: 15px;
-		  text-shadow: rgba(0,0,0,0.3) 0px 1px 0px;
-		  border-radius: 3px;
-		  border: 0;
-		  color: #faf2ee;
-			cursor: pointer;
+    .input-edit {
+      display: inline-block;
+      padding: 5px 10px;
+      transition: background .3s;
+      font-size: 15px;
+      text-shadow: rgba(0,0,0,0.3) 0px 1px 0px;
+      border-radius: 3px;
+      border: 0;
+      color: #faf2ee;
+      cursor: pointer;
 
-			input {
-				background-color: transparent;
-				border: 0;
-				outline: 0;
+      input {
+        background-color: transparent;
+        border: 0;
+        outline: 0;
         box-sizing: content-box;
-			}
+      }
 
-			.glyphicon {
-				color: #faf2ee;
-			}
+      .glyphicon {
+        color: #faf2ee;
+      }
 
-			&.active .glyphicon {
-				display: none;
-			}
+      &.active .glyphicon {
+        display: none;
+      }
 
-			&:hover {
-				text-shadow: none;
-			  background-color: rgba(0,0,0,0.13);
-			}
+      &:hover {
+        text-shadow: none;
+        background-color: rgba(0,0,0,0.13);
+      }
 
-			&.active {
-				text-shadow: none;
-				background-color: rgba(0,0,0,0.2);
-				box-shadow: rgba(255,255,255,0.15) 0 1px 0px,inset rgba(0,0,0,0.17) 0 1px 1px;
-				outline: 0;
-			}
-		}
+      &.active {
+        text-shadow: none;
+        background-color: rgba(0,0,0,0.2);
+        box-shadow: rgba(255,255,255,0.15) 0 1px 0px,inset rgba(0,0,0,0.17) 0 1px 1px;
+        outline: 0;
+      }
+    }
 
-		.gist-link, span {
-			display: inline-block;
-		}
+    .gist-link, span {
+      display: inline-block;
+    }
 
-	}
+  }
 
-	.dropdown {
+  .dropdown {
 
-		&.open .dropdown-toggle {
-			text-shadow: none;
-		  background-color: rgba(0,0,0,0.2);
-		  box-shadow: rgba(255,255,255,0.15) 0 1px 0px,inset rgba(0,0,0,0.17) 0 1px 1px;
-		  border: 1px solid transparent;
-		}
-	}
+    &.open .dropdown-toggle {
+      text-shadow: none;
+      background-color: rgba(0,0,0,0.2);
+      box-shadow: rgba(255,255,255,0.15) 0 1px 0px,inset rgba(0,0,0,0.17) 0 1px 1px;
+      border: 1px solid transparent;
+    }
+  }
 
-	.dropdown-toggle {
-		padding: 0px 1em;
-		height: $topbar-control-height;
-		line-height: $topbar-control-height - 2;
-		text-transform: uppercase;
-		font-weight: bold;
-		color: #faf2ee;
-	  text-shadow: rgba(0,0,0,0.3) 0px 1px 0px;
-		border: 1px solid transparent;
+  .dropdown-toggle {
+    padding: 0px 1em;
+    height: $topbar-control-height;
+    line-height: $topbar-control-height - 2;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #faf2ee;
+    text-shadow: rgba(0,0,0,0.3) 0px 1px 0px;
+    border: 1px solid transparent;
 
-		&:hover, &:focus {
-			text-shadow: none;
-			background-color: rgba(0,0,0,0.13);
-		}
-	}
+    &:hover, &:focus {
+      text-shadow: none;
+      background-color: rgba(0,0,0,0.13);
+    }
+  }
 
-	.signing-in {
-		padding: 0px 1em;
-		height: $topbar-control-height;
-		line-height: $topbar-control-height - 2;
-		text-transform: uppercase;
-		font-weight: bold;
-		color: #faf2ee;
-		text-shadow: rgba(0,0,0,0.3) 0px 1px 0px;
-		border: 1px solid transparent;
-	}
+  .signing-in {
+    padding: 0px 1em;
+    height: $topbar-control-height;
+    line-height: $topbar-control-height - 2;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #faf2ee;
+    text-shadow: rgba(0,0,0,0.3) 0px 1px 0px;
+    border: 1px solid transparent;
+  }
 
 }
 
 .code {
-	.CodeMirror, .header ul {
-		opacity: .3;
-		transition: opacity .3s;
-	}
+  .CodeMirror, .header ul {
+    opacity: .3;
+    transition: opacity .3s;
+  }
 
-	&.active .CodeMirror, &.active .header ul {
-		opacity: 1;
-	}
+  &.active .CodeMirror, &.active .header ul {
+    opacity: 1;
+  }
 
-	.CodeMirror {
-		font-family: Monaco, monospace;
-		font-size: 13px;
-		line-height: 1.6;
-		height: 100%;
-		width: 100%;
-		position: absolute;
-	}
+  .CodeMirror {
+    font-family: Monaco, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
 }
 
 .twiddle-panes {
-	position: absolute;
-	top: 60px;
-	bottom: 0;
-	left: 0;
-	right: 0;
+  position: absolute;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  right: 0;
   margin: 0;
-	margin-left: 0;
-	z-index: -1;
+  margin-left: 0;
+  z-index: -1;
 
-	.col-md-4 {
-		padding: 0;
-		height: 100%;
-		border-right: 1px solid #e4e2e2;
-	}
+  .col-md-4 {
+    padding: 0;
+    height: 100%;
+    border-right: 1px solid #e4e2e2;
+  }
 
-	.output {
-		border-right: none;
+  .output {
+    border-right: none;
 
-		span {
-			margin: 16px 25px;
-			display: inline-block;
-		}
+    span {
+      margin: 16px 25px;
+      display: inline-block;
+    }
 
-		iframe {
-		  border: 0;
-		  width: 100%;
-		  height: 100%;
-		  position: absolute;
-		}
-	}
+    iframe {
+      border: 0;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+  }
 
-	.header {
-		height: $code-header-height;
-		border-bottom: 1px solid #e4e2e2;
-		font-size: 16px;
-		background-color: #faf4f1;
+  .header {
+    height: $code-header-height;
+    border-bottom: 1px solid #e4e2e2;
+    font-size: 16px;
+    background-color: #faf4f1;
 
-		.file-picker {
-			margin-left: 15px;
-			margin-top: 8px;
-			margin-bottom: 0;
-			position: absolute;
-		}
-	}
+    .file-picker {
+      margin-left: 15px;
+      margin-top: 8px;
+      margin-bottom: 0;
+      position: absolute;
+    }
+  }
 }
 
 .dropdown {
-	li {
-		cursor: pointer;
-	}
+  li {
+    cursor: pointer;
+  }
 }
 
 .dropdown-submenu {
