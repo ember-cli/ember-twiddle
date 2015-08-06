@@ -1,23 +1,20 @@
 {{#if session.isOpening}}
   <li class="dropdown disabled signing-in">Signing in...</li>
-{{else if session.isAuthenticated}}
-  <span class="user-avatar"><img src="{{session.currentUser.avatarUrl32}}" /></span>
+{{else}}
+  {{#if session.isAuthenticated}}
+    <span class="user-avatar"><img src="{{session.currentUser.avatarUrl32}}" /></span>
+  {{/if}}
   <li class="dropdown">
      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-       {{session.currentUser.login}} <b class="caret"></b>
+       {{userName}} <b class="caret"></b>
      </a>
      <ul class="dropdown-menu dropdown-menu-right">
-       <li><a {{action 'signOut'}} class="test-sign-out">Sign out</a></li>
+       {{#if session.isAuthenticated}}
+         <li><a {{action 'signOut'}} class="test-sign-out">Sign out</a></li>
+       {{else}}
+         <li><a {{action 'signInViaGithub'}} class="test-sign-in">Sign in</a></li>
+       {{/if}}
      </ul>
-  </li>
-{{else}}
-  <li class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-      Anonymous <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-right">
-      <li><a {{action 'signInViaGithub'}} class="test-sign-in">Sign in</a></li>
-    </ul>
   </li>
 {{/if}}
 <li class="dropdown">

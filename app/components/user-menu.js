@@ -4,6 +4,10 @@ export default Ember.Component.extend({
   tagName: 'ul',
   classNames: ['nav', 'nav-pills', 'user-menu'],
 
+  userName: Ember.computed('seesion.isAuthenticated', function() {
+    return this.get('session.isAuthenticated') ? this.get('session.currentUser.login') : "Anonymous";
+  }),
+
   actions: {
     signInViaGithub() {
       this.sendAction('signInViaGithub');
