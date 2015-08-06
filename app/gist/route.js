@@ -36,16 +36,7 @@ export default Ember.Route.extend({
             this.transitionTo('gist.edit', newGist);
           });
         });
-      }).catch((error) => {
-        if (error && error.errors) {
-          let firstError = error.errors[0];
-          if (firstError.code === "unprocessable" && firstError.field === "forks") {
-            this.notify.info("You already own this gist.");
-            return;
-          }
-        }
-        throw error;
-      });
+      }).catch(this.catchForkError.bind(this));
     },
 
     signInViaGithub () {
@@ -58,5 +49,16 @@ export default Ember.Route.extend({
     signOut () {
       this.session.close();
     }
+  },
+
+  catchForkError(error) {
+    if (error && error.errors) {
+      let firstError = error.errors[0];
+      if (firstError.code === "unprocessable" && firstError.field === "forks") {
+        this.notify.info("You already own this gist.");
+        return;
+      }
+    }
+    throw error;
   }
 });
