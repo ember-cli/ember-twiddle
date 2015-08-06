@@ -1,0 +1,30 @@
+{{#if session.isOpening}}
+  <li class="dropdown disabled signing-in">Signing in...</li>
+{{else}}
+  {{#if session.isAuthenticated}}
+    <span class="user-avatar"><img src="{{session.currentUser.avatarUrl32}}" /></span>
+  {{/if}}
+  <li class="dropdown">
+     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+       {{userName}} <b class="caret"></b>
+     </a>
+     <ul class="dropdown-menu dropdown-menu-right">
+       {{#if session.isAuthenticated}}
+         <li><a {{action 'signOut'}} class="test-sign-out">Sign out</a></li>
+       {{else}}
+         <li><a {{action 'signInViaGithub'}} class="test-sign-in">Sign in</a></li>
+       {{/if}}
+     </ul>
+  </li>
+{{/if}}
+<li class="dropdown">
+  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+    Help <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-right">
+    <li><a href="https://github.com/ember-cli/ember-twiddle" target="_blank">Ember Twiddle v{{version}}</a></li>
+    <li><a href="https://github.com/ember-cli/ember-twiddle" target="_blank">Github</a></li>
+    <li><a href="https://github.com/ember-cli/ember-twiddle/wiki" target="_blank">Wiki</a></li>
+    <li><a href="https://github.com/ember-cli/ember-twiddle/issues" target="_blank">Issue tracker</a></li>
+  </ul>
+</li>
