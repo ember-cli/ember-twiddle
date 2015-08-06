@@ -32,8 +32,8 @@ export default Ember.Route.extend({
           gist.get('files').toArray().forEach((file) => {
             file.set('gist', newGist);
           });
-          return newGist.save().then((response) => {
-            this.transitionTo('gist.edit', response.id);
+          return newGist.save().then(() => {
+            this.transitionTo('gist.edit', newGist);
           });
         });
       }).catch((error) => {
