@@ -3,7 +3,13 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('build-messages', 'Integration | Component | build messages', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    this.cacheConsole = console.error;
+  },
+  afterEach() {
+    console.error = this.cacheConsole;
+  }
 });
 
 test('it shows the number of build messages', function(assert) {
@@ -34,7 +40,6 @@ test('it calls notify.info() when clicking on build errors', function(assert) {
     }
   });
 
-  this.cacheConsole = console.error;
   console.error = () => {};
   this.set('buildErrors', ['error1', 'error2']);
   this.set('isBuilding', false);
@@ -45,6 +50,4 @@ test('it calls notify.info() when clicking on build errors', function(assert) {
   this.$('span a').click();
 
   assert.ok(notifyObject.get('called'), "notify.info() was called");
-
-  console.error = this.cacheConsole;
 });
