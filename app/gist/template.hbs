@@ -16,14 +16,9 @@
     {{!-- {{#if isEditingDescription}} --}}
     {{title-input value=model.description}}
     {{!-- {{model.description}} --}}
-    <span class="indicator">
-      {{#if unsaved}}
-        <span class="test-unsaved-indicator">Unsaved</span>
-      {{else}}
-        <span>{{model.files.length}} files</span>
-        <a class="gist-link" href="{{model.htmlUrl}}" target="_blank">saved to Gist, rev {{model.currentRevision}}</a>
-      {{/if}}
-    </span>
+    {{saved-state-indicator model=model
+                            unsaved=unsaved
+    }}
   </div>
 
   {{user-menu session=session
