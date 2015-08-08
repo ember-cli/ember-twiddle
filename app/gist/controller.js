@@ -161,13 +161,6 @@ export default Ember.Controller.extend({
       }
     },
 
-    showErrors () {
-      this.get('buildErrors').forEach((error) => {
-        console.error(error);
-      });
-      this.notify.info('Errors were dumped to console');
-    },
-
     fork (gist) {
       gist.fork().then((response) => {
         this.transitionToRoute('gist.edit', response.id);
