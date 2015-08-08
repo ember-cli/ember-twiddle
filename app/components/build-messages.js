@@ -8,7 +8,7 @@ export default Ember.Component.extend({
       this.get('buildErrors').forEach((error) => {
         console.error(error);
       });
-      this.notify.info('Errors were dumped to console');
+      this.get('notify').info('Errors were dumped to console');
     }
   }
 });
