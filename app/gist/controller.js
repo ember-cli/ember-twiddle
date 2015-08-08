@@ -1,6 +1,12 @@
 import Ember from "ember";
 import config from '../config/environment';
 
+const {
+  computed: { equal },
+  observer,
+  run
+} = Ember;
+
 export default Ember.Controller.extend({
   emberCli: Ember.inject.service('ember-cli'),
   version: config.APP.version,
@@ -20,8 +26,8 @@ export default Ember.Controller.extend({
   activeEditorCol: null,
   col1File: null,
   col2File: null,
-  col1Active: Em.computed.equal('activeEditorCol','1'),
-  col2Active: Em.computed.equal('activeEditorCol','2'),
+  col1Active: equal('activeEditorCol','1'),
+  col2Active: equal('activeEditorCol','2'),
 
   /**
    * Errors during build
@@ -62,7 +68,7 @@ export default Ember.Controller.extend({
   /**
    * Set the initial file columns
    */
-  initializeColumns: Ember.observer('model', function() {
+  initializeColumns: observer('model', function() {
     var files = this.get('model.files');
 
     if(files.objectAt(0)) {
@@ -76,7 +82,7 @@ export default Ember.Controller.extend({
 
   rebuildApp: function() {
     if (this.get('isLiveReload')) {
-      Ember.run.debounce(this, this.buildApp, 500);
+      run.debounce(this, this.buildApp, 500);
     }
   },
 
@@ -155,13 +161,6 @@ export default Ember.Controller.extend({
       }
     },
 
-    showErrors () {
-      this.get('buildErrors').forEach((error) => {
-        console.error(error);
-      });
-      this.notify.info('Errors were dumped to console');
-    },
-
     removeFile (file) {
       if(confirm(`Are you sure you want to remove this file?\n\n${file.get('filePath')}`)) {
         file.deleteRecord();
@@ -187,7 +186,7 @@ export default Ember.Controller.extend({
     // part of some handshake, to ensure no races exist. This should likley not
     // be something a controller would handle - (SP)
     window.addEventListener('message', (m) => {
-      Ember.run(() => {
+      run(() => {
         if(typeof m.data==='object' && 'setDemoAppUrl' in m.data) {
           if (!this.get('isDestroyed')) {
             this.set('applicationUrl', m.data.setDemoAppUrl || '/');

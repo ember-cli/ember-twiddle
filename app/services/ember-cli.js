@@ -2,7 +2,7 @@ import Babel from "npm:babel";
 import Path from 'npm:path';
 import blueprints from '../lib/blueprints';
 import config from '../config/environment';
-
+import Ember from 'ember';
 
 const twiddleAppName = 'demo-app';
 
@@ -86,7 +86,7 @@ const requiredDependencies = [
  * Parts of this module are directly copied from the ember-cli
  * source code at https://github.com/ember-cli/ember-cli
  */
-export default Em.Service.extend({
+export default Ember.Service.extend({
   init () {
     this._super();
     this.set('store', this.container.lookup("store:main"));
@@ -122,7 +122,7 @@ export default Em.Service.extend({
    * @return {Ember Object}       Source code for built Ember app
    */
   compileGist (gist) {
-    var promise = new Em.RSVP.Promise((resolve, reject) => {
+    var promise = new Ember.RSVP.Promise((resolve, reject) => {
       let errors = [];
       let out = [];
       let cssOut = [];
@@ -262,7 +262,7 @@ export default Em.Service.extend({
    */
   compileHbs (code, filePath) {
     // TODO: Is there a way to precompile using the template compiler brought in via twiddle.json?
-    // let templateCode = Em.HTMLBars.precompile(code || '');
+    // let templateCode = Ember.HTMLBars.precompile(code || '');
 
     // Compiles all templates at runtime.
     return this.compileJs('export default Ember.HTMLBars.compile(`' + (code || '') + '`);', filePath);

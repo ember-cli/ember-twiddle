@@ -3,8 +3,7 @@
     "server",
     "document",
     "window",
-    "-Promise",
-    "Em"
+    "-Promise"
   ],
   "browser": true,
   "boss": true,
