@@ -216,7 +216,7 @@ export default Ember.Controller.extend({
 
     removeColumn (col) {
       let key = "col" + col;
-      var numColumns = this.get('realNumColumns');
+      let numColumns = this.get('realNumColumns');
 
       for (var i = (col|0) + 1; i <= numColumns; ++i) {
         this.set(key + "File", this.get("col" + i + "File"));
@@ -225,6 +225,14 @@ export default Ember.Controller.extend({
 
       this.transitionToRoute({queryParams: {numColumns: numColumns - 1}}).then(function() {
         this.set('realNumColumns', numColumns - 1);
+      }.bind(this));
+    },
+
+    addColumn() {
+      let numColumns = this.get('realNumColumns');
+
+      this.transitionToRoute({queryParams: {numColumns: numColumns + 1}}).then(function() {
+        this.set('realNumColumns', numColumns + 1);
       }.bind(this));
     }
   },

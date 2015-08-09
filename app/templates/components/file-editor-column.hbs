@@ -26,6 +26,9 @@
 
   <span class="nav-right">
     <span class="glyphicon glyphicon-remove" {{action 'removeColumn' col}}></span>
+    {{#if lastColumn}}
+      <span class="glyphicon glyphicon-plus" {{action 'addColumn'}}></span>
+    {{/if}}
   </span>
 </div>
 {{#if file}}

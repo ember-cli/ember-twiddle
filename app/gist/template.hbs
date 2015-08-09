@@ -33,9 +33,10 @@
       {{file-editor-column col="1"
                            file=col1File
                            allFiles=model.files
-                           numColumns=numColumns
+                           numColumns=realNumColumns
                            contentsChanged="contentsChanged"
                            removeColumn=(action "removeColumn")
+                           addColumn=(action "addColumn")
       }}
     </div>
   {{/if}}
@@ -45,9 +46,10 @@
       {{file-editor-column col="2"
                            file=col2File
                            allFiles=model.files
-                           numColumns=numColumns
+                           numColumns=realNumColumns
                            contentsChanged="contentsChanged"
                            removeColumn=(action "removeColumn")
+                           addColumn=(action "addColumn")
       }}
     </div>
   {{/if}}
@@ -57,9 +59,10 @@
       {{file-editor-column col="3"
                            file=col3File
                            allFiles=model.files
-                           numColumns=numColumns
+                           numColumns=realNumColumns
                            contentsChanged="contentsChanged"
                            removeColumn=(action "removeColumn")
+                           addColumn=(action "addColumn")
       }}
     </div>
   {{/if}}
