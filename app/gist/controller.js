@@ -70,7 +70,7 @@ export default Ember.Controller.extend({
    * Whether user wishes the code to automatically run
    * @type {boolean}
    */
-  isLiveReload: false,
+  isLiveReload: true,
 
   /**
    * Build the application and set the iframe code
@@ -135,7 +135,6 @@ export default Ember.Controller.extend({
       return false;
     }
 
-    console.log(this.get('col1File.fileName'), file.get('fileName'));
     if (this.get('col1File.fileName') === file.get('fileName')) {
       return false;
     }
