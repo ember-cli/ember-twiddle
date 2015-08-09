@@ -23,6 +23,10 @@
       </ul>
     </li>
   </ul>
+
+  <span class="nav-right">
+    <span class="glyphicon glyphicon-remove" {{action 'removeColumn' col}}></span>
+  </span>
 </div>
 {{#if file}}
 {{ivy-codemirror

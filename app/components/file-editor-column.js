@@ -29,6 +29,10 @@ export default Ember.Component.extend({
 
     valueUpdated() {
       this.sendAction('contentsChanged');
+    },
+
+    removeColumn(col) {
+      this.attrs.removeColumn(col);
     }
   }
 });
