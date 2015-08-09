@@ -2,8 +2,7 @@ import Ember from "ember";
 import config from '../config/environment';
 
 const {
-  computed: { equal, gte },
-  observer,
+  computed,
   run
 } = Ember;
 
@@ -54,12 +53,12 @@ export default Ember.Controller.extend({
   col1File: null,
   col2File: null,
   col3File: null,
-  col1Active: equal('activeEditorCol','1'),
-  col2Active: equal('activeEditorCol','2'),
-  col3Active: equal('activeEditorCol','3'),
-  showCol1: gte('realNumColumns', 1),
-  showCol2: gte('realNumColumns', 2),
-  showCol3: gte('realNumColumns', 3),
+  col1Active: computed.equal('activeEditorCol','1'),
+  col2Active: computed.equal('activeEditorCol','2'),
+  col3Active: computed.equal('activeEditorCol','3'),
+  showCol1: computed.gte('realNumColumns', 1),
+  showCol2: computed.gte('realNumColumns', 2),
+  showCol3: computed.gte('realNumColumns', 3),
 
   /**
    * Errors during build
@@ -71,7 +70,7 @@ export default Ember.Controller.extend({
    * Whether user wishes the code to automatically run
    * @type {boolean}
    */
-  isLiveReload: true,
+  isLiveReload: false,
 
   /**
    * Build the application and set the iframe code
@@ -97,25 +96,58 @@ export default Ember.Controller.extend({
     });
   },
 
+  realNumColumns: computed('numColumns', function() {
+    return Math.min(this.get('numColumns'), MAX_COLUMNS);
+  }),
+
   /**
    * Set the initial file columns
    */
-  initializeColumns: observer('model', 'numColumns', function() {
+  initializeColumns() {
     let files = this.get('model.files');
-    let numColumns = Math.min(this.get('numColumns'), MAX_COLUMNS);
+    let numColumns = this.get('realNumColumns');
 
     let j = 0;
     for (let i = 0; i < numColumns; ++i) {
       let key = 'col' + (i + 1) + 'File';
       if (!this.get(key)) {
-        if (files && files.objectAt(j)) {
-          this.set(key, files.objectAt(j++));
+        if (files) {
+          j = 0;
+          while (!this.isOpen(files.objectAt(j))) {
+            j++;
+          }
+          let file = files.objectAt(j);
+          if (file) {
+            this.set(key, file);
+          }
         }
       }
     }
+  },
 
-    this.set('realNumColumns', numColumns);
-  }),
+  /**
+   * Returns true if the passed in file is currently open
+   * @param {Object} one of the files in the gist
+   * @return {boolean}
+   */
+  isOpen(file) {
+    if (!file) {
+      return false;
+    }
+
+    console.log(this.get('col1File.fileName'), file.get('fileName'));
+    if (this.get('col1File.fileName') === file.get('fileName')) {
+      return false;
+    }
+    if (this.get('col2File.fileName') === file.get('fileName')) {
+      return false;
+    }
+    if (this.get('col3File.fileName') === file.get('fileName')) {
+      return false;
+    }
+
+    return true;
+  },
 
   rebuildApp: function() {
     if (this.get('isLiveReload')) {
@@ -215,25 +247,22 @@ export default Ember.Controller.extend({
     },
 
     removeColumn (col) {
-      let key = "col" + col;
       let numColumns = this.get('realNumColumns');
 
-      for (var i = (col|0) + 1; i <= numColumns; ++i) {
-        this.set(key + "File", this.get("col" + i + "File"));
-        this.set(key + "Active", this.get("col" + i + "Active"));
+      for (var i = (col|0); i < numColumns; ++i) {
+        this.set("col" + i + "File", this.get("col" + (i + 1) + "File"));
+        this.set("col" + i + "Active", this.get("col" + (i + 1) + "Active"));
       }
+      this.set("col" + numColumns + "File", undefined);
+      this.set("col" + numColumns + "Active", false);
 
-      this.transitionToRoute({queryParams: {numColumns: numColumns - 1}}).then(function() {
-        this.set('realNumColumns', numColumns - 1);
-      }.bind(this));
+      this.transitionToRoute({queryParams: {numColumns: numColumns - 1}});
     },
 
     addColumn() {
       let numColumns = this.get('realNumColumns');
 
-      this.transitionToRoute({queryParams: {numColumns: numColumns + 1}}).then(function() {
-        this.set('realNumColumns', numColumns + 1);
-      }.bind(this));
+      this.transitionToRoute({queryParams: {numColumns: numColumns + 1}}).then(this.initializeColumns.bind(this));
     }
   },
 
@@ -243,6 +272,9 @@ export default Ember.Controller.extend({
     }
     if(this.get('col2File') === file) {
       this.set('col2File', null);
+    }
+    if(this.get('col3File') === file) {
+      this.set('col3File', null);
     }
   },
 
