@@ -2,14 +2,20 @@ import Ember from "ember";
 import config from '../config/environment';
 
 const {
-  computed: { equal },
+  computed: { equal, gte },
   observer,
   run
 } = Ember;
 
+const MAX_COLUMNS = 3;
+
 export default Ember.Controller.extend({
   emberCli: Ember.inject.service('ember-cli'),
   version: config.APP.version,
+
+  queryParams: ['numColumns'],
+  numColumns: 2,
+
   init() {
     this._super(...arguments);
     this.setupWindowUpdate();
@@ -20,14 +26,40 @@ export default Ember.Controller.extend({
    * @type {String}
    */
   buildOutput: '',
+
+  /**
+   * If the code is currently being built
+   * @type {boolean}
+   */
   isBuilding: false,
+
+  /**
+   * If the edited code has not been saved by the user
+   * @type {boolean}
+   */
   unsaved: true,
+
+  /**
+   * File in the current active editor column
+   * @type {Object}
+   */
   activeFile: null,
+
+  /**
+   * Column which has the currently focused editor
+   * @type {Number}
+   */
   activeEditorCol: null,
+
   col1File: null,
   col2File: null,
+  col3File: null,
   col1Active: equal('activeEditorCol','1'),
   col2Active: equal('activeEditorCol','2'),
+  col3Active: equal('activeEditorCol','3'),
+  showCol1: gte('numColumns', 1),
+  showCol2: gte('numColumns', 2),
+  showCol3: gte('numColumns', 3),
 
   /**
    * Errors during build
@@ -68,15 +100,18 @@ export default Ember.Controller.extend({
   /**
    * Set the initial file columns
    */
-  initializeColumns: observer('model', function() {
+  initializeColumns: observer('model', 'numColumns', function() {
     var files = this.get('model.files');
+    var numColumns = Math.max(this.get('numColumns'), MAX_COLUMNS);
 
-    if(files.objectAt(0)) {
-      this.set('col1File', files.objectAt(0));
-    }
-
-    if(files.objectAt(1)) {
-      this.set('col2File', files.objectAt(1));
+    let j = 0;
+    for (let i = 0; i < numColumns; ++i) {
+      let key = 'col' + (i + 1) + 'File';
+      if (!this.get(key)) {
+        if (files && files.objectAt(j)) {
+          this.set(key, files.objectAt(j++));
+        }
+      }
     }
   }),
 

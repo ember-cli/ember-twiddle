@@ -30,13 +30,23 @@
 
 <div class="row twiddle-panes">
 
-  <div class="col-md-4 code {{if col1Active 'active' ''}}">
-    {{file-editor-column col="1" file=col1File allFiles=model.files contentsChanged="contentsChanged"}}
-  </div>
+  {{#if showCol1}}
+    <div class="col-md-4 code {{if col1Active 'active' ''}}">
+      {{file-editor-column col="1" file=col1File allFiles=model.files contentsChanged="contentsChanged"}}
+    </div>
+  {{/if}}
 
-  <div class="col-md-4 code {{if col2Active 'active' ''}}">
-    {{file-editor-column col="2" file=col2File allFiles=model.files contentsChanged="contentsChanged"}}
-  </div>
+  {{#if showCol2}}
+    <div class="col-md-4 code {{if col2Active 'active' ''}}">
+      {{file-editor-column col="2" file=col2File allFiles=model.files contentsChanged="contentsChanged"}}
+    </div>
+  {{/if}}
+
+  {{#if showCol3}}
+    <div class="col-md-4 code {{if col3Active 'active' ''}}">
+      {{file-editor-column col="3" file=col3File allFiles=model.files contentsChanged="contentsChanged"}}
+    </div>
+  {{/if}}
 
   <div class="col-md-4 output">
     <div class="header">
