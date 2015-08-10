@@ -250,10 +250,13 @@ export default Ember.Controller.extend({
 
       for (var i = (col|0); i < numColumns; ++i) {
         this.set("col" + i + "File", this.get("col" + (i + 1) + "File"));
-        this.set("col" + i + "Active", this.get("col" + (i + 1) + "Active"));
       }
       this.set("col" + numColumns + "File", undefined);
-      this.set("col" + numColumns + "Active", false);
+
+      let activeCol = this.get('activeEditorCol');
+      if (activeCol >= col) {
+        this.set('activeEditorCol', ((activeCol|0) - 1).toString());
+      }
 
       this.transitionToRoute({queryParams: {numColumns: numColumns - 1}});
     },
