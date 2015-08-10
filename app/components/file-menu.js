@@ -21,7 +21,7 @@ export default Ember.Component.extend({
       prompt('Ctrl + C ;-)', window.location.href);
     },
     fork(model) {
-      this.attrs.fork(model);
+      this.sendAction('fork', model);
     },
     deleteGist(model) {
       this.attrs.deleteGist(model);
