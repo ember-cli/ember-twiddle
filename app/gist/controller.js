@@ -89,6 +89,39 @@ export default Ember.Controller.extend({
     }
   },
 
+  createFile(filePath, fileProperties) {
+    if (filePath) {
+      if(this.get('model.files').findBy('filePath', filePath)) {
+        alert('A file with the name %@ already exists'.fmt(filePath));
+        return;
+      }
+
+      fileProperties.filePath = filePath;
+      let file = this.store.createRecord('gistFile', fileProperties);
+
+      this.get('model.files').pushObject(file);
+      this.notify.info('File %@ was added'.fmt(file.get('filePath')));
+      this.set('col1File', file);
+      this.set('activeEditorCol', '1');
+      this.send('contentsChanged');
+    }
+  },
+  /*
+   *  Test whether path is valid.  Presently only tests whether components are hyphenated.
+   */
+  isPathInvalid(type, path){
+    let errorMsg = null;
+    if (type.match(/^component/)) {
+      if(!path.match(/-[^\/]+$/)) {
+         errorMsg = 'Component file names need to include a hyphen';
+      }
+    }
+    if (errorMsg) {
+      alert(errorMsg);
+      return true;
+    }
+    return false;
+  },
   actions: {
     contentsChanged() {
       this.set('unsaved', true);
@@ -121,6 +154,24 @@ export default Ember.Controller.extend({
       }
     },
 
+    addComponent() {
+      let path = prompt('Component path (without file extension)', 'components/my-component');
+      if (Ember.isBlank(path)){
+        return;
+      }
+
+      //strip file extension if present
+      path = path.replace(/\.[^/.]+$/, "");
+
+      if (this.isPathInvalid('component', path)) {
+        return;
+      }
+      ['js', 'hbs'].forEach((fileExt)=>{
+        let fileProperties = this.get('emberCli').buildProperties(`component-${fileExt}`);
+        let filePath =  `${fileExt === 'hbs' ? 'templates/' : ''}${path}.${fileExt}`;
+        this.createFile(filePath, fileProperties);
+      });
+    },
     /**
      * Add a new file to the model
      * @param {String|null} type Blueprint name or null for empty file
@@ -132,23 +183,10 @@ export default Ember.Controller.extend({
       if (['twiddle.json','router', 'css'].indexOf(type)===-1) {
         filePath = prompt('File path', filePath);
       }
-
-      if (filePath) {
-        if(this.get('model.files').findBy('filePath', filePath)) {
-          alert('A file with the name %@ already exists'.fmt(filePath));
-          return;
-        }
-
-        fileProperties.filePath = filePath;
-        let file = this.store.createRecord('gistFile', fileProperties);
-
-        this.get('model.files').pushObject(file);
-        this.notify.info('File %@ was added'.fmt(file.get('filePath')));
-        this.set('col1File', file);
-        this.set('activeEditorCol', '1');
-
-        this.send('contentsChanged');
+      if (this.isPathInvalid(type, filePath)) {
+        return;
       }
+      this.createFile(filePath, fileProperties);
     },
 
     renameFile (file) {

@@ -5,6 +5,9 @@ export default Ember.Component.extend({
   classNames: ['dropdown'],
 
   actions: {
+    addComponent() {
+      this.attrs.addComponent();
+    },
     addFile(type) {
       this.attrs.addFile(type);
     },
