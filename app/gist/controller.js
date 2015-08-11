@@ -102,6 +102,7 @@ export default Ember.Controller.extend({
   realNumColumns: computed('numColumns', function() {
     return Math.min(this.get('numColumns'), MAX_COLUMNS);
   }),
+  noColumns: computed.equal('numColumns', 0),
 
   /**
    * Set the initial file columns

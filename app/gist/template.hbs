@@ -75,6 +75,9 @@
 
   <div class="col-md-4 output">
     <div class="header">
+      {{#if noColumns}}
+        <span class="glyphicon glyphicon-plus" {{action 'addColumn'}}></span>
+      {{/if}}
       {{build-messages notify=notify
                        isBuilding=isBuilding
                        buildErrors=buildErrors
