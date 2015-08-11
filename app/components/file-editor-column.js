@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   focusEditor: 'focusEditor',
   selectFile: 'selectFile',
+  keyMap: 'basic',
 
   editorMode: Ember.computed('file.extension', function () {
     switch(this.get('file.extension')) {

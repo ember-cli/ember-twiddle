@@ -22,6 +22,7 @@ module.exports = function() {
     },
     codemirror: {
       modes: ['xml', 'javascript', 'handlebars', 'htmlmixed', 'css'],
+      keyMaps: ['emacs', 'sublime', 'vim']
     },
     'ember-cli-bootstrap-sassy': {
       'js': ['dropdown']
