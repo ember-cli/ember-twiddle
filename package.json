@@ -29,7 +29,7 @@
     "ember-api-actions": "0.0.7",
     "ember-autoresize": "0.5.1",
     "ember-browserify": "^1.0.1",
-    "ember-cli": "1.13.6",
+    "ember-cli": "1.13.7",
     "ember-cli-app-version": "0.4.0",
     "ember-cli-babel": "^5.0.0",
     "ember-cli-bootstrap-sassy": "0.0.18",
@@ -53,6 +53,7 @@
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-export-application-global": "^1.0.3",
     "ember-git-version": "0.0.1",
+    "ember-lodash": "0.0.5",
     "ember-notify": "3.4.0",
     "ivy-codemirror": "~1.2.0",
     "torii": "^0.5.1"

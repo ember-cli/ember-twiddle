@@ -1,8 +1,7 @@
 import Ember from "ember";
 
 export default Ember.Component.extend({
-  tagName: 'ul',
-  classNames: ['nav', 'nav-pills', 'file-menu'],
+  tagName: 'li',
 
   actions: {
     addFile(type) {
@@ -21,7 +20,7 @@ export default Ember.Component.extend({
       prompt('Ctrl + C ;-)', window.location.href);
     },
     fork(model) {
-      this.attrs.fork(model);
+      this.sendAction('fork', model);
     },
     deleteGist(model) {
       this.attrs.deleteGist(model);

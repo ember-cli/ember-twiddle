@@ -6,6 +6,7 @@ const MAX_COLUMNS = 3;
 export default Ember.Component.extend({
   focusEditor: 'focusEditor',
   selectFile: 'selectFile',
+  keyMap: 'basic',
 
   editorMode: Ember.computed('file.extension', function () {
     switch(this.get('file.extension')) {

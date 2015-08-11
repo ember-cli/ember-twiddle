@@ -1,16 +1,19 @@
 <div class="row toolbar">
-  {{file-menu model=model
-              session=session
-              activeEditorCol=activeEditorCol
-              activeFile=activeFile
-              addFile=(action "addFile")
-              renameFile=(action "renameFile")
-              removeFile=(action "removeFile")
-              saveGist="saveGist"
-              fork=(action "fork")
-              deleteGist=(action "deleteGist")
-              signInViaGithub="signInViaGithub"
-  }}
+  <ul class="nav nav-pills file-menu">
+    {{file-menu model=model
+                session=session
+                activeEditorCol=activeEditorCol
+                activeFile=activeFile
+                addFile=(action "addFile")
+                renameFile=(action "renameFile")
+                removeFile=(action "removeFile")
+                saveGist="saveGist"
+                fork="fork"
+                deleteGist=(action "deleteGist")
+                signInViaGithub="signInViaGithub"}}
+
+    {{editor-mode-menu setKeyMap=(action "setEditorKeyMap")}}
+  </ul>
 
   <div class="title">
     {{title-input value=model.description}}
@@ -33,6 +36,7 @@
       {{file-editor-column col="1"
                            file=col1File
                            allFiles=model.files
+                           keyMap=settings.keyMap
                            numColumns=realNumColumns
                            contentsChanged="contentsChanged"
                            removeColumn=(action "removeColumn")
@@ -46,6 +50,7 @@
       {{file-editor-column col="2"
                            file=col2File
                            allFiles=model.files
+                           keyMap=settings.keyMap
                            numColumns=realNumColumns
                            contentsChanged="contentsChanged"
                            removeColumn=(action "removeColumn")
@@ -59,6 +64,7 @@
       {{file-editor-column col="3"
                            file=col3File
                            allFiles=model.files
+                           keyMap=settings.keyMap
                            numColumns=realNumColumns
                            contentsChanged="contentsChanged"
                            removeColumn=(action "removeColumn")

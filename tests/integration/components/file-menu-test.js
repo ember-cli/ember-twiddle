@@ -60,7 +60,7 @@ moduleForComponent('file-menu', 'Integration | Component | file menu', {
                               renameFile=(action "renameFile")
                               removeFile=(action "removeFile")
                               saveGist="saveGist"
-                              fork=(action "fork")
+                              fork="fork"
                               deleteGist=(action "deleteGist")
                               signInViaGithub="signInViaGithub"}}`);
   }

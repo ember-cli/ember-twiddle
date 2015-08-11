@@ -26,6 +26,19 @@ export default Ember.Route.extend({
       this.get('controller').set('unsaved', false);
     },
 
+    fork (gist) {
+      gist.fork().then((response) => {
+        this.get('store').find('gist', response.id).then((newGist) => {
+          gist.get('files').toArray().forEach((file) => {
+            file.set('gist', newGist);
+          });
+          return newGist.save().then(() => {
+            this.transitionTo('gist.edit', newGist);
+          });
+        });
+      }).catch(this.catchForkError.bind(this));
+    },
+
     signInViaGithub () {
       this.session.open('github-oauth2').catch(function(error) {
         alert('Could not sign you in: ' + error.message);
@@ -36,5 +49,16 @@ export default Ember.Route.extend({
     signOut () {
       this.session.close();
     }
+  },
+
+  catchForkError(error) {
+    if (error && error.errors) {
+      let firstError = error.errors[0];
+      if (firstError.code === "unprocessable" && firstError.field === "forks") {
+        this.notify.info("You already own this gist.");
+        return;
+      }
+    }
+    throw error;
   }
 });
