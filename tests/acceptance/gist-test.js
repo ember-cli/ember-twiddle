@@ -1,6 +1,9 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from 'ember-twiddle/tests/helpers/start-app';
+import { findMapText } from 'ember-twiddle/tests/helpers/util';
+import ErrorMessages from 'ember-twiddle/helpers/error-messages';
+
 
 const firstColumn = '.code:first-of-type';
 const firstFilePicker = firstColumn + ' .dropdown-toggle';
@@ -94,6 +97,44 @@ test('can add two templates with different names', function(assert) {
     assert.equal(numFiles, origFiles + 2, 'Added second file');
   });
 });
+
+test('can add component (js and hbs)', function(assert){
+
+  let origFileCount;
+  promptValue = "components/my-comp";
+  visit('/');
+  andThen(function(){
+    origFileCount =  find(firstFilePickerFiles).length;
+  });
+
+  click(fileMenu);
+  click('.add-component-link');
+  click(firstFilePicker);
+  andThen(function() {
+    let numFiles = find(firstFilePickerFiles).length;
+    assert.equal(numFiles, origFileCount + 2, 'Added component files');
+    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    assert.equal(fileNames[3], `${promptValue}.js`);
+    assert.equal(fileNames[4], `templates/${promptValue}.hbs`);
+  });
+});
+
+test('component without hyphen fails', function(assert){
+
+  let alertFn = window.alert;
+  window.alert = function(msg){
+    assert.equal(msg, ErrorMessages.componentsNeedHyphens);
+  };
+  promptValue = "components/some-dir/mycomp";
+
+  visit('/');
+  click('.add-component-link');
+  click(firstFilePicker);
+  andThen(function(){
+    window.alert = alertFn;
+  });
+});
+
 
 test('unsaved indicator', function(assert) {
   const indicator = ".test-unsaved-indicator";

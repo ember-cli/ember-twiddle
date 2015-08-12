@@ -1,6 +1,7 @@
 import Ember from "ember";
 import config from '../config/environment';
 import Settings from '../models/settings';
+import ErrorMessages from 'ember-twiddle/helpers/error-messages';
 
 const {
   computed: { equal },
@@ -113,7 +114,7 @@ export default Ember.Controller.extend({
     let errorMsg = null;
     if (type.match(/^component/)) {
       if(!path.match(/-[^\/]+$/)) {
-         errorMsg = 'Component file names need to include a hyphen';
+         errorMsg = ErrorMessages.componentsNeedHyphens;
       }
     }
     if (errorMsg) {
