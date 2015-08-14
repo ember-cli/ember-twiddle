@@ -201,7 +201,10 @@ body {
   margin: 0;
   margin-left: 0;
   z-index: -1;
-  display: flex;
+
+  @media (min-width: $screen-md-min) {
+    display: flex;
+  }
 
   .col-md-4 {
     flex-grow: 1;
