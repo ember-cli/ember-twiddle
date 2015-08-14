@@ -14,6 +14,7 @@ const deleteAction = '.file-menu a:contains(Delete)';
 const addTemplateAction = '.test-template-action';
 const firstFilePickerFiles = firstColumn + ' .dropdown-menu>li';
 const firstColumnTextarea = firstColumn + ' .CodeMirror textarea';
+const displayedFiles = '.file-picker > li > a';
 
 let promptValue = '';
 
@@ -114,8 +115,13 @@ test('can add component (js and hbs)', function(assert){
     let numFiles = find(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 2, 'Added component files');
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
-    assert.equal(fileNames[3], `${promptValue}.js`);
-    assert.equal(fileNames[4], `templates/${promptValue}.hbs`);
+    let jsFile = `${promptValue}.js`;
+    let hbsFile = `templates/${promptValue}.hbs`;
+    assert.equal(fileNames[3], jsFile);
+    assert.equal(fileNames[4], hbsFile);
+    let columnFiles = findMapText(displayedFiles);
+    assert.deepEqual(columnFiles, [jsFile, hbsFile], 'Added files are displayed');
+
   });
 });
 
