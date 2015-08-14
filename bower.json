@@ -9,8 +9,8 @@
     "ember-qunit": "0.4.9",
     "ember-qunit-notifications": "0.0.7",
     "ember-resolver": "~0.1.18",
-    "jquery": "^1.11.1",
-    "loader.js": "ember-cli/loader.js#3.2.0",
+    "jquery": "^1.11.3",
+    "loader.js": "ember-cli/loader.js#3.2.1",
     "qunit": "~1.18.0",
     "codemirror": "~5.5.0",
     "ember-cli-codemirror-shim": "~0.0.1",
@@ -22,6 +22,7 @@
     "Faker": "~3.0.0"
   },
   "resolutions": {
-    "codemirror": "~5.5.0"
+    "codemirror": "~5.5.0",
+    "loader.js": "3.2.1"
   }
 }
