@@ -1,6 +1,7 @@
 import Ember from "ember";
 import config from '../config/environment';
 import Settings from '../models/settings';
+import ErrorMessages from 'ember-twiddle/helpers/error-messages';
 
 const {
   computed: { equal },
@@ -75,11 +76,11 @@ export default Ember.Controller.extend({
     var files = this.get('model.files');
 
     if(files.objectAt(0)) {
-      this.set('col1File', files.objectAt(0));
+      this.setColumnFile(1, files.objectAt(0));
     }
 
     if(files.objectAt(1)) {
-      this.set('col2File', files.objectAt(1));
+      this.setColumnFile(2, files.objectAt(1));
     }
   }),
 
@@ -87,6 +88,44 @@ export default Ember.Controller.extend({
     if (this.get('isLiveReload')) {
       run.debounce(this, this.buildApp, 500);
     }
+  },
+
+  createFile(filePath, fileProperties, fileColumn=1) {
+    if (filePath) {
+      if(this.get('model.files').findBy('filePath', filePath)) {
+        alert('A file with the name %@ already exists'.fmt(filePath));
+        return;
+      }
+
+      fileProperties.filePath = filePath;
+      let file = this.store.createRecord('gistFile', fileProperties);
+
+      this.get('model.files').pushObject(file);
+      this.notify.info('File %@ was added'.fmt(file.get('filePath')));
+      this.setColumnFile(fileColumn, file);
+      this.set('activeEditorCol', '1');
+      this.send('contentsChanged');
+    }
+  },
+  /*
+   *  Test whether path is valid.  Presently only tests whether components are hyphenated.
+   */
+  isPathInvalid(type, path){
+    let errorMsg = null;
+    if (type.match(/^component/)) {
+      if(!path.match(/-[^\/]+$/)) {
+         errorMsg = ErrorMessages.componentsNeedHyphens;
+      }
+    }
+    if (errorMsg) {
+      alert(errorMsg);
+      return true;
+    }
+    return false;
+  },
+  setColumnFile(column, file){
+    let fileColumn = `col${column}File`;
+    this.set(fileColumn, file);
   },
 
   actions: {
@@ -121,6 +160,25 @@ export default Ember.Controller.extend({
       }
     },
 
+    addComponent() {
+      let path = prompt('Component path (without file extension)', 'components/my-component');
+      if (Ember.isBlank(path)){
+        return;
+      }
+
+      //strip file extension if present
+      path = path.replace(/\.[^/.]+$/, "");
+
+      if (this.isPathInvalid('component', path)) {
+        return;
+      }
+      ['js', 'hbs'].forEach((fileExt, i)=>{
+        let fileProperties = this.get('emberCli').buildProperties(`component-${fileExt}`);
+        let filePath =  `${fileExt === 'hbs' ? 'templates/' : ''}${path}.${fileExt}`;
+        let fileColumn = i+1;
+        this.createFile(filePath, fileProperties, fileColumn);
+      });
+    },
     /**
      * Add a new file to the model
      * @param {String|null} type Blueprint name or null for empty file
@@ -132,23 +190,10 @@ export default Ember.Controller.extend({
       if (['twiddle.json','router', 'css'].indexOf(type)===-1) {
         filePath = prompt('File path', filePath);
       }
-
-      if (filePath) {
-        if(this.get('model.files').findBy('filePath', filePath)) {
-          alert('A file with the name %@ already exists'.fmt(filePath));
-          return;
-        }
-
-        fileProperties.filePath = filePath;
-        let file = this.store.createRecord('gistFile', fileProperties);
-
-        this.get('model.files').pushObject(file);
-        this.notify.info('File %@ was added'.fmt(file.get('filePath')));
-        this.set('col1File', file);
-        this.set('activeEditorCol', '1');
-
-        this.send('contentsChanged');
+      if (this.isPathInvalid(type, filePath)) {
+        return;
       }
+      this.createFile(filePath, fileProperties);
     },
 
     renameFile (file) {
@@ -183,10 +228,10 @@ export default Ember.Controller.extend({
 
   _removeFileFromColumns (file) {
     if(this.get('col1File') === file) {
-      this.set('col1File', null);
+      this.setColumnFile(1, null);
     }
     if(this.get('col2File') === file) {
-      this.set('col2File', null);
+      this.setColumnFile(2, null);
     }
   },
 
