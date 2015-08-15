@@ -9,9 +9,13 @@
     <a tabindex="-1" href="#">Add...</a>
     <ul class="dropdown-menu">
       <li><a {{action 'addFile' ''}}>Other (empty file)</a></li>
-      <li><a {{action 'addComponent'}} class="add-component-link">Component (js and hbs)</a></li>
-      <li><a {{action 'addFile' 'component-hbs'}}>Component (hbs)</a></li>
-      <li><a {{action 'addFile' 'component-js'}}>Component (js)</a></li>
+      <li class="dropdown-submenu">
+        <a {{action 'addComponent'}} class="add-component-link">Component (js and hbs)</a>
+        <ul class="'dropdown dropdown-menu">
+          <li><a {{action 'addFile' 'component-hbs'}}>hbs only</a></li>
+          <li><a {{action 'addFile' 'component-js'}}>js only</a></li>
+        </ul>
+      </li>
       <li><a {{action 'addFile' 'model'}}>Model</a></li>
       <li><a {{action 'addFile' 'controller'}}>Controller</a></li>
       <li><a {{action 'addFile' 'route'}}>Route</a></li>
