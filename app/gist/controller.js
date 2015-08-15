@@ -140,14 +140,10 @@ export default Ember.Controller.extend({
       return false;
     }
 
-    if (this.get('col1File.fileName') === file.get('fileName')) {
-      return false;
-    }
-    if (this.get('col2File.fileName') === file.get('fileName')) {
-      return false;
-    }
-    if (this.get('col3File.fileName') === file.get('fileName')) {
-      return false;
+    for (let i = 1; i <= MAX_COLUMNS; ++i) {
+      if (this.get(`col${i}File.fileName`) === file.get('fileName')){
+        return false;
+      }
     }
 
     return true;
@@ -176,7 +172,7 @@ export default Ember.Controller.extend({
       this.send('contentsChanged');
     }
   },
-  
+
   /*
    *  Test whether path is valid.  Presently only tests whether components are hyphenated.
    */
@@ -192,6 +188,10 @@ export default Ember.Controller.extend({
       return true;
     }
     return false;
+  },
+
+  getColumnFile(column) {
+    return this.get(`col${column}File`);
   },
 
   setColumnFile(column, file){
@@ -295,9 +295,9 @@ export default Ember.Controller.extend({
       let numColumns = this.get('realNumColumns');
 
       for (var i = (col|0); i < numColumns; ++i) {
-        this.set("col" + i + "File", this.get("col" + (i + 1) + "File"));
+        this.setColumnFile(i, this.getColumnFile(i + 1));
       }
-      this.set("col" + numColumns + "File", undefined);
+      this.setColumnFile(numColumns, undefined);
 
       let activeCol = this.get('activeEditorCol');
       if (activeCol >= col) {
@@ -321,14 +321,10 @@ export default Ember.Controller.extend({
   },
 
   _removeFileFromColumns (file) {
-    if(this.get('col1File') === file) {
-      this.setColumnFile(1, null);
-    }
-    if(this.get('col2File') === file) {
-      this.setColumnFile(2, null);
-    }
-    if(this.get('col3File') === file) {
-      this.setColumnFile(3, null);
+    for (let i = 1; i <= MAX_COLUMNS; ++i) {
+      if (this.getColumnFile(i) === file) {
+        this.setColumnFile(i, null);
+      }
     }
   },
 
