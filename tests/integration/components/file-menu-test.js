@@ -29,6 +29,7 @@ moduleForComponent('file-menu', 'Integration | Component | file menu', {
       id: '74bae9a34142370ff5a3',
       files: [this.file],
       history: [],
+      ownerLogin: 'Gaurav0',
       isNew: false
     });
 
@@ -36,7 +37,10 @@ moduleForComponent('file-menu', 'Integration | Component | file menu', {
     this.set('model', this.gist);
 
     this.set('session', Ember.Object.create({
-      isAuthenticated: true
+      isAuthenticated: true,
+      currentUser: {
+        login: 'octocat'
+      }
     }));
 
     this.set('activeEditorCol', 1);
