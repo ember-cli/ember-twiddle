@@ -49,6 +49,7 @@ test('deleting a gist loaded in two columns', function(assert) {
     andThen(function() {
       assert.equal(find('.code .CodeMirror').length, 0, 'No code mirror editors active');
       assert.equal(find('.dropdown-toggle:contains(No file selected)').length, 2, 'Shows message when no file is selected.');
+      assert.equal(find('.file-menu .test-remove-action').length, 0, 'There no longer is a selected file to delete');
     });
 
     // TODO: Replace brittle for loop test code with "while there are files left..."
