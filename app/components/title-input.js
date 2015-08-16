@@ -9,13 +9,30 @@ export default Ember.Component.extend({
     this.$('input').focus();
   },
 
+  enter() {
+    this.$('input').blur();
+  },
+
   actions: {
     inputFocusIn() {
+      if(this.$('input').val()){
+        this.$('input').val('');
+    }
+
       this.set('active', true);
     },
 
-    inputFocusOut() {
+    inputFocusOut() {      
+      if(this.$('input').val()===''){
+        this.$('input').val('New Twiddle');
+      }
+
       this.set('active', false);
+    },
+
+    removeFocus() {
+      this.$('input').blur();
+      this.sendAction('inputFocusOut');
     }
   }
 
