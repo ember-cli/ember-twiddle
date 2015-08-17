@@ -25,7 +25,7 @@
 
   <span class="nav-right">
     <span class="glyphicon glyphicon-remove" {{action 'removeColumn' col}}></span>
-    {{#if lastColumn}}
+    {{#if isLastColumn}}
       <span class="glyphicon glyphicon-plus" {{action 'addColumn'}}></span>
     {{/if}}
   </span>

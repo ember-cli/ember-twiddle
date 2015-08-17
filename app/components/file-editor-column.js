@@ -21,7 +21,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  lastColumn: computed('col', 'numColumns', function() {
+  isLastColumn: computed('col', 'numColumns', function() {
     let numColumns = this.get('numColumns');
     return (this.get('col') | 0) === numColumns && numColumns < MAX_COLUMNS;
   }),
