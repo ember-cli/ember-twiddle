@@ -286,6 +286,12 @@ export default Ember.Controller.extend({
         file.deleteRecord();
         this.notify.info('File %@ was deleted'.fmt(file.get('filePath')));
         this._removeFileFromColumns(file);
+        if (this.get('activeFile') === file) {
+          this.setProperties({
+            activeFile: null,
+            activeEditorCol: null
+          });
+        }
 
         this.send('contentsChanged');
       }

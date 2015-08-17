@@ -9,6 +9,7 @@ export default ApplicationSerializer.extend({
   normalizePayload: function(payload) {
     this.normalizeFiles(payload);
     this.normalizeHistory(payload);
+    payload.ownerLogin = payload.owner.login;
     return payload;
   },
 

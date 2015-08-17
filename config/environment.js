@@ -75,7 +75,17 @@ module.exports = function(environment) {
   }
 
   if (environment === 'staging') {
+    ENV.githubOauthUrl = 'https://canary-twiddle-gatekeeper.herokuapp.com/authenticate/';
     ENV.assetsHost = '//canary-assets.ember-twiddle.com/';
+    ENV.torii = {
+      sessionServiceName: 'session',
+      providers: {
+        'github-oauth2': {
+          scope: 'gist',
+          apiKey: '085e033505c9d26ec27a'
+        }
+      }
+    };
   }
 
   return ENV;
