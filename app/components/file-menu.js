@@ -32,7 +32,11 @@ export default Ember.Component.extend({
     embed() {
       let src = window.location.href.split("?")[0];
       src += "?numColumns=0";
-      let embedCode = `<iframe width="800" height="600" src="${src}"></iframe>`;
+      let iframe = document.createElement("iframe");
+      iframe.src = src;
+      iframe.width = 800;
+      iframe.height = 600;
+      let embedCode = iframe.outerHTML;
       prompt('Ctrl + C ;-)', embedCode);
     },
     fork(model) {
