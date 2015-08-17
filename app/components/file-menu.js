@@ -1,8 +1,14 @@
 import Ember from "ember";
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
   tagName: 'li',
   classNames: ['dropdown'],
+
+  belongsToUser: computed('model.ownerLogin', 'session.currentUser.login', function() {
+    return this.get('model.ownerLogin') === this.get('session.currentUser.login');
+  }),
 
   actions: {
     addComponent() {

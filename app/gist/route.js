@@ -10,6 +10,10 @@ export default Ember.Route.extend({
   actions: {
     saveGist (gist) {
       var newGist = gist.get('isNew');
+      if (!newGist && gist.get('ownerLogin') !== this.get('session.currentUser.login')) {
+        this.send('fork', gist);
+        return;
+      }
       gist.save().then(() => {
         this.notify.info('Saved to Gist %@ on Github'.fmt(gist.get('id')));
         if(newGist) {

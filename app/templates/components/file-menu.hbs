@@ -34,7 +34,9 @@
     {{#unless model.isNew}}
       <li><a {{action 'share'}}>Share Twiddle</a></li>
       <li><a {{action 'embed'}}>Embed Twiddle</a></li>
-      <li><a {{action 'fork' model}} class="test-fork-action">Fork Twiddle</a></li>
+      {{#unless belongsToUser}}
+        <li><a {{action 'fork' model}} class="test-fork-action">Fork Twiddle</a></li>
+      {{/unless}}
       <li><a {{action 'deleteGist' model}} class="test-delete-action">Delete Twiddle</a></li>
     {{/unless}}
   {{else}}
