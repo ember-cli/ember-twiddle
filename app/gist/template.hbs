@@ -31,48 +31,21 @@
 </div>
 
 <div class="row twiddle-panes">
-
-  {{#if showCol1}}
-    <div class="col-md-4 code {{if col1Active 'active' ''}}">
-      {{file-editor-column col="1"
-                           file=col1File
-                           allFiles=model.files
-                           keyMap=settings.keyMap
-                           numColumns=realNumColumns
-                           contentsChanged="contentsChanged"
-                           removeColumn=(action "removeColumn")
-                           addColumn=(action "addColumn")
-      }}
-    </div>
-  {{/if}}
-
-  {{#if showCol2}}
-    <div class="col-md-4 code {{if col2Active 'active' ''}}">
-      {{file-editor-column col="2"
-                           file=col2File
-                           allFiles=model.files
-                           keyMap=settings.keyMap
-                           numColumns=realNumColumns
-                           contentsChanged="contentsChanged"
-                           removeColumn=(action "removeColumn")
-                           addColumn=(action "addColumn")
-      }}
-    </div>
-  {{/if}}
-
-  {{#if showCol3}}
-    <div class="col-md-4 code {{if col3Active 'active' ''}}">
-      {{file-editor-column col="3"
-                           file=col3File
-                           allFiles=model.files
-                           keyMap=settings.keyMap
-                           numColumns=realNumColumns
-                           contentsChanged="contentsChanged"
-                           removeColumn=(action "removeColumn")
-                           addColumn=(action "addColumn")
-      }}
-    </div>
-  {{/if}}
+  {{#each columns as |column|}}
+    {{#if column.show}}
+      <div class="col-md-4 code {{if column.active 'active' ''}}">
+        {{file-editor-column col=column.col
+                             file=column.file
+                             allFiles=model.files
+                             keyMap=settings.keyMap
+                             numColumns=realNumColumns
+                             contentsChanged="contentsChanged"
+                             removeColumn=(action "removeColumn")
+                             addColumn=(action "addColumn")
+        }}
+      </div>
+    {{/if}}
+  {{/each}}
 
   <div class="col-md-4 output">
     <div class="header">
