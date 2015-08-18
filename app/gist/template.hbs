@@ -31,21 +31,27 @@
 </div>
 
 <div class="row twiddle-panes">
-  {{#each columns as |column|}}
-    {{#if column.show}}
-      <div class="col-md-4 code {{if column.active 'active' ''}}">
-        {{file-editor-column col=column.col
-                             file=column.file
-                             allFiles=model.files
-                             keyMap=settings.keyMap
-                             numColumns=realNumColumns
-                             contentsChanged="contentsChanged"
-                             removeColumn=(action "removeColumn")
-                             addColumn=(action "addColumn")
-        }}
-      </div>
-    {{/if}}
-  {{/each}}
+  {{#unless fullScreen}}
+    <div class="col-md-4 file-tree">
+      {{ember-jstree data=fileTreeData}}
+    </div>
+
+    {{#each columns as |column|}}
+      {{#if column.show}}
+        <div class="col-md-4 code {{if column.active 'active' ''}}">
+          {{file-editor-column col=column.col
+                               file=column.file
+                               allFiles=model.files
+                               keyMap=settings.keyMap
+                               numColumns=realNumColumns
+                               contentsChanged="contentsChanged"
+                               removeColumn=(action "removeColumn")
+                               addColumn=(action "addColumn")
+          }}
+        </div>
+      {{/if}}
+    {{/each}}
+  {{/unless}}
 
   <div class="col-md-4 output">
     <div class="header">

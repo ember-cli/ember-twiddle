@@ -31,7 +31,7 @@ export default Ember.Component.extend({
     },
     embed() {
       let src = window.location.href.split("?")[0];
-      src += "?numColumns=0";
+      src += "?numColumns=0&fullScreen=true";
       let iframe = document.createElement("iframe");
       iframe.src = src;
       iframe.width = 800;
