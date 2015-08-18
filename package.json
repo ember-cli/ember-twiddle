@@ -42,7 +42,7 @@
     "dc-tabs": "0.1.0",
     "dedent": "^0.4.0",
     "ember-api-actions": "0.0.7",
-    "ember-autoresize": "0.5.1",
+    "ember-autoresize": "0.5.3",
     "ember-browserify": "^1.0.1",
     "ember-cli-bootstrap-sassy": "0.0.18",
     "ember-cli-build-notifications": "0.0.3",
