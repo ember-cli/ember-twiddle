@@ -6,23 +6,25 @@ export default Ember.Component.extend({
 
   //proxy clicks to input focus
   click() {
-    this.$('input').focus();
-  },
-
-  enter() {
-    this.$('input').blur();
+    this.$('input').focusin();
   },
 
   actions: {
-    inputFocusIn() {
-      if(this.$('input').val()){
-        this.$('input').val('');
-    }
+    inputFocusIn(){
+
+      //only if not already focused so subset of the value can still be selected manually
+      if(!this.get('active')){
+        this.$('input').select().one('mouseup.selectValue',
+          function (e) {
+            e.preventDefault();
+          }
+        );
+      }
 
       this.set('active', true);
     },
 
-    inputFocusOut() {      
+    inputFocusOut(){
       if(this.$('input').val()===''){
         this.$('input').val('New Twiddle');
       }
@@ -32,7 +34,6 @@ export default Ember.Component.extend({
 
     removeFocus() {
       this.$('input').blur();
-      this.sendAction('inputFocusOut');
     }
   }
 
