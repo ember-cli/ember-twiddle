@@ -54,7 +54,7 @@ export default Ember.Controller.extend({
    */
   activeEditorCol: null,
 
-  columns: [],
+  columns: null,
 
   settings: Settings.create(),
 
