@@ -26,6 +26,12 @@ export default Ember.Component.extend({
     return (this.get('col') | 0) === numColumns && numColumns < MAX_COLUMNS;
   }),
 
+  isFirstColumn: computed.equal('col', '1'),
+
+  showFileTreeOpenIcon: computed('isFirstColumn', 'fileTreeShown', function() {
+    return this.get('isFirstColumn') && !this.get('fileTreeShown');
+  }),
+
   focusIn () {
     this.sendAction('focusEditor', this);
   },
@@ -46,6 +52,10 @@ export default Ember.Component.extend({
 
     addColumn() {
       this.attrs.addColumn();
+    },
+
+    showFileTree() {
+      this.attrs.showFileTree();
     }
   }
 });

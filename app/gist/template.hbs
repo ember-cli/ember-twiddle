@@ -32,9 +32,11 @@
 
 <div class="row twiddle-panes">
   {{#unless fullScreen}}
-    <div class="col-md-4 file-tree">
-      {{ember-jstree data=fileTreeData}}
-    </div>
+    {{#if fileTreeShown}}
+      <div class="col-md-4 file-tree">
+        {{ember-jstree data=fileTreeData}}
+      </div>
+    {{/if}}
 
     {{#each columns as |column|}}
       {{#if column.show}}
@@ -44,9 +46,11 @@
                                allFiles=model.files
                                keyMap=settings.keyMap
                                numColumns=realNumColumns
+                               fileTreeShown=fileTreeShown
                                contentsChanged="contentsChanged"
                                removeColumn=(action "removeColumn")
                                addColumn=(action "addColumn")
+                               showFileTree=(action "showFileTree")
           }}
         </div>
       {{/if}}

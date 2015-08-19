@@ -239,6 +239,12 @@ body {
     background-color: #faf4f1;
     position: relative;
 
+    .nav-left {
+      position: absolute;
+      top: 18px;
+      left: 15px;
+    }
+
     .file-picker {
       margin-left: 15px;
       margin-top: 8px;
@@ -246,15 +252,19 @@ body {
       position: absolute;
     }
 
+    .nav-left+.file-picker {
+      margin-left: 30px;
+    }
+
     .nav-right {
       position: absolute;
       top: 20px;
       right: 15px;
+    }
 
-      .glyphicon {
-        color: $navbar-default-link-color;
-        cursor: pointer;
-      }
+    .glyphicon {
+      color: $navbar-default-link-color;
+      cursor: pointer;
     }
   }
 

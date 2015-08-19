@@ -73,6 +73,11 @@ export default Ember.Controller.extend({
   isLiveReload: true,
 
   /**
+   * Whether the file tree is currently shown
+   */
+  fileTreeShown: false,
+
+  /**
    * Build the application and set the iframe code
    */
   buildApp () {
@@ -275,6 +280,14 @@ export default Ember.Controller.extend({
 
     runNow () {
       this.buildApp();
+    },
+
+    showFileTree() {
+      this.set('fileTreeShown', true);
+    },
+
+    hideFileTree() {
+      this.set('fileTreeShown', false);
     },
 
     deleteGist (gist) {

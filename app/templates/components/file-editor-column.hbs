@@ -1,4 +1,9 @@
 <div class="header">
+  {{#if showFileTreeOpenIcon}}
+    <span class="nav-left">
+      <span class="glyphicon glyphicon-chevron-right" {{action 'showFileTree'}}></span>
+    </span>
+  {{/if}}
   <ul class="nav nav-pills file-picker">
     <li class="dropdown">
       {{#if allFiles.length}}
