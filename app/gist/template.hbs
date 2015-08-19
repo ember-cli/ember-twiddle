@@ -34,6 +34,11 @@
   {{#unless fullScreen}}
     {{#if fileTreeShown}}
       <div class="col-md-4 file-tree">
+        <div class="header">
+          <div class="nav-right">
+            <span class="glyphicon glyphicon-chevron-left" {{action 'hideFileTree'}}></span>
+          </div>
+        </div>
         {{ember-jstree data=fileTreeData}}
       </div>
     {{/if}}
