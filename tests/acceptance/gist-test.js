@@ -5,7 +5,7 @@ import { findMapText } from 'ember-twiddle/tests/helpers/util';
 import ErrorMessages from 'ember-twiddle/helpers/error-messages';
 
 
-const firstColumn = '.code:nth-of-type(2)';
+const firstColumn = '.code:first-of-type';
 const firstFilePicker = firstColumn + ' .dropdown-toggle';
 const secondFile = firstColumn + ' .dropdown-menu li:nth-child(2) a';
 const anyFile = firstColumn + ' .dropdown-menu li:nth-child(1) a';

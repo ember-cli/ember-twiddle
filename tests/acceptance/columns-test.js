@@ -15,7 +15,7 @@ module('Acceptance | columns', {
 });
 
 const columns = ".code";
-const firstColumn = ".code:nth-of-type(2)";
+const firstColumn = ".code:first-of-type";
 const plusGlyph = ".code .glyphicon-plus";
 const removeGlyph = firstColumn + " .glyphicon-remove";
 const outputPlusGlyph = ".output .glyphicon-plus";
