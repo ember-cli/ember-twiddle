@@ -53,7 +53,7 @@
     {{/each}}
   {{/unless}}
 
-  <div class="col-md-4 output">
+  <div class="col-md-4 output {{if fullScreen 'full-screen'}}">
     <div class="header">
       {{#if noColumns}}
         <span class="glyphicon glyphicon-plus" {{action 'addColumn'}}></span>
@@ -68,6 +68,9 @@
       <div>{{applicationUrl}}</div>
     </div>
     {{dummy-demo-app html=buildOutput}}
+    {{#if fullScreen}}
+      <a class="exit-full-screen-link" {{action 'exitFullScreen'}}>Edit Twiddle</a>
+    {{/if}}
   </div>
 
 </div>

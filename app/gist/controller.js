@@ -377,6 +377,14 @@ export default Ember.Controller.extend({
       }).then(this.initializeColumns.bind(this));
     },
 
+    exitFullScreen() {
+      this.transitionToRoute({
+        queryParams: {
+          fullScreen: false
+        }
+      }).then(this.initializeColumns.bind(this));
+    },
+
     setEditorKeyMap (keyMap) {
       const settings = this.get('settings');
       settings.set('keyMap', keyMap);
