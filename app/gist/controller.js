@@ -235,8 +235,9 @@ export default Ember.Controller.extend({
 
     openFile(filePath) {
       let file = this.get('model.files').findBy('filePath', filePath);
-      this.setColumnFile(1, file);
-      this.set('activeEditorCol', '1');
+      let activeCol = this.get('activeEditorCol') || '1';
+      this.setColumnFile(activeCol, file);
+      this.set('activeEditorCol', activeCol);
       this.set('activeFile', file);
     },
 
