@@ -29,9 +29,9 @@
   </ul>
 
   <span class="nav-right">
-    <span class="glyphicon glyphicon-remove" {{action 'removeColumn' col}}></span>
+    <span class="glyphicon glyphicon-remove" {{action 'removeColumn' col}} title="Hide this panel"></span>
     {{#if isLastColumn}}
-      <span class="glyphicon glyphicon-plus" {{action 'addColumn'}}></span>
+      <span class="glyphicon glyphicon-plus" {{action 'addColumn'}} title="Show another panel"></span>
     {{/if}}
   </span>
 </div>
