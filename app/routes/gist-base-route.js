@@ -2,6 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   setupController (controller, context) {
-    this.controllerFor('gist').set('model', context);
+    let gistController = this.controllerFor('gist');
+    gistController.set('model', context);
+    gistController.initializeColumns();
   }
 });

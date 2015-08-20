@@ -17,9 +17,7 @@
   </ul>
 
   <div class="title">
-    {{!-- {{#if isEditingDescription}} --}}
     {{title-input value=model.description}}
-    {{!-- {{model.description}} --}}
     {{saved-state-indicator model=model
                             unsaved=unsaved
     }}
@@ -33,17 +31,27 @@
 </div>
 
 <div class="row twiddle-panes">
-
-  <div class="col-md-4 code {{if col1Active 'active' ''}}">
-    {{file-editor-column col="1" file=col1File allFiles=model.files keyMap=settings.keyMap contentsChanged="contentsChanged"}}
-  </div>
-
-  <div class="col-md-4 code {{if col2Active 'active' ''}}">
-    {{file-editor-column col="2" file=col2File allFiles=model.files keyMap=settings.keyMap contentsChanged="contentsChanged"}}
-  </div>
+  {{#each columns as |column|}}
+    {{#if column.show}}
+      <div class="col-md-4 code {{if column.active 'active' ''}}">
+        {{file-editor-column col=column.col
+                             file=column.file
+                             allFiles=model.files
+                             keyMap=settings.keyMap
+                             numColumns=realNumColumns
+                             contentsChanged="contentsChanged"
+                             removeColumn=(action "removeColumn")
+                             addColumn=(action "addColumn")
+        }}
+      </div>
+    {{/if}}
+  {{/each}}
 
   <div class="col-md-4 output">
     <div class="header">
+      {{#if noColumns}}
+        <span class="glyphicon glyphicon-plus" {{action 'addColumn'}}></span>
+      {{/if}}
       {{build-messages notify=notify
                        isBuilding=isBuilding
                        buildErrors=buildErrors
