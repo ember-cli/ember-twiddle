@@ -200,8 +200,11 @@ body {
   margin: 0;
   margin-left: 0;
   z-index: -1;
-  display: -webkit-flex;
-  display: flex;
+
+  @media (min-width: $screen-md-min) {
+    display: -webkit-flex;
+    display: flex;
+  }
 
   .col-md-4 {
     -webkit-flex-grow: 1;

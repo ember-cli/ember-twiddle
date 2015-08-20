@@ -29,6 +29,16 @@ export default Ember.Component.extend({
     share() {
       prompt('Ctrl + C ;-)', window.location.href);
     },
+    embed() {
+      let src = window.location.href.split("?")[0];
+      src += "?numColumns=0";
+      let iframe = document.createElement("iframe");
+      iframe.src = src;
+      iframe.width = 800;
+      iframe.height = 600;
+      let embedCode = iframe.outerHTML;
+      prompt('Ctrl + C ;-)', embedCode);
+    },
     fork(model) {
       this.sendAction('fork', model);
     },
