@@ -3,7 +3,6 @@ import config from '../config/environment';
 import Settings from '../models/settings';
 import ErrorMessages from 'ember-twiddle/helpers/error-messages';
 import Column from '../utils/column';
-import _ from 'lodash/lodash';
 
 const {
   computed,
