@@ -1,9 +1,11 @@
 {{#if session.isOpening}}
   <li class="dropdown disabled signing-in">Signing in...</li>
 {{else}}
-  {{#if session.isAuthenticated}}
-    <span class="user-avatar"><img src="{{session.currentUser.avatarUrl32}}" /></span>
-  {{/if}}
+  <span class="user-avatar">
+    {{#if session.isAuthenticated}}
+      <img src="{{session.currentUser.avatarUrl32}}" />
+    {{/if}}
+  </span>
   <li class="dropdown">
      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
        {{userName}} <b class="caret"></b>
