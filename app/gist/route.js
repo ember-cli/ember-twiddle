@@ -15,7 +15,7 @@ export default Ember.Route.extend({
         return;
       }
       gist.save().then(() => {
-        this.notify.info('Saved to Gist %@ on Github'.fmt(gist.get('id')));
+        this.notify.info(`Saved to Gist ${gist.get('id')} on Github`);
         if(newGist) {
           this.transitionTo('gist.edit', gist).then(function() {
             this.send('setSaved');
