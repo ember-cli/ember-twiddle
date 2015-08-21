@@ -6,13 +6,15 @@ import Column from '../utils/column';
 
 const {
   computed,
-  run
+  run,
+  inject
 } = Ember;
 
 const MAX_COLUMNS = 3;
 
 export default Ember.Controller.extend({
-  emberCli: Ember.inject.service('ember-cli'),
+  emberCli: inject.service('ember-cli'),
+  notify: inject.service('notify'),
   version: config.APP.version,
 
   queryParams: ['numColumns'],
@@ -175,7 +177,7 @@ export default Ember.Controller.extend({
       let file = this.store.createRecord('gistFile', fileProperties);
 
       this.get('model.files').pushObject(file);
-      this.notify.info('File %@ was added'.fmt(file.get('filePath')));
+      this.get('notify').info('File %@ was added'.fmt(file.get('filePath')));
       this.setColumnFile(fileColumn, file);
       this.set('activeEditorCol', '1');
       this.send('contentsChanged');
@@ -235,7 +237,7 @@ export default Ember.Controller.extend({
       if(confirm(`Are you sure you want to remove this gist from Github?\n\n${gist.get('description')}`)) {
         gist.destroyRecord();
         this.transitionToRoute('gist.new');
-        this.notify.info('Gist %@ was deleted from Github'.fmt(gist.get('id')));
+        this.get('notify').info('Gist %@ was deleted from Github'.fmt(gist.get('id')));
       }
     },
 
@@ -285,14 +287,14 @@ export default Ember.Controller.extend({
         }
 
         file.set('filePath', filePath);
-        this.notify.info('File %@ was added'.fmt(file.get('filePath')));
+        this.get('notify').info('File %@ was added'.fmt(file.get('filePath')));
       }
     },
 
     removeFile (file) {
       if(confirm(`Are you sure you want to remove this file?\n\n${file.get('filePath')}`)) {
         file.deleteRecord();
-        this.notify.info('File %@ was deleted'.fmt(file.get('filePath')));
+        this.get('notify').info('File %@ was deleted'.fmt(file.get('filePath')));
         this._removeFileFromColumns(file);
         if (this.get('activeFile') === file) {
           this.setProperties({
