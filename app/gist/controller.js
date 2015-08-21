@@ -175,7 +175,7 @@ export default Ember.Controller.extend({
   createFile(filePath, fileProperties, fileColumn=1) {
     if (filePath) {
       if(this.get('model.files').findBy('filePath', filePath)) {
-        alert('A file with the name %@ already exists'.fmt(filePath));
+        alert(`A file with the name ${filePath} already exists`);
         return;
       }
 
@@ -183,7 +183,7 @@ export default Ember.Controller.extend({
       let file = this.store.createRecord('gistFile', fileProperties);
 
       this.get('model.files').pushObject(file);
-      this.get('notify').info('File %@ was added'.fmt(file.get('filePath')));
+      this.get('notify').info(`File ${file.get('filePath')} was added`);
       this.setColumnFile(fileColumn, file);
       this.set('activeEditorCol', '1');
       this.send('contentsChanged');
@@ -259,7 +259,7 @@ export default Ember.Controller.extend({
       if(confirm(`Are you sure you want to remove this gist from Github?\n\n${gist.get('description')}`)) {
         gist.destroyRecord();
         this.transitionToRoute('gist.new');
-        this.get('notify').info('Gist %@ was deleted from Github'.fmt(gist.get('id')));
+        this.get('notify').info(`Gist ${gist.get('id')} was deleted from Github`);
       }
     },
 
@@ -304,19 +304,19 @@ export default Ember.Controller.extend({
       let filePath = prompt('File path', file.get('filePath'));
       if (filePath) {
         if(this.get('model.files').findBy('filePath', filePath)) {
-          alert('A file with the name %@ already exists'.fmt(filePath));
+          alert(`A file with the name ${filePath} already exists`);
           return;
         }
 
         file.set('filePath', filePath);
-        this.get('notify').info('File %@ was added'.fmt(file.get('filePath')));
+        this.get('notify').info(`File ${file.get('filePath')} was added`);
       }
     },
 
     removeFile (file) {
       if(confirm(`Are you sure you want to remove this file?\n\n${file.get('filePath')}`)) {
         file.deleteRecord();
-        this.get('notify').info('File %@ was deleted'.fmt(file.get('filePath')));
+        this.get('notify').info(`File ${file.get('filePath')} was deleted`);
         this._removeFileFromColumns(file);
         if (this.get('activeFile') === file) {
           this.setProperties({

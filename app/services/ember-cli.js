@@ -146,7 +146,7 @@ export default Ember.Service.extend({
           }
         }
         catch(e) {
-          e.message = '%@: %@'.fmt(file.get('filePath'), e.message);
+          e.message = `${file.get('filePath')}: ${e.message}`;
           errors.push(e);
         }
       });
@@ -175,22 +175,22 @@ export default Ember.Service.extend({
 
     let depCssLinkTags = '';
     let depScriptTags ='';
-    let appScriptTag = '<script type="text/javascript">%@</script>'.fmt(appJS);
-    let appStyleTag = '<style type="text/css">%@</style>'.fmt(appCSS);
+    let appScriptTag = `<script type="text/javascript">${appJS}</script>`;
+    let appStyleTag = `<style type="text/css">${appCSS}</style>`;
 
     Object.keys(deps).forEach(function(depKey) {
       let dep = deps[depKey];
       if (dep.substr(dep.lastIndexOf(".")) === '.css') {
-        depCssLinkTags += '<link rel="stylesheet" type="text/css" href="%@">'.fmt(dep);
+        depCssLinkTags += `<link rel="stylesheet" type="text/css" href="${dep}">`;
       } else {
-        depScriptTags += '<script type="text/javascript" src="%@"></script>'.fmt(dep);
+        depScriptTags += `<script type="text/javascript" src="${dep}"></script>`;
       }
     });
 
-    depScriptTags += '<script type="text/javascript" src="%@assets/twiddle-deps.js?%@"></script>'.fmt(config.assetsHost, config.APP.version);
+    depScriptTags += `<script type="text/javascript" src="${config.assetsHost}assets/twiddle-deps.js?${config.APP.version}"></script>`;
 
-    index = index.replace('{{content-for \'head\'}}', '%@\n%@'.fmt(depCssLinkTags, appStyleTag));
-    index = index.replace('{{content-for \'body\'}}', '%@\n%@'.fmt(depScriptTags, appScriptTag));
+    index = index.replace('{{content-for \'head\'}}', `${depCssLinkTags}\n${appStyleTag}`);
+    index = index.replace('{{content-for \'body\'}}', `${depScriptTags}\n${appScriptTag}`);
 
     return index;
   },
