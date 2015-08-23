@@ -9,6 +9,7 @@ export default Ember.Component.extend({
   },
 
   didRender() {
+    $('.handle').remove();
     $('.col-md-4').after('<div class="handle"></div>');
     $('.handle').last().remove();
     $('.handle').drags();
@@ -68,7 +69,7 @@ export default Ember.Component.extend({
 
           $(window).on("mouseup", function() {
             $('body').css('cursor', priorCursor);
-            $drag.parents().off("mousemove");
+            $(window).off("mousemove");
             $('.draggable').removeClass('draggable').css('z-index', z_idx);
           });
           e.preventDefault(); // disable selection

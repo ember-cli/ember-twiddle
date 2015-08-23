@@ -33,6 +33,10 @@ body {
   position: absolute;
 }
 
+iframe {
+  pointer-events: none;
+}
+
 .light-gray {
   color: #cccccc;
 }
