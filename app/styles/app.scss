@@ -227,6 +227,10 @@ iframe {
     cursor: normal;
   }
 
+  .handle + .col-md-4 {
+    margin-left: -3px;
+  }
+
   .output {
     border-right: none;
 
@@ -388,6 +392,8 @@ iframe {
 
 .handle {
   height: 100%;
-  width: 2px;
-  border: 1px dashed black;
+  width: 3px;
+  background-color: transparent;
+  position: relative;
+  left: -2px;
 }

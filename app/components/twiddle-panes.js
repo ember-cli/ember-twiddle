@@ -15,6 +15,7 @@ export default Ember.Component.extend({
     $('.handle').drags();
   },
 
+  // This code originally taken from http://codepen.io/pprice/pen/splkc/
   initDrags() {
     (function($) {
       $.fn.drags = function(opt) {
