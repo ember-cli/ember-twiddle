@@ -13,10 +13,10 @@ export default Ember.Component.extend({
   },
 
   didRender() {
-    $('.handle').remove();
-    $('.col-md-4').after('<div class="handle"></div>');
-    $('.handle').last().remove();
-    $('.handle').drags();
+    this.$('.handle').remove();
+    this.$('.col-md-4').after('<div class="handle"></div>');
+    this.$('.handle').last().remove();
+    this.$('.handle').drags();
   },
 
   // This code originally taken from http://codepen.io/pprice/pen/splkc/

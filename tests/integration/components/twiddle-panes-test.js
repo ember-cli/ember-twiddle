@@ -6,21 +6,27 @@ moduleForComponent('twiddle-panes', 'Integration | Component | twiddle panes', {
 });
 
 test('it renders', function(assert) {
-  assert.expect(2);
-
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  assert.expect(3);
 
   this.render(hbs`{{twiddle-panes}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$('.handle').length, 0, 'Still renders if no columns');
 
-  // Template block usage:
+  this.set('numColumns', 4);
+
   this.render(hbs`
-    {{#twiddle-panes}}
-      template block text
+    {{#twiddle-panes numColumns=numColumns}}
+      <div class="col-md-4"></div>
+      <div class="col-md-4"></div>
+      <div class="col-md-4"></div>
+      <div class="col-md-4"></div>
     {{/twiddle-panes}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$('.handle').length, 3, 'Renders 3 handles if 4 columns');
+
+  this.$('.col-md-4').last().after('<div class="col-md-4"></div>');
+  this.set('numColumns', 5);
+
+  assert.equal(this.$('.handle').length, 4, 'Increases handles to 4 if a column is inserted');
 });
