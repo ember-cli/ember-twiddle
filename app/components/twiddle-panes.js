@@ -1,11 +1,15 @@
 import Ember from 'ember';
 
+const { $, run } = Ember;
+const jQuery = $;
+
 export default Ember.Component.extend({
   classNames: ['row', 'twiddle-panes'],
 
   init() {
     this._super(...arguments);
     this.initDrags();
+    this.setupMouseEventsFromIframe();
   },
 
   didRender() {
@@ -22,10 +26,11 @@ export default Ember.Component.extend({
 
         opt = $.extend({handle:"",cursor:"col-resize", min: 25}, opt);
 
+        var $el;
         if(opt.handle === "") {
-          var $el = this;
+          $el = this;
         } else {
-          var $el = this.find(opt.handle);
+          $el = this.find(opt.handle);
         }
 
         var priorCursor = $('body').css('cursor');
@@ -35,15 +40,16 @@ export default Ember.Component.extend({
           priorCursor = $('body').css('cursor');
           $('body').css('cursor', opt.cursor);
 
+          var $drag;
           if(opt.handle === "") {
-            var $drag = $(this).addClass('draggable');
+            $drag = $(this).addClass('draggable');
           } else {
-            var $drag = $(this).addClass('active-handle').parent().addClass('draggable');
+            $drag = $(this).addClass('active-handle').parent().addClass('draggable');
           }
           var z_idx = $drag.css('z-index'),
-            drg_h = $drag.outerHeight(),
+            //drg_h = $drag.outerHeight(),
             drg_w = $drag.outerWidth(),
-            pos_y = $drag.offset().top + drg_h - e.pageY,
+            //pos_y = $drag.offset().top + drg_h - e.pageY,
             pos_x = $drag.offset().left + drg_w - e.pageX;
           $drag.css('z-index', 1000);
           $(window).on("mousemove", function(e) {
@@ -76,7 +82,32 @@ export default Ember.Component.extend({
           e.preventDefault(); // disable selection
         });
 
-      }
+      };
     })(jQuery);
+  },
+
+  setupMouseEventsFromIframe() {
+    window.addEventListener('message', (m) => {
+      run(() => {
+        if(typeof m.data==='object' && 'mousemove' in m.data) {
+          if (!this.get('isDestroyed')) {
+            let event = $.Event("mousemove", {
+              pageX: m.data.mousemove.pageX + $("#dummy-content-iframe").offset().left,
+              pageY: m.data.mousemove.pageY + $("#dummy-content-iframe").offset().top
+            });
+            $(window).trigger(event);
+          }
+        }
+        if(typeof m.data==='object' && 'mouseup' in m.data) {
+          if (!this.get('isDestroyed')) {
+            let event = $.Event("mouseup", {
+              pageX: m.data.mouseup.pageX + $("#dummy-content-iframe").offset().left,
+              pageY: m.data.mouseup.pageY + $("#dummy-content-iframe").offset().top
+            });
+            $(window).trigger(event);
+          }
+        }
+      });
+    });
   }
 });
