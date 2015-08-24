@@ -89,7 +89,7 @@ const requiredDependencies = [
 export default Ember.Service.extend({
   init () {
     this._super();
-    this.set('store', this.container.lookup("store:main"));
+    this.set('store', this.container.lookup("service:store"));
   },
 
   generate(type) {
