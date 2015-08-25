@@ -16,7 +16,7 @@ export default Ember.Component.extend({
     this.$('.handle').remove();
     this.$('.col-md-4').after('<div class="handle"></div>');
     this.$('.handle').last().remove();
-    this.$('.handle').drags();
+    this.$('.handle').drags({pane: ".col-md-4"});
   },
 
   // This code originally taken from http://codepen.io/pprice/pen/splkc/
@@ -24,7 +24,7 @@ export default Ember.Component.extend({
     (function($) {
       $.fn.drags = function(opt) {
 
-        opt = $.extend({handle:"",cursor:"col-resize", min: 25}, opt);
+        opt = $.extend({handle:"",pane:"",cursor:"col-resize", min: 25}, opt);
 
         var $el;
         if(opt.handle === "") {
@@ -61,6 +61,7 @@ export default Ember.Component.extend({
             // the next X for prev
 
             var total = prev.outerWidth() + next.outerWidth();
+            var totalFlex = parseFloat(prev.css('flex-grow')) + parseFloat(next.css('flex-grow'));
 
             var leftPercentage = (((e.pageX - prev.offset().left) + (pos_x - drg_w / 2)) / total);
             var rightPercentage = 1 - leftPercentage;
@@ -69,6 +70,9 @@ export default Ember.Component.extend({
             {
               return;
             }
+
+            leftPercentage *= totalFlex;
+            rightPercentage *= totalFlex;
 
             prev.css('flex', leftPercentage.toString());
             next.css('flex', rightPercentage.toString());
