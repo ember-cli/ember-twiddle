@@ -21,11 +21,11 @@ const requiredFiles = [
 const availableBlueprints = {
   'templates/application': {
     blueprint: 'templates/application',
-    filePath: 'templates/application.hbs',
+    filePath: 'application/template.hbs',
   },
   'controllers/application': {
     blueprint: 'controllers/application',
-    filePath: 'controllers/application.js',
+    filePath: 'application/controller.js',
   },
   'app': {
     blueprint: 'app',
@@ -37,11 +37,11 @@ const availableBlueprints = {
   },
   'component-hbs': {
     blueprint: 'component-hbs',
-    filePath: 'templates/components/my-component.hbs',
+    filePath: 'my-component/template.hbs',
   },
   'component-js': {
     blueprint: 'component-js',
-    filePath: 'components/my-component.js',
+    filePath: 'my-component/component.js',
   },
   'controller': {
     blueprint: 'controller',

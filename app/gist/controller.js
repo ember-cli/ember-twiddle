@@ -243,7 +243,7 @@ export default Ember.Controller.extend({
     },
 
     addComponent() {
-      let path = prompt('Component path (without file extension)', 'components/my-component');
+      let path = prompt('Component path (without file extension)', 'my-component');
       if (Ember.isBlank(path)){
         return;
       }
@@ -256,7 +256,13 @@ export default Ember.Controller.extend({
       }
       ['js', 'hbs'].forEach((fileExt, i)=>{
         let fileProperties = this.get('emberCli').buildProperties(`component-${fileExt}`);
-        let filePath =  `${fileExt === 'hbs' ? 'templates/' : ''}${path}.${fileExt}`;
+        let notPodPrefix = "components/";
+        let filePath;
+        if (path.substr(0, notPodPrefix.length) === notPodPrefix) {
+          filePath =  `${fileExt === 'hbs' ? 'templates/' : ''}${path}.${fileExt}`;
+        } else {
+          filePath = path + "/" + (fileExt === 'hbs' ? 'template.hbs' : 'component.js');
+        }
         let fileColumn = i+1;
         this.createFile(filePath, fileProperties, fileColumn);
       });
