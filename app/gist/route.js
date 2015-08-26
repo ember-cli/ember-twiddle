@@ -1,6 +1,10 @@
 import Ember from 'ember';
 
+const { inject } = Ember;
+
 export default Ember.Route.extend({
+  notify: inject.service('notify'),
+
   beforeModel () {
     return this.session.fetch('github-oauth2').catch(function() {
       // Swallow error for now
@@ -15,7 +19,7 @@ export default Ember.Route.extend({
         return;
       }
       gist.save().then(() => {
-        this.notify.info(`Saved to Gist ${gist.get('id')} on Github`);
+        this.get('notify').info(`Saved to Gist ${gist.get('id')} on Github`);
         if(newGist) {
           this.transitionTo('gist.edit', gist).then(function() {
             this.send('setSaved');
@@ -59,7 +63,7 @@ export default Ember.Route.extend({
     if (error && error.errors) {
       let firstError = error.errors[0];
       if (firstError.code === "unprocessable" && firstError.field === "forks") {
-        this.notify.info("You already own this gist.");
+        this.get('notify').info("You already own this gist.");
         return;
       }
     }
