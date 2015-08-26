@@ -126,6 +126,32 @@ test('can add component (js and hbs)', function(assert){
   });
 });
 
+test('can add component (js and hbs) using pod format', function(assert){
+
+  let origFileCount;
+  promptValue = "my-comp";
+  visit('/');
+  andThen(function(){
+    origFileCount =  find(firstFilePickerFiles).length;
+  });
+
+  click(fileMenu);
+  click('.add-component-link');
+  click(firstFilePicker);
+  andThen(function() {
+    let numFiles = find(firstFilePickerFiles).length;
+    assert.equal(numFiles, origFileCount + 2, 'Added component files');
+    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    let jsFile = `${promptValue}/component.js`;
+    let hbsFile = `${promptValue}/template.hbs`;
+    assert.equal(fileNames[3], jsFile);
+    assert.equal(fileNames[4], hbsFile);
+    let columnFiles = findMapText(displayedFiles);
+    assert.deepEqual(columnFiles, [jsFile, hbsFile], 'Added files are displayed');
+
+  });
+});
+
 test('component without hyphen fails', function(assert){
 
   let alertFn = window.alert;
