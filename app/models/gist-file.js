@@ -14,14 +14,17 @@ export default DS.Model.extend({
   /*
     Replace dots with slashes, Gists can't have directories
    */
-  filePath: computed('fileName', function(key, value) {
-    if(value) {
-      this.set('fileName', value.replace(/\//gi, '.'));
-    }
+  filePath: computed('fileName', {
+    get() {
+      var fileName = this.get('fileName');
+      var parts = fileName.split('.');
+      return parts.slice(0, -1).join('/') + '.' + parts.slice(-1);
+    },
 
-    var fileName = this.get('fileName');
-    var parts = fileName.split('.');
-    return parts.slice(0,-1).join('/') + '.' + parts.slice(-1);
+    set(key, value) {
+      this.set('fileName', value.replace(/\//gi, '.'));
+      return value;
+    }
   }),
 
   extension: computed('filePath', function () {

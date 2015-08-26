@@ -28,6 +28,7 @@ test('you can add and remove columns', function(assert) {
   andThen(function() {
     assert.equal(currentURL(), '/', 'We are on the correct initial route');
     assert.equal(find(columns).length, 2, 'There are two columns to start');
+    assert.ok(find(firstColumn).hasClass('active'), 'The first column starts out active');
 
     find(plusGlyph).click();
   });

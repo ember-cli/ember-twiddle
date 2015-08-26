@@ -25,6 +25,7 @@ export default Ember.Controller.extend({
     this._super(...arguments);
     this.createColumns();
     this.setupWindowUpdate();
+    this.set('activeEditorCol', '1');
   },
 
   /**
