@@ -17,8 +17,9 @@ export default Ember.Controller.extend({
   notify: inject.service('notify'),
   version: config.APP.version,
 
-  queryParams: ['numColumns'],
+  queryParams: ['numColumns', 'fullScreen'],
   numColumns: 2,
+  fullScreen: false,
 
   init() {
     this._super(...arguments);
@@ -72,6 +73,11 @@ export default Ember.Controller.extend({
    * @type {boolean}
    */
   isLiveReload: true,
+
+  /**
+   * Whether the file tree is currently shown
+   */
+  fileTreeShown: false,
 
   /**
    * Build the application and set the iframe code
@@ -230,8 +236,24 @@ export default Ember.Controller.extend({
       this.set('activeFile', file);
     },
 
+    openFile(filePath) {
+      let file = this.get('model.files').findBy('filePath', filePath);
+      let activeCol = this.get('activeEditorCol') || '1';
+      this.setColumnFile(activeCol, file);
+      this.set('activeEditorCol', activeCol);
+      this.set('activeFile', file);
+    },
+
     runNow () {
       this.buildApp();
+    },
+
+    showFileTree() {
+      this.set('fileTreeShown', true);
+    },
+
+    hideFileTree() {
+      this.set('fileTreeShown', false);
     },
 
     deleteGist (gist) {
@@ -330,6 +352,14 @@ export default Ember.Controller.extend({
       this.transitionToRoute({
         queryParams: {
           numColumns: numColumns + 1
+        }
+      }).then(this.initializeColumns.bind(this));
+    },
+
+    exitFullScreen() {
+      this.transitionToRoute({
+        queryParams: {
+          fullScreen: false
         }
       }).then(this.initializeColumns.bind(this));
     },

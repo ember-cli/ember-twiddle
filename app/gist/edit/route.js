@@ -12,7 +12,6 @@ export default GistRoute.extend({
     this._super.apply(this, arguments);
 
     let gistController = this.controllerFor('gist');
-    gistController.rebuildApp();
     Ember.run.schedule('afterRender', function() {
       gistController.set('unsaved', false);
     });

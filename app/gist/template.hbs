@@ -31,23 +31,36 @@
 </div>
 
 <div class="row twiddle-panes">
-  {{#each columns as |column|}}
-    {{#if column.show}}
-      <div class="col-md-4 code {{if column.active 'active' ''}}">
-        {{file-editor-column col=column.col
-                             file=column.file
-                             allFiles=model.files
-                             keyMap=settings.keyMap
-                             numColumns=realNumColumns
-                             contentsChanged="contentsChanged"
-                             removeColumn=(action "removeColumn")
-                             addColumn=(action "addColumn")
+  {{#unless fullScreen}}
+    {{#if fileTreeShown}}
+      <div class="col-md-4 file-tree">
+        {{file-tree model=model
+                    openFile=(action "openFile")
+                    hideFileTree=(action "hideFileTree")
         }}
       </div>
     {{/if}}
-  {{/each}}
 
-  <div class="col-md-4 output">
+    {{#each columns as |column|}}
+      {{#if column.show}}
+        <div class="col-md-4 code {{if column.active 'active' ''}}">
+          {{file-editor-column col=column.col
+                               file=column.file
+                               allFiles=model.files
+                               keyMap=settings.keyMap
+                               numColumns=realNumColumns
+                               fileTreeShown=fileTreeShown
+                               contentsChanged="contentsChanged"
+                               removeColumn=(action "removeColumn")
+                               addColumn=(action "addColumn")
+                               showFileTree=(action "showFileTree")
+          }}
+        </div>
+      {{/if}}
+    {{/each}}
+  {{/unless}}
+
+  <div class="col-md-4 output {{if fullScreen 'full-screen'}}">
     <div class="header">
       {{#if noColumns}}
         <span class="glyphicon glyphicon-plus" {{action 'addColumn'}} title="Show an editor panel"></span>
@@ -62,6 +75,9 @@
       <div>{{applicationUrl}}</div>
     </div>
     {{dummy-demo-app html=buildOutput}}
+    {{#if fullScreen}}
+      <a class="exit-full-screen-link" {{action 'exitFullScreen'}}>Edit Twiddle</a>
+    {{/if}}
   </div>
 
 </div>
