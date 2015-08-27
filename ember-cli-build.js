@@ -45,6 +45,7 @@ module.exports = function() {
   });
 
   app.import('bower_components/ember/ember-template-compiler.js');
+  app.import('vendor/drags.js');
 
   var loaderTree = pickFiles('bower_components', {
     srcDir: '/loader.js',
