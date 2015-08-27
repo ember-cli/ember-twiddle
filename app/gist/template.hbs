@@ -30,7 +30,7 @@
   }}
 </div>
 
-<div class="row twiddle-panes">
+{{#twiddle-panes numColumns=realNumColumns fullScreen=fullScreen fileTreeShown=fileTreeShown}}
   {{#unless fullScreen}}
     {{#if fileTreeShown}}
       <div class="col-md-4 file-tree">
@@ -79,5 +79,4 @@
       <a class="exit-full-screen-link" {{action 'exitFullScreen'}}>Edit Twiddle</a>
     {{/if}}
   </div>
-
-</div>
+{{/twiddle-panes}}

@@ -10,7 +10,8 @@ const twiddleAppName = 'demo-app';
 const boilerPlateJs = [
   'app',
   'router',
-  'initializers/router'
+  'initializers/router',
+  'initializers/mouse-events'
 ];
 
 // These files have to be present
@@ -50,6 +51,10 @@ const availableBlueprints = {
   'initializers/router': {
     blueprint: 'initializers/router',
     filePath: 'initializers/router.js',
+  },
+  'initializers/mouse-events': {
+    blueprint: 'initializers/mouse-events',
+    filePath: 'initializers/mouse-events.js',
   },
   'model': {
     blueprint: 'model',

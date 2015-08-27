@@ -215,11 +215,16 @@ body {
   }
 
   .col-md-4 {
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
+    -webkit-flex: 0.5;
+    flex: 0.5;
     padding: 0;
     height: 100%;
     border-right: 1px solid #e4e2e2;
+    cursor: normal;
+  }
+
+  .handle + .col-md-4 {
+    margin-left: -3px;
   }
 
   .output {
@@ -379,4 +384,12 @@ body {
   top: 8px;
   margin: 10px 25px;
   text-align: right;
+}
+
+.handle {
+  height: 100%;
+  width: 3px;
+  background-color: transparent;
+  position: relative;
+  left: -2px;
 }
