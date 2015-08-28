@@ -41,6 +41,10 @@ body {
   color: #ffcc00;
 }
 
+.flip-horizontal {
+  transform: scale(-1, 1);
+}
+
 .toolbar {
   height: $topbar-height;
   font-size: 13px;
