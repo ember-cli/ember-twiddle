@@ -197,7 +197,7 @@ export default Ember.Controller.extend({
   isPathInvalid(type, path){
     let errorMsg = null;
     if (type.match(/^component/)) {
-      if(!path.match(/-[^\/]+$/)) {
+      if (!path.match(/[^\/]+-[^\/]+(\/(component\.js|template\.hbs))?$/)) {
          errorMsg = ErrorMessages.componentsNeedHyphens;
       }
     }
