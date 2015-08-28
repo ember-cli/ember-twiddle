@@ -23,6 +23,7 @@ module('Acceptance | gist', {
     this.application = startApp();
     this.cacheConfirm = window.confirm;
     this.cachePrompt = window.prompt;
+    this.cacheAlert = window.alert;
     window.confirm = () => true;
     window.prompt = () => promptValue;
 
@@ -33,6 +34,7 @@ module('Acceptance | gist', {
     Ember.run(this.application, 'destroy');
     window.confirm = this.cacheConfirm;
     window.prompt = this.cachePrompt;
+    window.alert = this.cacheAlert;
   }
 });
 
@@ -153,9 +155,11 @@ test('can add component (js and hbs) using pod format', function(assert){
 });
 
 test('component without hyphen fails', function(assert){
+  assert.expect(2);
 
-  let alertFn = window.alert;
+  let called = false;
   window.alert = function(msg){
+    called = true;
     assert.equal(msg, ErrorMessages.componentsNeedHyphens);
   };
   promptValue = "components/some-dir/mycomp";
@@ -164,7 +168,7 @@ test('component without hyphen fails', function(assert){
   click('.add-component-link');
   click(firstFilePicker);
   andThen(function(){
-    window.alert = alertFn;
+    assert.ok(called, "alert was called");
   });
 });
 
