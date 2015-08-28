@@ -66,6 +66,14 @@ export default Ember.Component.extend({
 
     hideFileTree() {
       this.attrs.hideFileTree();
+    },
+
+    expandAll() {
+      this.get('jsTreeActionReceiver').send('openAll');
+    },
+
+    collapseAll() {
+      this.get('jsTreeActionReceiver').send('closeAll');
     }
   }
 
