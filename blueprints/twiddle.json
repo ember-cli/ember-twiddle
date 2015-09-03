@@ -2,7 +2,7 @@
   "version": "0.4.10",
   "dependencies": {
     "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
-    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.9/ember.js",
+    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.9/ember.debug.js",
     "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.11/ember-data.js",
     "ember-template-compiler": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.9/ember-template-compiler.js"
   }
