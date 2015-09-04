@@ -15,8 +15,6 @@ export default Ember.Route.extend({
     saveGist (gist) {
       var newGist = gist.get('isNew');
       if (!newGist && gist.get('ownerLogin') !== this.get('session.currentUser.login')) {
-        console.log(gist.get('ownerLogin'));
-        console.log(this.get('session.currentUser.login'));
         this.send('fork', gist);
         return;
       }
