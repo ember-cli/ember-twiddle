@@ -8,6 +8,7 @@ $navbar-default-link-color:                #777 !default;
 $navbar-default-link-hover-color:          #333 !default;
 $navbar-default-link-hover-bg:             transparent !default;
 $navbar-default-link-active-color:         #555 !default;
+$header-icon-color:                        #c6b5ad !default;
 
 $topbar-height: 60px;
 $topbar-control-height: 32px;
@@ -19,6 +20,7 @@ $code-header-height: 60px;
 }
 
 @import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "vendor/twiddlicon/twiddlicon.scss";
 
 button {
   @extend .btn;
@@ -282,8 +284,45 @@ body {
     }
 
     .glyphicon {
-      color: $navbar-default-link-color;
+      font-size: 0.8em;
+    }
+
+    .twiddlicon {
+      font-size: 1.2em;
+    }
+
+    .glyphicon, .twiddlicon {
+      text-align:center;
+      color: $header-icon-color;
+      text-shadow: 1px 1px 0px white;
       cursor: pointer;
+      padding: 2px;
+    }
+
+    .twiddlicon:hover{
+      color: #faf4f1;
+      background-color: #d6c3ba;
+      border-radius: 20%;
+      padding: 2px;
+      text-shadow: 1px 1px 0px #ad9488;
+    }
+
+    .glyphicon-plus {
+      padding-bottom: 3px;
+      padding-left: 3px;
+    }
+
+    .glyphicon:hover {
+      color: #faf4f1;
+      background-color: #d6c3ba;
+      border-radius: 20%;
+      padding: 2px;
+      text-shadow: 1px 1px 0px #ad9488;
+    }
+
+    .glyphicon-plus:hover {
+      padding-bottom: 3px;
+      padding-left: 3px;
     }
   }
 

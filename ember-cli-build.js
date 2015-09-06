@@ -9,9 +9,9 @@ module.exports = function() {
   var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
   var prepend = null;
 
-  if(isProductionLikeBuild) {
-    prepend = env==='production' ? '//assets.ember-twiddle.com/' : '//canary-assets.ember-twiddle.com/';
-  }
+  // if(isProductionLikeBuild) {
+  //   prepend = env==='production' ? '//assets.ember-twiddle.com/' : '//canary-assets.ember-twiddle.com/';
+  // }
 
   var blueprintsCode = getEmberCLIBlueprints();
 
@@ -29,7 +29,8 @@ module.exports = function() {
     },
     fileCreator: [{filename: '/lib/blueprints.js', content: blueprintsCode}],
     sourcemaps: {
-      enabled: !isProductionLikeBuild,
+      //enabled: !isProductionLikeBuild,
+      enabled: false
     },
     minifyCSS: { enabled: isProductionLikeBuild },
     minifyJS: { enabled: isProductionLikeBuild },
@@ -45,7 +46,14 @@ module.exports = function() {
   });
 
   app.import('bower_components/ember/ember-template-compiler.js');
+  app.import('vendor/hint.min.css');
   app.import('vendor/drags.js');
+
+  var twiddlicons = pickFiles('vendor/twiddlicon/',{
+    srcDir: '/',
+    include: ['**/*.woff', '**/*.eot', '**/*.ttf', '**/*.svg'],
+    destDir: '/assets'
+  });
 
   var loaderTree = pickFiles('bower_components', {
     srcDir: '/loader.js',
@@ -63,7 +71,7 @@ module.exports = function() {
     outputFile: '/assets/twiddle-deps.js',
   });
 
-  return mergeTrees([app.toTree(), twiddleVendorTree, loaderTree]);
+  return mergeTrees([app.toTree(), twiddleVendorTree, loaderTree, twiddlicons]);
 };
 
 // This copies code out of ember-cli's blueprints into

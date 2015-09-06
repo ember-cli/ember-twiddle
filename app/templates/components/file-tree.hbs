@@ -1,12 +1,18 @@
 <div class="header">
   <div class="nav-left">
     &nbsp;
-    <span class="glyphicon glyphicon-resize-full flip-horizontal" {{action 'expandAll'}} title="Expand All"></span>
+    <span class="hint--bottom hint--rounded" data-hint="Expand All">
+      <span class="twiddlicon twiddlicon-expand-all" {{action 'expandAll'}}></span>
+    </span>
     &nbsp;
-    <span class="glyphicon glyphicon-resize-small flip-horizontal" {{action 'collapseAll'}} title="Collapse All"></span>
+    <span class="hint--bottom hint--rounded" data-hint="Collapse All">
+      <span class="twiddlicon twiddlicon-collapse-all" {{action 'collapseAll'}}></span>
+    </span>
   </div>
   <div class="nav-right">
-    <span class="glyphicon glyphicon-chevron-left" {{action 'hideFileTree'}} title="Hide project explorer tree"></span>
+    <span class="hint--bottom hint--rounded" data-hint="Hide project files">
+        <span class="glyphicon glyphicon-chevron-left" {{action 'hideFileTree'}}></span>
+    </span>
   </div>
 </div>
 {{ember-jstree data=fileTreeData
