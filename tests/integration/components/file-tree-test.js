@@ -67,11 +67,11 @@ test('can expand and collapse all', function(assert) {
 
   assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 initial nodes");
 
-  this.$('.glyphicon-resize-full').click();
+  this.$('.twiddlicon-expand-all').click();
 
   assert.equal(this.$('.jstree-anchor').length, 3, "There are 3 nodes once you expand all");
 
-  this.$('.glyphicon-resize-small').click();
+  this.$('.twiddlicon-collapse-all').click();
 
   assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 nodes once you collapse all");
 });
