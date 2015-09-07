@@ -154,8 +154,7 @@ body {
     }
   }
 
-  .dropdown-toggle {
-    padding: 0px 1em;
+  .dropdown-toggle, .sign-in {
     height: $topbar-control-height;
     line-height: $topbar-control-height - 2;
     text-transform: uppercase;
@@ -168,6 +167,15 @@ body {
       text-shadow: none;
       background-color: rgba(0,0,0,0.13);
     }
+  }
+
+  .dropdown-toggle {
+    padding: 0 1em;
+  }
+
+  .sign-in {
+    cursor: pointer;
+    padding: 0 .5em;
   }
 
   .signing-in {
