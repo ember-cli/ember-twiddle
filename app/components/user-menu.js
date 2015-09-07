@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   tagName: 'ul',
   classNames: ['nav', 'nav-pills', 'user-menu'],
 
-  userName: Ember.computed.alias('session.currentUser.login'),
+  userName: Ember.computed.readOnly('session.currentUser.login'),
 
   actions: {
     signInViaGithub() {
