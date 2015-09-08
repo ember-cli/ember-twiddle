@@ -6,11 +6,11 @@ export default ApplicationSerializer.extend({
     history: { deserialize: 'records', serialize: false },
   },
 
-  normalizePayload: function(payload) {
+  normalizeResponse: function(store, primaryModelClass, payload, id, requestType) {
     this.normalizeFiles(payload);
     this.normalizeHistory(payload);
-    payload.ownerLogin = payload.owner.login;
-    return payload;
+    payload.owner_login = payload.owner.login;
+    return this._super(store, primaryModelClass, payload, id, requestType);
   },
 
   normalizeFiles (payload) {
