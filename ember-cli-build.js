@@ -45,7 +45,7 @@ module.exports = function() {
   });
 
   app.import('bower_components/ember/ember-template-compiler.js');
-  app.import('vendor/hint.min.css');
+  app.import('vendor/hint.css');
   app.import('vendor/drags.js');
 
   var twiddlicons = pickFiles('vendor/twiddlicon/',{
