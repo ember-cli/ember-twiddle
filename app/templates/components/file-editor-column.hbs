@@ -1,7 +1,9 @@
 <div class="header">
   {{#if showFileTreeOpenIcon}}
     <span class="nav-left">
-      <span class="glyphicon glyphicon-chevron-right" {{action 'showFileTree'}} title="Show project explorer tree"></span>
+      <span class="hint--bottom hint--rounded" data-hint="Show project files" >
+        <span class="glyphicon glyphicon-chevron-right" {{action 'showFileTree'}}></span>
+      </span>
     </span>
   {{/if}}
   <ul class="nav nav-pills file-picker">
@@ -29,9 +31,13 @@
   </ul>
 
   <span class="nav-right">
-    <span class="glyphicon glyphicon-remove" {{action 'removeColumn' col}} title="Hide this panel"></span>
+    <span class="hint--bottom hint--rounded" data-hint="Hide this panel">
+      <span class="glyphicon glyphicon-remove" {{action 'removeColumn' col}}></span>
+    </span>
     {{#if isLastColumn}}
-      <span class="glyphicon glyphicon-plus" {{action 'addColumn'}} title="Show another panel"></span>
+      <span class="hint--bottom hint--rounded" data-hint="Show another panel">
+        <span class="glyphicon glyphicon-plus hint--bottom hint--rounded" {{action 'addColumn'}}></span>
+      </span>
     {{/if}}
   </span>
 </div>
