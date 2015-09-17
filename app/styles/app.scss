@@ -227,6 +227,10 @@ body {
     height: 100%;
     border-right: 1px solid #e4e2e2;
     cursor: normal;
+
+    @media (max-width: $screen-md-min) {
+      margin-bottom: 60px;
+    }
   }
 
   .handle + .col-md-4 {
@@ -235,17 +239,26 @@ body {
 
   .output {
     border-right: none;
+    position: relative;
 
     span {
       margin: 16px 25px;
       display: inline-block;
     }
 
-    iframe {
-      border: 0;
-      width: 100%;
-      height: 100%;
+    .content {
       position: absolute;
+      top: 100px;
+      bottom: 0;
+      width: 100%;
+      border: 0;
+
+      iframe {
+        border: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+      }
     }
 
     span.glyphicon-plus {
@@ -430,9 +443,12 @@ body {
 }
 
 .handle {
-  height: 100%;
   width: 3px;
   background-color: transparent;
   position: relative;
   left: -2px;
+
+  @media (min-width: $screen-md-min) {
+    height: 100%;
+  }
 }

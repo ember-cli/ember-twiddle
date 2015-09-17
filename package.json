@@ -58,6 +58,7 @@
     "ember-load": "0.0.2",
     "ember-lodash": "0.0.5",
     "ember-notify": "4.0.1",
+    "ember-responsive": "1.1.1",
     "ivy-codemirror": "~1.2.0",
     "torii": "^0.5.1"
   },
