@@ -202,6 +202,12 @@ body {
     height: 100%;
     width: 100%;
     position: absolute;
+
+    @media (min-width: $screen-md-min) {
+      height: auto;
+      top: 60px;
+      bottom: 0;
+    }
   }
 }
 
