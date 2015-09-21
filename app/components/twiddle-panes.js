@@ -13,8 +13,10 @@ export default Ember.Component.extend({
 
   didRender() {
     this.$('.handle').remove();
-    this.$('.col-md-4').after('<div class="handle"></div>');
-    this.$('.handle').last().remove();
-    this.$('.handle').drags({pane: ".col-md-4"});
+    if (!this.get('media.isMobile')) {
+      this.$('.col-md-4').after('<div class="handle"></div>');
+      this.$('.handle').last().remove();
+      this.$('.handle').drags({pane: ".col-md-4"});
+    }
   }
 });
