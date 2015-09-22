@@ -6,10 +6,12 @@ moduleFor('controller:gist', {
 
   beforeEach() {
     this._originalConfirm = window.confirm;
+    this._originalAlert = window.alert;
   },
 
   afterEach() {
     window.confirm = this._originalConfirm;
+    window.alert = this._originalAlert;
   }
 });
 
@@ -40,6 +42,8 @@ test('deleting a gist requires confirmation', function(assert) {
 
 test('isPathInvalid method', function(assert) {
   let controller = this.subject();
+
+  window.alert = function() {};
 
   assert.ok(!controller.isPathInvalid('component', 'my-component'), 'can add component with valid pods path');
   assert.ok(controller.isPathInvalid('component', 'myComponent'), 'cannot add component with invalid pods path');
