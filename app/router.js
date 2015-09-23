@@ -10,6 +10,7 @@ Router.map(function() {
     this.route('new', {path: '/'});
     this.route('edit', {path: '/:id'});
   });
+  this.route('twiddles');
 });
 
 export default Router;

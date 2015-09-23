@@ -1,0 +1,5 @@
+<ul>
+  {{#each model as |gist|}}
+    <li>{{gist.id}} {{#link-to 'gist.edit' gist.id}}Twiddle{{/link-to}}</li>
+  {{/each}}
+</ul>

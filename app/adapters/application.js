@@ -19,6 +19,8 @@ export default DS.RESTAdapter.extend({
     return {};
   }),
 
+  shouldReloadAll() { return true; },
+  shouldReloadRecord() { return true; },
 
   /**
     Called by the store when an existing record is saved

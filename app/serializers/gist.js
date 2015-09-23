@@ -6,11 +6,24 @@ export default ApplicationSerializer.extend({
     history: { deserialize: 'records', serialize: false },
   },
 
-  normalizeResponse: function(store, primaryModelClass, payload, id, requestType) {
+  normalizeSingleResponse: function(store, primaryModelClass, payload, id, requestType) {
+    this.normalizeHash(payload);
+    return this._super(store, primaryModelClass, payload, id, requestType);
+  },
+
+  normalizeArrayResponse: function(store, primaryModelClass, payload, id, requestType) {
+    payload.forEach(function(hash) {
+      this.normalizeHash(hash);
+    }.bind(this));
+    return this._super(store, primaryModelClass, payload, id, requestType);
+  },
+
+  normalizeHash: function(payload) {
     this.normalizeFiles(payload);
     this.normalizeHistory(payload);
-    payload.owner_login = payload.owner.login;
-    return this._super(store, primaryModelClass, payload, id, requestType);
+    if (payload.owner) {
+      payload.owner_login = payload.owner.login;
+    }
   },
 
   normalizeFiles (payload) {
@@ -66,10 +79,12 @@ export default ApplicationSerializer.extend({
 
   // Not implemented yet.
   normalizeHistory (payload) {
-    for(var i=0; i<payload.history.length; i++) {
-      payload.history[i].id = payload.history[i].version;
-      payload.history[i].short_id = payload.history[i].version.substring(0,7);
-      delete payload.history[i].version;
+    if (payload.history) {
+      for(var i=0; i<payload.history.length; i++) {
+        payload.history[i].id = payload.history[i].version;
+        payload.history[i].short_id = payload.history[i].version.substring(0,7);
+        delete payload.history[i].version;
+      }
     }
   },
 
