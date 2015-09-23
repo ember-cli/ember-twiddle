@@ -24,7 +24,8 @@ export default Ember.Component.extend({
         text: fileName,
         parent: parentPath,
         icon: "glyphicon glyphicon-file light-gray",
-        path: path
+        path: path,
+        leaf: true
       };
     });
 
@@ -32,18 +33,25 @@ export default Ember.Component.extend({
     let parents = _.uniq(_.pluck(treeData, 'parent'));
     parents.forEach(function(parent) {
       if (!paths.contains(parent) && parent !== "#") {
+        let splitPath = parent.split("/");
+        let parentPath = splitPath.slice(0, -1).join("/");
+        let fileName = splitPath[splitPath.length - 1];
+        if (parentPath === "") {
+          parentPath = "#";
+        }
         treeData.push({
           id: "node" + seq++,
-          text: parent,
-          parent: "#",
-          icon: "glyphicon glyphicon-folder-open yellow"
+          text: fileName,
+          parent: parentPath,
+          icon: "glyphicon glyphicon-folder-open yellow",
+          path: parent
         });
       }
     });
 
     let idMap = {};
     treeData.forEach(function(node) {
-      idMap[node.text] = node.id;
+      idMap[node.path] = node.id;
     });
 
     treeData.forEach(function(node) {
@@ -57,7 +65,7 @@ export default Ember.Component.extend({
 
   actions: {
     handleSelectTreeNode(node) {
-      if (node.original.path) {
+      if (node.original.leaf) {
         this.attrs.openFile(node.original.path);
         return;
       }
