@@ -1,5 +1,22 @@
-<ul>
-  {{#each model as |gist|}}
-    <li>{{gist.id}} {{#link-to 'gist.edit' gist.id}}Twiddle{{/link-to}}</li>
-  {{/each}}
-</ul>
+<h1>My Saved Twiddles</h1>
+
+<table class="saved-twiddles">
+  <thead>
+    <th>SHA</th>
+    <th>Updated</th>
+    <th>Twiddle</th>
+    <th>Gist</th>
+    <th>Description</th>
+  </thead>
+  <tbody>
+    {{#each model as |gist|}}
+      <tr>
+        <td>{{gist.id}}</td>
+        <td>{{moment-format gist.updatedAt "ddd MMM D YYYY"}}</td>
+        <td>{{#link-to 'gist.edit' gist.id}}Twiddle{{/link-to}}</td>
+        <td><a href={{gist.htmlUrl}}>Gist</a></td>
+        <td>{{gist.description}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

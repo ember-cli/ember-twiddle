@@ -7,18 +7,24 @@ export default ApplicationSerializer.extend({
   },
 
   normalizeSingleResponse: function(store, primaryModelClass, payload, id, requestType) {
-    this.normalizeHash(payload);
+    if (primaryModelClass.modelName === "gist") {
+      this.normalizeGist(payload);
+    }
+
     return this._super(store, primaryModelClass, payload, id, requestType);
   },
 
   normalizeArrayResponse: function(store, primaryModelClass, payload, id, requestType) {
-    payload.forEach(function(hash) {
-      this.normalizeHash(hash);
-    }.bind(this));
+    if (primaryModelClass.modelName === "gist") {
+      payload.forEach(function(hash) {
+        this.normalizeGist(hash);
+      }.bind(this));
+    }
+
     return this._super(store, primaryModelClass, payload, id, requestType);
   },
 
-  normalizeHash: function(payload) {
+  normalizeGist: function(payload) {
     this.normalizeFiles(payload);
     this.normalizeHistory(payload);
     if (payload.owner) {
@@ -40,6 +46,7 @@ export default ApplicationSerializer.extend({
 
       normalizedFiles.push(file);
     }
+
     payload.files = normalizedFiles;
   },
 

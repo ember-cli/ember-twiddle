@@ -13,6 +13,8 @@ export default DS.Model.extend({
   url: attr('string'),
   description: attr('string'),
   htmlUrl: attr('string'),
+  createdAt: attr('date'),
+  updatedAt: attr('date'),
   ownerLogin: attr('string'),
   files: hasMany('gistFile', { async: false }),
   history: hasMany('gistRevision', { async: false }),
