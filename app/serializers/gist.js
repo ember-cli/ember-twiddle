@@ -1,6 +1,8 @@
 import ApplicationSerializer from './application';
 
 export default ApplicationSerializer.extend({
+  seq: 0,
+
   attrs: {
     files: { embedded: 'always' },
     history: { deserialize: 'records', serialize: false },
@@ -8,7 +10,7 @@ export default ApplicationSerializer.extend({
 
   normalizeSingleResponse: function(store, primaryModelClass, payload, id, requestType) {
     if (primaryModelClass.modelName === "gist") {
-      this.normalizeGist(payload);
+      this.normalizeGist(payload, false);
     }
 
     return this._super(store, primaryModelClass, payload, id, requestType);
@@ -17,27 +19,27 @@ export default ApplicationSerializer.extend({
   normalizeArrayResponse: function(store, primaryModelClass, payload, id, requestType) {
     if (primaryModelClass.modelName === "gist") {
       payload.forEach(function(hash) {
-        this.normalizeGist(hash);
+        this.normalizeGist(hash, true);
       }.bind(this));
     }
 
     return this._super(store, primaryModelClass, payload, id, requestType);
   },
 
-  normalizeGist: function(payload) {
-    this.normalizeFiles(payload);
+  normalizeGist: function(payload, isArray) {
+    this.normalizeFiles(payload, isArray);
     this.normalizeHistory(payload);
     if (payload.owner) {
       payload.owner_login = payload.owner.login;
     }
   },
 
-  normalizeFiles (payload) {
+  normalizeFiles (payload, isArray) {
     var normalizedFiles = [];
 
     for(var origName in payload.files) {
       let file = payload.files[origName];
-      file.id = origName;
+      file.id = isArray ? this.incrementProperty('seq').toString() : origName;
       file.file_type = file.type;
       file.file_name = file.filename;
 

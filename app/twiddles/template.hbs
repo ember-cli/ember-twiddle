@@ -9,7 +9,7 @@
     <th>Description</th>
   </thead>
   <tbody>
-    {{#each model as |gist|}}
+    {{#each filteredModel as |gist|}}
       <tr>
         <td>{{gist.id}}</td>
         <td>{{moment-format gist.updatedAt "ddd MMM D YYYY"}}</td>
