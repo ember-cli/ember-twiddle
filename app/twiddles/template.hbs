@@ -6,17 +6,12 @@
     <th>Updated</th>
     <th>Twiddle</th>
     <th>Gist</th>
+    <th>Files</th>
     <th>Description</th>
   </thead>
   <tbody>
     {{#each filteredModel as |gist|}}
-      <tr>
-        <td>{{gist.id}}</td>
-        <td>{{moment-format gist.updatedAt "ddd MMM D YYYY"}}</td>
-        <td>{{#link-to 'gist.edit' gist.id}}Twiddle{{/link-to}}</td>
-        <td><a href={{gist.htmlUrl}}>Gist</a></td>
-        <td>{{gist.description}}</td>
-      </tr>
+      {{saved-twiddles-row gist=gist}}
     {{/each}}
   </tbody>
 </table>
