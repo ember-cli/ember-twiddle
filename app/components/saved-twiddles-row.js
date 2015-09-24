@@ -12,4 +12,4 @@ export default Ember.Component.extend({
       return file.get('filePath');
     }).join("\n");
   })
-})
+});

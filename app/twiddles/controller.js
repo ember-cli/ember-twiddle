@@ -4,9 +4,6 @@ export default Ember.Controller.extend({
 
   // Not working correctly
   filteredModel: Ember.computed.filter('model', function(gist) {
-    console.log(gist.get('files').toArray().map(function(file) {
-      return file.get('fileName');
-    }));
     return gist.get('files').map(function(file) {
       return file.get('fileName');
     }).contains('twiddle.json');
