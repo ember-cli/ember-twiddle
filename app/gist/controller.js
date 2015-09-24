@@ -124,6 +124,16 @@ export default Ember.Controller.extend({
   },
 
   /**
+   * Clears the columns
+   */
+  clearColumns() {
+    let numColumns = this.get('realNumColumns');
+    for (let i = 1; i <= numColumns; ++i) {
+      this.setColumnFile(i, undefined);
+    }
+  },
+
+  /**
    * Set the initial files in the columns
    */
   initializeColumns() {
