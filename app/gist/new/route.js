@@ -7,7 +7,7 @@ export default GistRoute.extend({
   model () {
     this.store.unloadAll('gistFile');
 
-    var model = this.store.createRecord('gist', {description: 'New Twiddle'});
+    var model = this.store.createRecord('gist', {description: 'New Twiddle '});
 
     model.get('files').pushObject(this.get('emberCli').generate('controllers/application'));
     model.get('files').pushObject(this.get('emberCli').generate('templates/application'));
