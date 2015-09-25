@@ -96,10 +96,14 @@ export default Ember.Controller.extend({
     })
     .catch(errors => {
       this.set('isBuilding', false);
-      this.set('buildErrors', errors);
-      errors.forEach(error => {
-        console.error(error);
-      });
+      if (Ember.isArray(errors)) {
+        this.set('buildErrors', errors);
+        errors.forEach(error => {
+          console.error(error);
+        });
+      } else {
+        console.error(errors);
+      }
     });
   },
 
