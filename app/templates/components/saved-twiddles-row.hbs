@@ -1,6 +1,6 @@
-<td>{{gist.id}}</td>
-<td>{{moment-format gist.updatedAt "ddd MMM D YYYY"}}</td>
-<td>{{#link-to 'gist.edit' gist.id}}Twiddle{{/link-to}}</td>
-<td><a href={{gist.htmlUrl}}>Gist</a></td>
-<td title={{filesTitle}}>{{numFiles}} files</td>
-<td>{{gist.description}}</td>
+<td class="test-gist-id">{{gist.id}}</td>
+<td class="test-gist-updated-at">{{moment-format gist.updatedAt "ddd MMM D YYYY"}}</td>
+<td class="test-gist-twiddle-link">{{#link-to 'gist.edit' gist.id}}Twiddle{{/link-to}}</td>
+<td class="test-gist-html-ulr"><a href={{gist.htmlUrl}}>Gist</a></td>
+<td title={{filesTitle}} class="test-gist-numfiles">{{numFiles}} files</td>
+<td class="test-gist-description">{{gist.description}}</td>
