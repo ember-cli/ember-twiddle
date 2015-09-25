@@ -5,6 +5,10 @@ export default function() {}
  */
 export function testConfig() {
 
+  this.get('/gists', function(db) {
+    return db.gists;
+  });
+
   this.get('/gists/:id', function(db, request) {
     let id = request.params.id;
     return db.gists.find(id);

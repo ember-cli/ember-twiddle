@@ -61,7 +61,7 @@
     "ember-moment": "4.0.1",
     "ember-notify": "4.0.1",
     "ivy-codemirror": "~1.2.0",
-    "torii": "^0.5.1"
+    "torii": "^0.6.0"
   },
   "dependencies": {
     "babel": "^5.0.0"
