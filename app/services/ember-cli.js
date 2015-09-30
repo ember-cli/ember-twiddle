@@ -270,7 +270,8 @@ export default Ember.Service.extend({
     // let templateCode = Ember.HTMLBars.precompile(code || '');
 
     // Compiles all templates at runtime.
-    return this.compileJs('export default Ember.HTMLBars.compile(`' + (code || '') + '`);', filePath);
+    const mungedCode = (code || '').replace(/\\/g, "\\\\"); // Prevent backslashes from being escaped
+    return this.compileJs('export default Ember.HTMLBars.compile(`' + mungedCode + '`);', filePath);
   },
 
   compileCss(code, moduleName) {
