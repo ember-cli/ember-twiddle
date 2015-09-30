@@ -16,6 +16,9 @@ module.exports = function() {
   var blueprintsCode = getEmberCLIBlueprints();
 
   var app = new EmberApp({
+    SRI: {
+      runsIn: "production"
+    },
     fingerprint: {
       enabled: isProductionLikeBuild,
       prepend: prepend

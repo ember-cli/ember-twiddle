@@ -1,0 +1,17 @@
+<h1 class="test-twiddles-header">My Saved Twiddles</h1>
+
+<table class="saved-twiddles">
+  <thead>
+    <th>SHA</th>
+    <th>Updated</th>
+    <th>Twiddle</th>
+    <th>Gist</th>
+    <th>Files</th>
+    <th>Description</th>
+  </thead>
+  <tbody>
+    {{#each filteredModel as |gist|}}
+      {{saved-twiddles-row gist=gist}}
+    {{/each}}
+  </tbody>
+</table>

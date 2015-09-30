@@ -16,7 +16,7 @@ export default DS.Model.extend({
    */
   filePath: computed('fileName', {
     get() {
-      var fileName = this.get('fileName');
+      var fileName = this.get('fileName') || '';
       var parts = fileName.split('.');
       return parts.slice(0, -1).join('/') + '.' + parts.slice(-1);
     },
