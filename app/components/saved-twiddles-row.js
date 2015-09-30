@@ -8,8 +8,6 @@ export default Ember.Component.extend({
   }),
 
   filesTitle: Ember.computed('gist.files.@each.filePath', function() {
-    return this.get('gist.files').toArray().map((file) => {
-      return file.get('filePath');
-    }).join("\n");
+    return this.get('gist.files').toArray().mapBy('filePath').join("\n");
   })
 });
