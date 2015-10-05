@@ -1,11 +1,14 @@
 import ApplicationSerializer from './application';
 
 export default ApplicationSerializer.extend({
-  seq: 0,
-
   attrs: {
     files: { embedded: 'always' },
     history: { deserialize: 'records', serialize: false },
+  },
+
+  init(...args) {
+    this._super(...args);
+    this.set('seq', 0);
   },
 
   normalizeSingleResponse: function(store, primaryModelClass, payload, id, requestType) {
