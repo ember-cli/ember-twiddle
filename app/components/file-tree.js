@@ -29,25 +29,30 @@ export default Ember.Component.extend({
       };
     });
 
-    let paths = _.uniq(_.pluck(treeData, 'text'));
-    let parents = _.uniq(_.pluck(treeData, 'parent'));
-    parents.forEach(function(parent) {
-      if (!paths.contains(parent) && parent !== "#") {
-        let splitPath = parent.split("/");
-        let parentPath = splitPath.slice(0, -1).join("/");
-        let fileName = splitPath[splitPath.length - 1];
-        if (parentPath === "") {
-          parentPath = "#";
+    let done = false;
+    do {
+      done = true;
+      let paths = _.uniq(_.pluck(treeData, 'text'));
+      let parents = _.uniq(_.pluck(treeData, 'parent'));
+      parents.forEach(function(parent) {
+        if (!paths.contains(parent) && parent !== "#" && treeData.filterBy('path', parent).length === 0) {
+          let splitPath = parent.split("/");
+          let parentPath = splitPath.slice(0, -1).join("/");
+          let fileName = splitPath[splitPath.length - 1];
+          if (parentPath === "") {
+            parentPath = "#";
+          }
+          treeData.push({
+            id: "node" + seq++,
+            text: fileName,
+            parent: parentPath,
+            icon: "glyphicon glyphicon-folder-open yellow",
+            path: parent
+          });
+          done = false;
         }
-        treeData.push({
-          id: "node" + seq++,
-          text: fileName,
-          parent: parentPath,
-          icon: "glyphicon glyphicon-folder-open yellow",
-          path: parent
-        });
-      }
-    });
+      });
+    } while (!done);
 
     let idMap = {};
     treeData.forEach(function(node) {

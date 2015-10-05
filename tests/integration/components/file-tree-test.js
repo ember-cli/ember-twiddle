@@ -20,9 +20,17 @@ moduleForComponent('file-tree', 'Integration | Component | file tree', {
       filePath: "some/long/path.js"
     });
 
+    this.file4 = Ember.Object.create({
+      filePath: "some/path/to/file.js"
+    });
+
+    this.file5 = Ember.Object.create({
+      filePath: "some/path/to/file2.js"
+    });
+
     this.gist = Ember.Object.create({
       id: '74bae9a34142370ff5a3',
-      files: [this.file1, this.file2, this.file3],
+      files: [this.file1, this.file2, this.file3, this.file4, this.file5],
       history: [],
       ownerLogin: 'Gaurav0',
       isNew: false
@@ -54,7 +62,7 @@ test('it has 2 initial nodes', function(assert) {
 
   this.$('.jstree-ocl').click();
 
-  assert.equal(this.$('.jstree-anchor').length, 4, "There are 4 nodes once you expand the folder");
+  assert.equal(this.$('.jstree-anchor').length, 5, "There are 5 nodes once you expand the some folder");
 });
 
 test('it calls openFile when you click on a leaf node', function(assert) {
@@ -72,7 +80,7 @@ test('can expand and collapse all', function(assert) {
 
   this.$('.twiddlicon-expand-all').click();
 
-  assert.equal(this.$('.jstree-anchor').length, 5, "There are 5 nodes once you expand all");
+  assert.equal(this.$('.jstree-anchor').length, 9, "There are 9 nodes once you expand all");
 
   this.$('.twiddlicon-collapse-all').click();
 
