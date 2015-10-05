@@ -30,9 +30,9 @@ test('Able to run a gist using an external dependency', function(assert) {
         '  "version": "0.4.0",\n' +
         '  "dependencies": {\n' +
         '    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",\n' +
-        '    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.5/ember.js",\n' +
-        '    "ember-template-compiler": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.5/ember-template-compiler.js",\n' +
-        '    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.7/ember-data.js",\n' +
+        '    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.10/ember.js",\n' +
+        '    "ember-template-compiler": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.10/ember-template-compiler.js",\n' +
+        '    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.13/ember-data.js",\n' +
         '    "lodash": "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"\n' +
         '  }\n' +
         '}'
