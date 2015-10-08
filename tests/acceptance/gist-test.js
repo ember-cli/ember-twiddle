@@ -176,14 +176,14 @@ test('can add service', function(assert){
   assert.expect(3);
 
   let origFileCount;
-  promptValue = "services/my-service.js";
+  promptValue = "my-service/service.js";
   visit('/');
   andThen(function(){
     origFileCount = find(firstFilePickerFiles).length;
   });
 
   click(fileMenu);
-  click('.add-service-link');
+  click('.test-add-service-link');
   click(firstFilePicker);
 
   andThen(function() {

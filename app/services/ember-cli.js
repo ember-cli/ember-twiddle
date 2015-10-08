@@ -66,7 +66,7 @@ const availableBlueprints = {
   },
   'service': {
     blueprint: 'service',
-    filePath: 'services/my-service.js'
+    filePath: 'my-service/service.js'
   },
   'template': {
     blueprint: 'template',
