@@ -172,6 +172,32 @@ test('component without hyphen fails', function(assert){
   });
 });
 
+test('can add service', function(assert){
+  assert.expect(3);
+
+  let origFileCount;
+  promptValue = "services/my-service.js";
+  visit('/');
+  andThen(function(){
+    origFileCount = find(firstFilePickerFiles).length;
+  });
+
+  click(fileMenu);
+  click('.add-service-link');
+  click(firstFilePicker);
+
+  andThen(function() {
+    let numFiles = find(firstFilePickerFiles).length;
+    assert.equal(numFiles, origFileCount + 1, 'Added service file');
+
+    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    assert.equal(fileNames[3], promptValue, 'Added the file with the right name');
+
+    let columnFiles = findMapText(displayedFiles);
+    assert.ok(columnFiles.contains(promptValue), 'Added file is displayed');
+  });
+});
+
 
 test('unsaved indicator', function(assert) {
   const indicator = ".test-unsaved-indicator";

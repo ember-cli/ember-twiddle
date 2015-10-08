@@ -64,6 +64,10 @@ const availableBlueprints = {
     blueprint: 'route',
     filePath: 'my-route/route.js',
   },
+  'service': {
+    blueprint: 'service',
+    filePath: 'services/my-service.js'
+  },
   'template': {
     blueprint: 'template',
     filePath: 'my-route/template.hbs',
