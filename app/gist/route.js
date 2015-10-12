@@ -47,6 +47,14 @@ export default Ember.Route.extend({
       }).catch(this.catchForkError.bind(this));
     },
 
+    copy () {
+      this.transitionTo('gist.new', {
+        queryParams: {
+          copyCurrentTwiddle: true
+        }
+      });
+    },
+
     signInViaGithub () {
       this.session.open('github-oauth2').catch(function(error) {
         alert('Could not sign you in: ' + error.message);
