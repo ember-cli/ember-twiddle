@@ -11,6 +11,7 @@ moduleForComponent('file-menu', 'Integration | Component | file menu', {
     this.removeFileCalled = false;
     this.saveGistCalled = false;
     this.forkCalled = false;
+    this.copyCalled = false;
     this.deleteGistCalled = false;
     this.signInViaGithubCalled = false;
 
@@ -53,6 +54,7 @@ moduleForComponent('file-menu', 'Integration | Component | file menu', {
     this.on('removeFile', (file) => { this.removeFileCalled = true; this.removedFile = file; });
     this.on('saveGist', (gist) => { this.saveGistCalled = true; this.gistToSave = gist; });
     this.on('fork', (gist) => { this.forkCalled = true; this.gistToFork = gist; });
+    this.on('copy', () => { this.copyCalled = true; });
     this.on('deleteGist', (gist) => { this.deleteGistCalled = true; this.gistToDelete = gist; });
     this.on('signInViaGithub', () => { this.signInViaGithubCalled = true; });
 
@@ -65,6 +67,7 @@ moduleForComponent('file-menu', 'Integration | Component | file menu', {
                               removeFile=(action "removeFile")
                               saveGist="saveGist"
                               fork="fork"
+                              copy="copy"
                               deleteGist=(action "deleteGist")
                               signInViaGithub="signInViaGithub"}}`);
   }
@@ -113,6 +116,16 @@ test("it calls fork on clicking 'Fork Twiddle'", function(assert) {
 
   assert.ok(this.forkCalled, 'fork was called');
   assert.equal(this.gistToFork, this.gist, 'fork was called with gist to fork');
+});
+
+test("it calls copy on clicking 'Copy Twiddle'", function(assert) {
+  assert.expect(1);
+
+  // logged in user is the same as the owner of the gist
+  this.set('session.currentUser.login', 'Gaurav0');
+  this.$('.test-copy-action').click();
+
+  assert.ok(this.copyCalled, 'copy was called');
 });
 
 test("it calls deleteGist on clicking 'Delete Twiddle'", function(assert) {

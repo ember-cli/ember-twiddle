@@ -42,6 +42,9 @@ export default Ember.Component.extend({
     fork(model) {
       this.sendAction('fork', model);
     },
+    copy() {
+      this.sendAction('copy');
+    },
     deleteGist(model) {
       this.attrs.deleteGist(model);
     },

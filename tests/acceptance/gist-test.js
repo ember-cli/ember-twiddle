@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import startApp from 'ember-twiddle/tests/helpers/start-app';
 import { findMapText } from 'ember-twiddle/tests/helpers/util';
 import ErrorMessages from 'ember-twiddle/helpers/error-messages';
+import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
 
 
 const firstColumn = '.code:first-of-type';
@@ -221,5 +222,39 @@ test('unsaved indicator', function(assert) {
 
   andThen(function() {
     assert.equal(find(indicator).length, 1, "Unsaved indicator reappears after editing");
+  });
+});
+
+test('own gist can be copied into a new one', function(assert) {
+  // set owner of gist as currently logged in user
+  stubValidSession(this.application, {
+    currentUser: { login: "Gaurav0" },
+    "github-oauth2": {}
+  });
+
+  runGist([
+    {
+      filename: 'index/controller.js',
+      content: `import Ember from 'ember';
+                export default Ember.Controller.extend();`,
+    },
+    {
+      filename: 'index/route.js',
+      content: 'export default Ember.Route.extend();',
+    }
+  ]);
+
+  fillIn('.title input', "my twiddle");
+  andThen(function() {
+    assert.equal(find('.title input').val(), "my twiddle");
+    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+  });
+
+  click('.test-copy-action');
+
+  andThen(function() {
+    assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
+    assert.equal(find('.test-unsaved-indicator').length, 1, "Unsaved indicator appears when gist is copied");
+    assert.equal(find('.test-copy-action').length, 0, "Menu item to copy gist is not shown anymore");
   });
 });
