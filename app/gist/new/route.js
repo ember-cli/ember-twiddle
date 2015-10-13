@@ -20,8 +20,12 @@ export default GistRoute.extend({
     return model;
   },
 
-  setupController() {
+  setupController(controller) {
     this._super.apply(this, arguments);
+
+    // reset copyCurrentTwiddle, so it is not shown in the URL: this QP is only
+    // needed when initializing the model for this route
+    controller.set('copyCurrentTwiddle', false);
 
     this.controllerFor('gist').set('unsaved', true);
   }
