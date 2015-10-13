@@ -234,13 +234,8 @@ test('own gist can be copied into a new one', function(assert) {
 
   runGist([
     {
-      filename: 'index/controller.js',
-      content: `import Ember from 'ember';
-                export default Ember.Controller.extend();`,
-    },
-    {
-      filename: 'index/route.js',
-      content: 'export default Ember.Route.extend();',
+      filename: 'application.template.hbs',
+      content: 'hello world!',
     }
   ]);
 
@@ -256,5 +251,6 @@ test('own gist can be copied into a new one', function(assert) {
     assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
     assert.equal(find('.test-unsaved-indicator').length, 1, "Unsaved indicator appears when gist is copied");
     assert.equal(find('.test-copy-action').length, 0, "Menu item to copy gist is not shown anymore");
+    assert.equal(outputContents('div'), 'hello world!');
   });
 });
