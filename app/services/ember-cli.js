@@ -180,12 +180,16 @@ export default Ember.Service.extend({
 
   buildHtml (gist, appJS, appCSS) {
     let index = blueprints['index.html'];
-    let deps = this.getTwiddleJson(gist).dependencies;
+    let twiddleJSON = this.getTwiddleJson(gist);
+    let deps = twiddleJSON.dependencies;
 
     let depCssLinkTags = '';
     let depScriptTags ='';
     let appScriptTag = `<script type="text/javascript">${appJS}</script>`;
     let appStyleTag = `<style type="text/css">${appCSS}</style>`;
+
+    let EmberENV = twiddleJSON.EmberENV || {};
+    depScriptTags += `<script type="text/javascript">EmberENV = ${JSON.stringify(EmberENV)};</script>`;
 
     Object.keys(deps).forEach(function(depKey) {
       let dep = deps[depKey];
