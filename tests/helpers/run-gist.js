@@ -1,5 +1,3 @@
-import Ember from "ember";
-
 export default function(app, files) {
   const login = "Gaurav0";
   const gist_id = "35de43cb81fc35ddffb2";
@@ -31,23 +29,7 @@ export default function(app, files) {
     files: gistFiles
   });
 
-  let iframe_window;
-
   visit('/35de43cb81fc35ddffb2');
 
-  andThen(function() {
-    iframe_window = outputPane();
-
-    // Wait until iframe loads
-    return new Ember.RSVP.Promise(function (resolve) {
-      iframe_window.addEventListener('load', function () {
-        iframe_window.removeEventListener('load');
-        resolve();
-      });
-    });
-  });
-
-  return andThen(function() {
-    iframe_window.visit('/');
-  });
+  return waitForLoadedIFrame();
 }
