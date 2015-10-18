@@ -3,6 +3,7 @@ import Path from 'npm:path';
 import blueprints from '../lib/blueprints';
 import config from '../config/environment';
 import Ember from 'ember';
+import moment from 'moment';
 
 const twiddleAppName = 'demo-app';
 
@@ -204,6 +205,11 @@ export default Ember.Service.extend({
 
     index = index.replace('{{content-for \'head\'}}', `${depCssLinkTags}\n${appStyleTag}`);
     index = index.replace('{{content-for \'body\'}}', `${depScriptTags}\n${appScriptTag}`);
+
+    // replace the {{build-timestamp}} placeholder with the number of
+    // milliseconds since the Unix Epoch:
+    // http://momentjs.com/docs/#/displaying/unix-offset/
+    index = index.replace('{{build-timestamp}}', +moment());
 
     return index;
   },
