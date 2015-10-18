@@ -248,6 +248,10 @@ test('own gist can be copied into a new one', function(assert) {
   click('.test-copy-action');
 
   andThen(function() {
+    waitForLoadedIFrame();
+  });
+
+  andThen(function() {
     assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
     assert.equal(find('.test-unsaved-indicator').length, 1, "Unsaved indicator appears when gist is copied");
     assert.equal(find('.test-copy-action').length, 0, "Menu item to copy gist is not shown anymore");
@@ -270,6 +274,10 @@ test('accessing /:gist/copy creates a new Twiddle with a copy of the gist', func
   });
 
   visit('/35de43cb81fc35ddffb2/copy');
+
+  andThen(function() {
+    waitForLoadedIFrame();
+  });
 
   andThen(function() {
     assert.equal(currentURL(), '/');
