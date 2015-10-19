@@ -24,6 +24,7 @@
     "currentPath",
     "currentRouteName",
     "runGist",
+    "waitForLoadedIFrame",
     "outputPane",
     "outputContents"
   ],
