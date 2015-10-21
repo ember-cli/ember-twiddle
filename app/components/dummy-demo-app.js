@@ -21,7 +21,7 @@ export default Ember.Component.extend(ResizeMixin, {
     let supportsSrcDoc = ('srcdoc' in ifrm);
 
     if (!Ember.testing && supportsSrcDoc) {
-      ifrm.sandbox = 'allow-scripts allow-forms';
+      ifrm.sandbox = 'allow-scripts allow-forms allow-modals';
       ifrm.srcdoc = this.get('html');
     }
 
