@@ -471,4 +471,8 @@ body {
 .saved-twiddles {
   width: 80%;
   margin: 10px auto;
+
+  tr:hover {
+    background-color: $ember-orange;
+  }
 }
