@@ -90,3 +90,27 @@ test('Able to resolve ember / ember-data dependencies via version only', functio
     assert.equal(outputContents('.ember-data-version'), '1.13.13');
   });
 });
+
+test('Dependencies can be changed via the UI', function(assert) {
+  runGist(TWIDDLE_SHOWING_VERSIONS);
+
+  andThen(function() {
+    assert.equal(outputContents('.ember-version'), '1.13.10');
+    assert.equal(outputContents('.ember-data-version'), '1.13.13');
+  });
+
+  andThen(function() {
+    click('.versions-menu .dropdown-toggle');
+    click('.test-set-ember-version:contains("2.1.0")');
+
+    click('.versions-menu .dropdown-toggle');
+    click('.test-set-ember-data-version:contains("2.1.0")');
+
+    waitForLoadedIFrame();
+  });
+
+  andThen(function() {
+    assert.equal(outputContents('.ember-version'), '2.1.0');
+    assert.equal(outputContents('.ember-data-version'), '2.1.0');
+  });
+});

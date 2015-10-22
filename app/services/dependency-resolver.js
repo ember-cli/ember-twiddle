@@ -1,5 +1,8 @@
 import Ember from 'ember';
 
+const EMBER_VERSIONS = ['2.1.0', '2.0.2', '1.13.10', '1.12.1'];
+const EMBER_DATA_VERSIONS = ['2.1.0', '2.0.1', '1.13.14'];
+
 const VERSION_REGEX = /^\d+.\d+.\d+$/;
 
 const CDN_MAP = {
@@ -26,6 +29,8 @@ const CHANNEL_FILENAME_MAP = {
 };
 
 const CHANNELS = ['release', 'beta', 'canary'];
+
+const { computed } = Ember;
 
 export default Ember.Service.extend({
   resolveDependencies: function(dependencies) {
@@ -70,5 +75,13 @@ export default Ember.Service.extend({
     var { library, fileName } = CDN_MAP[name];
 
     return `http://cdnjs.cloudflare.com/ajax/libs/${library}/${version}/${fileName}`;
-  }
+  },
+
+  emberVersions: computed(function() {
+    return [...CHANNELS, ...EMBER_VERSIONS];
+  }),
+
+  emberDataVersions: computed(function() {
+    return [...CHANNELS, ...EMBER_DATA_VERSIONS];
+  })
 });

@@ -15,6 +15,10 @@
                 signInViaGithub="signInViaGithub"}}
 
     {{editor-mode-menu setKeyMap=(action "setEditorKeyMap")}}
+
+    {{versions-menu versionSelected=(action "versionSelected")
+                    emberVersions=emberVersions
+                    emberDataVersions=emberDataVersions }}
   </ul>
 
   <div class="title">
