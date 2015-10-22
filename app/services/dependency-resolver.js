@@ -19,6 +19,14 @@ const CDN_MAP = {
   }
 };
 
+const CHANNEL_FILENAME_MAP = {
+  'ember': 'ember.debug.js',
+  'ember-template-compiler': 'ember-template-compiler.js',
+  'ember-data': 'ember-data.js'
+};
+
+const CHANNELS = ['release', 'beta', 'canary'];
+
 export default Ember.Service.extend({
   resolveDependencies: function(dependencies) {
     Object.keys(dependencies).forEach((name) => {
@@ -45,7 +53,17 @@ export default Ember.Service.extend({
       return this.cdnURL(name, value);
     }
 
+    if (CHANNELS.indexOf(value) !== -1) {
+      return this.channelURL(name, value);
+    }
+
     return value;
+  },
+
+  channelURL: function(name, channel) {
+    var fileName = CHANNEL_FILENAME_MAP[name];
+
+    return `http://builds.emberjs.com/${channel}/${fileName}`;
   },
 
   cdnURL: function(name, version) {
