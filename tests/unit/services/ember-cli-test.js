@@ -70,7 +70,7 @@ test("getTwiddleJson() resolves dependencies", function(assert) {
 });
 
 test("updateDependencyVersion() updates the version of the dependency in twiddle.json", function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
   var service = this.subject();
 
@@ -92,5 +92,34 @@ test("updateDependencyVersion() updates the version of the dependency in twiddle
     var parsed = JSON.parse(updatedContent);
 
     assert.equal(parsed.dependencies.ember, 'release');
+    assert.equal(parsed.dependencies.hasOwnProperty('ember-template-compiler'), false, "does not automatically add an ember-template-compiler dependency, when ember is updated");
+  });
+});
+
+test("updateDependencyVersion() updates the version of ember-template-compiler if ember is updated", function(assert) {
+  assert.expect(2);
+
+  var service = this.subject();
+
+  var gist = Ember.Object.create({
+    files: Ember.A([Ember.Object.create({
+      filePath: 'twiddle.json',
+      content: `
+        {
+          "dependencies": {
+            "ember": "1.13.9",
+            "ember-template-compiler": "1.13.9"
+          }
+        }
+      `
+    })])
+  });
+
+  service.updateDependencyVersion(gist, 'ember', 'release').then(function() {
+    var updatedContent = gist.get('files').findBy('filePath', 'twiddle.json').get('content');
+    var parsed = JSON.parse(updatedContent);
+
+    assert.equal(parsed.dependencies.ember, 'release');
+    assert.equal(parsed.dependencies['ember-template-compiler'], 'release');
   });
 });

@@ -277,6 +277,13 @@ export default Ember.Service.extend({
 
       json.dependencies[dependencyName] = version;
 
+      // since ember and ember-template-compiler should always have the same
+      // version, we update the version for the ember-template-compiler too, if
+      // the ember dependency is updated
+      if (dependencyName === 'ember' && json.dependencies.hasOwnProperty('ember-template-compiler')) {
+        json.dependencies['ember-template-compiler'] = version;
+      }
+
       json = JSON.stringify(json, null, '  ');
       twiddle.set('content', json);
 
