@@ -68,3 +68,29 @@ test("getTwiddleJson() resolves dependencies", function(assert) {
     'jquery': "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
   });
 });
+
+test("updateDependencyVersion() updates the version of the dependency in twiddle.json", function(assert) {
+  assert.expect(1);
+
+  var service = this.subject();
+
+  var gist = Ember.Object.create({
+    files: Ember.A([Ember.Object.create({
+      filePath: 'twiddle.json',
+      content: `
+        {
+          "dependencies": {
+            "ember": "1.13.9"
+          }
+        }
+      `
+    })])
+  });
+
+  service.updateDependencyVersion(gist, 'ember', 'release').then(function() {
+    var updatedContent = gist.get('files').findBy('filePath', 'twiddle.json').get('content');
+    var parsed = JSON.parse(updatedContent);
+
+    assert.equal(parsed.dependencies.ember, 'release');
+  });
+});

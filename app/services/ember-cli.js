@@ -264,6 +264,26 @@ export default Ember.Service.extend({
     return twiddleJson;
   },
 
+  updateDependencyVersion: function(gist, dependencyName, version) {
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      var twiddle = gist.get('files').findBy('filePath', 'twiddle.json');
+
+      var json;
+      try {
+        json = JSON.parse(twiddle.get('content'));
+      } catch (e) {
+        return reject(e);
+      }
+
+      json.dependencies[dependencyName] = version;
+
+      json = JSON.stringify(json, null, '  ');
+      twiddle.set('content', json);
+
+      resolve();
+    });
+  },
+
   /**
    * Compile a javascript file. This means that we
    * transform it using Babel.
