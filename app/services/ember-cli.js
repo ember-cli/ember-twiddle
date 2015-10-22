@@ -97,6 +97,8 @@ const requiredDependencies = [
  * source code at https://github.com/ember-cli/ember-cli
  */
 export default Ember.Service.extend({
+  dependencyResolver: Ember.inject.service(),
+
   init () {
     this._super();
     this.set('store', this.container.lookup("service:store"));
@@ -255,6 +257,9 @@ export default Ember.Service.extend({
         twiddleJson.dependencies[dep] = dependencies[dep];
       }
     });
+
+    var dependencyResolver = this.get('dependencyResolver');
+    dependencyResolver.resolveDependencies(twiddleJson.dependencies);
 
     return twiddleJson;
   },
