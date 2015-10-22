@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from 'ember-twiddle/tests/helpers/start-app';
 
-module('Acceptance | external dependency', {
+module('Acceptance | dependencies', {
   beforeEach: function() {
     this.application = startApp();
   },
@@ -11,6 +11,40 @@ module('Acceptance | external dependency', {
     Ember.run(this.application, 'destroy');
   }
 });
+
+const TWIDDLE_SHOWING_VERSIONS = [
+  {
+    filename: "application.template.hbs",
+    content: `
+    <span class='ember-version'>{{emberVersion}}</span>
+    <span class='ember-data-version'>{{emberDataVersion}}</span>
+    `
+  },
+  {
+    filename: "application.controller.js",
+    content: `
+    import Ember from 'ember';
+    import DS from 'ember-data';
+
+    export default Ember.Controller.extend({
+    emberVersion: Ember.VERSION,
+    emberDataVersion: DS.VERSION
+    });
+    `
+  },
+  {
+    filename: 'twiddle.json',
+    content: `
+    {
+    "dependencies": {
+    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
+    "ember": "1.13.10",
+    "ember-data": "1.13.13"
+    }
+    }
+    `
+  }
+];
 
 test('Able to run a gist using an external dependency', function(assert) {
 
@@ -45,5 +79,38 @@ test('Able to run a gist using an external dependency', function(assert) {
     const outputDiv = 'div';
 
     assert.equal(outputContents(outputDiv), '3.10.0', 'Gist including an external dependency can make use of it');
+  });
+});
+
+test('Able to resolve ember / ember-data dependencies via version only', function(assert) {
+  runGist(TWIDDLE_SHOWING_VERSIONS);
+
+  andThen(function() {
+    assert.equal(outputContents('.ember-version'), '1.13.10');
+    assert.equal(outputContents('.ember-data-version'), '1.13.13');
+  });
+});
+
+test('Dependencies can be changed via the UI', function(assert) {
+  runGist(TWIDDLE_SHOWING_VERSIONS);
+
+  andThen(function() {
+    assert.equal(outputContents('.ember-version'), '1.13.10');
+    assert.equal(outputContents('.ember-data-version'), '1.13.13');
+  });
+
+  andThen(function() {
+    click('.versions-menu .dropdown-toggle');
+    click('.test-set-ember-version:contains("2.1.0")');
+
+    click('.versions-menu .dropdown-toggle');
+    click('.test-set-ember-data-version:contains("2.1.0")');
+
+    waitForLoadedIFrame();
+  });
+
+  andThen(function() {
+    assert.equal(outputContents('.ember-version'), '2.1.0');
+    assert.equal(outputContents('.ember-data-version'), '2.1.0');
   });
 });

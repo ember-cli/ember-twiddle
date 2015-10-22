@@ -97,6 +97,8 @@ const requiredDependencies = [
  * source code at https://github.com/ember-cli/ember-cli
  */
 export default Ember.Service.extend({
+  dependencyResolver: Ember.inject.service(),
+
   init () {
     this._super();
     this.set('store', this.container.lookup("service:store"));
@@ -256,7 +258,30 @@ export default Ember.Service.extend({
       }
     });
 
+    var dependencyResolver = this.get('dependencyResolver');
+    dependencyResolver.resolveDependencies(twiddleJson.dependencies);
+
     return twiddleJson;
+  },
+
+  updateDependencyVersion: function(gist, dependencyName, version) {
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      var twiddle = gist.get('files').findBy('filePath', 'twiddle.json');
+
+      var json;
+      try {
+        json = JSON.parse(twiddle.get('content'));
+      } catch (e) {
+        return reject(e);
+      }
+
+      json.dependencies[dependencyName] = version;
+
+      json = JSON.stringify(json, null, '  ');
+      twiddle.set('content', json);
+
+      resolve();
+    });
   },
 
   /**
