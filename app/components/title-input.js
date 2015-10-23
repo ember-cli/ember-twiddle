@@ -9,6 +9,10 @@ export default Ember.Component.extend({
     this.$('input').focusin();
   },
 
+  change() {
+    this.send('valueChanged');
+  },
+
   actions: {
     inputFocusIn(){
 
@@ -34,6 +38,10 @@ export default Ember.Component.extend({
 
     removeFocus() {
       this.$('input').blur();
+    },
+
+    valueChanged() {
+      this.attrs.titleChanged();
     }
   }
 
