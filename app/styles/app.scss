@@ -473,11 +473,20 @@ body {
   }
 }
 
+div.table-responsive {
+  margin: 20px auto;
+}
+
 .saved-twiddles {
   width: 80%;
-  margin: 10px auto;
+  margin: 0 auto;
 
-  tr:hover {
+  thead th {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+
+  tbody tr:hover {
     background-color: $ember-orange;
   }
 }
