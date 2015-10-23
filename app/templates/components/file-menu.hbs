@@ -4,45 +4,47 @@
 
 <ul class="dropdown dropdown-menu">
   <li>{{#link-to 'gist.new'}}New Twiddle{{/link-to}}</li>
-  <li role="presentation" class="divider"></li>
-  <li class="dropdown-submenu">
-    <a tabindex="-1" href="#">Add...</a>
-    <ul class="dropdown-menu">
-      <li><a {{action 'addFile' ''}}>Other (empty file)</a></li>
-      <li class="dropdown-submenu">
-        <a {{action 'addComponent'}} class="add-component-link">Component (js and hbs)</a>
-        <ul class="'dropdown dropdown-menu">
-          <li><a {{action 'addFile' 'component-hbs'}}>hbs only</a></li>
-          <li><a {{action 'addFile' 'component-js'}}>js only</a></li>
-        </ul>
-      </li>
-      <li><a {{action 'addFile' 'model'}}>Model</a></li>
-      <li><a {{action 'addFile' 'controller'}}>Controller</a></li>
-      <li><a {{action 'addFile' 'route'}}>Route</a></li>
-      <li><a {{action 'addFile' 'template'}} class="test-template-action">Template</a></li>
-      <li><a {{action 'addFile' 'service'}} class="test-add-service-link">Service</a></li>
-      <li><a {{action 'addFile' 'router'}}>Router</a></li>
-      <li><a {{action 'addFile' 'css'}}>CSS</a></li>
-    </ul>
-  </li>
-  {{#if activeEditorCol}}
-    <li><a {{action 'renameFile' activeFile}} class="test-rename-action">Move {{activeFile.filePath}}</a></li>
-    <li><a {{action 'removeFile' activeFile}} class="test-remove-action">Delete {{activeFile.filePath}}</a></li>
-  {{/if}}
-  {{#if session.isAuthenticated}}
+  {{#if model}}
     <li role="presentation" class="divider"></li>
-    <li><a {{action 'saveGist' model}} class="test-save-action">Save to Github Gist</a></li>
-    {{#unless model.isNew}}
-      <li><a {{action 'share'}}>Share Twiddle</a></li>
-      <li><a {{action 'embed'}}>Embed Twiddle</a></li>
-      {{#unless belongsToUser}}
-        <li><a {{action 'fork' model}} class="test-fork-action">Fork Twiddle</a></li>
-      {{else}}
-        <li><a {{action 'copy'}} class="test-copy-action">Copy Twiddle</a></li>
+    <li class="dropdown-submenu">
+      <a tabindex="-1" href="#">Add...</a>
+      <ul class="dropdown-menu">
+        <li><a {{action 'addFile' ''}}>Other (empty file)</a></li>
+        <li class="dropdown-submenu">
+          <a {{action 'addComponent'}} class="add-component-link">Component (js and hbs)</a>
+          <ul class="'dropdown dropdown-menu">
+            <li><a {{action 'addFile' 'component-hbs'}}>hbs only</a></li>
+            <li><a {{action 'addFile' 'component-js'}}>js only</a></li>
+          </ul>
+        </li>
+        <li><a {{action 'addFile' 'model'}}>Model</a></li>
+        <li><a {{action 'addFile' 'controller'}}>Controller</a></li>
+        <li><a {{action 'addFile' 'route'}}>Route</a></li>
+        <li><a {{action 'addFile' 'template'}} class="test-template-action">Template</a></li>
+        <li><a {{action 'addFile' 'service'}} class="test-add-service-link">Service</a></li>
+        <li><a {{action 'addFile' 'router'}}>Router</a></li>
+        <li><a {{action 'addFile' 'css'}}>CSS</a></li>
+      </ul>
+    </li>
+    {{#if activeEditorCol}}
+      <li><a {{action 'renameFile' activeFile}} class="test-rename-action">Move {{activeFile.filePath}}</a></li>
+      <li><a {{action 'removeFile' activeFile}} class="test-remove-action">Delete {{activeFile.filePath}}</a></li>
+    {{/if}}
+    {{#if session.isAuthenticated}}
+      <li role="presentation" class="divider"></li>
+      <li><a {{action 'saveGist' model}} class="test-save-action">Save to Github Gist</a></li>
+      {{#unless model.isNew}}
+        <li><a {{action 'share'}}>Share Twiddle</a></li>
+        <li><a {{action 'embed'}}>Embed Twiddle</a></li>
+        {{#unless belongsToUser}}
+          <li><a {{action 'fork' model}} class="test-fork-action">Fork Twiddle</a></li>
+        {{else}}
+          <li><a {{action 'copy'}} class="test-copy-action">Copy Twiddle</a></li>
+        {{/unless}}
+        <li><a {{action 'deleteGist' model}} class="test-delete-action">Delete Twiddle</a></li>
       {{/unless}}
-      <li><a {{action 'deleteGist' model}} class="test-delete-action">Delete Twiddle</a></li>
-    {{/unless}}
-  {{else}}
-    <li><a {{action 'signInViaGithub'}} class="test-sign-in-action">Sign in with Github to Save</a></li>
+    {{else}}
+      <li><a {{action 'signInViaGithub'}} class="test-sign-in-action">Sign in with Github to Save</a></li>
+    {{/if}}
   {{/if}}
 </ul>
