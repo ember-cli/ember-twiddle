@@ -54,3 +54,19 @@ test('visiting /twiddles', function(assert) {
     assert.equal(currentURL(), '/35de43cb81fc35ddffb2', 'Able to click on a twiddle and go to the twiddle');
   });
 });
+
+test('a new twiddle can be created via File menu', function(assert) {
+  visit('/twiddles');
+  click('.dropdown-menu .test-new-twiddle');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/', 'Empty twiddle page is shown');
+
+    // it can be navigated back to the list of twiddles via the user menu
+    click('.user-menu .test-show-twiddles');
+  });
+
+  andThen(function() {
+    assert.equal(currentURL(), '/twiddles');
+  });
+});

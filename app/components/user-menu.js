@@ -12,6 +12,10 @@ export default Ember.Component.extend({
     },
     signOut() {
       this.sendAction('signOut');
+    },
+
+    showTwiddles() {
+      this.sendAction('showTwiddles');
     }
   }
 });
