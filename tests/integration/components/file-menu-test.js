@@ -145,3 +145,10 @@ test("it calls signInViaGithub when clicking on 'Sign In To Github To Save'", fu
 
   assert.ok(this.signInViaGithubCalled, 'signInViaGithub was called');
 });
+
+test("it only renders 'New Twiddle' menu item, when no model is specified", function(assert) {
+  this.render(hbs`{{file-menu}}`);
+
+  assert.equal(this.$('.dropdown-menu li').length, 1, "only one menu item is rendered");
+  assert.equal(this.$('.dropdown-menu li').text().trim(), "New Twiddle");
+});

@@ -1,4 +1,17 @@
-<h1 class="test-twiddles-header">My Saved Twiddles</h1>
+<div class="row toolbar">
+  <ul class="nav nav-pills file-menu">
+    {{file-menu}}
+  </ul>
+
+  <div class="title">
+    <h1 class="saved-twiddles-header">My Saved Twiddles</h1>
+  </div>
+
+  {{user-menu session=session
+              version=version
+              signInViaGithub="signInViaGithub"
+              signOut="signOut" }}
+</div>
 
 <table class="saved-twiddles">
   <thead>

@@ -11,6 +11,13 @@ export default Ember.Route.extend({
     });
   },
 
+  deactivate () {
+    var gist = this.controller.get('model');
+    if (gist.get('isNew')) {
+      this.store.unloadRecord(gist);
+    }
+  },
+
   actions: {
     saveGist (gist) {
       var newGist = gist.get('isNew');
@@ -64,6 +71,10 @@ export default Ember.Route.extend({
 
     signOut () {
       this.session.close();
+    },
+
+    showTwiddles: function() {
+      this.transitionTo('twiddles');
     }
   },
 
