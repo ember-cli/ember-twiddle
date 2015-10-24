@@ -70,3 +70,12 @@ test('a new twiddle can be created via File menu', function(assert) {
     assert.equal(currentURL(), '/twiddles');
   });
 });
+
+test('signing out navigates to the new twiddle route', function(assert) {
+  visit('/twiddles');
+  click('.user-menu .test-sign-out');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/', 'Empty twiddle page is shown');
+  });
+});
