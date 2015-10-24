@@ -22,7 +22,7 @@
   </ul>
 
   <div class="title">
-    {{title-input value=model.description}}
+    {{title-input value=model.description titleChanged=(action "titleChanged")}}
     {{saved-state-indicator model=model
                             unsaved=unsaved
     }}

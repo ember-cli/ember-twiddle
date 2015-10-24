@@ -275,6 +275,11 @@ export default Ember.Controller.extend({
       this.buildApp();
     },
 
+    titleChanged() {
+      this.set('unsaved', true);
+      this.send('titleUpdated');
+    },
+
     showFileTree() {
       this.set('fileTreeShown', true);
     },
