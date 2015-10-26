@@ -323,7 +323,7 @@ export default Ember.Controller.extend({
     },
 
     addHelper() {
-      let type = 'helper'
+      let type = 'helper';
       let fileProperties = this.get('emberCli').buildProperties(type);
       let filePath = prompt('File path', fileProperties.filePath);
       let splitFilePath = filePath.split('/');

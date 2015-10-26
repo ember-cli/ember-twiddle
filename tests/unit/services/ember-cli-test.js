@@ -123,3 +123,29 @@ test("updateDependencyVersion() updates the version of ember-template-compiler i
     assert.equal(parsed.dependencies['ember-template-compiler'], 'release');
   });
 });
+
+test("buildProperties() works as expected without replacements", function (assert) {
+  assert.expect(3);
+
+  var service = this.subject();
+  var props = service.buildProperties('helper');
+
+  assert.equal(props.filePath, 'helpers/my-helper.js', 'filePath set');
+  assert.ok(props.content, 'has content');
+  assert.ok(props.content.indexOf('<%=') === -1, 'No replacement tags in content');
+});
+
+test("buildProperties() works as expected with replacements", function (assert) {
+  assert.expect(5);
+
+  var service = this.subject();
+  var props = service.buildProperties('helper', {
+    camelizedModuleName: 'myHelper'
+  });
+
+  assert.equal(props.filePath, 'helpers/my-helper.js', 'filePath set');
+  assert.ok(props.content, 'has content');
+  assert.ok(props.content.indexOf('<%=') === -1, 'No replacement tags in content');
+  assert.ok(props.content.indexOf('myHelper(params') !== -1, 'Replacements worked');
+  assert.ok(props.content.indexOf('helper(myHelper)') !== -1, 'Replacements worked if multiple');
+});
