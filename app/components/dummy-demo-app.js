@@ -1,9 +1,11 @@
 import Ember from 'ember';
 import ResizeMixin from 'ember-twiddle/lib/resize-mixin';
 
-const { $, on } = Ember;
+const { $, on, inject } = Ember;
 
 export default Ember.Component.extend(ResizeMixin, {
+  demoApp: inject.service(),
+
   iframeId: 'dummy-content-iframe',
   classNames: ['content'],
 
@@ -33,6 +35,8 @@ export default Ember.Component.extend(ResizeMixin, {
       ifrm.document.write('<p>Your browser doesn\'t support the <code>srcdoc</code> attribute for iframes. Ember Twiddle needs this to run safely.</p><p>Please use the latest version of Chrome, Safari or Firefox.</p><p>More information: <a href="https://github.com/ember-cli/ember-twiddle#browser-support">https://github.com/ember-cli/ember-twiddle#browser-support</a>');
       ifrm.document.close();
     }
+
+    this.get('demoApp').setCurrentIFrame(ifrm);
 
     if (Ember.testing) {
       ifrm = ifrm.contentWindow;
