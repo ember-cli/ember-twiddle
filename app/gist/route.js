@@ -5,6 +5,8 @@ const { inject } = Ember;
 export default Ember.Route.extend({
   notify: inject.service('notify'),
 
+  titleToken: Ember.computed.readOnly('controller.model.description'),
+
   beforeModel () {
     return this.session.fetch('github-oauth2').catch(function() {
       // Swallow error for now

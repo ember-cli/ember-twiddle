@@ -239,10 +239,13 @@ test('own gist can be copied into a new one', function(assert) {
     }
   ]);
 
+  andThen(function() {
+    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+  });
+
   fillIn('.title input', "my twiddle");
   andThen(function() {
     assert.equal(find('.title input').val(), "my twiddle");
-    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
   });
 
   click('.test-copy-action');
@@ -267,10 +270,13 @@ test('accessing /:gist/copy creates a new Twiddle with a copy of the gist', func
     }
   ]);
 
+  andThen(function() {
+    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+  });
+
   fillIn('.title input', "my twiddle");
   andThen(function() {
     assert.equal(find('.title input').val(), "my twiddle");
-    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
   });
 
   visit('/35de43cb81fc35ddffb2/copy');
