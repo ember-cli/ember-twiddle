@@ -13,5 +13,13 @@ export default Ember.Route.extend({
 
   model() {
     return this.store.findAll('gist');
+  },
+
+  actions: {
+    signOut: function() {
+      this.session.close().then(() => {
+        this.transitionTo('/');
+      });
+    }
   }
 });
