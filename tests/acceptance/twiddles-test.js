@@ -12,7 +12,7 @@ module('Acceptance | twiddles', {
     const file = server.create('gist-file', {
       login: "octocat",
       filename: "twiddle.json",
-      content: ''
+      content: '{ "dependencies": {} }'
     });
     server.create('gist', {
       id: '35de43cb81fc35ddffb2',
