@@ -36,7 +36,7 @@ export default Ember.Route.extend({
         } else {
           this.send('setSaved');
         }
-      });
+      }).catch((this.catchSaveError.bind(this)));
     },
 
     setSaved () {
@@ -84,10 +84,23 @@ export default Ember.Route.extend({
     if (error && error.errors) {
       let firstError = error.errors[0];
       if (firstError.code === "unprocessable" && firstError.field === "forks") {
-        this.get('notify').info("You already own this gist.");
+        this.get('notify').error("You already own this gist.");
         return;
       }
     }
+    this.get('notify').error("Something went wrong. The gist was not forked.");
+    throw error;
+  },
+
+  catchSaveError(error) {
+    if (error && error.errors) {
+      let firstError = error.errors[0];
+      if (firstError.code === "unprocessable") {
+        this.get('notify').error("The gist is invalid, and could not be saved.");
+        return;
+      }
+    }
+    this.get('notify').error("Something went wrong. The gist was not saved.");
     throw error;
   }
 });
