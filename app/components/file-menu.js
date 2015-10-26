@@ -14,6 +14,9 @@ export default Ember.Component.extend({
     addComponent() {
       this.attrs.addComponent();
     },
+    addHelper() {
+      this.attrs.addHelper();
+    },
     addFile(type) {
       this.attrs.addFile(type);
     },

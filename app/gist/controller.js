@@ -322,6 +322,24 @@ export default Ember.Controller.extend({
       });
     },
 
+    addHelper() {
+      let type = 'helper';
+      let fileProperties = this.get('emberCli').buildProperties(type);
+      let filePath = prompt('File path', fileProperties.filePath);
+      let splitFilePath = filePath.split('/');
+      let file = splitFilePath[splitFilePath.length - 1];
+      let name = file.replace('.js', '').camelize();
+
+      fileProperties = this.get('emberCli').buildProperties(type, {
+        camelizedModuleName: name
+      });
+
+      if (this.isPathInvalid(type, filePath)) {
+        return;
+      }
+      this.createFile(filePath, fileProperties);
+    },
+
     /**
      * Add a new file to the model
      * @param {String|null} type Blueprint name or null for empty file
