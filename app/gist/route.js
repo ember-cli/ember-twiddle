@@ -88,6 +88,7 @@ export default Ember.Route.extend({
         return;
       }
     }
+    this.get('notify').error("Something went wrong. The gist was not forked.");
     throw error;
   },
 
@@ -99,6 +100,7 @@ export default Ember.Route.extend({
         return;
       }
     }
+    this.get('notify').error("Something went wrong. The gist was not saved.");
     throw error;
   }
 });
