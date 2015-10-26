@@ -61,6 +61,10 @@ const availableBlueprints = {
     blueprint: 'model',
     filePath: 'models/my-model.js',
   },
+  'helper': {
+    blueprint: 'helper',
+    filePath: 'helpers/my-helper.js'
+  },
   'route': {
     blueprint: 'route',
     filePath: 'my-route/route.js',
@@ -108,13 +112,23 @@ export default Ember.Service.extend({
     return this.store.createRecord('gistFile', this.buildProperties(type));
   },
 
-  buildProperties(type) {
+  buildProperties(type, replacements) {
     if (type in availableBlueprints) {
       let blueprint = availableBlueprints[type];
+      let content = blueprints[blueprint.blueprint];
+
+      if (replacements) {
+        Object.keys(replacements).forEach(key => {
+          let token = `<%= ${key} %>`;
+          let value = replacements[key];
+
+          content = content.replace(new RegExp(token, 'g'), value);
+        });
+      }
 
       return {
         filePath: blueprint.filePath,
-        content: blueprints[blueprint.blueprint].replace(/<\%\=(.*)\%\>/gi,'')
+        content: content.replace(/<\%\=(.*)\%\>/gi,'')
       };
     }
   },

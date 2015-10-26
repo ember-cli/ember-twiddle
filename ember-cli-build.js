@@ -93,6 +93,7 @@ function getEmberCLIBlueprints() {
     'router': 'app/files/app/router.js',
     'service': 'service/files/__root__/__path__/__name__.js',
     'template': 'template/files/__root__/__path__/__name__.hbs',
+    'helper': 'helper/files/__root__/helpers/__name__.js'
   };
 
   for (var blueprintName in cliBlueprintFiles) {

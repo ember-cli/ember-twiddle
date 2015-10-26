@@ -199,6 +199,32 @@ test('can add service', function(assert){
   });
 });
 
+test('can add helper', function(assert){
+  assert.expect(3);
+
+  let origFileCount;
+  promptValue = 'helpers/my-helper.js';
+  visit('/');
+  andThen(function(){
+    origFileCount = find(firstFilePickerFiles).length;
+  });
+
+  click(fileMenu);
+  click('.test-add-helper-link');
+  click(firstFilePicker);
+
+  andThen(function() {
+    let numFiles = find(firstFilePickerFiles).length;
+    assert.equal(numFiles, origFileCount + 1, 'Added helper file');
+
+    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    assert.equal(fileNames[3], promptValue, 'Added the file with the right name');
+
+    let columnFiles = findMapText(displayedFiles);
+    assert.ok(columnFiles.contains(promptValue), 'Added file is displayed');
+  });
+});
+
 
 test('unsaved indicator', function(assert) {
   const indicator = ".test-unsaved-indicator";
