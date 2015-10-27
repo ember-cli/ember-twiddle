@@ -74,10 +74,15 @@ body {
       line-height: normal;
       border-radius: 3px;
 
+
       img {
         width: $topbar-control-height;
         height: $topbar-control-height;
       }
+
+      &.unauthenticated {
+      	background-image: url("../images/github32-inverse-faf2ee.svg");
+    	}
     }
   }
 

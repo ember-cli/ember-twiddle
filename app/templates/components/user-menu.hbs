@@ -18,9 +18,7 @@
     </li>
   {{else}}
     <li><a {{action 'signInViaGithub'}} class="test-sign-in sign-in">Sign in</a></li>
-    <span class="user-avatar">
-      <img class="github-logo" src="images/github32-inverse-faf2ee.svg" alt="Sign in with GitHub"/>
-    </span>
+    <span class="user-avatar unauthenticated"></span>
   {{/if}}
 {{/if}}
 <li class="dropdown">
