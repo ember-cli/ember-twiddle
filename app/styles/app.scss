@@ -73,6 +73,10 @@ body {
       margin-right: 10px;
       line-height: normal;
       border-radius: 3px;
+
+      &.unauthenticated {
+      	background-image: url("../images/github32-inverse-faf2ee.svg");
+      }
     }
   }
 
