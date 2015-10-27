@@ -33,13 +33,15 @@ export default Ember.Component.extend({
       prompt('Ctrl + C ;-)', window.location.href);
     },
     embed() {
-      let src = window.location.href.split("?")[0];
-      src += "?fullScreen=true";
-      let iframe = document.createElement("iframe");
+      let src = window.location.href.split('?')[0];
+      src += '?fullScreen=true';
+      let responsive = document.createElement('div');
+      responsive.style.cssText = 'position:relative;height:0;overflow:hidden;max-width:100%;padding-bottom:56.25%;'; // 16:9
+      let iframe = document.createElement('iframe');
       iframe.src = src;
-      iframe.width = 800;
-      iframe.height = 600;
-      let embedCode = iframe.outerHTML;
+      iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;';
+      responsive.appendChild(iframe);
+      let embedCode = responsive.outerHTML;
       prompt('Ctrl + C ;-)', embedCode);
     },
     fork(model) {
