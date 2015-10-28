@@ -78,7 +78,7 @@
     </div>
     {{run-or-live-reload liveReloadChanged="liveReloadChanged" runNow="runNow"}}
     <div class="url-bar">
-      <div>{{applicationUrl}}</div>
+      {{input value=applicationUrl enter="urlChanged" }}
     </div>
     {{dummy-demo-app html=buildOutput}}
     {{#if fullScreen}}

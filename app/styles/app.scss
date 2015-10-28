@@ -446,9 +446,10 @@ body {
   border-bottom: 1px solid #ddd;
   padding: 6px;
 }
-.url-bar > div {
+.url-bar > input {
   display: block;
   height: 25px;
+  width: 100%;
   padding: 3px;
   background: #fff;
   border: 1px solid #ddd;
