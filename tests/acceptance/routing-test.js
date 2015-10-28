@@ -5,9 +5,23 @@ import startApp from 'ember-twiddle/tests/helpers/start-app';
 module('Acceptance | routing', {
   beforeEach: function() {
     this.application = startApp();
+
+    this.registerWaiter = () => {
+      window.messagesWaiting = 1;
+      this._waiter = () => {
+        return window.messagesWaiting === 0;
+      };
+      Ember.Test.registerWaiter(this._waiter);
+    };
   },
 
   afterEach: function() {
+    window.messagesWaiting = 0;
+    if (this._waiter) {
+      Ember.Test.unregisterWaiter(this._waiter);
+      this._waiter = null;
+    }
+
     Ember.run(this.application, 'destroy');
   }
 });
@@ -67,68 +81,60 @@ test('Able to do routing in a gist', function(assert) {
 
   runGist(TWIDDLE_WITH_ROUTES);
 
-  andThen(function() {
-    return new Ember.RSVP.Promise(function (resolve) {
-      Ember.run.next(function() {
-        assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 0");
-
-        iframe_window = outputPane();
-        iframe_window.click(iframe_window.find(aboutLink)).then(resolve);
-      });
-    });
+  andThen(() => {
+    this.registerWaiter();
   });
 
-  andThen(function() {
-    return new Ember.RSVP.Promise(function(resolve) {
-      Ember.run.next(function() {
-        assert.equal(outputContents(outletText), 'About Page', 'About Link leads to About Page being displayed');
-        assert.equal(find(addressBar).val(), '/about', "Correct URL is shown in address bar 1");
+  andThen(() => {
+    assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 0");
 
-        iframe_window.click(iframe_window.find(indexLink)).then(resolve);
-      });
-    });
+    this.registerWaiter();
+    iframe_window = outputPane();
+    iframe_window.click(iframe_window.find(aboutLink));
   });
 
-  andThen(function() {
-    Ember.run.next(function() {
-      assert.equal(outputContents(outletText), 'Main Page', 'Index Link leads to Main Page being displayed');
-      assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 2");
-    });
+  andThen(() => {
+    assert.equal(outputContents(outletText), 'About Page', 'About Link leads to About Page being displayed');
+    assert.equal(find(addressBar).val(), '/about', "Correct URL is shown in address bar 1");
+
+    this.registerWaiter();
+    iframe_window.click(iframe_window.find(indexLink));
+  });
+
+  andThen(() => {
+    assert.equal(outputContents(outletText), 'Main Page', 'Index Link leads to Main Page being displayed');
+    assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 2");
   });
 });
 
 test('URL can be changed via the address bar', function(assert) {
   runGist(TWIDDLE_WITH_ROUTES);
 
-  andThen(function() {
-    return new Ember.RSVP.Promise(function(resolve) {
-      Ember.run.next(function() {
-        assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 0");
-
-        click(addressBar);
-        fillIn(addressBar, '/about');
-        keyEvent(addressBar, 'keyup', 13).then(resolve);
-      });
-    });
+  andThen(() => {
+    this.registerWaiter();
   });
 
   andThen(function() {
-    return new Ember.RSVP.Promise(function(resolve) {
-      Ember.run.next(function() {
-        assert.equal(outputContents(outletText), 'About Page', 'Changing the URL to /about and pressing enter leads to the About Page being displayed');
-        assert.equal(find(addressBar).val(), '/about', "Correct URL is shown in address bar 1");
+    assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 0");
 
-        click(addressBar);
-        fillIn(addressBar, '/');
-        keyEvent(addressBar, 'keyup', 13).then(resolve);
-      });
-    });
+    click(addressBar);
+    fillIn(addressBar, '/about');
+    keyEvent(addressBar, 'keyup', 13);
   });
 
   andThen(function() {
-    Ember.run.next(function() {
-      assert.equal(outputContents(outletText), 'Main Page', 'Changing the URL to / and pressing enter leads to the Main Page being displayed');
-      assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 2");
-    });
+    assert.equal(outputContents(outletText), 'About Page', 'Changing the URL to /about and pressing enter leads to the About Page being displayed');
+    assert.equal(find(addressBar).val(), '/about', "Correct URL is shown in address bar 1");
+
+    click(addressBar);
+    fillIn(addressBar, '/');
+    keyEvent(addressBar, 'keyup', 13);
+  });
+
+  andThen(function() {
+    assert.equal(outputContents(outletText), 'Main Page', 'Changing the URL to / and pressing enter leads to the Main Page being displayed');
+    assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 2");
   });
 });
+
+
