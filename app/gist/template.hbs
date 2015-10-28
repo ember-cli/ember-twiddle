@@ -78,9 +78,7 @@
       }}
     </div>
     {{run-or-live-reload liveReloadChanged="liveReloadChanged" runNow="runNow"}}
-    <div class="url-bar">
-      {{input value=applicationUrl enter="urlChanged" }}
-    </div>
+    {{address-bar applicationUrl=applicationUrl urlChanged="urlChanged"}}
     {{dummy-demo-app html=buildOutput}}
     {{#if fullScreen}}
       <a class="exit-full-screen-link" {{action 'exitFullScreen'}}>Edit Twiddle</a>
