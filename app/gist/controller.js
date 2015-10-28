@@ -441,6 +441,9 @@ export default Ember.Controller.extend({
       run(() => {
         if(typeof m.data==='object' && 'setDemoAppUrl' in m.data) {
           if (!this.get('isDestroyed')) {
+            if (window.messagesWaiting > 0) {
+              window.messagesWaiting = 0;
+            }
             this.set('applicationUrl', m.data.setDemoAppUrl || '/');
           }
         }
