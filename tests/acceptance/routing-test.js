@@ -68,43 +68,31 @@ test('Able to do routing in a gist', function(assert) {
   runGist(TWIDDLE_WITH_ROUTES);
 
   andThen(function() {
-    const done = assert.async();
-
     return new Ember.RSVP.Promise(function (resolve) {
       Ember.run.next(function() {
         assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 0");
 
         iframe_window = outputPane();
         iframe_window.click(iframe_window.find(aboutLink)).then(resolve);
-
-        done();
       });
     });
   });
 
   andThen(function() {
-    const done = assert.async();
-
     return new Ember.RSVP.Promise(function(resolve) {
       Ember.run.next(function() {
         assert.equal(outputContents(outletText), 'About Page', 'About Link leads to About Page being displayed');
         assert.equal(find(addressBar).val(), '/about', "Correct URL is shown in address bar 1");
 
         iframe_window.click(iframe_window.find(indexLink)).then(resolve);
-
-        done();
       });
     });
   });
 
   andThen(function() {
-    const done = assert.async();
-
     Ember.run.next(function() {
       assert.equal(outputContents(outletText), 'Main Page', 'Index Link leads to Main Page being displayed');
       assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 2");
-
-      done();
     });
   });
 });
@@ -113,8 +101,6 @@ test('URL can be changed via the address bar', function(assert) {
   runGist(TWIDDLE_WITH_ROUTES);
 
   andThen(function() {
-    const done = assert.async();
-
     return new Ember.RSVP.Promise(function(resolve) {
       Ember.run.next(function() {
         assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 0");
@@ -122,15 +108,11 @@ test('URL can be changed via the address bar', function(assert) {
         click(addressBar);
         fillIn(addressBar, '/about');
         keyEvent(addressBar, 'keyup', 13).then(resolve);
-
-        done();
       });
     });
   });
 
   andThen(function() {
-    const done = assert.async();
-
     return new Ember.RSVP.Promise(function(resolve) {
       Ember.run.next(function() {
         assert.equal(outputContents(outletText), 'About Page', 'Changing the URL to /about and pressing enter leads to the About Page being displayed');
@@ -139,20 +121,14 @@ test('URL can be changed via the address bar', function(assert) {
         click(addressBar);
         fillIn(addressBar, '/');
         keyEvent(addressBar, 'keyup', 13).then(resolve);
-
-        done();
       });
     });
   });
 
   andThen(function() {
-    const done = assert.async();
-
     Ember.run.next(function() {
       assert.equal(outputContents(outletText), 'Main Page', 'Changing the URL to / and pressing enter leads to the Main Page being displayed');
       assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 2");
-
-      done();
     });
   });
 });
