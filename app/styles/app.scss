@@ -73,6 +73,11 @@ body {
       margin-right: 10px;
       line-height: normal;
       border-radius: 3px;
+
+      img {
+        width: $topbar-control-height;
+        height: $topbar-control-height;
+      }
     }
   }
 
