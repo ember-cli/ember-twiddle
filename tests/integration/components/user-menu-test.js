@@ -17,14 +17,12 @@ moduleForComponent('user-menu', 'Integration | Component | user menu', {
         avatarUrl32: 'fake.png'
       }
     }));
-    this.set('version', '0.4.0');
 
     this.on('signInViaGithub', () => { this.signInViaGithubCalled = true; });
     this.on('signOut', () => { this.signOutCalled = true; });
     this.on('showTwiddles', () => { this.showTwiddlesCalled = true; });
 
     this.render(hbs`{{user-menu session=session
-                                version=version
                                 signInViaGithub="signInViaGithub"
                                 signOut="signOut"
                                 showTwiddles="showTwiddles" }}`);
@@ -55,4 +53,26 @@ test('it calls showTwiddles upon clicking "My Saved Twiddles"', function(assert)
   this.$('.test-show-twiddles').click();
 
   assert.ok(this.showTwiddlesCalled, 'showTwiddles was called');
+});
+
+test('shows no current version link when in development environment', function(assert) {
+  this.render(hbs`{{user-menu}}`);
+
+  assert.equal(this.$('.test-current-version-link').length, 0);
+});
+
+test('shows link to release when in production environment', function(assert) {
+  this.render(hbs`{{user-menu environment="production" version="4.0.4" }}`);
+
+  assert.equal(this.$('.test-current-version-link').length, 1);
+  assert.equal(this.$('.test-current-version-link').attr('href'), "https://github.com/ember-cli/ember-twiddle/releases/tag/4.0.4");
+  assert.equal(this.$('.test-current-version-link').text().trim(), "Ember Twiddle v4.0.4");
+});
+
+test('shows link to commit when in staging environment', function(assert) {
+  this.render(hbs`{{user-menu environment="staging" version="4.0.4-abc" currentRevision="abcdefg" }}`);
+
+  assert.equal(this.$('.test-current-version-link').length, 1);
+  assert.equal(this.$('.test-current-version-link').attr('href'), "https://github.com/ember-cli/ember-twiddle/commit/abcdefg");
+  assert.equal(this.$('.test-current-version-link').text().trim(), "Ember Twiddle v4.0.4-abc");
 });

@@ -28,9 +28,10 @@
     Help <b class="caret"></b>
   </a>
   <ul class="dropdown-menu dropdown-menu-right">
-    <li><a href="https://github.com/ember-cli/ember-twiddle" target="_blank">Ember Twiddle v{{version}}</a></li>
+    {{#if currentVersionLink}}
+      <li><a href="{{currentVersionLink}}" target="_blank" class="test-current-version-link">Ember Twiddle v{{version}}</a></li>
+    {{/if}}
     <li><a href="https://github.com/ember-cli/ember-twiddle" target="_blank">GitHub</a></li>
-    <li><a href="https://github.com/ember-cli/ember-twiddle/wiki" target="_blank">Wiki</a></li>
     <li><a href="https://github.com/ember-cli/ember-twiddle/issues" target="_blank">Issue tracker</a></li>
   </ul>
 </li>
