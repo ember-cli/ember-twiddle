@@ -21,7 +21,8 @@ module.exports = function() {
     },
     fingerprint: {
       enabled: isProductionLikeBuild,
-      prepend: prepend
+      prepend: prepend,
+      extensions: ['js', 'css', 'png', 'svg']
     },
     codemirror: {
       modes: ['xml', 'javascript', 'handlebars', 'htmlmixed', 'css'],
