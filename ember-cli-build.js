@@ -22,7 +22,7 @@ module.exports = function() {
     fingerprint: {
       enabled: isProductionLikeBuild,
       prepend: prepend,
-      extensions: ['js', 'css', 'png', 'svg']
+      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg', 'eot', 'ttf', 'woff', 'woff2']
     },
     codemirror: {
       modes: ['xml', 'javascript', 'handlebars', 'htmlmixed', 'css'],
