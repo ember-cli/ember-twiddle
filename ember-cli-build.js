@@ -52,12 +52,6 @@ module.exports = function() {
   app.import('vendor/hint.css');
   app.import('vendor/drags.js');
 
-  var twiddlicons = pickFiles('vendor/twiddlicon/',{
-    srcDir: '/',
-    include: ['**/*.woff', '**/*.eot', '**/*.ttf', '**/*.svg'],
-    destDir: '/assets'
-  });
-
   var loaderTree = pickFiles('bower_components', {
     srcDir: '/loader.js',
     files: ['loader.js'],
@@ -74,7 +68,7 @@ module.exports = function() {
     outputFile: '/assets/twiddle-deps.js',
   });
 
-  return mergeTrees([app.toTree(), twiddleVendorTree, loaderTree, twiddlicons]);
+  return mergeTrees([app.toTree(), twiddleVendorTree, loaderTree]);
 };
 
 // This copies code out of ember-cli's blueprints into
