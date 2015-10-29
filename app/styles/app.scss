@@ -78,6 +78,10 @@ body {
         width: $topbar-control-height;
         height: $topbar-control-height;
       }
+
+      &.unauthenticated {
+      	background: url("../images/github32-inverse-faf2ee.svg");
+      }
     }
   }
 
