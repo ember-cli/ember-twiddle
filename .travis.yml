@@ -21,6 +21,7 @@ install:
   - bower install
 script:
   - npm test
+after_script:
   - scripts/travis-deploy.sh
 env:
   global:
