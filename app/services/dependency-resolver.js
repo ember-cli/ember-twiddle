@@ -68,13 +68,13 @@ export default Ember.Service.extend({
   channelURL: function(name, channel) {
     var fileName = CHANNEL_FILENAME_MAP[name];
 
-    return `http://builds.emberjs.com/${channel}/${fileName}`;
+    return `//builds.emberjs.com/${channel}/${fileName}`;
   },
 
   cdnURL: function(name, version) {
     var { library, fileName } = CDN_MAP[name];
 
-    return `http://cdnjs.cloudflare.com/ajax/libs/${library}/${version}/${fileName}`;
+    return `//cdnjs.cloudflare.com/ajax/libs/${library}/${version}/${fileName}`;
   },
 
   emberVersions: computed(function() {

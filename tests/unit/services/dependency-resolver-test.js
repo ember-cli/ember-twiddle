@@ -6,19 +6,19 @@ test('resolveDependencies() leaves URLs untouched', function(assert) {
   var service = this.subject();
 
   var dependencies = {
-    jquery: 'http://my-cdn.com/1.2.3/jquery.js',
+    jquery: '//my-cdn.com/1.2.3/jquery.js',
     ember: 'https://my-cdn.com/1.2.3/ember.js',
-    'ember-template-compiler': 'http://my-cdn.com/1.2.3/ember-template-compiler.js',
-    'ember-data': 'http://my-cdn.com/1.2.3/ember-data.js'
+    'ember-template-compiler': '//my-cdn.com/1.2.3/ember-template-compiler.js',
+    'ember-data': '//my-cdn.com/1.2.3/ember-data.js'
   };
 
   service.resolveDependencies(dependencies);
 
   assert.deepEqual(dependencies, {
-    jquery: 'http://my-cdn.com/1.2.3/jquery.js',
+    jquery: '//my-cdn.com/1.2.3/jquery.js',
     ember: 'https://my-cdn.com/1.2.3/ember.js',
-    'ember-template-compiler': 'http://my-cdn.com/1.2.3/ember-template-compiler.js',
-    'ember-data': 'http://my-cdn.com/1.2.3/ember-data.js'
+    'ember-template-compiler': '//my-cdn.com/1.2.3/ember-template-compiler.js',
+    'ember-data': '//my-cdn.com/1.2.3/ember-data.js'
   });
 });
 
@@ -32,7 +32,7 @@ test('it resolves version for ember', function(assert) {
   service.resolveDependencies(dependencies);
 
   assert.deepEqual(dependencies, {
-    ember: 'http://cdnjs.cloudflare.com/ajax/libs/ember.js/1.12.1/ember.debug.js'
+    ember: '//cdnjs.cloudflare.com/ajax/libs/ember.js/1.12.1/ember.debug.js'
   });
 });
 
@@ -46,7 +46,7 @@ test('it resolves version for ember-template-compiler', function(assert) {
   service.resolveDependencies(dependencies);
 
   assert.deepEqual(dependencies, {
-    'ember-template-compiler': 'http://cdnjs.cloudflare.com/ajax/libs/ember.js/1.12.1/ember-template-compiler.js'
+    'ember-template-compiler': '//cdnjs.cloudflare.com/ajax/libs/ember.js/1.12.1/ember-template-compiler.js'
   });
 });
 
@@ -60,7 +60,7 @@ test('it resolves version for ember-data', function(assert) {
   service.resolveDependencies(dependencies);
 
   assert.deepEqual(dependencies, {
-    'ember-data': 'http://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.12.1/ember-data.js'
+    'ember-data': '//cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.12.1/ember-data.js'
   });
 });
 
@@ -76,9 +76,9 @@ test('release channel can be specified for version', function(assert) {
   service.resolveDependencies(dependencies);
 
   assert.deepEqual(dependencies, {
-    'ember': 'http://builds.emberjs.com/release/ember.debug.js',
-    'ember-template-compiler': 'http://builds.emberjs.com/release/ember-template-compiler.js',
-    'ember-data': 'http://builds.emberjs.com/release/ember-data.js'
+    'ember': '//builds.emberjs.com/release/ember.debug.js',
+    'ember-template-compiler': '//builds.emberjs.com/release/ember-template-compiler.js',
+    'ember-data': '//builds.emberjs.com/release/ember-data.js'
   });
 });
 
@@ -94,9 +94,9 @@ test('beta channel can be specified for version', function(assert) {
   service.resolveDependencies(dependencies);
 
   assert.deepEqual(dependencies, {
-    'ember': 'http://builds.emberjs.com/beta/ember.debug.js',
-    'ember-template-compiler': 'http://builds.emberjs.com/beta/ember-template-compiler.js',
-    'ember-data': 'http://builds.emberjs.com/beta/ember-data.js'
+    'ember': '//builds.emberjs.com/beta/ember.debug.js',
+    'ember-template-compiler': '//builds.emberjs.com/beta/ember-template-compiler.js',
+    'ember-data': '//builds.emberjs.com/beta/ember-data.js'
   });
 });
 
@@ -112,8 +112,8 @@ test('canary channel can be specified for version', function(assert) {
   service.resolveDependencies(dependencies);
 
   assert.deepEqual(dependencies, {
-    'ember': 'http://builds.emberjs.com/canary/ember.debug.js',
-    'ember-template-compiler': 'http://builds.emberjs.com/canary/ember-template-compiler.js',
-    'ember-data': 'http://builds.emberjs.com/canary/ember-data.js'
+    'ember': '//builds.emberjs.com/canary/ember.debug.js',
+    'ember-template-compiler': '//builds.emberjs.com/canary/ember-template-compiler.js',
+    'ember-data': '//builds.emberjs.com/canary/ember-data.js'
   });
 });
