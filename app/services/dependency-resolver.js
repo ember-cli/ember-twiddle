@@ -78,10 +78,12 @@ export default Ember.Service.extend({
   },
 
   emberVersions: computed(function() {
-    return [...CHANNELS, ...EMBER_VERSIONS];
+    // CHANNELS disabled because they don't work in https
+    return [/*...CHANNELS,*/ ...EMBER_VERSIONS];
   }),
 
   emberDataVersions: computed(function() {
-    return [...CHANNELS, ...EMBER_DATA_VERSIONS];
+    // CHANNELS disabled because tehy don't work in https
+    return [/*...CHANNELS,*/ ...EMBER_DATA_VERSIONS];
   })
 });
