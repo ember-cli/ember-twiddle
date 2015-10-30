@@ -68,7 +68,7 @@ export default Ember.Service.extend({
   channelURL: function(name, channel) {
     var fileName = CHANNEL_FILENAME_MAP[name];
 
-    return `//builds.emberjs.com/${channel}/${fileName}`;
+    return `//ember.alexspeller.com/${channel}/${fileName}`;
   },
 
   cdnURL: function(name, version) {
