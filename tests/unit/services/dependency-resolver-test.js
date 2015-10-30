@@ -76,9 +76,9 @@ test('release channel can be specified for version', function(assert) {
   service.resolveDependencies(dependencies);
 
   assert.deepEqual(dependencies, {
-    'ember': '//builds.emberjs.com/release/ember.debug.js',
-    'ember-template-compiler': '//builds.emberjs.com/release/ember-template-compiler.js',
-    'ember-data': '//builds.emberjs.com/release/ember-data.js'
+    'ember': '//ember.alexspeller.com/release/ember.debug.js',
+    'ember-template-compiler': '//ember.alexspeller.com/release/ember-template-compiler.js',
+    'ember-data': '//ember.alexspeller.com/release/ember-data.js'
   });
 });
 
@@ -94,9 +94,9 @@ test('beta channel can be specified for version', function(assert) {
   service.resolveDependencies(dependencies);
 
   assert.deepEqual(dependencies, {
-    'ember': '//builds.emberjs.com/beta/ember.debug.js',
-    'ember-template-compiler': '//builds.emberjs.com/beta/ember-template-compiler.js',
-    'ember-data': '//builds.emberjs.com/beta/ember-data.js'
+    'ember': '//ember.alexspeller.com/beta/ember.debug.js',
+    'ember-template-compiler': '//ember.alexspeller.com/beta/ember-template-compiler.js',
+    'ember-data': '//ember.alexspeller.com/beta/ember-data.js'
   });
 });
 
@@ -112,8 +112,8 @@ test('canary channel can be specified for version', function(assert) {
   service.resolveDependencies(dependencies);
 
   assert.deepEqual(dependencies, {
-    'ember': '//builds.emberjs.com/canary/ember.debug.js',
-    'ember-template-compiler': '//builds.emberjs.com/canary/ember-template-compiler.js',
-    'ember-data': '//builds.emberjs.com/canary/ember-data.js'
+    'ember': '//ember.alexspeller.com/canary/ember.debug.js',
+    'ember-template-compiler': '//ember.alexspeller.com/canary/ember-template-compiler.js',
+    'ember-data': '//ember.alexspeller.com/canary/ember-data.js'
   });
 });
