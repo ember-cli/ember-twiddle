@@ -55,7 +55,7 @@
     "ember-deploy-s3-index": "^0.4.0",
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-export-application-global": "^1.0.3",
-    "ember-git-version": "0.0.1",
+    "ember-git-version": "0.1.0",
     "ember-legacy-views": "0.2.0",
     "ember-load": "0.0.2",
     "ember-lodash": "0.0.5",
