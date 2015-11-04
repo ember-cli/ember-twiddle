@@ -25,6 +25,7 @@
     "moment-timezone": ">= 0.1.0"
   },
   "resolutions": {
-    "codemirror": "~5.6.0"
+    "codemirror": "~5.6.0",
+    "ember": "2.1.0"
   }
 }
