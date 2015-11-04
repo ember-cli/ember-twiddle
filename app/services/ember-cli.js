@@ -367,7 +367,6 @@ function contentForAppBoot (content, config) {
   // doesn't recognize them properly...
   var monkeyPatchModules = [
     'ember',
-    'ember/resolver',
     'ember/load-initializers'
   ];
 
@@ -392,4 +391,3 @@ function contentForAppBoot (content, config) {
 function calculateAppConfig(config) {
   return JSON.stringify(config.APP || {});
 }
-
