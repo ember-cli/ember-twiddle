@@ -367,8 +367,8 @@ function contentForAppBoot (content, config) {
   // doesn't recognize them properly...
   var monkeyPatchModules = [
     'ember',
-    'ember/resolver',
-    'ember/load-initializers'
+    'ember/load-initializers',
+    'ember-resolver/resolver'
   ];
 
   if ("ember-data" in config.dependencies) {
@@ -392,4 +392,3 @@ function contentForAppBoot (content, config) {
 function calculateAppConfig(config) {
   return JSON.stringify(config.APP || {});
 }
-

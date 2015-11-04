@@ -5,6 +5,7 @@ module.exports = function() {
   var concat = require('broccoli-concat');
   var mergeTrees = require('broccoli-merge-trees');
   var pickFiles = require('broccoli-static-compiler');
+  var babelTranspiler = require('broccoli-babel-transpiler');
   var env = EmberApp.env();
   var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
   var prepend = null;
@@ -58,12 +59,23 @@ module.exports = function() {
     destDir: '/assets'
   });
 
-  var twiddleVendorTree = concat(funnel('bower_components'),{
+  var bowerTree = funnel('bower_components');
+  var baseResolverTree = funnel('node_modules/ember-resolver/addon', {
+    destDir: 'ember-resolver'
+  });
+
+  var transpiledResolverTree = babelTranspiler(baseResolverTree, {
+    loose: true,
+    moduleIds: true,
+    modules: 'amdStrict'
+  });
+
+  var twiddleVendorTree = concat(mergeTrees([bowerTree, transpiledResolverTree]), {
     inputFiles: [
       'loader.js/loader.js',
-      'ember-resolver/dist/modules/ember-resolver.js',
       'ember-cli-shims/app-shims.js',
       'ember-load-initializers/ember-load-initializers.js',
+      'ember-resolver/**/*.js'
     ],
     outputFile: '/assets/twiddle-deps.js',
   });
@@ -95,6 +107,12 @@ function getEmberCLIBlueprints() {
     var filePath = cliPath + '/blueprints/' + cliBlueprintFiles[blueprintName];
     fileMap[blueprintName] = fs.readFileSync(filePath).toString();
   }
+
+  // ember-cli 1.13.x uses ember/resolver
+  fileMap['app'] = fileMap.app.replace('\'ember/resolver\'', '\'ember-resolver/resolver\'');
+
+  // ember-cli 2.x uses ember-resolver
+  fileMap['app'] = fileMap.app.replace('\'ember-resolver\'', '\'ember-resolver/resolver\'');
 
   fileMap['twiddle.json'] = fs.readFileSync('blueprints/twiddle.json').toString();
   fileMap['initializers/router'] = fs.readFileSync('blueprints/router_initializer.js').toString();
