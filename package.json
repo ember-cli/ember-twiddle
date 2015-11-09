@@ -20,7 +20,6 @@
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.1.2",
-    "broccoli-babel-transpiler": "^5.4.5",
     "broccoli-concat": "0.0.13",
     "broccoli-funnel": "0.2.8",
     "broccoli-merge-trees": "0.2.3",
