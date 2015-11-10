@@ -4,14 +4,18 @@ import startApp from 'ember-twiddle/tests/helpers/start-app';
 
 module('Acceptance | routing', {
   beforeEach: function() {
+    window.messagesWaiting = 0;
+
+    this._waiter = () => {
+      return window.messagesWaiting === 0;
+    };
+
+    Ember.Test.registerWaiter(this._waiter);
+
     this.application = startApp();
 
-    this.registerWaiter = () => {
-      window.messagesWaiting = 1;
-      this._waiter = () => {
-        return window.messagesWaiting === 0;
-      };
-      Ember.Test.registerWaiter(this._waiter);
+    this.waitForMessage = () => {
+      window.messagesWaiting++;
     };
   },
 
@@ -82,13 +86,9 @@ test('Able to do routing in a gist', function(assert) {
   runGist(TWIDDLE_WITH_ROUTES);
 
   andThen(() => {
-    this.registerWaiter();
-  });
-
-  andThen(() => {
     assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 0");
 
-    this.registerWaiter();
+    this.waitForMessage();
     iframe_window = outputPane();
     iframe_window.click(iframe_window.find(aboutLink));
   });
@@ -97,7 +97,7 @@ test('Able to do routing in a gist', function(assert) {
     assert.equal(outputContents(outletText), 'About Page', 'About Link leads to About Page being displayed');
     assert.equal(find(addressBar).val(), '/about', "Correct URL is shown in address bar 1");
 
-    this.registerWaiter();
+    this.waitForMessage();
     iframe_window.click(iframe_window.find(indexLink));
   });
 
@@ -109,10 +109,6 @@ test('Able to do routing in a gist', function(assert) {
 
 test('URL can be changed via the address bar', function(assert) {
   runGist(TWIDDLE_WITH_ROUTES);
-
-  andThen(() => {
-    this.registerWaiter();
-  });
 
   andThen(function() {
     assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 0");
@@ -136,5 +132,3 @@ test('URL can be changed via the address bar', function(assert) {
     assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 2");
   });
 });
-
-
