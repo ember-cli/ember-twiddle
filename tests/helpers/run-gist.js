@@ -1,7 +1,17 @@
-export default function(app, files) {
-  const login = "Gaurav0";
-  const gist_id = "35de43cb81fc35ddffb2";
-  const commit = "f354c6698b02fe3243656c8dc5aa0303cc7ae81c";
+import Ember from "ember";
+
+const { isArray } = Ember;
+
+export default function(app, options) {
+  if (isArray(options)) {
+    options = { files: options };
+  }
+
+  const login = options.login || "Gaurav0";
+  const gist_id = options.gist_id || "35de43cb81fc35ddffb2";
+  const commit = options.commit || "f354c6698b02fe3243656c8dc5aa0303cc7ae81c";
+  const initialRoute = options.initialRoute || "/";
+  let files = options.files || [];
 
   files.push({
     filename: "initializers.setup-test.js",
@@ -29,7 +39,12 @@ export default function(app, files) {
     files: gistFiles
   });
 
-  visit('/35de43cb81fc35ddffb2');
+  let url = "/" + gist_id;
+  if (initialRoute !== "/") {
+    url += "?route=" + initialRoute;
+  }
 
-  return waitForLoadedIFrame();
+  visit(url);
+
+  return waitForLoadedIFrame(initialRoute);
 }

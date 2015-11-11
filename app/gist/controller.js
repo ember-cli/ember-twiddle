@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
   dependencyResolver: inject.service(),
   notify: inject.service('notify'),
 
-  queryParams: ['numColumns', 'fullScreen'],
+  queryParams: ['numColumns', 'fullScreen', 'route'],
   numColumns: 2,
   fullScreen: false,
 
@@ -91,6 +91,7 @@ export default Ember.Controller.extend({
 
     this.set('isBuilding', true);
     this.set('buildErrors', []);
+    this.set('model.initialRoute', this.get('route'));
 
     this.get('emberCli').compileGist(this.get('model')).then(buildOutput => {
       this.set('isBuilding', false);
