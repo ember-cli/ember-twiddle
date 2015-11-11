@@ -1,6 +1,6 @@
 import Ember from "ember";
 
-export default function() {
+export default function(app, url) {
   let iframe_window;
 
   andThen(function() {
@@ -16,6 +16,7 @@ export default function() {
   });
 
   return andThen(function() {
-    iframe_window.visit('/');
+    url = url || "/";
+    iframe_window.visit(url);
   });
 }

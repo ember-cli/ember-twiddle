@@ -137,4 +137,18 @@ test('URL can be changed via the address bar', function(assert) {
   });
 });
 
+test('URL can be set via route query parameter', function(assert) {
+  runGist({
+    files: TWIDDLE_WITH_ROUTES,
+    initialRoute: "/about"
+  });
 
+  andThen(() => {
+    this.registerWaiter();
+  });
+
+  andThen(function() {
+    assert.equal(find(addressBar).val(), "/about", "Correct URL appears when set via query parameter");
+    assert.equal(outputContents(outletText), 'About Page', 'Initializing the URL to /about leads to the About Page being displayed');
+  });
+});

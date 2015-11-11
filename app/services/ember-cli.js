@@ -196,6 +196,10 @@ export default Ember.Service.extend({
   },
 
   buildHtml (gist, appJS, appCSS) {
+    if (gist.get('initialRoute')) {
+      appJS += "window.location.hash='" + gist.get('initialRoute') + "';";
+    }
+
     let index = blueprints['index.html'];
     let twiddleJSON = this.getTwiddleJson(gist);
     let deps = twiddleJSON.dependencies;
