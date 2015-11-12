@@ -445,7 +445,11 @@ export default Ember.Controller.extend({
             if (window.messagesWaiting > 0) {
               window.messagesWaiting = 0;
             }
-            this.set('applicationUrl', m.data.setDemoAppUrl || '/');
+            const newRoute = m.data.setDemoAppUrl || '/';
+            this.setProperties({
+              applicationUrl: newRoute,
+              route: newRoute === "/" ? undefined : newRoute
+            });
           }
         }
       });
