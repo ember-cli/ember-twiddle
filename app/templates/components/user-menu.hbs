@@ -2,12 +2,12 @@
   <li class="dropdown disabled signing-in">Signing in...</li>
 {{else}}
   {{#if session.isAuthenticated}}
-    <span class="user-avatar">
-        <img src="{{session.currentUser.avatarUrl32}}" />
-    </span>
 
-    <li class="dropdown">
+    <li class="dropdown user-dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <span class="user-avatar">
+          <img src="{{session.currentUser.avatarUrl32}}" />
+        </span>
         {{userName}} <b class="caret"></b>
       </a>
       <ul class="dropdown-menu dropdown-menu-right">
@@ -17,8 +17,12 @@
       </ul>
     </li>
   {{else}}
-    <li><a {{action 'signInViaGithub'}} class="test-sign-in sign-in">Sign in</a></li>
-    <span class="user-avatar unauthenticated"></span>
+    <li>
+      <a {{action 'signInViaGithub'}} class="test-sign-in sign-in">
+        <span class="user-avatar unauthenticated"></span>
+        Sign in
+      </a>
+    </li>
   {{/if}}
 {{/if}}
 <li class="dropdown">
