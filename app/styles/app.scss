@@ -67,7 +67,7 @@ body {
     .user-avatar {
       display: inline-block;
       width: $topbar-control-height;
-      height: $topbar-control-height;
+      height: 100%;
       overflow: hidden;
       float: left;
       margin-right: 10px;
@@ -163,13 +163,16 @@ body {
   }
 
   .dropdown {
-
     &.open .dropdown-toggle {
       text-shadow: none;
       background-color: rgba(0,0,0,0.2);
       box-shadow: rgba(255,255,255,0.15) 0 1px 0px,inset rgba(0,0,0,0.17) 0 1px 1px;
       border: 1px solid transparent;
     }
+  }
+
+  .user-dropdown > .dropdown-toggle {
+    padding: 0 1em 0 0;
   }
 
   .dropdown-toggle, .sign-in {
@@ -193,7 +196,7 @@ body {
 
   .sign-in {
     cursor: pointer;
-    padding: 0 .5em;
+    padding: 0 .5em 0 0;
   }
 
   .signing-in {
