@@ -98,7 +98,6 @@ test('Able to do routing in a gist', function(assert) {
     assert.equal(outputContents(outletText), 'About Page', 'About Link leads to About Page being displayed');
     assert.equal(find(addressBar).val(), '/about', "Correct URL is shown in address bar 1");
     console.log(decodeURIComponent(window.location.search));
-    debugger;
     assert.ok(decodeURIComponent(window.location.search).indexOf("route=/about") > 0, "URL is added to route query string parameter 1");
 
     this.registerWaiter();
