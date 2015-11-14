@@ -1,6 +1,7 @@
 import Ember from "ember";
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
 
 moduleForComponent('file-tree', 'Integration | Component | file tree', {
   integration: true,
@@ -47,42 +48,41 @@ moduleForComponent('file-tree', 'Integration | Component | file tree', {
   }
 });
 
-test('it calls hideFileTree when you hide the panel', function(assert) {
+test('it calls openFile when you click on a leaf node', function(assert) {
   assert.expect(1);
 
-  this.$('.glyphicon-chevron-left').click();
+  return wait().then(() => {
+    this.$('.jstree-anchor').eq(0).click();
 
-  assert.ok(this.hideFileTreeCalled, "hideFileTree was called");
+    assert.ok(this.openFileCalled, "openFile was called");
+  });
 });
 
 test('it has 2 initial nodes', function(assert) {
   assert.expect(2);
 
-  assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 initial nodes");
+  return wait().then(() => {
+    assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 initial nodes");
 
-  this.$('.jstree-ocl').click();
+    this.$('.jstree-ocl').click();
 
-  assert.equal(this.$('.jstree-anchor').length, 5, "There are 5 nodes once you expand the some folder");
-});
-
-test('it calls openFile when you click on a leaf node', function(assert) {
-  assert.expect(1);
-
-  this.$('.jstree-anchor').eq(0).click();
-
-  assert.ok(this.openFileCalled, "openFile was called");
+    assert.equal(this.$('.jstree-anchor').length, 5, "There are 5 nodes once you expand the some folder");
+  });
 });
 
 test('can expand and collapse all', function(assert) {
   assert.expect(3);
 
-  assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 initial nodes");
 
-  this.$('.twiddlicon-expand-all').click();
+  return wait().then(() => {
+    assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 initial nodes");
 
-  assert.equal(this.$('.jstree-anchor').length, 9, "There are 9 nodes once you expand all");
+    this.$('.twiddlicon-expand-all').click();
 
-  this.$('.twiddlicon-collapse-all').click();
+    assert.equal(this.$('.jstree-anchor').length, 9, "There are 9 nodes once you expand all");
 
-  assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 nodes once you collapse all");
+    this.$('.twiddlicon-collapse-all').click();
+
+    assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 nodes once you collapse all");
+  });
 });

@@ -6,6 +6,22 @@ const { computed } = Ember;
 export default Ember.Component.extend({
   jsTreeActionReceiver: null,
 
+  didInsertElement() {
+    if (Ember.testing) {
+      this._asyncOps = 1;
+      this._waiter = () => {
+        return this._asyncOps === 0;
+      };
+      Ember.Test.registerWaiter(this._waiter);
+    }
+  },
+
+  willDestroyElement() {
+    if (Ember.testing) {
+      Ember.Test.unregisterWaiter(this._waiter);
+    }
+  },
+
   /**
    * Calculate data for file tree
    */
@@ -70,6 +86,9 @@ export default Ember.Component.extend({
 
   actions: {
     handleSelectTreeNode(node) {
+      if (Ember.testing) {
+        this._asyncOps = 1;
+      }
       if (node.original.leaf) {
         this.attrs.openFile(node.original.path);
         return;
@@ -77,15 +96,27 @@ export default Ember.Component.extend({
       this.get('jsTreeActionReceiver').send('toggleNode', node.id);
     },
 
+    handleReady() {
+      if (Ember.testing) {
+        this._asyncOps = 0;
+      }
+    },
+
     hideFileTree() {
       this.attrs.hideFileTree();
     },
 
     expandAll() {
+      if (Ember.testing) {
+        this._asyncOps = 1;
+      }
       this.get('jsTreeActionReceiver').send('openAll');
     },
 
     collapseAll() {
+      if (Ember.testing) {
+        this._asyncOps = 1;
+      }
       this.get('jsTreeActionReceiver').send('closeAll');
     }
   }
