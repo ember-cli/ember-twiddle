@@ -15,7 +15,17 @@ export default function(app, options) {
 
   files.push({
     filename: "initializers.setup-test.js",
-    content: "import Ember from 'ember';\n\nexport default {\n  name: 'setup-test',\n  initialize: function(container, app) {\n    app.setupForTesting();\n     app.injectTestHelpers();\n    window.QUnit = window.parent.QUnit;\n  }\n};"
+    content: `import Ember from 'ember';
+
+              export default {
+                name: 'setup-test',
+                initialize: function() {
+                  const app = arguments[1] || arguments[0];
+                  app.setupForTesting();
+                  app.injectTestHelpers();
+                  window.QUnit = window.parent.QUnit;
+                }
+              };`
   });
 
   let gistFiles = {};
