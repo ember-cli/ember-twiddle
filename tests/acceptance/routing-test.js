@@ -82,7 +82,9 @@ test('Able to do routing in a gist', function(assert) {
   runGist(TWIDDLE_WITH_ROUTES);
 
   andThen(() => {
-    this.registerWaiter();
+    if (!find(addressBar).val()) {
+      this.registerWaiter();
+    }
   });
 
   andThen(() => {
@@ -114,7 +116,9 @@ test('URL can be changed via the address bar', function(assert) {
   runGist(TWIDDLE_WITH_ROUTES);
 
   andThen(() => {
-    this.registerWaiter();
+    if (!find(addressBar).val()) {
+      this.registerWaiter();
+    }
   });
 
   andThen(function() {
@@ -147,7 +151,9 @@ test('URL can be set via route query parameter', function(assert) {
   });
 
   andThen(() => {
-    this.registerWaiter();
+    if (!find(addressBar).val()) {
+      this.registerWaiter();
+    }
   });
 
   andThen(function() {
