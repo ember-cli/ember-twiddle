@@ -57,7 +57,7 @@
     "ember-export-application-global": "1.0.4",
     "ember-git-version": "0.1.0",
     "ember-legacy-views": "0.2.0",
-    "ember-load": "0.0.2",
+    "ember-load": "mike-north/ember-load#ca1264f12c334061d5f151c533c78739a52f6bac",
     "ember-lodash": "0.0.5",
     "ember-moment": "4.0.1",
     "ember-notify": "4.0.1",

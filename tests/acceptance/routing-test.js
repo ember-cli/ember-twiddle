@@ -68,7 +68,7 @@ const TWIDDLE_WITH_ROUTES = [
                 "version": "0.4.0",
                 "dependencies": {
                   "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
-                  "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.10/ember.js",
+                  "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.10/ember.debug.js",
                   "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.13/ember-data.js",
                   "ember-template-compiler": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.10/ember-template-compiler.js"
                 }
