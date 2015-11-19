@@ -272,7 +272,11 @@ export default Ember.Service.extend({
     var dependencies = JSON.parse(blueprints['twiddle.json']).dependencies;
     requiredDependencies.forEach(function(dep) {
       if (!twiddleJson.dependencies[dep] && dependencies[dep]) {
-        twiddleJson.dependencies[dep] = dependencies[dep];
+        if (dep === 'ember-template-compiler') {
+          twiddleJson.dependencies[dep] = twiddleJson.dependencies['ember'].replace('ember.debug.js', 'ember-template-compiler.js');
+        } else {
+          twiddleJson.dependencies[dep] = dependencies[dep];
+        }
       }
     });
 

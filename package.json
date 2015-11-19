@@ -50,7 +50,7 @@
     "ember-cli-sass": "4.1.0",
     "ember-cli-sri": "1.1.0",
     "ember-cli-uglify": "1.2.0",
-    "ember-data": "2.1.0",
+    "ember-data": "2.2.0",
     "ember-deploy-s3": "0.0.5",
     "ember-deploy-s3-index": "^0.4.0",
     "ember-disable-proxy-controllers": "1.0.1",
