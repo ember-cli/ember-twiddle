@@ -37,7 +37,7 @@ export default DS.RESTAdapter.extend({
   */
   updateRecord: function(store, type, snapshot) {
     var data = {};
-    var serializer = store.serializerFor(type.typeKey);
+    var serializer = store.serializerFor(type.modelName);
 
     serializer.serializeIntoHash(data, type, snapshot);
 
