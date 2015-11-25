@@ -42,7 +42,7 @@ export default DS.RESTAdapter.extend({
     serializer.serializeIntoHash(data, type, snapshot);
 
     var id = snapshot.id;
-    var url = this.buildURL(type.typeKey, id, snapshot, 'updateRecord');
+    var url = this.buildURL(type.modelName, id, snapshot, 'updateRecord');
 
     return this.ajax(url, "PATCH", { data: data });
   }
