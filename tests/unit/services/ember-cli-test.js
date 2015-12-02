@@ -156,3 +156,11 @@ test('compileHbs includes moduleName', function(assert) {
 
   assert.ok(result.indexOf('moduleName: "demo-app/somePath/here"') > -1, 'moduleName included');
 });
+
+test('compileHbs can include backticks', function(assert) {
+  var template = "`stuff`";
+  var service = this.subject();
+  var result = service.compileHbs(template, 'some-path');
+
+  assert.ok(result.indexOf(template) > -1, 'original template included');
+});
