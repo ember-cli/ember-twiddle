@@ -49,7 +49,7 @@
     "ember-cli-release": "0.2.8",
     "ember-cli-sass": "5.2.1",
     "ember-deploy-s3": "0.0.5",
-    "ember-deploy-s3-index": "^0.4.0",
+    "ember-deploy-s3-index": "Kerry350/ember-deploy-s3-index#d25817a0c0849392e786c4eb4222629905aba190",
     "ember-git-version": "0.1.0",
     "ember-legacy-views": "0.2.0",
     "ember-load": "0.0.3",
