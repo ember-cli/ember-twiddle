@@ -10,7 +10,7 @@
     "ember-qunit-notifications": "0.1.0",
     "ember-resolver": "0.1.21",
     "jquery": "^1.11.3",
-    "loader.js": "ember-cli/loader.js#3.2.1",
+    "loader.js": "ember-cli/loader.js#3.4.0",
     "qunit": "~1.20.0",
     "codemirror": "~5.6.0",
     "ember-cli-codemirror-shim": "~0.0.1",
