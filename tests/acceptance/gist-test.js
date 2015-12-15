@@ -10,8 +10,8 @@ const firstColumn = '.code:first-of-type';
 const firstFilePicker = firstColumn + ' .dropdown-toggle';
 const secondFile = firstColumn + ' .dropdown-menu li:nth-child(2) a';
 const anyFile = firstColumn + ' .dropdown-menu li:nth-child(1) a';
-const fileMenu = '.file-menu .dropdown-toggle';
-const deleteAction = '.file-menu a:contains(Delete)';
+const fileMenu = '.main-menu .dropdown-toggle';
+const deleteAction = '.main-menu a:contains(Delete)';
 const addTemplateAction = '.test-template-action';
 const firstFilePickerFiles = firstColumn + ' .dropdown-menu>li';
 const firstColumnTextarea = firstColumn + ' .CodeMirror textarea';
@@ -52,7 +52,7 @@ test('deleting a gist loaded in two columns', function(assert) {
     andThen(function() {
       assert.equal(find('.code .CodeMirror').length, 0, 'No code mirror editors active');
       assert.equal(find('.dropdown-toggle:contains(No file selected)').length, 2, 'Shows message when no file is selected.');
-      assert.equal(find('.file-menu .test-remove-action').length, 0, 'There no longer is a selected file to delete');
+      assert.equal(find('.main-menu .test-remove-action').length, 0, 'There no longer is a selected file to delete');
     });
 
     // TODO: Replace brittle for loop test code with "while there are files left..."
