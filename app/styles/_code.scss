@@ -1,0 +1,25 @@
+.code {
+  .CodeMirror, .header ul {
+    opacity: .3;
+    transition: opacity .3s;
+  }
+
+  &.active .CodeMirror, &.active .header ul {
+    opacity: 1;
+  }
+
+  .CodeMirror {
+    font-family: Monaco, monospace;
+    font-size: $font-size;
+    line-height: 1.6;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+
+    @media (min-width: $screen-md-min) {
+      height: auto;
+      top: 60px;
+      bottom: 0;
+    }
+  }
+}

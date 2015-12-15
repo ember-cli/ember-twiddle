@@ -1,0 +1,17 @@
+div.table-responsive {
+  margin: 20px auto;
+}
+
+.saved-twiddles {
+  width: 80%;
+  margin: 0 auto;
+
+  thead th {
+    padding: 8px;
+    border: 1px solid $grey-4;
+  }
+
+  tbody tr:hover {
+    background-color: $pale-orange;
+  }
+}
