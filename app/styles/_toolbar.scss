@@ -1,5 +1,21 @@
 .toolbar {
-  height: $topbar-height;
+
+  @media (min-width: $screen-md-min) {
+    height: $topbar-height;
+  }
+
+  @media (max-width: $screen-md-min) {
+    position: relative;
+    z-index: 100;
+    opacity: 1;
+
+    >div, >ul {
+      height: $topbar-height;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
   font-size: $font-size;
   background: $ember-orange top center;
   background-image: url("../images/navigation_background.png");
@@ -23,10 +39,17 @@
   }
 
   .user-menu {
-    position: absolute;
-    right: ($topbar-height - $topbar-control-height) / 2;
-    top: ($topbar-height - $topbar-control-height) / 2;
     text-align: right;
+
+    @media (min-width: $screen-md-min) {
+      position: absolute;
+      right: ($topbar-height - $topbar-control-height) / 2;
+      top: ($topbar-height - $topbar-control-height) / 2;
+    }
+
+    @media (max-width: $screen-md-min) {
+      float: right;
+    }
 
     .user-avatar {
       display: inline-block;
@@ -50,20 +73,29 @@
   }
 
   .main-menu {
-    position: absolute;
-    left: ($topbar-height - $topbar-control-height) / 2;
-    top: ($topbar-height - $topbar-control-height) / 2;
+
+    @media (min-width: $screen-md-min) {
+      position: absolute;
+      left: ($topbar-height - $topbar-control-height) / 2;
+      top: ($topbar-height - $topbar-control-height) / 2;
+    }
+
     text-align: left;
+    height: 60px;
   }
 
   .title {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 800px;
-    margin: 13px 0;
-    margin-left: -400px;
+    padding: 13px 0;
     text-align: center;
+    width: 100%;
+
+    @media (min-width: $screen-md-min) {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      margin-left: -400px;
+      width: 800px;
+    }
 
     h1 {
       margin: 10px;
