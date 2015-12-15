@@ -1,6 +1,6 @@
 import config from '../config/environment';
 import Ember from 'ember';
-import ajax from 'ic-ajax';
+import ajax from 'ember-ajax';
 
 export default Ember.Object.extend({  /**
    * Resolve the user over the Github API using the token
