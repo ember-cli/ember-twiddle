@@ -1,40 +1,51 @@
-<div class="row toolbar">
-  <ul class="nav nav-pills file-menu">
-    {{file-menu model=model
-                session=session
-                activeEditorCol=activeEditorCol
-                activeFile=activeFile
-                addFile=(action "addFile")
-                addHelper=(action "addHelper")
-                addComponent=(action "addComponent")
-                renameFile=(action "renameFile")
-                removeFile=(action "removeFile")
-                deleteGist=(action "deleteGist")
-                saveGist="saveGist"
-                fork="fork"
-                copy="copy"
-                signInViaGithub="signInViaGithub"}}
-
-    {{editor-mode-menu setKeyMap=(action "setEditorKeyMap")}}
-
-    {{versions-menu versionSelected=(action "versionSelected")
-                    emberVersions=emberVersions
-                    emberDataVersions=emberDataVersions }}
-  </ul>
-
-  <div class="title">
-    {{title-input value=model.description titleChanged=(action "titleChanged")}}
-    {{saved-state-indicator model=model
-                            unsaved=unsaved
-    }}
+<nav class="navbar-default">
+  <div class="row toolbar">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsed-menu" aria-expanded="false">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
   </div>
+  <div id="collapsed-menu" class="collapse navbar-collapse">
+    <div class="row toolbar">
+      <ul class="nav-pills main-menu">
+        {{file-menu model=model
+                    session=session
+                    activeEditorCol=activeEditorCol
+                    activeFile=activeFile
+                    addFile=(action "addFile")
+                    addHelper=(action "addHelper")
+                    addComponent=(action "addComponent")
+                    renameFile=(action "renameFile")
+                    removeFile=(action "removeFile")
+                    deleteGist=(action "deleteGist")
+                    saveGist="saveGist"
+                    fork="fork"
+                    copy="copy"
+                    signInViaGithub="signInViaGithub"
+        }}
 
-  {{user-menu session=session
-              signInViaGithub="signInViaGithub"
-              signOut="signOut"
-              showTwiddles="showTwiddles"
-  }}
-</div>
+        {{editor-mode-menu setKeyMap=(action "setEditorKeyMap")}}
+
+        {{versions-menu versionSelected=(action "versionSelected")
+                        emberVersions=emberVersions
+                        emberDataVersions=emberDataVersions
+        }}
+      </ul>
+
+      <div class="title">
+        {{title-input value=model.description titleChanged=(action "titleChanged")}}
+        {{saved-state-indicator model=model unsaved=unsaved}}
+      </div>
+
+      {{user-menu session=session
+                  signInViaGithub="signInViaGithub"
+                  signOut="signOut"
+                  showTwiddles="showTwiddles"
+      }}
+    </div>
+  </div>
+</nav>
 
 {{#twiddle-panes numColumns=realNumColumns fullScreen=fullScreen fileTreeShown=fileTreeShown}}
   {{#unless fullScreen}}

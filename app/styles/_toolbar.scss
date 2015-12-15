@@ -8,6 +8,20 @@
   -webkit-box-shadow: rgba(0,0,0,0.3) 0 0 3px;
   box-shadow: rgba(0,0,0,0.3) 0 0 3px;
 
+  button.navbar-toggle {
+    &:hover, &:active, &:focus {
+      background: $pale-orange;
+      outline: none;
+      opacity: 0.5;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+
   .user-menu {
     position: absolute;
     right: ($topbar-height - $topbar-control-height) / 2;
@@ -35,7 +49,7 @@
     }
   }
 
-  .file-menu {
+  .main-menu {
     position: absolute;
     left: ($topbar-height - $topbar-control-height) / 2;
     top: ($topbar-height - $topbar-control-height) / 2;
@@ -43,9 +57,17 @@
   }
 
   .title {
+    position: absolute;
+    top: 0;
+    left: 50%;
     width: 800px;
-    margin: 13px auto;
+    margin: 13px 0;
+    margin-left: -400px;
     text-align: center;
+
+    h1 {
+      margin: 10px;
+    }
 
     .saved-twiddles-header {
       color: $bleached-orange;

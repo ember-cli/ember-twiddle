@@ -29,7 +29,7 @@ module.exports = function() {
       keyMaps: ['emacs', 'sublime', 'vim']
     },
     'ember-cli-bootstrap-sassy': {
-      'js': ['dropdown']
+      'js': ['dropdown', 'collapse']
     },
     fileCreator: [{filename: '/lib/blueprints.js', content: blueprintsCode}],
     sourcemaps: {
