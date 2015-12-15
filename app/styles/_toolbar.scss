@@ -214,4 +214,10 @@
     border: 1px solid transparent;
   }
 
+  &.navbar-collapse {
+    @media (max-width: $screen-md-min) {
+      background: $ember-orange;
+    }
+  }
+
 }
