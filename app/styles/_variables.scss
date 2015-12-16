@@ -1,0 +1,41 @@
+// local vars
+$ember-orange: #e1563f;
+$pale-orange: #f67862;
+$bleached-orange: #faf2ee;
+$burnt-orange: #aa412f;
+$header-icon-color: #c6b5ad;
+$grey-1: #faf4f1;
+$grey-2: #eee;
+$grey-3: #e4e2e2;
+$grey-4: #ddd;
+$grey-5: #ccc;
+$yellow: #ffcc00;
+$icon-bg: #d6c3ba;
+$icon-shadow: 1px 1px 0px #fff;
+$icon-shadow-hover: 1px 1px 0px #ad9488;
+$shadow-opacity: 0.3;
+$text-shadow: rgba(0, 0, 0, $shadow-opacity) 0px 1px 0px;
+$menu-hover-bg: rgba(0, 0, 0, 0.13);
+$menu-box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0px, inset rgba(0, 0, 0, 0.17) 0 1px 1px;
+$menu-bg: rgba(0, 0, 0, 0.2);
+
+$topbar-height: 60px;
+$topbar-control-height: 32px;
+$code-header-height: 60px;
+$url-bar-height: 30px;
+$url-bar-padding: 6px;
+
+$font-size: 13px;
+$font-size-larger: 15px;
+
+// bootstrap vars
+$brand-primary: #000;
+$screen-md-min: 950px;
+$grid-float-breakpoint: 950px;
+$dropdown-link-hover-bg: $ember-orange;
+$dropdown-link-hover-color: #fff;
+$dropdown-link-color: #000;
+$navbar-default-link-color: #777;
+$navbar-default-link-hover-color: #333;
+$navbar-default-link-hover-bg: transparent;
+$navbar-default-link-active-color: #555;

@@ -1,0 +1,155 @@
+.twiddle-panes {
+  margin: 0;
+  margin-left: 0;
+  position: absolute;
+  top: $topbar-height;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  @media (min-width: $screen-md-min) {
+    display: -webkit-flex;
+    display: flex;
+  }
+
+  .col-md-4 {
+    -webkit-flex: 0.5;
+    flex: 0.5;
+    padding: 0;
+    height: 100%;
+    border-right: 1px solid #e4e2e2;
+    cursor: normal;
+
+    @media (max-width: $screen-md-min) {
+      margin-bottom: 60px;
+    }
+  }
+
+  .handle + .col-md-4 {
+    margin-left: -3px;
+  }
+
+  .output {
+    border-right: none;
+    position: relative;
+
+    span {
+      margin: 16px 25px;
+      display: inline-block;
+    }
+
+    .content {
+      position: absolute;
+      top: 100px;
+      bottom: 0;
+      width: 100%;
+      border: 0;
+
+      iframe {
+        border: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+      }
+    }
+
+    span.glyphicon-plus {
+      cursor: pointer;
+    }
+  }
+
+  .header {
+    height: $code-header-height;
+    border-bottom: 1px solid $grey-3;
+    font-size: 16px;
+    background-color: $grey-1;
+    position: relative;
+
+    .nav-left {
+      position: absolute;
+      top: 18px;
+      left: 15px;
+    }
+
+    .file-picker {
+      margin-left: 15px;
+      margin-top: 8px;
+      margin-bottom: 0;
+      position: absolute;
+    }
+
+    .nav-left+.file-picker {
+      margin-left: 30px;
+    }
+
+    .nav-right {
+      position: absolute;
+      top: 20px;
+      right: 15px;
+    }
+
+    .glyphicon {
+      font-size: 0.8em;
+    }
+
+    .twiddlicon {
+      font-size: 1em;
+    }
+
+    .glyphicon, .twiddlicon {
+      text-align:center;
+      color: $header-icon-color;
+      text-shadow: 1px 1px 0px white;
+      cursor: pointer;
+      padding: 2px;
+    }
+
+    .twiddlicon:hover{
+      color: $grey-1;
+      background-color: $icon-bg;
+      border-radius: 20%;
+      padding: 2px;
+      text-shadow: $icon-shadow-hover;
+    }
+
+    .glyphicon-plus {
+      padding-bottom: 3px;
+      padding-left: 3px;
+    }
+
+    .glyphicon:hover {
+      color: #faf4f1;
+      background-color: #d6c3ba;
+      border-radius: 20%;
+      padding: 2px;
+      text-shadow: $icon-shadow-hover;
+    }
+
+    .glyphicon-plus:hover {
+      padding-bottom: 3px;
+      padding-left: 3px;
+    }
+  }
+
+  .full-screen {
+    .header {
+      display: none;
+    }
+
+    .run-or-live-reload {
+      display: none;
+    }
+  }
+
+  .exit-full-screen-link {
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    width: 100px;
+    margin-left: -50px;
+    text-align: center;
+    color: $dropdown-link-color;
+    cursor: pointer;
+  }
+}

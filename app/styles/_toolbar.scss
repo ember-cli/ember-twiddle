@@ -1,0 +1,223 @@
+.toolbar {
+
+  @media (min-width: $screen-md-min) {
+    height: $topbar-height;
+  }
+
+  @media (max-width: $screen-md-min) {
+    position: relative;
+    z-index: 100;
+    opacity: 1;
+
+    >div, >ul {
+      height: $topbar-height;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  font-size: $font-size;
+  background: $ember-orange top center;
+  background-image: url("../images/navigation_background.png");
+  border-bottom: 1px solid $burnt-orange;
+  -moz-box-shadow: rgba(0,0,0,0.3) 0 0 3px;
+  -webkit-box-shadow: rgba(0,0,0,0.3) 0 0 3px;
+  box-shadow: rgba(0,0,0,0.3) 0 0 3px;
+
+  button.navbar-toggle {
+    &:hover, &:active, &:focus {
+      background: $pale-orange;
+      outline: none;
+      opacity: 0.5;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  .user-menu {
+    text-align: right;
+
+    @media (min-width: $screen-md-min) {
+      position: absolute;
+      right: ($topbar-height - $topbar-control-height) / 2;
+      top: ($topbar-height - $topbar-control-height) / 2;
+    }
+
+    @media (max-width: $screen-md-min) {
+      float: right;
+    }
+
+    .user-avatar {
+      display: inline-block;
+      width: $topbar-control-height;
+      height: 100%;
+      overflow: hidden;
+      float: left;
+      margin-right: 10px;
+      line-height: normal;
+      border-radius: 3px;
+
+      img {
+        width: $topbar-control-height;
+        height: $topbar-control-height;
+      }
+
+      &.unauthenticated {
+        background: url("../images/github32-inverse-faf2ee.svg");
+      }
+    }
+  }
+
+  .main-menu {
+
+    @media (min-width: $screen-md-min) {
+      position: absolute;
+      left: ($topbar-height - $topbar-control-height) / 2;
+      top: ($topbar-height - $topbar-control-height) / 2;
+    }
+
+    text-align: left;
+    height: 60px;
+  }
+
+  .title {
+    padding: 13px 0;
+    text-align: center;
+    width: 100%;
+
+    @media (min-width: $screen-md-min) {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      margin-left: -400px;
+      width: 800px;
+    }
+
+    h1 {
+      margin: 10px;
+    }
+
+    .saved-twiddles-header {
+      color: $bleached-orange;
+      font-size: $font-size-larger;
+    }
+
+    .indicator {
+      text-transform: uppercase;
+      font-weight: bold;
+      color: #faf2ee;
+      text-shadow: rgba(0, 0, 0, 0.3) 0px 1px 0px;
+
+      a {
+        color: #ffffff;
+        text-decoration: none;
+        &:hover {
+          border-bottom: dotted 1px;
+        }
+      }
+    }
+
+    .input-edit {
+      display: inline-block;
+      padding: 5px 10px;
+      transition: background .3s;
+      font-size: $font-size-larger;
+      text-shadow: $text-shadow;
+      border-radius: 3px;
+      border: 0;
+      color: $bleached-orange;
+      cursor: pointer;
+
+      input {
+        background-color: transparent;
+        border: 0;
+        outline: 0;
+        box-sizing: content-box;
+      }
+
+      .glyphicon {
+        color: $bleached-orange;
+      }
+
+      &.active .glyphicon {
+        display: none;
+      }
+
+      &:hover {
+        text-shadow: none;
+        background-color: $menu-hover-bg;
+      }
+
+      &.active {
+        text-shadow: none;
+        background-color: $menu-bg;
+        box-shadow: rgba(255,255,255,0.15) 0 1px 0px,inset rgba(0,0,0,0.17) 0 1px 1px;
+        outline: 0;
+      }
+    }
+
+    .gist-link, span {
+      display: inline-block;
+    }
+
+  }
+
+  .dropdown {
+    &.open .dropdown-toggle {
+      text-shadow: none;
+      background-color: $menu-bg;
+      box-shadow: rgba(255,255,255,0.15) 0 1px 0px,inset rgba(0,0,0,0.17) 0 1px 1px;
+      border: 1px solid transparent;
+    }
+  }
+
+  .user-dropdown > .dropdown-toggle {
+    padding: 0 1em 0 0;
+  }
+
+  .dropdown-toggle, .sign-in {
+    height: $topbar-control-height;
+    line-height: $topbar-control-height - 2;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: $bleached-orange;
+    text-shadow: $text-shadow;
+    border: 1px solid transparent;
+
+    &:hover, &:focus {
+      text-shadow: none;
+      background-color: $menu-hover-bg;
+    }
+  }
+
+  .dropdown-toggle {
+    padding: 0 1em;
+  }
+
+  .sign-in {
+    cursor: pointer;
+    padding: 0 .5em 0 0;
+  }
+
+  .signing-in {
+    padding: 0 1em;
+    height: $topbar-control-height;
+    line-height: $topbar-control-height - 2;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: $bleached-orange;
+    text-shadow: $text-shadow;
+    border: 1px solid transparent;
+  }
+
+  &.navbar-collapse {
+    @media (max-width: $screen-md-min) {
+      background: $ember-orange;
+    }
+  }
+
+}
