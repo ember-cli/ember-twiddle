@@ -16,9 +16,10 @@ export default Ember.Controller.extend({
   dependencyResolver: inject.service(),
   notify: inject.service('notify'),
 
-  queryParams: ['numColumns', 'fullScreen', 'route'],
+  queryParams: ['numColumns', 'fullScreen', 'route', 'openFiles'],
   numColumns: 2,
   fullScreen: false,
+  openFiles: "",
 
   init() {
     this._super(...arguments);
@@ -144,8 +145,15 @@ export default Ember.Controller.extend({
    * Set the initial files in the columns
    */
   initializeColumns() {
-    let files = this.get('model.files');
-    let numColumns = this.get('realNumColumns');
+    const files = this.get('model.files');
+    const openFileNames = this.get('openFiles').split(",");
+    const openFiles = openFileNames.map((file) => files.findBy('fileName', file));
+
+    for (let i = 1; i <= openFiles.length; ++i) {
+      this.setColumnFile(i, openFiles[i - 1]);
+    }
+
+    const numColumns = this.get('realNumColumns');
 
     let j = 0;
     for (let i = 1; i <= numColumns; ++i) {
@@ -205,6 +213,7 @@ export default Ember.Controller.extend({
       this.setColumnFile(fileColumn, file);
       this.set('activeEditorCol', '1');
       this.send('contentsChanged');
+      this._updateOpenFiles();
     }
   },
 
@@ -231,6 +240,13 @@ export default Ember.Controller.extend({
 
   setColumnFile(column, file) {
     this.get('columns').objectAt(column - 1).set('file', file);
+  },
+
+  _updateOpenFiles() {
+    const columns = this.get('columns');
+    const fileNames = columns.map(column => column.get('file.fileName'));
+    const openFiles = fileNames.join(",").replace(/^,|,$/g, '');
+    this.set('openFiles', openFiles);
   },
 
   actions: {
@@ -260,6 +276,7 @@ export default Ember.Controller.extend({
 
     selectFile (file) {
       this.set('activeFile', file);
+      this._updateOpenFiles();
     },
 
     openFile(filePath) {
@@ -268,6 +285,7 @@ export default Ember.Controller.extend({
       this.setColumnFile(activeCol, file);
       this.set('activeEditorCol', activeCol);
       this.set('activeFile', file);
+      this._updateOpenFiles();
     },
 
     runNow () {
@@ -354,6 +372,7 @@ export default Ember.Controller.extend({
         return;
       }
       this.createFile(filePath, fileProperties);
+      this._updateOpenFiles();
     },
 
     renameFile (file) {
@@ -366,6 +385,7 @@ export default Ember.Controller.extend({
 
         file.set('filePath', filePath);
         this.get('notify').info(`File ${file.get('filePath')} was added`);
+        this._updateOpenFiles();
       }
     },
 
@@ -381,6 +401,7 @@ export default Ember.Controller.extend({
           });
         }
 
+        this._updateOpenFiles();
         this.send('contentsChanged');
       }
     },
@@ -398,6 +419,7 @@ export default Ember.Controller.extend({
         this.set('activeEditorCol', ((activeCol|0) - 1).toString());
       }
 
+      this._updateOpenFiles();
       this.transitionToRoute({queryParams: {numColumns: numColumns - 1}});
     },
 
@@ -408,7 +430,10 @@ export default Ember.Controller.extend({
         queryParams: {
           numColumns: numColumns + 1
         }
-      }).then(this.initializeColumns.bind(this));
+      }).then(() => {
+        this.initializeColumns();
+        this._updateOpenFiles();
+      });
     },
 
     exitFullScreen() {
@@ -416,7 +441,10 @@ export default Ember.Controller.extend({
         queryParams: {
           fullScreen: false
         }
-      }).then(this.initializeColumns.bind(this));
+      }).then(() => {
+        this.initializeColumns();
+        this._updateOpenFiles();
+      });
     },
 
     setEditorKeyMap (keyMap) {
