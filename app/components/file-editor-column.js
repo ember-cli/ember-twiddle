@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   focusEditor: 'focusEditor',
   selectFile: 'selectFile',
   keyMap: 'basic',
+  file: null,
 
   editorMode: computed('file.extension', function () {
     switch(this.get('file.extension')) {
@@ -42,8 +43,10 @@ export default Ember.Component.extend({
       this.sendAction('selectFile', file);
     },
 
-    valueUpdated() {
-      this.sendAction('contentsChanged');
+    valueUpdated(_, __, changeObj) {
+      if(changeObj.origin !== 'setValue') {
+        this.sendAction('contentsChanged');
+      }
     },
 
     removeColumn(col) {
