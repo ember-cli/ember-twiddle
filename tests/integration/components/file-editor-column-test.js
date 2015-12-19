@@ -47,38 +47,36 @@ test('it calls showFileTree when the show file tree glyph is clicked', function(
   this.$('.glyphicon-chevron-right').click();
 });
 
-test('it calls contentsChanged when changing the content via the code editor', function(assert) {
+test('it calls contentChanged with true when changing the content via the code editor', function(assert) {
   assert.expect(1);
   const enterKeyEvent = { keyCode: 3 };
 
-  this.set('externalAction', () => {
-    assert.ok(true, 'contentsChanged action was called');
+  this.set('externalAction', (isUserChange) => {
+    assert.ok(isUserChange, 'contentChanged action was called');
   });
 
   this.set('file', { content: '' });
 
   this.render(hbs`
-    {{file-editor-column col='1' file=file contentsChanged=(action externalAction)}}
+    {{file-editor-column col='1' file=file contentChanged=(action externalAction)}}
   `);
 
   const codeMirrorInstance = this.$('.CodeMirror')[0].CodeMirror;
   codeMirrorInstance.triggerOnKeyDown(enterKeyEvent);
 });
 
-test('it does not call contentsChanged when changing the content programatically', function(assert) {
+test('it calls contentChanged with false when changing the content programatically', function(assert) {
   assert.expect(1);
-  let externalNotCalled = true;
 
-  this.set('externalAction', () => {
-    externalNotCalled = false;
+  this.set('externalAction', (isUserChange) => {
+    assert.notOk(isUserChange, 'contentChanged action was called');
   });
 
   this.set('file', { content: '' });
 
   this.render(hbs`
-    {{file-editor-column col='1' file=file contentsChanged=(action externalAction)}}
+    {{file-editor-column col='1' file=file contentChanged=(action externalAction)}}
   `);
 
   this.set('file.content', 'new content');
-  assert.ok(externalNotCalled, 'contentsChanged action was not called');
 });

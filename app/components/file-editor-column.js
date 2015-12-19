@@ -44,9 +44,8 @@ export default Ember.Component.extend({
     },
 
     valueUpdated(_, __, changeObj) {
-      if(changeObj.origin !== 'setValue') {
-        this.sendAction('contentsChanged');
-      }
+      const isUserChange = changeObj.origin !== 'setValue';
+      this.sendAction('contentChanged', isUserChange);
     },
 
     removeColumn(col) {

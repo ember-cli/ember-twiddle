@@ -411,6 +411,12 @@ export default Ember.Controller.extend({
       }).then(this.initializeColumns.bind(this));
     },
 
+    updateColumn(isUserChange) {
+      if(isUserChange) {
+        this.send('contentsChanged');
+      }
+    },
+
     exitFullScreen() {
       this.transitionToRoute({
         queryParams: {
