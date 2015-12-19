@@ -8,7 +8,7 @@ export default Ember.Component.extend({
   selectFile: 'selectFile',
   keyMap: 'basic',
 
-  editorMode: Ember.computed('file.extension', function () {
+  editorMode: computed('file.extension', function () {
     switch(this.get('file.extension')) {
       case '.js':
         return 'javascript';
@@ -37,7 +37,7 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    selectFile (file) {
+    selectFile(file) {
       this.set('file', file);
       this.sendAction('selectFile', file);
     },
