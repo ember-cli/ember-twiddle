@@ -52,7 +52,7 @@ test('it calls contentChanged with true when changing the content via the code e
   const enterKeyEvent = { keyCode: 3 };
 
   this.set('externalAction', (isUserChange) => {
-    assert.ok(isUserChange, 'contentChanged action was called');
+    assert.ok(isUserChange, 'contentChanged was called with isUserChange = true');
   });
 
   this.set('file', { content: '' });
@@ -69,7 +69,7 @@ test('it calls contentChanged with false when changing the content programatical
   assert.expect(1);
 
   this.set('externalAction', (isUserChange) => {
-    assert.notOk(isUserChange, 'contentChanged action was called');
+    assert.notOk(isUserChange, 'contentChanged was called with isUserChange = false');
   });
 
   this.set('file', { content: '' });
