@@ -5,6 +5,7 @@ module.exports = function() {
   var concat = require('broccoli-concat');
   var mergeTrees = require('broccoli-merge-trees');
   var pickFiles = require('broccoli-static-compiler');
+  var babelTranspiler = require('broccoli-babel-transpiler');
   var env = EmberApp.env();
   var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
   var prepend = null;
@@ -58,12 +59,24 @@ module.exports = function() {
     destDir: '/assets'
   });
 
-  var twiddleVendorTree = concat(funnel('bower_components'),{
+  var bowerTree = funnel('bower_components');
+  var baseResolverTree = funnel('node_modules/ember-resolver/addon', {
+    destDir: 'ember-resolver'
+  });
+
+  var transpiledResolverTree = babelTranspiler(baseResolverTree, {
+    loose: true,
+    moduleIds: true,
+    modules: 'amdStrict'
+  });
+  var mergedDepsTree = mergeTrees([bowerTree, transpiledResolverTree]);
+
+  var twiddleVendorTree = concat(mergedDepsTree, {
     inputFiles: [
       'loader.js/loader.js',
-      'ember-resolver/dist/modules/ember-resolver.js',
       'ember-cli-shims/app-shims.js',
-      'ember-load-initializers/ember-load-initializers.js'
+      'ember-load-initializers/ember-load-initializers.js',
+      'ember-resolver/**/*.js'
     ],
     outputFile: '/assets/twiddle-deps.js'
   });
