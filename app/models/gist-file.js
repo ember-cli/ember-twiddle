@@ -3,7 +3,7 @@ import Ember from 'ember';
 import Path from 'npm:path';
 
 const { attr, belongsTo } = DS;
-const { computed, observer } = Ember;
+const { computed } = Ember;
 
 export default DS.Model.extend({
   fileType: attr('string'),
