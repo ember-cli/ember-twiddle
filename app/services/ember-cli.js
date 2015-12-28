@@ -391,12 +391,6 @@ function babelOpts(moduleName) {
  * @return {Array}          Code buffer
  */
 function contentForAppBoot (content, config) {
-  // Add in a shim for ember-resolver => ember/resolver for now since we are still bringing in old bower component
-  // TODO: Once we support included addons, bring in new ember-resolver addon
-  content.push('    define("ember-resolver", ["exports", "ember/resolver"],\n' +
-    '      function(exports, Resolver) {\n' +
-    '        exports["default"] = Resolver;\n' +
-    '      });\n');
 
   // Some modules are not actually transpiled so Babel
   // doesn't recognize them properly...

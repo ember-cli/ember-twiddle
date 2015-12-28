@@ -3,7 +3,7 @@ import Ember from 'ember';
 import Path from 'npm:path';
 
 const { attr, belongsTo } = DS;
-const { computed, observer } = Ember;
+const { computed } = Ember;
 
 export default DS.Model.extend({
   fileType: attr('string'),
@@ -34,11 +34,10 @@ export default DS.Model.extend({
   /**
     We need to register deletes.
    */
-  registerDeleteOnGist: observer('isDeleted', function() {
-    if(!this.get('gist')) {
-      return;
+  deleteRecord() {
+    this._super(...arguments);
+    if(this.get('gist')) {
+      this.get('gist').registerDeletedFile(this.get('id'));
     }
-
-    this.get('gist').registerDeletedFile(this.get('id'));
-  })
+  }
 });

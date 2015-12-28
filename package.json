@@ -20,6 +20,7 @@
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.2.0",
+    "broccoli-babel-transpiler": "~5.4.5",
     "broccoli-concat": "0.0.13",
     "broccoli-funnel": "^1.0.0",
     "broccoli-merge-trees": "^1.0.0",
@@ -57,7 +58,7 @@
     "ember-moment": "4.2.1",
     "ember-notify": "4.3.1",
     "ember-responsive": "1.2.3",
-    "ivy-codemirror": "~1.2.0",
+    "ivy-codemirror": "1.3.0",
     "torii": "^0.6.0"
   },
   "dependencies": {
