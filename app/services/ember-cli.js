@@ -227,10 +227,14 @@ export default Ember.Service.extend({
     const testingEnabled = twiddleJSON.options && twiddleJSON.options["enable-testing"];
 
     if (testingEnabled) {
-      depScriptTags += `<script type="text/javascript" src="${config.assetsHost}assets/test-loader.js?${config.APP.version}"></script>`;
-      depScriptTags += `<script type="text/javascript" src="${config.assetsHost}assets/test-support.js?${config.APP.version}"></script>`;
-      depScriptTags += `<script type="text/javascript" src="${config.assetsHost}testem.js?${config.APP.version}"></script>`;
+      const testJSFiles = ['assets/test-loader.js', 'assets/test-support.js', 'testem.js'];
+
+      testJSFiles.forEach(jsFile => {
+        depScriptTags += `<script type="text/javascript" src="${config.assetsHost}${jsFile}?${config.APP.version}"></script>`;
+      });
+
       depCssLinkTags += `<link rel="stylesheet" type="text/css" href="${config.assetsHost}assets/test-support.css?${config.APP.version}">`;
+
       testStuff += `
         <div id="qunit"></div>
         <div id="qunit-fixture"></div>
