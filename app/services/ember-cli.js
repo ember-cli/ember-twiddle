@@ -7,8 +7,6 @@ import moment from 'moment';
 
 const twiddleAppName = 'demo-app';
 
-const testingEnabled = true; // TODO: make this an option in UI
-
 // These files will be included if not present
 const boilerPlateJs = [
   'app',
@@ -225,6 +223,9 @@ export default Ember.Service.extend({
     });
 
     depScriptTags += `<script type="text/javascript" src="${config.assetsHost}assets/twiddle-deps.js?${config.APP.version}"></script>`;
+
+    const testingEnabled = twiddleJSON.options && twiddleJSON.options["enable-testing"];
+
     if (testingEnabled) {
       depScriptTags += `<script type="text/javascript" src="${config.assetsHost}assets/test-loader.js?${config.APP.version}"></script>`;
       depScriptTags += `<script type="text/javascript" src="${config.assetsHost}assets/test-support.js?${config.APP.version}"></script>`;

@@ -1,7 +1,10 @@
 {
-  "version": "0.4.17",
+  "version": "0.5.0",
   "EmberENV": {
     "FEATURES": {}
+  },
+  "options": {
+    "enable-testing": false
   },
   "dependencies": {
     "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
