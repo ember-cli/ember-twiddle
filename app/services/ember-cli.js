@@ -103,8 +103,8 @@ const requiredDependencies = [
 export default Ember.Service.extend({
   dependencyResolver: Ember.inject.service(),
 
-  init () {
-    this._super();
+  init (...args) {
+    this._super(...args);
     this.set('store', this.container.lookup("service:store"));
   },
 
