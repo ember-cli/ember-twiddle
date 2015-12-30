@@ -200,6 +200,12 @@ export default Ember.Service.extend({
       appJS += "window.location.hash='" + gist.get('initialRoute') + "';";
     }
 
+    // avoids security error
+    appJS += "window.history.pushState = function() {}; window.history.replaceState = function() {};";
+
+    // Hide toolbar since it is not working
+    appCSS += `\n#qunit-testrunner-toolbar { display: none; }\n`;
+
     let index = blueprints['index.html'];
     let twiddleJSON = this.getTwiddleJson(gist);
     let deps = twiddleJSON.dependencies;
