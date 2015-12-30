@@ -28,6 +28,32 @@
       border-radius: 0;
     }
 
+    .dropdown-menu {
+      position: static;
+      float: none;
+      border: 0;
+      border-radius: 0;
+      background-color: #E1563F;
+      box-shadow: none;
+
+      .dropdown-submenu > .dropdown-menu {
+        margin-left: 1em;
+        margin-top: 0;
+      }
+
+      .divider {
+        background-color: lighten($burnt-orange, 10%);
+      }
+
+      a {
+        color: #fff;
+
+        &:hover {
+          background-color: lighten($burnt-orange, 10%);
+        }
+      }
+    }
+
     hr {
       display: block;
       border-color: $burnt-orange;
