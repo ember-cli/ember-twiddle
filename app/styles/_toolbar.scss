@@ -136,6 +136,10 @@
       width: 800px;
     }
 
+    @media (max-width: $screen-md-min) {
+      margin-left: 15px;
+    }
+
     h1 {
       margin: 10px;
     }
