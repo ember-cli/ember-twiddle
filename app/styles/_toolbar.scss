@@ -9,6 +9,7 @@
     text-decoration: none;
   }
 
+
   @media (min-width: $screen-md-min) {
     height: $topbar-height;
   }
@@ -25,6 +26,10 @@
 
     .nav-pills > li {
       float: none;
+    }
+
+    .nav-pills > li + li {
+      margin-left: 0;
     }
 
     .dropdown-toggle {
