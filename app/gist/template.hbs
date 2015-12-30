@@ -1,10 +1,12 @@
 <nav class="navbar-default">
   <div class="row toolbar">
-    <div>
-      <div class="title">
-        {{title-input value=model.description titleChanged=(action "titleChanged")}}
-        {{saved-state-indicator model=model unsaved=unsaved}}
-      </div>
+    <div class="bar">
+      {{#if media.isMobile}}
+        <div class="title">
+          {{title-input value=model.description titleChanged=(action "titleChanged")}}
+          {{saved-state-indicator model=model unsaved=unsaved}}
+        </div>
+      {{/if}}
 
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsed-menu" aria-expanded="false">
         <span class="icon-bar"></span>
@@ -13,6 +15,7 @@
       </button>
     </div>
   </div>
+
   <div id="collapsed-menu" class="collapse navbar-collapse row toolbar">
     <ul class="nav-pills main-menu">
       {{file-menu model=model
@@ -38,6 +41,13 @@
                       emberDataVersions=emberDataVersions
       }}
     </ul>
+
+    {{#if (or media.isDesktop media.isJumbo)}}
+      <div class="title">
+        {{title-input value=model.description titleChanged=(action "titleChanged")}}
+        {{saved-state-indicator model=model unsaved=unsaved}}
+      </div>
+    {{/if}}
 
     <hr>
 

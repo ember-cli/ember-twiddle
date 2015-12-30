@@ -4,6 +4,11 @@
     display: none;
   }
 
+  .nav-pills > li > a {
+    display: block;
+    text-decoration: none;
+  }
+
   @media (min-width: $screen-md-min) {
     height: $topbar-height;
   }
