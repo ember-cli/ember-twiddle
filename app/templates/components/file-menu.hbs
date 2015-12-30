@@ -2,17 +2,17 @@
   File <b class="caret"></b>
 </a>
 
-<ul class="dropdown dropdown-menu">
+<ul class="dropdown-menu">
   <li>{{#link-to 'gist.new' class="test-new-twiddle" }}New Twiddle{{/link-to}}</li>
   {{#if model}}
     <li role="presentation" class="divider"></li>
-    <li class="dropdown-submenu">
+    <li class="dropdown dropdown-submenu">
       <a tabindex="-1" href="#">Add...</a>
       <ul class="dropdown-menu">
         <li><a {{action 'addFile' ''}}>Other (empty file)</a></li>
-        <li class="dropdown-submenu">
+        <li class="dropdown dropdown-submenu">
           <a {{action 'addComponent'}} class="add-component-link">Component (js and hbs)</a>
-          <ul class="'dropdown dropdown-menu">
+          <ul class="dropdown-menu">
             <li><a {{action 'addFile' 'component-hbs'}}>hbs only</a></li>
             <li><a {{action 'addFile' 'component-js'}}>js only</a></li>
           </ul>
