@@ -1,5 +1,9 @@
 .toolbar {
 
+  hr {
+    display: none;
+  }
+
   @media (min-width: $screen-md-min) {
     height: $topbar-height;
   }
@@ -14,6 +18,21 @@
       margin-top: 0;
       margin-bottom: 0;
     }
+
+    .nav-pills > li {
+      float: none;
+    }
+
+    .dropdown-toggle {
+      display: block;
+      border-radius: 0;
+    }
+
+    hr {
+      display: block;
+      border-color: $burnt-orange;
+      margin: 1em 0;
+    }
   }
 
   font-size: $font-size;
@@ -25,10 +44,22 @@
   box-shadow: rgba(0,0,0,0.3) 0 0 3px;
 
   button.navbar-toggle {
+    margin-top: 13px;
+    margin-bottom: 13px;
+    border-color: $burnt-orange;
+
+    @media (max-width: $screen-md-min) {
+      display: inline-block;
+    }
+
     &:hover, &:active, &:focus {
       background: $pale-orange;
       outline: none;
       opacity: 0.5;
+    }
+
+    .icon-bar {
+      background-color: $burnt-orange;
     }
   }
 
@@ -48,7 +79,12 @@
     }
 
     @media (max-width: $screen-md-min) {
-      float: right;
+      float: none;
+      text-align: left;
+
+      .user-dropdown > .dropdown-toggle {
+        padding-left: 1em;
+      }
     }
 
     .user-avatar {
@@ -73,6 +109,8 @@
   }
 
   .main-menu {
+    text-align: left;
+    height: 60px;
 
     @media (min-width: $screen-md-min) {
       position: absolute;
@@ -80,14 +118,15 @@
       top: ($topbar-height - $topbar-control-height) / 2;
     }
 
-    text-align: left;
-    height: 60px;
+    @media (max-width: $screen-md-min) {
+      height: auto;
+    }
   }
 
   .title {
     padding: 13px 0;
     text-align: center;
-    width: 100%;
+    display: inline-block;
 
     @media (min-width: $screen-md-min) {
       position: absolute;
@@ -217,6 +256,8 @@
   &.navbar-collapse {
     @media (max-width: $screen-md-min) {
       background: $ember-orange;
+      padding: 0;
+      border: 0;
     }
   }
 
