@@ -23,7 +23,8 @@ module.exports = function() {
     fingerprint: {
       enabled: isProductionLikeBuild,
       prepend: prepend,
-      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg', 'eot', 'ttf', 'woff', 'woff2', 'ico']
+      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg', 'eot', 'ttf', 'woff', 'woff2', 'ico'],
+      exclude: ['test-loader', 'test-support', 'testem']
     },
     codemirror: {
       modes: ['xml', 'javascript', 'handlebars', 'htmlmixed', 'css'],
@@ -39,7 +40,7 @@ module.exports = function() {
     minifyCSS: { enabled: isProductionLikeBuild },
     minifyJS: { enabled: isProductionLikeBuild },
 
-    tests: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
+    tests: true,
     hinting: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
 
     vendorFiles: {

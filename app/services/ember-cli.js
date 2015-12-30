@@ -103,8 +103,8 @@ const requiredDependencies = [
 export default Ember.Service.extend({
   dependencyResolver: Ember.inject.service(),
 
-  init () {
-    this._super();
+  init (...args) {
+    this._super(...args);
     this.set('store', this.container.lookup("service:store"));
   },
 
@@ -200,6 +200,12 @@ export default Ember.Service.extend({
       appJS += "window.location.hash='" + gist.get('initialRoute') + "';";
     }
 
+    // avoids security error
+    appJS += "window.history.pushState = function() {}; window.history.replaceState = function() {};";
+
+    // Hide toolbar since it is not working
+    appCSS += `\n#qunit-testrunner-toolbar, #qunit-tests a[href] { display: none; }\n`;
+
     let index = blueprints['index.html'];
     let twiddleJSON = this.getTwiddleJson(gist);
     let deps = twiddleJSON.dependencies;
@@ -208,6 +214,7 @@ export default Ember.Service.extend({
     let depScriptTags ='';
     let appScriptTag = `<script type="text/javascript">${appJS}</script>`;
     let appStyleTag = `<style type="text/css">${appCSS}</style>`;
+    let testStuff = '';
 
     let EmberENV = twiddleJSON.EmberENV || {};
     depScriptTags += `<script type="text/javascript">EmberENV = ${JSON.stringify(EmberENV)};</script>`;
@@ -223,8 +230,27 @@ export default Ember.Service.extend({
 
     depScriptTags += `<script type="text/javascript" src="${config.assetsHost}assets/twiddle-deps.js?${config.APP.version}"></script>`;
 
+    const testingEnabled = twiddleJSON.options && twiddleJSON.options["enable-testing"];
+
+    if (testingEnabled) {
+      const testJSFiles = ['assets/test-loader.js', 'assets/test-support.js', 'testem.js'];
+
+      testJSFiles.forEach(jsFile => {
+        depScriptTags += `<script type="text/javascript" src="${config.assetsHost}${jsFile}?${config.APP.version}"></script>`;
+      });
+
+      depCssLinkTags += `<link rel="stylesheet" type="text/css" href="${config.assetsHost}assets/test-support.css?${config.APP.version}">`;
+
+      testStuff += `
+        <div id="qunit"></div>
+        <div id="qunit-fixture"></div>
+        <div id="ember-testing-container">
+          <div id="ember-testing"></div>
+        </div>`;
+    }
+
     index = index.replace('{{content-for \'head\'}}', `${depCssLinkTags}\n${appStyleTag}`);
-    index = index.replace('{{content-for \'body\'}}', `${depScriptTags}\n${appScriptTag}`);
+    index = index.replace('{{content-for \'body\'}}', `${depScriptTags}\n${appScriptTag}\n${testStuff}\n`);
 
     // replace the {{build-timestamp}} placeholder with the number of
     // milliseconds since the Unix Epoch:

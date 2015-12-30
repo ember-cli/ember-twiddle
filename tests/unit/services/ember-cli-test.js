@@ -6,7 +6,6 @@ moduleFor('service:ember-cli', 'Unit | Service | ember cli', {
   needs: ['model:gist','model:gistFile', 'service:dependency-resolver']
 });
 
-// Replace this with your real tests.
 test('compiling a gist works', function(assert) {
   assert.expect(7);
   var service = this.subject();
@@ -163,4 +162,67 @@ test('compileHbs can include backticks', function(assert) {
   var result = service.compileHbs(template, 'some-path');
 
   assert.ok(result.indexOf(template) > -1, 'original template included');
+});
+
+test("buildHtml works when testing not enabled", function(assert) {
+  var service = this.subject();
+
+  service.getTwiddleJson = function() {
+    return {
+      "version": "0.5.0",
+      "EmberENV": {
+        "FEATURES": {}
+      },
+      "options": {
+        "enable-testing": false
+      },
+      "dependencies": {
+        "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
+      }
+    };
+  };
+
+  var gist = Ember.Object.create({
+    initialRoute: "/"
+  });
+
+  var output = service.buildHtml(gist, '/* app */', '/* styles */');
+
+  assert.ok(output.indexOf("window.location.hash='/';") > 0, "output sets initialRoute");
+  assert.ok(output.indexOf('EmberENV = {"FEATURES":{}}') > 0, "output contains feature flags");
+  assert.ok(output.indexOf('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"></script>') > 0, "output includes dependency");
+  assert.ok(output.indexOf('<style type="text/css">/* styles */') > 0, "output includes styles");
+  assert.ok(output.indexOf('<script type="text/javascript">/* app */') > 0, "output includes the app js");
+  assert.ok(output.indexOf('<div id="ember-testing-container">') === -1, "output does not contain testing container");
+});
+
+
+
+test("buildHtml works when testing is enabled", function(assert) {
+  var service = this.subject();
+
+  service.getTwiddleJson = function() {
+    return {
+      "version": "0.5.0",
+      "EmberENV": {
+        "FEATURES": {}
+      },
+      "options": {
+        "enable-testing": true
+      },
+      "dependencies": {
+        "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
+      }
+    };
+  };
+
+  var gist = Ember.Object.create({});
+
+  var output = service.buildHtml(gist, '', '');
+
+  assert.ok(output.indexOf("window.location.hash='/';") === -1, "output does not set initialRoute if not provided");
+  assert.ok(output.indexOf('<div id="qunit"></div>') > 0, "output contains qunit div");
+  assert.ok(output.indexOf('<div id="qunit-fixture"></div>') > 0, "output contains qunit fixture div");
+  assert.ok(output.indexOf('<div id="ember-testing-container">') > 0, "output contains testing container");
+  assert.ok(output.indexOf('<div id="ember-testing"></div>') > 0, "output contains testing div");
 });
