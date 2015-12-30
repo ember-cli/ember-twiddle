@@ -191,7 +191,7 @@ test("buildHtml works when testing not enabled", function(assert) {
   assert.ok(output.indexOf("window.location.hash='/';") > 0, "output sets initialRoute");
   assert.ok(output.indexOf('EmberENV = {"FEATURES":{}}') > 0, "output contains feature flags");
   assert.ok(output.indexOf('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"></script>') > 0, "output includes dependency");
-  assert.ok(output.indexOf('<style type="text/css">/* styles */</style>') > 0, "output includes styles");
+  assert.ok(output.indexOf('<style type="text/css">/* styles */') > 0, "output includes styles");
   assert.ok(output.indexOf('<script type="text/javascript">/* app */') > 0, "output includes the app js");
   assert.ok(output.indexOf('<div id="ember-testing-container">') === -1, "output does not contain testing container");
 });
