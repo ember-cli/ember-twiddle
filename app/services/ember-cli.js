@@ -204,7 +204,7 @@ export default Ember.Service.extend({
     appJS += "window.history.pushState = function() {}; window.history.replaceState = function() {};";
 
     // Hide toolbar since it is not working
-    appCSS += `\n#qunit-testrunner-toolbar { display: none; }\n`;
+    appCSS += `\n#qunit-testrunner-toolbar, #qunit-tests a[href] { display: none; }\n`;
 
     let index = blueprints['index.html'];
     let twiddleJSON = this.getTwiddleJson(gist);
