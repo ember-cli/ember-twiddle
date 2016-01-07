@@ -1,5 +1,5 @@
 /* global require, module, process */
-module.exports = function() {
+module.exports = function(defaults) {
   var EmberApp = require('ember-cli/lib/broccoli/ember-app');
   var funnel = require('broccoli-funnel');
   var concat = require('broccoli-concat');
@@ -16,7 +16,7 @@ module.exports = function() {
 
   var blueprintsCode = getEmberCLIBlueprints();
 
-  var app = new EmberApp({
+  var app = new EmberApp(defaults, {
     SRI: {
       runsIn: "production"
     },
