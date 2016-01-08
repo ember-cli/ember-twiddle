@@ -31,7 +31,7 @@
     "ember-api-actions": "0.0.11",
     "ember-autoresize": "0.5.14",
     "ember-browserify": "1.1.4",
-    "ember-cli": "2.2.0-beta.1",
+    "ember-cli": "2.2.0-beta.3",
     "ember-cli-app-version": "1.0.0",
     "ember-cli-babel": "^5.1.5",
     "ember-cli-bootstrap-sassy": "0.5.1",
@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "babel": "^5.0.0",
-    "ember-cli-sri": "1.2.0",
+    "ember-cli-sri": "2.0.0",
     "ember-cli-uglify": "1.2.0",
     "ember-data": "2.2.1",
     "ember-disable-proxy-controllers": "1.0.1",
