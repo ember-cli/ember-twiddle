@@ -223,6 +223,7 @@ export default Ember.Service.extend({
 
     let EmberENV = twiddleJSON.EmberENV || {};
     depScriptTags += `<script type="text/javascript">EmberENV = ${JSON.stringify(EmberENV)};</script>`;
+    depScriptTags += `<script type="text/javascript" src="${config.assetsHost}assets/loader.js?${config.APP.version}"></script>`;
 
     Object.keys(deps).forEach(function(depKey) {
       let dep = deps[depKey];

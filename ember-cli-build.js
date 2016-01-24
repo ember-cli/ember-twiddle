@@ -74,7 +74,6 @@ module.exports = function(defaults) {
 
   var twiddleVendorTree = concat(mergedDepsTree, {
     inputFiles: [
-      'loader.js/loader.js',
       'ember-cli-shims/app-shims.js',
       'ember-load-initializers/ember-load-initializers.js',
       'ember-resolver/**/*.js'
