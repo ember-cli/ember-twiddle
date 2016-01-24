@@ -60,6 +60,10 @@ module.exports = function(defaults) {
     destDir: '/assets'
   });
 
+  var emberDataShims = funnel('vendor', {
+    files: ['ember-data-shims.js']
+  });
+
   var bowerTree = funnel('bower_components');
   var baseResolverTree = funnel('node_modules/ember-resolver/addon', {
     destDir: 'ember-resolver'
@@ -70,13 +74,14 @@ module.exports = function(defaults) {
     moduleIds: true,
     modules: 'amdStrict'
   });
-  var mergedDepsTree = mergeTrees([bowerTree, transpiledResolverTree]);
+  var mergedDepsTree = mergeTrees([bowerTree, transpiledResolverTree, emberDataShims]);
 
   var twiddleVendorTree = concat(mergedDepsTree, {
     inputFiles: [
       'ember-cli-shims/app-shims.js',
       'ember-load-initializers/ember-load-initializers.js',
-      'ember-resolver/**/*.js'
+      'ember-resolver/**/*.js',
+      'ember-data-shims.js'
     ],
     outputFile: '/assets/twiddle-deps.js'
   });
