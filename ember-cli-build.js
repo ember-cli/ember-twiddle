@@ -110,6 +110,7 @@ function getEmberCLIBlueprints() {
     fileMap[blueprintName] = fs.readFileSync(filePath).toString();
   }
 
+  fileMap['resolver'] = fs.readFileSync('app/resolver.js').toString();
   fileMap['twiddle.json'] = fs.readFileSync('blueprints/twiddle.json').toString();
   fileMap['initializers/router'] = fs.readFileSync('blueprints/router_initializer.js').toString();
   fileMap['initializers/mouse-events'] = fs.readFileSync('blueprints/mouse_events_initializer.js').toString();

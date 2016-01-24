@@ -12,7 +12,8 @@ const boilerPlateJs = [
   'app',
   'router',
   'initializers/router',
-  'initializers/mouse-events'
+  'initializers/mouse-events',
+  'resolver'
 ];
 
 // These files have to be present
@@ -84,6 +85,10 @@ const availableBlueprints = {
   'twiddle.json': {
     blueprint: 'twiddle.json',
     filePath: 'twiddle.json'
+  },
+  'resolver': {
+    blueprint: 'resolver',
+    filePath: 'resolver.js'
   }
 };
 
