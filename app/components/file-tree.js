@@ -1,6 +1,4 @@
 import Ember from "ember";
-import _ from 'lodash/lodash';
-
 const { computed } = Ember;
 
 export default Ember.Component.extend({
@@ -70,7 +68,7 @@ export default Ember.Component.extend({
         treeDataObject.icon = 'glyphicon glyphicon-file light-gray';
       } else {
         treeDataObject.icon = 'glyphicon glyphicon-folder-open yellow';
-      };
+      }
 
       return treeDataObject;
     });
