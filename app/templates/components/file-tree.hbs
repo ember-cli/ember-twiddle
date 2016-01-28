@@ -17,5 +17,5 @@
 </div>
 {{ember-jstree data=fileTreeData
                actionReceiver=jsTreeActionReceiver
-               eventDidSelectNode="handleSelectTreeNode"
+               eventDidSelectNode=(action "handleSelectTreeNode")
 }}

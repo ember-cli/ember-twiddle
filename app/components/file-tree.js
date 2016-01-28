@@ -6,66 +6,74 @@ const { computed } = Ember;
 export default Ember.Component.extend({
   jsTreeActionReceiver: null,
 
+  fileTreeHash: computed('model.files.[]', function() {
+    const files = this.get('model.files');
+
+    return files.reduce((accumulator, file) => {
+      const path = file.get('filePath');
+      const splitPath = path.split('/');
+      const splitPathZeroBasedLength = splitPath.length - 1;
+
+      const possiblePaths = splitPath.map((pathPart, index, paths) => {
+        const previousPathIsRoot = index - 1 < 0;
+        const pathObj = {
+          nodeName: pathPart,
+          isFile: false
+        };
+
+        if(previousPathIsRoot) {
+          pathObj.path = pathPart;
+          pathObj.parent = '#';
+        } else {
+          const previousPath = paths.slice(0, index).join('/');
+          pathObj.path = `${previousPath}/${pathPart}`;
+          pathObj.parent = previousPath;
+        }
+
+        if(index === splitPathZeroBasedLength) {
+          pathObj.isFile = true;
+        }
+
+        return pathObj;
+      });
+
+      const existingFilteredOut = possiblePaths.filter(pathObj => {
+        return !accumulator[pathObj.path];
+      });
+
+      existingFilteredOut.forEach(pathObj => {
+        accumulator[pathObj.path] = pathObj;
+      });
+
+      return accumulator;
+    }, {});
+  }),
+
   /**
    * Calculate data for file tree
    */
-  fileTreeData: computed('model.files.[]', function() {
-    let seq = 0;
-    let treeData = this.get('model.files').map(function(file) {
-      let path = file.get('filePath');
-      let splitPath = path.split("/");
-      let parentPath = splitPath.slice(0, -1).join("/");
-      let fileName = splitPath[splitPath.length - 1];
-      if (parentPath === "") {
-        parentPath = "#";
-      }
-      return {
-        id: "node" + seq++,
-        text: fileName,
-        parent: parentPath,
-        icon: "glyphicon glyphicon-file light-gray",
-        path: path,
-        leaf: true
+  fileTreeData: computed('fileTreeHash', function() {
+    const fileTreeHash = this.get('fileTreeHash');
+    const fileTreeKeys = Object.keys(fileTreeHash);
+    const fileTreeObjects = fileTreeKeys.map(key => fileTreeHash[key]);
+
+    return fileTreeObjects.map(treeObject => {
+      const treeDataObject = {
+        id: treeObject.path,
+        text: treeObject.nodeName,
+        parent: treeObject.parent,
+        path: treeObject.path
       };
+
+      if(treeObject.isFile) {
+        treeDataObject.isLeaf = true;
+        treeDataObject.icon = 'glyphicon glyphicon-file light-gray';
+      } else {
+        treeDataObject.icon = 'glyphicon glyphicon-folder-open yellow';
+      };
+
+      return treeDataObject;
     });
-
-    let done = false;
-    do {
-      done = true;
-      let paths = _.uniq(_.pluck(treeData, 'text'));
-      let parents = _.uniq(_.pluck(treeData, 'parent'));
-      parents.forEach(function(parent) {
-        if (!paths.contains(parent) && parent !== "#" && treeData.filterBy('path', parent).length === 0) {
-          let splitPath = parent.split("/");
-          let parentPath = splitPath.slice(0, -1).join("/");
-          let fileName = splitPath[splitPath.length - 1];
-          if (parentPath === "") {
-            parentPath = "#";
-          }
-          treeData.push({
-            id: "node" + seq++,
-            text: fileName,
-            parent: parentPath,
-            icon: "glyphicon glyphicon-folder-open yellow",
-            path: parent
-          });
-          done = false;
-        }
-      });
-    } while (!done);
-
-    let idMap = {};
-    treeData.forEach(function(node) {
-      idMap[node.path] = node.id;
-    });
-
-    treeData.forEach(function(node) {
-      if (node.parent !== "#") {
-        node.parent = idMap[node.parent];
-      }
-    });
-
-    return treeData;
   }),
 
   actions: {
