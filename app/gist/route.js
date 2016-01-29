@@ -17,7 +17,7 @@ export default Ember.Route.extend({
   deactivate () {
     var gist = this.controller.get('model');
     if (gist.get('isNew')) {
-      this.store.unloadRecord(gist);
+      this.get('store').unloadRecord(gist);
     }
   },
 

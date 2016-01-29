@@ -5,6 +5,7 @@ import config from '../config/environment';
 import Ember from 'ember';
 import moment from 'moment';
 
+const { inject } = Ember;
 const twiddleAppName = 'demo-app';
 
 // These files will be included if not present
@@ -106,15 +107,11 @@ const requiredDependencies = [
  * source code at https://github.com/ember-cli/ember-cli
  */
 export default Ember.Service.extend({
-  dependencyResolver: Ember.inject.service(),
-
-  init (...args) {
-    this._super(...args);
-    this.set('store', this.container.lookup("service:store"));
-  },
+  dependencyResolver: inject.service(),
+  store: inject.service(),
 
   generate(type) {
-    return this.store.createRecord('gistFile', this.buildProperties(type));
+    return this.get('store').createRecord('gistFile', this.buildProperties(type));
   },
 
   buildProperties(type, replacements) {
@@ -270,7 +267,7 @@ export default Ember.Service.extend({
     requiredFiles.forEach(filePath => {
       var file = gist.get('files').findBy('filePath', filePath);
       if(!file) {
-        gist.get('files').pushObject(this.store.createRecord('gistFile', {
+        gist.get('files').pushObject(this.get('store').createRecord('gistFile', {
           filePath: filePath,
           content: blueprints[filePath]
         }));

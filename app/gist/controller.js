@@ -206,7 +206,7 @@ export default Ember.Controller.extend({
       }
 
       fileProperties.filePath = filePath;
-      let file = this.store.createRecord('gistFile', fileProperties);
+      let file = this.get('store').createRecord('gistFile', fileProperties);
 
       this.get('model.files').pushObject(file);
       this.get('notify').info(`File ${file.get('filePath')} was added`);

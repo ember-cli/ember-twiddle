@@ -9,7 +9,7 @@ export default Ember.Object.extend({  /**
    */
   resolveUser (token) {
     config.TMP_TORII_TOKEN = token;
-    return this.store.find('user', 'current').then((user) => {
+    return this.get('store').find('user', 'current').then((user) => {
       config.TMP_TORII_TOKEN = null;
       localStorage.setItem('fiddle_gh_session', token);
       return { currentUser: user, token: token };
