@@ -1,7 +1,6 @@
 import Ember from "ember";
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
 
 moduleForComponent('file-tree', 'Integration | Component | file tree', {
   integration: true,
@@ -39,29 +38,38 @@ moduleForComponent('file-tree', 'Integration | Component | file tree', {
 
     this.set('model', this.gist);
 
-    this.on('openFile', () => { this.openFileCalled = true; });
-    this.on('hideFileTree', () => { this.hideFileTreeCalled = true; });
-
-    this.render(hbs`{{file-tree model=model
-                                openFile=(action "openFile")
-                                hideFileTree=(action "hideFileTree")}}`);
+    const waitForRender = new Ember.RSVP.Promise(resolve => {
+      this.set('didBecomeReady', () => {
+        resolve();
+      });
+    });
+    this.set('waitForRender', waitForRender);
   }
 });
 
 test('it calls openFile when you click on a leaf node', function(assert) {
   assert.expect(1);
 
-  return wait().then(() => {
-    this.$('.jstree-anchor').eq(0).click();
+  this.set('externalAction', () => {
+    assert.ok(true, 'openFile was called');
+  });
 
-    assert.ok(this.openFileCalled, "openFile was called");
+  this.render(hbs`{{file-tree model=model
+                            openFile=(action externalAction)
+                            didBecomeReady=(action didBecomeReady)}}`);
+
+  return this.get('waitForRender').then(() => {
+    this.$('.jstree-anchor').eq(0).click();
   });
 });
 
 test('it has 2 initial nodes', function(assert) {
   assert.expect(2);
 
-  return wait().then(() => {
+  this.render(hbs`{{file-tree model=model
+                          didBecomeReady=(action didBecomeReady)}}`);
+
+  return this.get('waitForRender').then(() => {
     assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 initial nodes");
 
     this.$('.jstree-ocl').click();
@@ -73,8 +81,20 @@ test('it has 2 initial nodes', function(assert) {
 test('can expand and collapse all', function(assert) {
   assert.expect(3);
 
+  this.set('externalOpenFile', () => {
+    assert.ok(true, 'openFile was called');
+  });
 
-  return wait().then(() => {
+  this.set('externalHideFileTree', () => {
+    assert.ok(true, 'hideFileTree was called');
+  });
+
+  this.render(hbs`{{file-tree model=model
+                          openFile=(action externalOpenFile)
+                          hideFileTree=(action externalHideFileTree)
+                          didBecomeReady=(action didBecomeReady)}}`);
+
+  return this.get('waitForRender').then(() => {
     assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 initial nodes");
 
     this.$('.twiddlicon-expand-all').click();

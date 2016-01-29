@@ -64,7 +64,7 @@ export default Ember.Component.extend({
       };
 
       if(treeObject.isFile) {
-        treeDataObject.isLeaf = true;
+        treeDataObject.leaf = true;
         treeDataObject.icon = 'glyphicon glyphicon-file light-gray';
       } else {
         treeDataObject.icon = 'glyphicon glyphicon-folder-open yellow';
@@ -83,7 +83,10 @@ export default Ember.Component.extend({
       this.get('jsTreeActionReceiver').send('toggleNode', node.id);
     },
 
-    handleReady() {
+    didBecomeReady() {
+      if(this.attrs.didBecomeReady) {
+        this.attrs.didBecomeReady();
+      }
     },
 
     hideFileTree() {
