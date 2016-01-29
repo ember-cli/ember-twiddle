@@ -5,9 +5,6 @@ import hbs from 'htmlbars-inline-precompile';
 moduleForComponent('file-tree', 'Integration | Component | file tree', {
   integration: true,
   beforeEach() {
-    this.openFileCalled = false;
-    this.hideFileTreeCalled = false;
-
     this.file1 = Ember.Object.create({
       filePath: "some-path.js"
     });
