@@ -101,7 +101,7 @@ test('Dependencies can be changed via the UI', function(assert) {
 
   andThen(function() {
     click('.versions-menu .dropdown-toggle');
-    click('.test-set-ember-version:contains("2.1.1")');
+    click('.test-set-ember-version:contains("2.1.2")');
 
     click('.versions-menu .dropdown-toggle');
     click('.test-set-ember-data-version:contains("2.1.0")');
@@ -110,7 +110,7 @@ test('Dependencies can be changed via the UI', function(assert) {
   });
 
   andThen(function() {
-    assert.equal(outputContents('.ember-version'), '2.1.1');
+    assert.equal(outputContents('.ember-version'), '2.1.2');
     assert.equal(outputContents('.ember-data-version'), '2.1.0');
   });
 });

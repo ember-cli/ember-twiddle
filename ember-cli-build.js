@@ -60,6 +60,10 @@ module.exports = function(defaults) {
     destDir: '/assets'
   });
 
+  var emberDataShims = funnel('vendor', {
+    files: ['ember-data-shims.js']
+  });
+
   var bowerTree = funnel('bower_components');
   var baseResolverTree = funnel('node_modules/ember-resolver/addon', {
     destDir: 'ember-resolver'
@@ -70,14 +74,14 @@ module.exports = function(defaults) {
     moduleIds: true,
     modules: 'amdStrict'
   });
-  var mergedDepsTree = mergeTrees([bowerTree, transpiledResolverTree]);
+  var mergedDepsTree = mergeTrees([bowerTree, transpiledResolverTree, emberDataShims]);
 
   var twiddleVendorTree = concat(mergedDepsTree, {
     inputFiles: [
-      'loader.js/loader.js',
       'ember-cli-shims/app-shims.js',
       'ember-load-initializers/ember-load-initializers.js',
-      'ember-resolver/**/*.js'
+      'ember-resolver/**/*.js',
+      'ember-data-shims.js'
     ],
     outputFile: '/assets/twiddle-deps.js'
   });
@@ -110,6 +114,7 @@ function getEmberCLIBlueprints() {
     fileMap[blueprintName] = fs.readFileSync(filePath).toString();
   }
 
+  fileMap['resolver'] = fs.readFileSync('app/resolver.js').toString();
   fileMap['twiddle.json'] = fs.readFileSync('blueprints/twiddle.json').toString();
   fileMap['initializers/router'] = fs.readFileSync('blueprints/router_initializer.js').toString();
   fileMap['initializers/mouse-events'] = fs.readFileSync('blueprints/mouse_events_initializer.js').toString();

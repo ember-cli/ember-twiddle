@@ -5,12 +5,12 @@ export default GistRoute.extend({
   emberCli: Ember.inject.service('ember-cli'),
 
   model (params) {
-    var model = this.store.createRecord('gist', {description: 'New Twiddle'});
+    var model = this.get('store').createRecord('gist', {description: 'New Twiddle'});
 
     if (params.copyCurrentTwiddle) {
-      this.store.peekAll('gistFile').setEach('gist', model);
+      this.get('store').peekAll('gistFile').setEach('gist', model);
     } else {
-      this.store.unloadAll('gistFile');
+      this.get('store').unloadAll('gistFile');
 
       model.get('files').pushObject(this.get('emberCli').generate('controllers/application'));
       model.get('files').pushObject(this.get('emberCli').generate('templates/application'));

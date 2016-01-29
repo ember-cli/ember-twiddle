@@ -12,7 +12,7 @@ export default Ember.Route.extend({
   },
 
   model() {
-    return this.store.findAll('gist');
+    return this.get('store').findAll('gist');
   },
 
   actions: {
