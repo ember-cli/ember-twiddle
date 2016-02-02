@@ -2,11 +2,16 @@ import config from '../config/environment';
 import Ember from 'ember';
 import ajax from 'ember-ajax';
 
+const { inject } = Ember;
+
 export default Ember.Object.extend({  /**
    * Resolve the user over the Github API using the token
    * @param  token      API token (either from Cookie or Oauth)
    * @return Promise
    */
+
+  store: inject.service(),
+
   resolveUser (token) {
     config.TMP_TORII_TOKEN = token;
     return this.get('store').find('user', 'current').then((user) => {
