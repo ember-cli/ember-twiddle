@@ -36,6 +36,20 @@ test('it resolves version for ember', function(assert) {
   });
 });
 
+test('it resolves beta versions for ember', function(assert) {
+  var service = this.subject();
+
+  var dependencies = {
+    ember: '2.4.0-beta.2'
+  };
+
+  service.resolveDependencies(dependencies);
+
+  assert.deepEqual(dependencies, {
+    ember: '//cdnjs.cloudflare.com/ajax/libs/ember.js/2.4.0-beta.2/ember.debug.js'
+  });
+});
+
 test('it resolves version for ember-template-compiler', function(assert) {
   var service = this.subject();
 
