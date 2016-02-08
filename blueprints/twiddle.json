@@ -1,5 +1,5 @@
 {
-  "version": "0.5.0",
+  "version": "0.5.1",
   "EmberENV": {
     "FEATURES": {}
   },
@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
-    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/2.2.0/ember.debug.js",
-    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/2.2.0/ember-data.js",
+    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/2.3.1/ember.debug.js",
+    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/2.3.3/ember-data.js",
     "ember-template-compiler": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/2.2.0/ember-template-compiler.js"
   }
 }
