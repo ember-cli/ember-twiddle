@@ -4,9 +4,6 @@ module.exports = function(deployTarget) {
   var ENV = {
     build: {
       environment: deployTarget
-    },
-    "revision-data": {
-      type: "git-tag-commit"
     }
   };
 
@@ -22,7 +19,10 @@ module.exports = function(deployTarget) {
       secretAccessKey: process.env['AWS_ACCESS_KEY_SECRET'],
       bucket: "canary.ember-twiddle.com",
       region: "us-west-2"
-    }
+    };
+    ENV['git-revision'] = {
+      type: 'git-commit'
+    };
   }
 
   if (deployTarget === 'production') {
@@ -37,7 +37,10 @@ module.exports = function(deployTarget) {
       secretAccessKey: process.env['AWS_ACCESS_KEY_SECRET'],
       bucket: "ember-twiddle.com",
       region: "us-west-2"
-    }
+    };
+    ENV['git-revision'] = {
+      type: 'git-tag-commit'
+    };
   }
 
   return ENV;
