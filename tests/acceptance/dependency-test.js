@@ -39,7 +39,7 @@ const TWIDDLE_SHOWING_VERSIONS = [
     "dependencies": {
     "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
     "ember": "1.13.10",
-    "ember-data": "1.13.13"
+    "ember-data": "1.13.15"
     }
     }
     `
@@ -66,7 +66,7 @@ test('Able to run a gist using an external dependency', function(assert) {
         '    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",\n' +
         '    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.10/ember.debug.js",\n' +
         '    "ember-template-compiler": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.10/ember-template-compiler.js",\n' +
-        '    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.13/ember-data.js",\n' +
+        '    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.15/ember-data.js",\n' +
         '    "lodash": "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.js"\n' +
         '  }\n' +
         '}'
@@ -87,7 +87,7 @@ test('Able to resolve ember / ember-data dependencies via version only', functio
 
   andThen(function() {
     assert.equal(outputContents('.ember-version'), '1.13.10');
-    assert.equal(outputContents('.ember-data-version'), '1.13.13');
+    assert.equal(outputContents('.ember-data-version'), '1.13.15');
   });
 });
 
@@ -96,7 +96,7 @@ test('Dependencies can be changed via the UI', function(assert) {
 
   andThen(function() {
     assert.equal(outputContents('.ember-version'), '1.13.10');
-    assert.equal(outputContents('.ember-data-version'), '1.13.13');
+    assert.equal(outputContents('.ember-data-version'), '1.13.15');
   });
 
   andThen(function() {
