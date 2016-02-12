@@ -10,9 +10,9 @@ fi
 
 if [ "$TRAVIS_BRANCH" == "master" ]; then
   # Deploy to staging on a merge to master
-  ember deploy staging --activate
+  ember deploy staging --verbose --activate
 
 elif [ -n "$TRAVIS_TAG" ]; then
   # Deploy to production on a tag
-  ember deploy production --activate
+  ember deploy production --verbose --activate
 fi
