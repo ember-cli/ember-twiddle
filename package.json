@@ -20,8 +20,8 @@
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.2.0",
-    "broccoli-babel-transpiler": "~5.4.5",
-    "broccoli-concat": "0.0.13",
+    "broccoli-babel-transpiler": "~5.5.0",
+    "broccoli-concat": "2.1.0",
     "broccoli-funnel": "^1.0.0",
     "broccoli-merge-trees": "^1.0.0",
     "broccoli-static-compiler": "0.2.2",
@@ -50,7 +50,7 @@
     "ember-cli-inject-live-reload": "^1.3.1",
     "ember-cli-jstree": "ritesh83/ember-cli-jstree#678e06b69b88219903bfb7496a7f030829adba0a",
     "ember-cli-mirage": "0.1.11",
-    "ember-cli-moment-shim": "0.7.1",
+    "ember-cli-moment-shim": "1.0.0",
     "ember-cli-qunit": "1.2.1",
     "ember-cli-release": "0.2.8",
     "ember-cli-sass": "5.2.1",
@@ -58,10 +58,12 @@
     "ember-legacy-views": "0.2.0",
     "ember-load": "0.0.3",
     "ember-lodash": "0.0.6",
-    "ember-moment": "4.2.1",
+    "ember-moment": "6.0.0",
     "ember-notify": "4.4.0",
     "ember-responsive": "1.2.5",
     "ivy-codemirror": "1.3.0",
+    "moment": "2.11.2",
+    "moment-timezone": "0.5.0",
     "torii": "0.7.0-beta.4"
   },
   "dependencies": {
