@@ -5,7 +5,7 @@ module.exports = function(deployTarget) {
     build: {
       environment: deployTarget
     },
-    'git-revision': {
+    'revision-data': {
       type: 'version-commit'
     }
   };
