@@ -50,7 +50,6 @@ module.exports = function(defaults) {
     }
   });
 
-  app.import('vendor/loader-shim.js');
   app.import('bower_components/ember/ember-template-compiler.js');
   app.import('vendor/hint.css');
   app.import('vendor/drags.js');
@@ -61,7 +60,7 @@ module.exports = function(defaults) {
   });
 
   var emberDataShims = funnel('vendor', {
-    files: ['ember-data-shims.js', 'loader-shim.js']
+    files: ['ember-data-shims.js']
   });
 
   var bowerTree = funnel('bower_components');
@@ -92,7 +91,6 @@ module.exports = function(defaults) {
     inputFiles: [
       'ember-cli-shims/app-shims.js',
       'ember-load-initializers/**/*.js',
-      'loader-shim.js',
       'ember-resolver/**/*.js',
       'ember-data-shims.js'
     ],
