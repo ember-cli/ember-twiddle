@@ -54,8 +54,7 @@ module.exports = function(defaults) {
   app.import('vendor/hint.css');
   app.import('vendor/drags.js');
 
-  var loaderTree = pickFiles('bower_components', {
-    srcDir: '/loader.js',
+  var loaderTree = funnel('node_modules/loader.js/lib', {
     files: ['loader.js'],
     destDir: '/assets'
   });
@@ -65,6 +64,7 @@ module.exports = function(defaults) {
   });
 
   var bowerTree = funnel('bower_components');
+
   var baseResolverTree = funnel('node_modules/ember-resolver/addon', {
     destDir: 'ember-resolver'
   });
@@ -74,12 +74,23 @@ module.exports = function(defaults) {
     moduleIds: true,
     modules: 'amdStrict'
   });
-  var mergedDepsTree = mergeTrees([bowerTree, transpiledResolverTree, emberDataShims]);
+
+  var baseInitializersTree = funnel('node_modules/ember-load-initializers/addon', {
+    destDir: 'ember-load-initializers'
+  });
+
+  var transpiledInitializersTree = babelTranspiler(baseInitializersTree, {
+    loose: true,
+    moduleIds: true,
+    modules: 'amdStrict'
+  });
+
+  var mergedDepsTree = mergeTrees([bowerTree, transpiledInitializersTree, transpiledResolverTree, emberDataShims]);
 
   var twiddleVendorTree = concat(mergedDepsTree, {
     inputFiles: [
       'ember-cli-shims/app-shims.js',
-      'ember-load-initializers/ember-load-initializers.js',
+      'ember-load-initializers/**/*.js',
       'ember-resolver/**/*.js',
       'ember-data-shims.js'
     ],
