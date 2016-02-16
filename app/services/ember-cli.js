@@ -101,7 +101,7 @@ const availableBlueprints = {
   },
   'route-test': {
     blueprint: 'route-test',
-    filePath: 'tests/unit/routes/my-route.js'
+    filePath: 'tests/unit/routes/my-route-test.js'
   }
 };
 
@@ -262,6 +262,8 @@ export default Ember.Service.extend({
         <div id="ember-testing-container">
           <div id="ember-testing"></div>
         </div>`;
+
+      testStuff += `<script type="text/javascript">require("demo-app/tests/test-helper");</script>`;
     }
 
     index = index.replace('{{content-for \'head\'}}', `${depCssLinkTags}\n${appStyleTag}`);
