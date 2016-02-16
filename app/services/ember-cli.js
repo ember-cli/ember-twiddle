@@ -99,9 +99,17 @@ const availableBlueprints = {
     blueprint: 'test-resolver',
     filePath: 'tests/helpers/resolver.js'
   },
+  'controller-test': {
+    blueprint: 'controller-test',
+    filePath: 'tests/unit/controllers/my-controller-test.js'
+  },
   'route-test': {
     blueprint: 'route-test',
     filePath: 'tests/unit/routes/my-route-test.js'
+  },
+  'service-test': {
+    blueprint: 'service-test',
+    filePath: 'tests/unit/services/my-service-test.js'
   }
 };
 
