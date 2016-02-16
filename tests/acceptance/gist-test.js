@@ -225,6 +225,32 @@ test('can add helper', function(assert){
   });
 });
 
+test('can add unit test', function(assert){
+  assert.expect(3);
+
+  let origFileCount;
+  promptValue = 'tests/unit/routes/my-route.js';
+  visit('/');
+  andThen(function(){
+    origFileCount = find(firstFilePickerFiles).length;
+  });
+
+  click(fileMenu);
+  click('.test-add-route-test-link');
+  click(firstFilePicker);
+
+  andThen(function() {
+    let numFiles = find(firstFilePickerFiles).length;
+    assert.equal(numFiles, origFileCount + 3, 'Added 3 test files');
+
+    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
+
+    let columnFiles = findMapText(displayedFiles);
+    assert.ok(columnFiles.contains(promptValue), 'Added file is displayed');
+  });
+});
+
 
 test('unsaved indicator', function(assert) {
   const indicator = ".test-unsaved-indicator";
