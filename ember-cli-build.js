@@ -120,9 +120,9 @@ function getEmberCLIBlueprints() {
     'helper': 'helper/files/__root__/helpers/__name__.js',
     'test-helper': 'app/files/tests/test-helper.js',
     'test-resolver': 'app/files/tests/helpers/resolver.js',
-    'controller-test': 'route-test/files/tests/unit/__path__/__test__.js',
+    'controller-test': 'controller-test/files/tests/unit/__path__/__test__.js',
     'route-test': 'route-test/files/tests/unit/__path__/__test__.js',
-    'service-test': 'route-test/files/tests/unit/__path__/__test__.js'
+    'service-test': 'service-test/files/tests/unit/__path__/__test__.js'
   };
 
   for (var blueprintName in cliBlueprintFiles) {
