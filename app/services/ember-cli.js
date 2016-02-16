@@ -329,7 +329,7 @@ export default Ember.Service.extend({
     return twiddleJson;
   },
 
-  updateDependencyVersion: function(gist, dependencyName, version) {
+  updateDependencyVersion(gist, dependencyName, version) {
     return new Ember.RSVP.Promise(function(resolve, reject) {
       var twiddle = gist.get('files').findBy('filePath', 'twiddle.json');
 
@@ -348,6 +348,29 @@ export default Ember.Service.extend({
       if (dependencyName === 'ember' && json.dependencies.hasOwnProperty('ember-template-compiler')) {
         json.dependencies['ember-template-compiler'] = version;
       }
+
+      json = JSON.stringify(json, null, '  ');
+      twiddle.set('content', json);
+
+      resolve();
+    });
+  },
+
+  ensureTestingEnabled(gist) {
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      var twiddle = gist.get('files').findBy('filePath', 'twiddle.json');
+
+      var json;
+      try {
+        json = JSON.parse(twiddle.get('content'));
+      } catch (e) {
+        return reject(e);
+      }
+
+      if (!json.options) {
+        json.options = {};
+      }
+      json.options["enable-testing"] = true;
 
       json = JSON.stringify(json, null, '  ');
       twiddle.set('content', json);
