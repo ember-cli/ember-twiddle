@@ -25,6 +25,17 @@
         <li><a {{action 'addHelper' 'helper'}} class="test-add-helper-link">Helper</a></li>
         <li><a {{action 'addFile' 'router'}}>Router</a></li>
         <li><a {{action 'addFile' 'css'}}>CSS</a></li>
+        <li class="dropdown dropdown-submenu">
+          <a>Tests</a>
+          <ul class="dropdown-menu">
+            <li class="dropdown dropdown-submenu">
+              <a>Unit</a>
+              <ul class="dropdown-menu">
+                <li><a {{action 'addUnitTestFile' 'route'}}>Route</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
       </ul>
     </li>
     {{#if activeEditorCol}}

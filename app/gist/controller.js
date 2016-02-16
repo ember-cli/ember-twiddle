@@ -357,6 +357,25 @@ export default Ember.Controller.extend({
       this.createFile(filePath, fileProperties);
     },
 
+    addUnitTestFile(type) {
+      type = type + "-" + 'test';
+      let fileProperties = this.get('emberCli').buildProperties(type);
+      let filePath = prompt('File path', fileProperties.filePath);
+      let splitFilePath = filePath.split('/');
+      let file = splitFilePath[splitFilePath.length - 1];
+      let name = file.replace('.js', '');
+
+      fileProperties = this.get('emberCli').buildProperties(type, {
+        dasherizedModuleName: name,
+        friendlyTestDescription: 'TODO: put something here'
+      });
+
+      if (this.isPathInvalid(type, filePath)) {
+        return;
+      }
+      this.createFile(filePath, fileProperties);
+    },
+
     /**
      * Add a new file to the model
      * @param {String|null} type Blueprint name or null for empty file

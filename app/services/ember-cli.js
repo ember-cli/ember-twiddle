@@ -73,7 +73,7 @@ const availableBlueprints = {
   },
   'service': {
     blueprint: 'service',
-    filePath: 'my-service/service.js'
+    filePath: 'services/my-service.js'
   },
   'template': {
     blueprint: 'template',
@@ -90,6 +90,18 @@ const availableBlueprints = {
   'resolver': {
     blueprint: 'resolver',
     filePath: 'resolver.js'
+  },
+  'test-helper': {
+    blueprint: 'test-helper',
+    filePath: 'tests/test-helper.js'
+  },
+  'test-resolver': {
+    blueprint: 'test-resolver',
+    filePath: 'tests/helpers/resolver.js'
+  },
+  'route-test': {
+    blueprint: 'route-test',
+    filePath: 'tests/unit/routes/my-route.js'
   }
 };
 
