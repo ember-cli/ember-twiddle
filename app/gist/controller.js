@@ -192,6 +192,12 @@ export default Ember.Controller.extend({
     return true;
   },
 
+  hasPath(filePath) {
+    const files = this.get('model.files');
+    const file = files.findBy('filePath', filePath);
+    return file !== undefined;
+  },
+
   rebuildApp: function() {
     if (this.get('isLiveReload')) {
       run.debounce(this, this.buildApp, 500);
@@ -200,7 +206,7 @@ export default Ember.Controller.extend({
 
   createFile(filePath, fileProperties, fileColumn=1) {
     if (filePath) {
-      if(this.get('model.files').findBy('filePath', filePath)) {
+      if(this.hasPath(filePath)) {
         alert(`A file with the name ${filePath} already exists`);
         return;
       }
@@ -247,6 +253,21 @@ export default Ember.Controller.extend({
     const fileNames = columns.map(column => column.get('file.fileName'));
     const openFiles = fileNames.join(",").replace(/^,|,$/g, '');
     this.set('openFiles', openFiles);
+  },
+
+  ensureTestHelperExists() {
+    this._ensureExists('tests/test-helper.js', 'test-helper');
+  },
+
+  ensureTestResolverExists() {
+    this._ensureExists('tests/helpers/resolver.js', 'test-resolver');
+  },
+
+  _ensureExists(filePath, blueprint) {
+    if (!this.hasPath(filePath)) {
+      const fileProperties = this.get('emberCli').buildProperties(blueprint);
+      this.createFile(filePath, fileProperties);
+    }
   },
 
   actions: {
@@ -355,6 +376,30 @@ export default Ember.Controller.extend({
         return;
       }
       this.createFile(filePath, fileProperties);
+    },
+
+    addUnitTestFile(type) {
+
+      this.get('emberCli').ensureTestingEnabled(this.get('model')).then(() => {
+        this.ensureTestHelperExists();
+        this.ensureTestResolverExists();
+        let blueprint = type + "-" + 'test';
+        let fileProperties = this.get('emberCli').buildProperties(blueprint);
+        let filePath = prompt('File path', fileProperties.filePath);
+        let splitFilePath = filePath.split('/');
+        let file = splitFilePath[splitFilePath.length - 1];
+        let name = file.replace('-test.js', '');
+
+        fileProperties = this.get('emberCli').buildProperties(blueprint, {
+          dasherizedModuleName: name,
+          friendlyTestDescription: 'TODO: put something here'
+        });
+
+        if (this.isPathInvalid(type, filePath)) {
+          return;
+        }
+        this.createFile(filePath, fileProperties);
+      });
     },
 
     /**

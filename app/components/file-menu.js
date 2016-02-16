@@ -20,6 +20,9 @@ export default Ember.Component.extend({
     addFile(type) {
       this.attrs.addFile(type);
     },
+    addUnitTestFile(type) {
+      this.attrs.addUnitTestFile(type);
+    },
     renameFile(file) {
       this.attrs.renameFile(file);
     },
