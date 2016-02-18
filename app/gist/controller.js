@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
   dependencyResolver: inject.service(),
   notify: inject.service('notify'),
 
-  queryParams: ['numColumns', 'fullScreen', 'route', 'openFiles'],
+  queryParams: ['numColumns', 'fullScreen', 'route', 'openFiles', 'fileTreeShown'],
   numColumns: 2,
   fullScreen: false,
   openFiles: "",

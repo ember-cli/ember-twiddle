@@ -34,52 +34,41 @@ test('you can add and remove columns', function(assert) {
   });
 
   andThen(function() {
-    assert.ok(decodeURIComponent(window.location.search).indexOf('numColumns=3') > 0,
-      'We are on the correct route for 3 columns');
+    assert.ok(urlHas('numColumns=3'), 'We are on the correct route for 3 columns');
     assert.equal(find(columns).length, 3, 'There are now 3 columns');
-    assert.ok(decodeURIComponent(window.location.search).indexOf(
-        "openFiles=application.controller.js,application.template.hbs,twiddle.json") > 0,
+    assert.ok(urlHas("openFiles=application.controller.js,application.template.hbs,twiddle.json"),
       "URL contains correct openFiles query parameter 1");
 
     find(removeGlyph).click();
   });
 
   andThen(function() {
-    assert.ok(decodeURIComponent(window.location.search).indexOf('numColumns') === -1,
-      'We are on the correct route for 2 columns');
+    assert.ok(!urlHas('numColumns'), 'We are on the correct route for 2 columns');
     assert.equal(find(columns).length, 2, 'There are now 2 columns');
-    assert.ok(decodeURIComponent(window.location.search).indexOf(
-        "openFiles=application.template.hbs,twiddle.json") > 0,
+    assert.ok(urlHas("openFiles=application.template.hbs,twiddle.json"),
       "URL contains correct openFiles query parameter 2");
 
     find(removeGlyph).click();
   });
 
   andThen(function() {
-    assert.ok(decodeURIComponent(window.location.search).indexOf('numColumns=1') > 0,
-      'We are on the correct route for 1 columns');
+    assert.ok(urlHas('numColumns=1'), 'We are on the correct route for 1 columns');
     assert.equal(find(columns).length, 1, 'There are now 1 columns');
-    assert.ok(decodeURIComponent(window.location.search).indexOf(
-        "openFiles=twiddle.json") > 0,
-      "URL contains correct openFiles query parameter 3");
+    assert.ok(urlHas("openFiles=twiddle.json"), "URL contains correct openFiles query parameter 3");
 
     find(removeGlyph).click();
   });
 
   andThen(function() {
-    assert.ok(decodeURIComponent(window.location.search).indexOf('numColumns=0') > 0,
-      'We are on the correct route for 0 columns');
+    assert.ok(urlHas('numColumns=0'), 'We are on the correct route for 0 columns');
     assert.equal(find(columns).length, 0, 'There are now 0 columns');
-    assert.ok(decodeURIComponent(window.location.search).indexOf(
-        "openFiles") === -1,
-      "URL does not contain openFiles query parameter");
+    assert.ok(!urlHas("openFiles"), "URL does not contain openFiles query parameter");
 
     find(outputPlusGlyph).click();
   });
 
   andThen(function() {
-    assert.ok(decodeURIComponent(window.location.search).indexOf('numColumns=1') > 0,
-      'We are on the correct route for 1 columns');
+    assert.ok(urlHas('numColumns=1'), 'We are on the correct route for 1 columns');
     assert.equal(find(columns).length, 1, 'There are now 1 columns');
 
     find(showFileTreeGlyph).click();
@@ -87,6 +76,7 @@ test('you can add and remove columns', function(assert) {
 
   andThen(function() {
     assert.equal(find(".file-tree").length, 1, "The file tree is shown");
+    assert.ok(urlHas('fileTreeShown=true'), 'We are on the correct route when file tree is shown');
 
     find(hideFileTreeGlyph).click();
   });
@@ -95,3 +85,7 @@ test('you can add and remove columns', function(assert) {
     assert.equal(find(".file-tree").length, 0, "The file tree is hidden");
   });
 });
+
+function urlHas(text) {
+  return decodeURIComponent(window.location.search).indexOf(text) > 0;
+}
