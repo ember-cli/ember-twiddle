@@ -99,6 +99,18 @@ const availableBlueprints = {
     blueprint: 'test-resolver',
     filePath: 'tests/helpers/resolver.js'
   },
+  'test-start-app': {
+    blueprint: 'test-start-app',
+    filePath: 'tests/helpers/start-app.js'
+  },
+  'test-destroy-app': {
+    blueprint: 'test-destroy-app',
+    filePath: 'tests/helpers/destroy-app.js'
+  },
+  'test-module-for-acceptance': {
+    blueprint: 'test-module-for-acceptance',
+    filePath: 'tests/helpers/module-for-acceptance.js'
+  },
   'controller-test': {
     blueprint: 'controller-test',
     filePath: 'tests/unit/controllers/my-controller-test.js'
@@ -110,6 +122,10 @@ const availableBlueprints = {
   'service-test': {
     blueprint: 'service-test',
     filePath: 'tests/unit/services/my-service-test.js'
+  },
+  'acceptance-test': {
+    blueprint: 'acceptance-test',
+    filePath: 'tests/acceptance/my-acceptance-test.js'
   }
 };
 
@@ -269,13 +285,14 @@ export default Ember.Service.extend({
         <div id="qunit-fixture"></div>
         <div id="ember-testing-container">
           <div id="ember-testing"></div>
-        </div>`;
+        </div>
+        <div id="test-root"></div>`;
 
       testStuff += `<script type="text/javascript">require("demo-app/tests/test-helper");</script>`;
     }
 
     index = index.replace('{{content-for \'head\'}}', `${depCssLinkTags}\n${appStyleTag}`);
-    index = index.replace('{{content-for \'body\'}}', `${depScriptTags}\n${appScriptTag}\n${testStuff}\n`);
+    index = index.replace('{{content-for \'body\'}}', `${depScriptTags}\n${appScriptTag}\n${testStuff}\n<div id="root"></div>`);
 
     // replace the {{build-timestamp}} placeholder with the number of
     // milliseconds since the Unix Epoch:
@@ -478,5 +495,7 @@ function contentForAppBoot (content, config) {
  * Directly copied from ember-cli
  */
 function calculateAppConfig(config) {
-  return JSON.stringify(config.APP || {});
+  let appConfig = config.APP || {};
+  appConfig.rootElement="#root";
+  return JSON.stringify(appConfig);
 }

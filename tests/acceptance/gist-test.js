@@ -229,7 +229,7 @@ test('can add unit test', function(assert){
   assert.expect(3);
 
   let origFileCount;
-  promptValue = 'tests/unit/routes/my-route.js';
+  promptValue = 'tests/unit/routes/my-route-test.js';
   visit('/');
   andThen(function(){
     origFileCount = find(firstFilePickerFiles).length;
@@ -242,6 +242,32 @@ test('can add unit test', function(assert){
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 3, 'Added 3 test files');
+
+    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
+
+    let columnFiles = findMapText(displayedFiles);
+    assert.ok(columnFiles.contains(promptValue), 'Added file is displayed');
+  });
+});
+
+test('can add acceptance test', function(assert){
+  assert.expect(3);
+
+  let origFileCount;
+  promptValue = 'tests/acceptance/my-acceptance-test.js';
+  visit('/');
+  andThen(function(){
+    origFileCount = find(firstFilePickerFiles).length;
+  });
+
+  click(fileMenu);
+  click('.test-add-acceptance-test-link');
+  click(firstFilePicker);
+
+  andThen(function() {
+    let numFiles = find(firstFilePickerFiles).length;
+    assert.equal(numFiles, origFileCount + 6, 'Added 6 test files');
 
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
