@@ -6,12 +6,14 @@ module.exports = function(defaults) {
   var mergeTrees = require('broccoli-merge-trees');
   var pickFiles = require('broccoli-static-compiler');
   var babelTranspiler = require('broccoli-babel-transpiler');
+  var path = require('path');
+
   var env = EmberApp.env();
   var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
   var prepend = null;
 
   if(isProductionLikeBuild) {
-    prepend = env==='production' ? '//assets.ember-twiddle.com/' : '//canary-assets.ember-twiddle.com/';
+    prepend = env === 'production' ? '//assets.ember-twiddle.com/' : '//canary-assets.ember-twiddle.com/';
   }
 
   var blueprintsCode = getEmberCLIBlueprints();
@@ -54,7 +56,7 @@ module.exports = function(defaults) {
   app.import('vendor/hint.css');
   app.import('vendor/drags.js');
 
-  var loaderTree = funnel('node_modules/loader.js/lib', {
+  var loaderTree = funnel(path.dirname(require.resolve('loader.js')), {
     files: ['loader.js'],
     destDir: '/assets'
   });
