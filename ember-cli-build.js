@@ -6,12 +6,14 @@ module.exports = function(defaults) {
   var mergeTrees = require('broccoli-merge-trees');
   var pickFiles = require('broccoli-static-compiler');
   var babelTranspiler = require('broccoli-babel-transpiler');
+  var path = require('path');
+
   var env = EmberApp.env();
   var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
   var prepend = null;
 
   if(isProductionLikeBuild) {
-    prepend = env==='production' ? '//assets.ember-twiddle.com/' : '//canary-assets.ember-twiddle.com/';
+    prepend = env === 'production' ? '//assets.ember-twiddle.com/' : '//canary-assets.ember-twiddle.com/';
   }
 
   var blueprintsCode = getEmberCLIBlueprints();
@@ -54,7 +56,7 @@ module.exports = function(defaults) {
   app.import('vendor/hint.css');
   app.import('vendor/drags.js');
 
-  var loaderTree = funnel('node_modules/loader.js/lib', {
+  var loaderTree = funnel(path.dirname(require.resolve('loader.js')), {
     files: ['loader.js'],
     destDir: '/assets'
   });
@@ -120,9 +122,12 @@ function getEmberCLIBlueprints() {
     'helper': 'helper/files/__root__/helpers/__name__.js',
     'test-helper': 'app/files/tests/test-helper.js',
     'test-resolver': 'app/files/tests/helpers/resolver.js',
+    'test-destroy-app': 'app/files/tests/helpers/destroy-app.js',
+    'test-module-for-acceptance': 'app/files/tests/helpers/module-for-acceptance.js',
     'controller-test': 'controller-test/files/tests/unit/__path__/__test__.js',
     'route-test': 'route-test/files/tests/unit/__path__/__test__.js',
-    'service-test': 'service-test/files/tests/unit/__path__/__test__.js'
+    'service-test': 'service-test/files/tests/unit/__path__/__test__.js',
+    'acceptance-test': 'acceptance-test/files/tests/acceptance/__name__-test.js'
   };
 
   for (var blueprintName in cliBlueprintFiles) {
@@ -141,6 +146,7 @@ function getEmberCLIBlueprints() {
   fileMap['templates/application'] = fs.readFileSync('blueprints/application_template.hbs').toString();
   fileMap['app.css'] = fs.readFileSync('blueprints/app.css').toString();
   fileMap['index.html'] = fs.readFileSync('blueprints/index.html').toString();
+  fileMap['test-start-app'] = fs.readFileSync('blueprints/start-app.js').toString();
 
   return 'export default ' + JSON.stringify(fileMap);
 }

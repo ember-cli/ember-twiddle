@@ -263,6 +263,18 @@ export default Ember.Controller.extend({
     this._ensureExists('tests/helpers/resolver.js', 'test-resolver');
   },
 
+  ensureTestStartAppHelperExists() {
+    this._ensureExists('tests/helpers/start-app.js', 'test-start-app');
+  },
+
+  ensureTestDestroyAppHelperExists() {
+    this._ensureExists('tests/helpers/destroy-app.js', 'test-destroy-app');
+  },
+
+  ensureTestModuleForAcceptanceHelperExists() {
+    this._ensureExists('tests/helpers/module-for-acceptance.js', 'test-module-for-acceptance');
+  },
+
   _ensureExists(filePath, blueprint) {
     if (!this.hasPath(filePath)) {
       const fileProperties = this.get('emberCli').buildProperties(blueprint);
@@ -379,7 +391,6 @@ export default Ember.Controller.extend({
     },
 
     addUnitTestFile(type) {
-
       this.get('emberCli').ensureTestingEnabled(this.get('model')).then(() => {
         this.ensureTestHelperExists();
         this.ensureTestResolverExists();
@@ -395,7 +406,34 @@ export default Ember.Controller.extend({
           friendlyTestDescription: 'TODO: put something here'
         });
 
-        if (this.isPathInvalid(type, filePath)) {
+        if (this.isPathInvalid(blueprint, filePath)) {
+          return;
+        }
+        this.createFile(filePath, fileProperties);
+      });
+    },
+
+    addAcceptanceTestFile() {
+      this.get('emberCli').ensureTestingEnabled(this.get('model')).then(() => {
+        this.ensureTestHelperExists();
+        this.ensureTestResolverExists();
+        this.ensureTestStartAppHelperExists();
+        this.ensureTestDestroyAppHelperExists();
+        this.ensureTestModuleForAcceptanceHelperExists();
+        const blueprint = 'acceptance-test';
+        let fileProperties = this.get('emberCli').buildProperties(blueprint);
+        let filePath = prompt('File path', fileProperties.filePath);
+        let splitFilePath = filePath.split('/');
+        let file = splitFilePath[splitFilePath.length - 1];
+        let name = file.replace('-test.js', '');
+
+        fileProperties = this.get('emberCli').buildProperties(blueprint, {
+          testFolderRoot: '../..',
+          dasherizedModuleName: name,
+          friendlyTestDescription: 'TODO: put something here'
+        });
+
+        if (this.isPathInvalid(blueprint, filePath)) {
           return;
         }
         this.createFile(filePath, fileProperties);
