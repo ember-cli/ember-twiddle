@@ -1,4 +1,6 @@
-# [ember-twiddle](http://ember-twiddle.com) [![Build Status][travis-badge]][travis-badge-url]
+# [ember-twiddle](http://ember-twiddle.com)
+
+[![Build Status][travis-badge]][travis-badge-url] [![Code Climate](https://codeclimate.com/github/ember-cli/ember-twiddle/badges/gpa.svg)](https://codeclimate.com/github/ember-cli/ember-twiddle)
 
 An ember cli like web based javascript sharing tool. http://ember-twiddle.com
 
