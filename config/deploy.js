@@ -13,29 +13,12 @@ module.exports = function(deployTarget) {
       channel: '#ember-twiddle',
       username: 'ember-twiddle-deploy-notifications',
       didDeploy: function(context) {
-        var deployMessage = this._getHumanDeployMessage(context);
+        var deployMessage = _getHumanDeployMessage(context);
         return function(slack) {
           return slack.notify({
             text: deployMessage
           });
         };
-      },
-      _getHumanDeployMessage: function(context) {
-        var revision;
-        if (context.revisionData) {
-          revision = context.revisionData['revisionKey'] || context.revisionData['activatedRevisionKey'];
-        }
-
-        var projectName = context.project.name();
-
-        var message;
-        if (revision) {
-          message = projectName + ' revision ' + revision;
-        } else {
-          message = projectName;
-        }
-
-        return message + " to " + context.deployTarget + " target";
       }
     }
   };
@@ -72,3 +55,22 @@ module.exports = function(deployTarget) {
 
   return ENV;
 };
+
+
+function _getHumanDeployMessage(context) {
+  var revision;
+  if (context.revisionData) {
+    revision = context.revisionData['revisionKey'] || context.revisionData['activatedRevisionKey'];
+  }
+
+  var projectName = context.project.name();
+
+  var message;
+  if (revision) {
+    message = projectName + ' revision ' + revision;
+  } else {
+    message = projectName;
+  }
+
+  return message + " to " + context.deployTarget + " target";
+}
