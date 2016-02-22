@@ -17,12 +17,12 @@ export default Ember.Controller.extend({
   notify: inject.service('notify'),
 
   queryParams: ['numColumns', 'fullScreen', 'route', 'openFiles', 'fileTreeShown'],
-  numColumns: 2,
+  numColumns: 1,
   fullScreen: false,
   openFiles: "",
 
-  init() {
-    this._super(...arguments);
+  init(...args) {
+    this._super(...args);
     this.createColumns();
     this.setupWindowUpdate();
     this.set('activeEditorCol', '1');
@@ -80,7 +80,7 @@ export default Ember.Controller.extend({
   /**
    * Whether the file tree is currently shown
    */
-  fileTreeShown: false,
+  fileTreeShown: true,
 
   /**
    * Build the application and set the iframe code
