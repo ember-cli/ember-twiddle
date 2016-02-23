@@ -15,7 +15,7 @@ module('Acceptance | columns', {
 });
 
 const columns = ".code";
-const firstColumn = ".code:first-of-type";
+const firstColumn = ".code:eq(0)";
 const plusGlyph = ".code .glyphicon-plus";
 const removeGlyph = firstColumn + " .glyphicon-remove";
 const outputPlusGlyph = ".output .glyphicon-plus";
@@ -27,8 +27,17 @@ test('you can add and remove columns', function(assert) {
 
   andThen(function() {
     assert.equal(currentURL(), '/', 'We are on the correct initial route');
-    assert.equal(find(columns).length, 2, 'There are two columns to start');
+    assert.equal(find(columns).length, 1, 'There is one column to start');
     assert.ok(find(firstColumn).hasClass('active'), 'The first column starts out active');
+
+    find(plusGlyph).click();
+  });
+
+  andThen(function() {
+    assert.ok(urlHas('numColumns=2'), 'We are on the correct route for 2 columns');
+    assert.equal(find(columns).length, 2, 'There are now 2 columns');
+    assert.ok(urlHas("openFiles=application.controller.js,application.template.hbs"),
+      "URL contains correct openFiles query parameter 1");
 
     find(plusGlyph).click();
   });
@@ -43,7 +52,7 @@ test('you can add and remove columns', function(assert) {
   });
 
   andThen(function() {
-    assert.ok(!urlHas('numColumns'), 'We are on the correct route for 2 columns');
+    assert.ok(urlHas('numColumns=2'), 'We are on the correct route for 2 columns');
     assert.equal(find(columns).length, 2, 'There are now 2 columns');
     assert.ok(urlHas("openFiles=application.template.hbs,twiddle.json"),
       "URL contains correct openFiles query parameter 2");
@@ -52,7 +61,7 @@ test('you can add and remove columns', function(assert) {
   });
 
   andThen(function() {
-    assert.ok(urlHas('numColumns=1'), 'We are on the correct route for 1 columns');
+    assert.ok(!urlHas('numColumns'), 'We are on the correct route for 1 columns');
     assert.equal(find(columns).length, 1, 'There are now 1 columns');
     assert.ok(urlHas("openFiles=twiddle.json"), "URL contains correct openFiles query parameter 3");
 
@@ -68,21 +77,25 @@ test('you can add and remove columns', function(assert) {
   });
 
   andThen(function() {
-    assert.ok(urlHas('numColumns=1'), 'We are on the correct route for 1 columns');
+    assert.ok(!urlHas('numColumns'), 'We are on the correct route for 1 columns');
     assert.equal(find(columns).length, 1, 'There are now 1 columns');
+
+    assert.equal(find(".file-tree").length, 1, "The file tree is shown");
+    assert.ok(!urlHas('fileTreeShown'), 'We are on the correct route when file tree is shown');
+
+    find(hideFileTreeGlyph).click();
+  });
+
+  andThen(function() {
+    assert.ok(urlHas('fileTreeShown=false'), 'We are on the correct route when file tree is shown');
+    assert.equal(find(".file-tree").length, 0, "The file tree is hidden");
 
     find(showFileTreeGlyph).click();
   });
 
   andThen(function() {
     assert.equal(find(".file-tree").length, 1, "The file tree is shown");
-    assert.ok(urlHas('fileTreeShown=true'), 'We are on the correct route when file tree is shown');
-
-    find(hideFileTreeGlyph).click();
-  });
-
-  andThen(function() {
-    assert.equal(find(".file-tree").length, 0, "The file tree is hidden");
+    assert.ok(!urlHas('fileTreeShown'), 'We are on the correct route when file tree is shown');
   });
 });
 

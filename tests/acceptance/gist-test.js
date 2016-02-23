@@ -6,7 +6,7 @@ import ErrorMessages from 'ember-twiddle/helpers/error-messages';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
 
 
-const firstColumn = '.code:first-of-type';
+const firstColumn = '.code:eq(0)';
 const firstFilePicker = firstColumn + ' .dropdown-toggle';
 const secondFile = firstColumn + ' .dropdown-menu li:nth-child(2) a';
 const anyFile = firstColumn + ' .dropdown-menu li:nth-child(1) a';
@@ -16,6 +16,7 @@ const addTemplateAction = '.test-template-action';
 const firstFilePickerFiles = firstColumn + ' .dropdown-menu>li';
 const firstColumnTextarea = firstColumn + ' .CodeMirror textarea';
 const displayedFiles = '.file-picker > li > a';
+const plusGlyph = ".code .glyphicon-plus";
 
 let promptValue = '';
 
@@ -44,6 +45,7 @@ test('deleting a gist loaded in two columns', function(assert) {
 
   andThen(function() {
     assert.equal(currentURL(), '/', 'We are on the correct route');
+    click(plusGlyph);
     click(firstFilePicker);
     click(secondFile);
     click(firstFilePicker);
@@ -112,6 +114,7 @@ test('can add component (js and hbs)', function(assert){
     origFileCount =  find(firstFilePickerFiles).length;
   });
 
+  click(plusGlyph);
   click(fileMenu);
   click('.add-component-link');
   click(firstFilePicker);
@@ -138,6 +141,7 @@ test('can add component (js and hbs) using pod format', function(assert){
     origFileCount =  find(firstFilePickerFiles).length;
   });
 
+  click(plusGlyph);
   click(fileMenu);
   click('.add-component-link');
   click(firstFilePicker);
