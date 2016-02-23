@@ -4,6 +4,7 @@ import blueprints from '../lib/blueprints';
 import config from '../config/environment';
 import Ember from 'ember';
 import moment from 'moment';
+import htmlbarsPrecompilePlugin from "../utils/babel-htmlbars-compiler";
 
 const { inject } = Ember;
 const twiddleAppName = 'demo-app';
@@ -145,6 +146,13 @@ const requiredDependencies = [
 export default Ember.Service.extend({
   dependencyResolver: inject.service(),
   store: inject.service(),
+
+  init(...args) {
+    if (!Ember.testing) {
+      Babel.options.plugins.default.push(htmlbarsPrecompilePlugin);
+    }
+    return this._super(...args);
+  },
 
   generate(type) {
     return this.get('store').createRecord('gistFile', this.buildProperties(type));
