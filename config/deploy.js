@@ -34,7 +34,8 @@ module.exports = function(deployTarget) {
       accessKeyId: process.env['AWS_ACCESS_KEY_ID'],
       secretAccessKey: process.env['AWS_ACCESS_KEY_SECRET'],
       bucket: "canary.ember-twiddle.com",
-      region: "us-west-2"
+      region: "us-west-2",
+      allowOverwrite: true
     };
   }
 
@@ -49,7 +50,8 @@ module.exports = function(deployTarget) {
       accessKeyId: process.env['AWS_ACCESS_KEY_ID'],
       secretAccessKey: process.env['AWS_ACCESS_KEY_SECRET'],
       bucket: "ember-twiddle.com",
-      region: "us-west-2"
+      region: "us-west-2",
+      allowOverwrite: true
     };
   }
 
