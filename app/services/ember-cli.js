@@ -1,9 +1,12 @@
 import Babel from "npm:babel";
 import Path from 'npm:path';
+import HtmlbarsInlinePrecompile from 'npm:babel-plugin-htmlbars-inline-precompile';
 import blueprints from '../lib/blueprints';
 import config from '../config/environment';
 import Ember from 'ember';
 import moment from 'moment';
+
+const hbsPlugin = new HtmlbarsInlinePrecompile(Ember.HTMLBars.precompile);
 
 const { inject } = Ember;
 const twiddleAppName = 'demo-app';
@@ -456,7 +459,8 @@ function babelOpts(moduleName) {
   return {
     modules:'amd',
     moduleIds:true,
-    moduleId: moduleName
+    moduleId: moduleName,
+    plugins: [ hbsPlugin ]
   };
 }
 
