@@ -39,8 +39,15 @@ module.exports = function(defaults) {
     sourcemaps: {
       enabled: !isProductionLikeBuild
     },
-    minifyCSS: { enabled: isProductionLikeBuild },
-    minifyJS: { enabled: isProductionLikeBuild },
+    minifyCSS: {
+      enabled: isProductionLikeBuild
+    },
+    minifyJS: {
+      enabled: isProductionLikeBuild,
+      options: {
+        exclude: ["assets/vendor.js"]
+      }
+    },
 
     tests: true,
     hinting: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
@@ -51,6 +58,7 @@ module.exports = function(defaults) {
       }
     }
   });
+
 
   app.import('bower_components/ember/ember-template-compiler.js');
   app.import('vendor/hint.css');
