@@ -23,8 +23,7 @@ module.exports = function(defaults) {
       runsIn: "production"
     },
     fingerprint: {
-      //enabled: isProductionLikeBuild,
-      enabled: false,
+      enabled: isProductionLikeBuild,
       prepend: prepend,
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg', 'eot', 'ttf', 'woff', 'woff2', 'ico'],
       exclude: ['test-loader', 'test-support', 'testem']
