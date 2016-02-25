@@ -23,7 +23,8 @@ module.exports = function(defaults) {
       runsIn: "production"
     },
     fingerprint: {
-      enabled: isProductionLikeBuild,
+      //enabled: isProductionLikeBuild,
+      enabled: false,
       prepend: prepend,
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg', 'eot', 'ttf', 'woff', 'woff2', 'ico'],
       exclude: ['test-loader', 'test-support', 'testem']
@@ -45,7 +46,10 @@ module.exports = function(defaults) {
     minifyJS: {
       enabled: isProductionLikeBuild,
       options: {
-        exclude: ["assets/vendor.js"]
+        // Fix for minification bug with Uglify & Babel: Babel depends on constructor.name === "Plugin"
+        mangle: {
+          except: ['Plugin']
+        }
       }
     },
 
