@@ -138,6 +138,7 @@ function getEmberCLIBlueprints() {
     'controller-test': 'controller-test/files/tests/unit/__path__/__test__.js',
     'route-test': 'route-test/files/tests/unit/__path__/__test__.js',
     'service-test': 'service-test/files/tests/unit/__path__/__test__.js',
+    'component-test': 'component-test/files/tests/__testType__/__path__/__test__.js',
     'acceptance-test': 'acceptance-test/files/tests/acceptance/__name__-test.js'
   };
 
