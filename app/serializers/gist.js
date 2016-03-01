@@ -12,21 +12,21 @@ export default ApplicationSerializer.extend({
   },
 
   normalizeSingleResponse: function(store, primaryModelClass, payload, id, requestType) {
-    if (primaryModelClass.modelName === "gist") {
-      this.normalizeGist(payload, false);
-    }
+    this.normalizeGist(payload, false);
 
     return this._super(store, primaryModelClass, payload, id, requestType);
   },
 
   normalizeArrayResponse: function(store, primaryModelClass, payload, id, requestType) {
-    if (primaryModelClass.modelName === "gist") {
-      payload.forEach(function(hash) {
-        this.normalizeGist(hash, true);
-      }.bind(this));
-    }
+    payload.forEach(function(hash) {
+      this.normalizeGist(hash, true);
+    }.bind(this));
 
     return this._super(store, primaryModelClass, payload, id, requestType);
+  },
+
+  normalizeQueryResponse: function(store, primaryModelClass, payload, id, requestType) {
+    return this._super(store, primaryModelClass, [payload], id, requestType);
   },
 
   normalizeGist: function(payload, isArray) {
