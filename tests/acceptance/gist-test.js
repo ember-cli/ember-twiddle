@@ -255,6 +255,32 @@ test('can add unit test', function(assert){
   });
 });
 
+test('can add integration test', function(assert){
+  assert.expect(3);
+
+  let origFileCount;
+  promptValue = 'tests/integration/components/my-component-test.js';
+  visit('/');
+  andThen(function(){
+    origFileCount = find(firstFilePickerFiles).length;
+  });
+
+  click(fileMenu);
+  click('.test-add-component-test-link');
+  click(firstFilePicker);
+
+  andThen(function() {
+    let numFiles = find(firstFilePickerFiles).length;
+    assert.equal(numFiles, origFileCount + 3, 'Added 3 test files');
+
+    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
+
+    let columnFiles = findMapText(displayedFiles);
+    assert.ok(columnFiles.contains(promptValue), 'Added file is displayed');
+  });
+});
+
 test('can add acceptance test', function(assert){
   assert.expect(3);
 

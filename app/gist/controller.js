@@ -282,6 +282,16 @@ export default Ember.Controller.extend({
     }
   },
 
+  calculateFileVarsForTests(blueprint) {
+    const fileProperties = this.get('emberCli').buildProperties(blueprint);
+    const filePath = prompt('File path', fileProperties.filePath);
+    const splitFilePath = filePath.split('/');
+    const file = splitFilePath[splitFilePath.length - 1];
+    const name = file.replace('-test.js', '');
+    return { filePath, name };
+
+  },
+
   actions: {
     contentsChanged() {
       this.set('unsaved', true);
@@ -394,15 +404,31 @@ export default Ember.Controller.extend({
       this.get('emberCli').ensureTestingEnabled(this.get('model')).then(() => {
         this.ensureTestHelperExists();
         this.ensureTestResolverExists();
-        let blueprint = type + "-" + 'test';
-        let fileProperties = this.get('emberCli').buildProperties(blueprint);
-        let filePath = prompt('File path', fileProperties.filePath);
-        let splitFilePath = filePath.split('/');
-        let file = splitFilePath[splitFilePath.length - 1];
-        let name = file.replace('-test.js', '');
+        const blueprint = type + "-" + 'test';
+        const { filePath, name } = this.calculateFileVarsForTests(blueprint);
 
-        fileProperties = this.get('emberCli').buildProperties(blueprint, {
+        const fileProperties = this.get('emberCli').buildProperties(blueprint, {
           dasherizedModuleName: name,
+          friendlyTestDescription: 'TODO: put something here'
+        });
+
+        if (this.isPathInvalid(blueprint, filePath)) {
+          return;
+        }
+        this.createFile(filePath, fileProperties);
+      });
+    },
+
+    addIntegrationTestFile(type) {
+      this.get('emberCli').ensureTestingEnabled(this.get('model')).then(() => {
+        this.ensureTestHelperExists();
+        this.ensureTestResolverExists();
+        const blueprint = type + '-test';
+        const { filePath, name } = this.calculateFileVarsForTests(blueprint);
+
+        const fileProperties = this.get('emberCli').buildProperties(blueprint, {
+          testType: 'integration',
+          componentPathName: name,
           friendlyTestDescription: 'TODO: put something here'
         });
 
@@ -421,16 +447,12 @@ export default Ember.Controller.extend({
         this.ensureTestDestroyAppHelperExists();
         this.ensureTestModuleForAcceptanceHelperExists();
         const blueprint = 'acceptance-test';
-        let fileProperties = this.get('emberCli').buildProperties(blueprint);
-        let filePath = prompt('File path', fileProperties.filePath);
-        let splitFilePath = filePath.split('/');
-        let file = splitFilePath[splitFilePath.length - 1];
-        let name = file.replace('-test.js', '');
+        const { filePath, name } = this.calculateFileVarsForTests(blueprint);
 
-        fileProperties = this.get('emberCli').buildProperties(blueprint, {
+        const fileProperties = this.get('emberCli').buildProperties(blueprint, {
           testFolderRoot: '../..',
           dasherizedModuleName: name,
-          friendlyTestDescription: 'TODO: put something here'
+          friendlyTestName: 'TODO: put something here'
         });
 
         if (this.isPathInvalid(blueprint, filePath)) {

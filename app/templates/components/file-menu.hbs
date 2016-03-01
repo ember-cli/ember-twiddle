@@ -30,6 +30,12 @@
           <ul class="dropdown-menu">
             <li><a {{action 'addAcceptanceTestFile'}} class="test-add-acceptance-test-link">Acceptance</a></li>
             <li class="dropdown dropdown-submenu">
+              <a>Integration</a>
+              <ul class="dropdown-menu">
+                <li><a {{action 'addIntegrationTestFile' 'component'}} class="test-add-component-test-link">Component</a></li>
+              </ul>
+            </li>
+            <li class="dropdown dropdown-submenu">
               <a>Unit</a>
               <ul class="dropdown-menu">
                 <li><a {{action 'addUnitTestFile' 'controller'}}>Controller</a></li>

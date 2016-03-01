@@ -5,6 +5,7 @@ import blueprints from '../lib/blueprints';
 import config from '../config/environment';
 import Ember from 'ember';
 import moment from 'moment';
+import _template from "lodash/string/template";
 
 const hbsPlugin = new HtmlbarsInlinePrecompile(Ember.HTMLBars.precompile);
 
@@ -126,6 +127,10 @@ const availableBlueprints = {
     blueprint: 'service-test',
     filePath: 'tests/unit/services/my-service-test.js'
   },
+  'component-test': {
+    blueprint: 'component-test',
+    filePath: 'tests/integration/components/my-component-test.js'
+  },
   'acceptance-test': {
     blueprint: 'acceptance-test',
     filePath: 'tests/acceptance/my-acceptance-test.js'
@@ -159,12 +164,7 @@ export default Ember.Service.extend({
       let content = blueprints[blueprint.blueprint];
 
       if (replacements) {
-        Object.keys(replacements).forEach(key => {
-          let token = `<%= ${key} %>`;
-          let value = replacements[key];
-
-          content = content.replace(new RegExp(token, 'g'), value);
-        });
+        content = _template(content)(replacements);
       }
 
       return {
