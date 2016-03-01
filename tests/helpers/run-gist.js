@@ -11,6 +11,7 @@ export default function(app, options) {
   const gist_id = options.gist_id || "35de43cb81fc35ddffb2";
   const commit = options.commit || "f354c6698b02fe3243656c8dc5aa0303cc7ae81c";
   const initialRoute = options.initialRoute || "/";
+  const isGitRevision = options.type === "revision";
   let files = options.files || [];
 
   files.push({
@@ -43,6 +44,15 @@ export default function(app, options) {
 
   server.create('user', {login: login});
   const owner = server.create('owner', {login: login});
+
+  if (isGitRevision) {
+    server.create('gist-revision', {
+      id: gist_id,
+      revId: commit,
+      owner: owner,
+      files: gistFiles
+    });
+  }
   server.create('gist', {
     id: gist_id,
     owner: owner,
@@ -50,6 +60,9 @@ export default function(app, options) {
   });
 
   let url = "/" + gist_id;
+  if (isGitRevision) {
+    url += "/" + commit;
+  }
   if (initialRoute !== "/") {
     url += "?route=" + initialRoute;
   }

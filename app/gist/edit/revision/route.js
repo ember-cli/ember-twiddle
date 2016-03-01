@@ -1,7 +1,6 @@
-import Ember from "ember";
-import GistRoute from "../route";
+import GistEditRoute from "../route";
 
-export default GistRoute.extend({
+export default GistEditRoute.extend({
 
   controllerName: 'gist',
   templateName: 'gist',
