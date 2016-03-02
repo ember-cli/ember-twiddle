@@ -25,10 +25,6 @@ export default ApplicationSerializer.extend({
     return this._super(store, primaryModelClass, payload, id, requestType);
   },
 
-  normalizeQueryResponse: function(store, primaryModelClass, payload, id, requestType) {
-    return this._super(store, primaryModelClass, [payload], id, requestType);
-  },
-
   normalizeGist: function(payload, isArray) {
     this.normalizeFiles(payload, isArray);
     this.normalizeHistory(payload);

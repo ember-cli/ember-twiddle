@@ -1,40 +1,12 @@
 /**
  * This is a factory definition for a gist revision.
  */
-import Mirage/*, {faker} */ from 'ember-cli-mirage';
+import GistFactory from './gist';
 
-export default Mirage.Factory.extend({
+export default GistFactory.extend({
   url() {
     return `https://api.github.com/gists/${this.id}/${this.revId}`;
-  },
-  forks_url() {
-    return `https://api.github.com/gists/${this.id}/forks`;
-  },
-  commits_url() {
-    return `https://api.github.com/gists/${this.id}/commits`;
-  },
-  git_pull_url() {
-    return `https://gist.github.com/${this.id}.git`;
-  },
-  git_push_url() {
-    return `https://gist.github.com/${this.id}.git`;
-  },
-  html_url() {
-    return "https://gist.github.com/" + this.id;
-  },
-  //files,
-  public: true,
-  created_at: "2015-07-23T22:30:30Z",
-  updated_at: "2015-07-23T22:49:45Z",
-  description: "New Twiddle",
-  comments: 0,
-  user: null,
-  comments_url() {
-    return `https://api.github.com/gists/${this.id}/comments`;
-  },
-  //owner,
-  forks: [],
-  history: []
+  }
 });
 
 /* Sample
