@@ -6,6 +6,6 @@ export default Ember.Route.extend({
     gistController.set('model', context);
     gistController.clearColumns();
     gistController.initializeColumns();
-    gistController.rebuildApp();
+    gistController.get('rebuildApp').perform();
   }
 });
