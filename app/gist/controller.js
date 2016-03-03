@@ -200,7 +200,7 @@ export default Ember.Controller.extend({
       yield timeout(500);
       yield this.get('buildApp').perform();
     }
-  }),
+  }).restartable(),
 
   createFile(filePath, fileProperties, fileColumn=1) {
     if (filePath) {
