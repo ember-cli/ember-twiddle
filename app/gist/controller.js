@@ -156,12 +156,16 @@ export default Ember.Controller.extend({
     const numColumns = this.get('realNumColumns');
 
     let j = 0;
+    const len = files.get('length');
     for (let i = 1; i <= numColumns; ++i) {
       if (!this.getColumnFile(i)) {
         if (files) {
           j = 0;
           while (!this.isOpen(files.objectAt(j))) {
             j++;
+            if (j >= len) {
+              return;
+            }
           }
           let file = files.objectAt(j);
           if (file) {

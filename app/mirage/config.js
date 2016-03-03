@@ -14,6 +14,11 @@ export function testConfig() {
     return db.gists.find(id);
   });
 
+  this.get('/gists/:id/:rev_id', function(db, request) {
+    let id = request.params.id;
+    return db["gist-revisions"].find(id);
+  });
+
   this.get('/user', function(db) {
     return db.users.find(1);
   });

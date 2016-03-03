@@ -5,7 +5,7 @@ export default GistRoute.extend({
   model (params) {
     this.get('store').unloadAll('gistFile');
 
-    return this.get('store').find('gist', params.id);
+    return this.get('store').find('gist', params.gistId);
   },
 
   setupController() {
