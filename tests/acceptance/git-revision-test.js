@@ -21,10 +21,7 @@ test('Able to load a previous revision of a gist', function(assert) {
     }
   ];
 
-  runGist({
-    type: "revision",
-    files
-  });
+  runRevision(files);
 
   andThen(function() {
     const outputDiv = 'div';

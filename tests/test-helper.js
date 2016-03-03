@@ -4,6 +4,7 @@ import {
   setResolver
 } from 'ember-qunit';
 import runGist from "./helpers/run-gist";
+import runRevision from "./helpers/run-revision";
 import waitForLoadedIFrame from './helpers/wait-for-loaded-iframe';
 
 setResolver(resolver);
@@ -20,5 +21,5 @@ Ember.Test.registerHelper('outputContents', function(app, selector) {
 });
 
 Ember.Test.registerAsyncHelper('runGist', runGist);
-
+Ember.Test.registerAsyncHelper('runRevision', runRevision);
 Ember.Test.registerAsyncHelper('waitForLoadedIFrame', waitForLoadedIFrame);
