@@ -488,7 +488,7 @@ function contentForAppBoot (content, config) {
     content.push('  require("'+mod+'").__esModule=true;');
   });
 
-  content.push('  require("' +
+  content.push('  window.App = require("' +
     config.modulePrefix +
     '/app")["default"].create(' +
     calculateAppConfig(config) +
