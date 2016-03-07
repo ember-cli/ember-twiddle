@@ -20,10 +20,14 @@ export default Ember.Component.extend({
   },
 
   willUpdate() {
-    this.willDestroyElement();
+    this.cleanupDrags();
   },
 
   willDestroyElement() {
+    this.cleanupDrags();
+  },
+
+  cleanupDrags() {
     this.$('.handle').drags("destroy");
     this.$('.handle').remove();
   }
