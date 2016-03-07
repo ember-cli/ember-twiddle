@@ -19,7 +19,11 @@ export default Ember.Component.extend({
     }
   },
 
-  willClearRender() {
+  willUpdate() {
+    this.willDestroyElement();
+  },
+
+  willDestroyElement() {
     this.$('.handle').drags("destroy");
     this.$('.handle').remove();
   }
