@@ -1,3 +1,4 @@
+import Ember from "ember";
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -55,10 +56,12 @@ test('it calls contentChanged with true when changing the content via the code e
     assert.ok(isUserChange, 'contentChanged was called with isUserChange = true');
   });
 
+  this.set('ignoreAction', Ember.K);
+
   this.set('file', { content: '' });
 
   this.render(hbs`
-    {{file-editor-column col='1' file=file contentChanged=(action externalAction)}}
+    {{file-editor-column col='1' file=file contentChanged=(action externalAction) focusEditor=(action ignoreAction)}}
   `);
 
   const codeMirrorInstance = this.$('.CodeMirror')[0].CodeMirror;

@@ -2,6 +2,7 @@ import Ember from "ember";
 import Settings from '../models/settings';
 import ErrorMessages from 'ember-twiddle/helpers/error-messages';
 import Column from '../utils/column';
+import { task, timeout } from "ember-concurrency";
 
 const {
   computed,
@@ -85,20 +86,16 @@ export default Ember.Controller.extend({
   /**
    * Build the application and set the iframe code
    */
-  buildApp () {
-    if (this.get('isDestroyed')) {
-      return;
-    }
-
+  buildApp: task(function *() {
     this.set('isBuilding', true);
     this.set('buildErrors', []);
     this.set('model.initialRoute', this.get('route'));
 
-    this.get('emberCli').compileGist(this.get('model')).then(buildOutput => {
+    try {
+      const buildOutput = yield this.get('emberCli').compileGist(this.get('model'));
       this.set('isBuilding', false);
       this.set('buildOutput', buildOutput);
-    })
-    .catch(errors => {
+    } catch(errors) {
       this.set('isBuilding', false);
       if (Ember.isArray(errors)) {
         this.set('buildErrors', errors);
@@ -108,8 +105,8 @@ export default Ember.Controller.extend({
       } else {
         console.error(errors);
       }
-    });
-  },
+    }
+  }),
 
   realNumColumns: computed('numColumns', function() {
     return Math.min(this.get('numColumns'), MAX_COLUMNS);
@@ -202,11 +199,12 @@ export default Ember.Controller.extend({
     return file !== undefined;
   },
 
-  rebuildApp: function() {
+  rebuildApp: task(function *() {
     if (this.get('isLiveReload')) {
-      run.debounce(this, this.buildApp, 500);
+      yield timeout(500);
+      yield this.get('buildApp').perform();
     }
-  },
+  }).restartable(),
 
   createFile(filePath, fileProperties, fileColumn=1) {
     if (filePath) {
@@ -299,7 +297,7 @@ export default Ember.Controller.extend({
   actions: {
     contentsChanged() {
       this.set('unsaved', true);
-      this.rebuildApp();
+      this.get('rebuildApp').perform();
     },
 
     versionSelected: function(dependency, version) {
@@ -307,13 +305,13 @@ export default Ember.Controller.extend({
       var emberCli = this.get('emberCli');
 
       emberCli.updateDependencyVersion(gist, dependency, version).then(() => {
-        this.rebuildApp();
+        this.get('rebuildApp').perform();
       });
     },
 
     liveReloadChanged(isLiveReload) {
       this.set('isLiveReload', isLiveReload);
-      this.rebuildApp();
+      this.get('rebuildApp').perform();
     },
 
     focusEditor (editor) {
@@ -336,7 +334,7 @@ export default Ember.Controller.extend({
     },
 
     runNow () {
-      this.buildApp();
+      this.get('buildApp').perform();
     },
 
     titleChanged() {

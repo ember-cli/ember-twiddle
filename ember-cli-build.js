@@ -51,6 +51,9 @@ module.exports = function(defaults) {
         }
       }
     },
+    babel: {
+      includePolyfill: true
+    },
 
     tests: true,
     hinting: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
