@@ -1,6 +1,5 @@
 import config from '../config/environment';
 import Ember from 'ember';
-import ajax from 'ember-ajax';
 
 const { inject } = Ember;
 
@@ -11,6 +10,7 @@ export default Ember.Object.extend({  /**
    */
 
   store: inject.service(),
+  ajax: inject.service(),
 
   resolveUser (token) {
     config.TMP_TORII_TOKEN = token;
@@ -38,10 +38,7 @@ export default Ember.Object.extend({  /**
    * @return Promise
    */
   open (authorization) {
-    return ajax({
-      url: config.githubOauthUrl + authorization.authorizationCode,
-      dataType: 'json',
-    }).then(result => this.resolveUser(result.token));
+    return this.get('ajax').request(config.githubOauthUrl + authorization.authorizationCode).then(result => this.resolveUser(result.token));
   },
 
 
