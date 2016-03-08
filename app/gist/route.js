@@ -104,6 +104,10 @@ export default Ember.Route.extend({
         this.get('notify').error("The gist is invalid, and could not be saved.");
         return;
       }
+      if (firstError.code === "missing_field") {
+        this.get('notify').error("The contents of a file is completely empty, so the gist could not be saved.");
+        return;
+      }
     }
     this.get('notify').error("Something went wrong. The gist was not saved.");
     throw error;
