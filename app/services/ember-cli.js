@@ -225,18 +225,18 @@ export default Ember.Service.extend({
       this.addBoilerPlateFiles(out, gist);
       this.addConfig(out, gist);
 
-      let twiddleJson = this.getTwiddleJson(gist);
+      this.getTwiddleJson(gist).then(twiddleJson => {
+        // Add boot code
+        contentForAppBoot(out, {modulePrefix: twiddleAppName, dependencies: twiddleJson.dependencies});
 
-      // Add boot code
-      contentForAppBoot(out, {modulePrefix: twiddleAppName, dependencies: twiddleJson.dependencies});
-
-      resolve(this.buildHtml(gist, out.join('\n'), cssOut.join('\n')));
+        resolve(this.buildHtml(gist, out.join('\n'), cssOut.join('\n'), twiddleJson));
+      });
     });
 
     return promise;
   },
 
-  buildHtml (gist, appJS, appCSS) {
+  buildHtml (gist, appJS, appCSS, twiddleJSON) {
     if (gist.get('initialRoute')) {
       appJS += "window.location.hash='" + gist.get('initialRoute') + "';";
     }
@@ -248,7 +248,6 @@ export default Ember.Service.extend({
     appCSS += `\n#qunit-testrunner-toolbar, #qunit-tests a[href] { display: none; }\n`;
 
     let index = blueprints['index.html'];
-    let twiddleJSON = this.getTwiddleJson(gist);
     let deps = twiddleJSON.dependencies;
 
     let depCssLinkTags = '';
@@ -337,24 +336,28 @@ export default Ember.Service.extend({
   },
 
   getTwiddleJson (gist) {
-    var twiddleJson = JSON.parse(gist.get('files').findBy('filePath', 'twiddle.json').get('content'));
+    return new Ember.RSVP.Promise((resolve, reject) => {
+      var twiddleJson = JSON.parse(gist.get('files').findBy('filePath', 'twiddle.json').get('content'));
 
-    // Fill in any missing required dependencies
-    var dependencies = JSON.parse(blueprints['twiddle.json']).dependencies;
-    requiredDependencies.forEach(function(dep) {
-      if (!twiddleJson.dependencies[dep] && dependencies[dep]) {
-        if (dep === 'ember-template-compiler') {
-          twiddleJson.dependencies[dep] = twiddleJson.dependencies['ember'].replace('ember.debug.js', 'ember-template-compiler.js');
-        } else {
-          twiddleJson.dependencies[dep] = dependencies[dep];
+      // Fill in any missing required dependencies
+      var dependencies = JSON.parse(blueprints['twiddle.json']).dependencies;
+      requiredDependencies.forEach(function(dep) {
+        if (!twiddleJson.dependencies[dep] && dependencies[dep]) {
+          if (dep === 'ember-template-compiler') {
+            twiddleJson.dependencies[dep] = twiddleJson.dependencies['ember'].replace('ember.debug.js', 'ember-template-compiler.js');
+          } else {
+            twiddleJson.dependencies[dep] = dependencies[dep];
+          }
         }
-      }
+      });
+
+      var dependencyResolver = this.get('dependencyResolver');
+      dependencyResolver.resolveDependencies(twiddleJson.dependencies);
+      dependencyResolver.resolveAddons(twiddleJson.addons, twiddleJson.dependencies).then(() => {
+        console.log(twiddleJson);
+        resolve(twiddleJson);
+      });
     });
-
-    var dependencyResolver = this.get('dependencyResolver');
-    dependencyResolver.resolveDependencies(twiddleJson.dependencies);
-
-    return twiddleJson;
   },
 
   updateDependencyVersion(gist, dependencyName, version) {
