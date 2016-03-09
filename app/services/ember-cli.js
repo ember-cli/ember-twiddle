@@ -264,7 +264,7 @@ export default Ember.Service.extend({
       let dep = deps[depKey];
       if (dep.substr(dep.lastIndexOf(".")) === '.css') {
         depCssLinkTags += `<link rel="stylesheet" type="text/css" href="${dep}">`;
-      } else {
+      } else if (dep.substr(dep.lastIndexOf(".")) === '.js') {
         depScriptTags += `<script type="text/javascript" src="${dep}"></script>`;
       }
     });

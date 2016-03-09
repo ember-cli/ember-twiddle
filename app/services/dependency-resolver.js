@@ -54,6 +54,7 @@ export default Ember.Service.extend({
         let addon = hash[name];
         if(addon.status === 'build_success') {
           dependencies[name] = addon.addon_js;
+          dependencies[name+'_css'] = addon.addon_css;
         }
         else if (addon.status === 'building') {
         }
