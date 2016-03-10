@@ -55,6 +55,7 @@ export default Ember.Service.extend({
         if(addon.status === 'build_success') {
           dependencies[name] = addon.addon_js;
           dependencies[name+'_css'] = addon.addon_css;
+          console.log(`Addon ${name} is loaded...`);
         }
         else if (addon.status === 'building') {
           console.log(`Addon ${name} is currently building...`);
