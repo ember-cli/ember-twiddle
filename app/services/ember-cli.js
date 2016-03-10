@@ -358,6 +358,9 @@ export default Ember.Service.extend({
           resolve(twiddleJson);
         });
       }
+      else {
+        resolve(twiddleJson);
+      }
     });
   },
 
