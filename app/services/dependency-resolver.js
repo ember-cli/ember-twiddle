@@ -57,8 +57,13 @@ export default Ember.Service.extend({
           dependencies[name+'_css'] = addon.addon_css;
         }
         else if (addon.status === 'building') {
+          console.log(`Addon ${name} is currently building...`);
+          console.log(`Joost will have to implement some sort of refresh logic here..`);
         }
         else if (addon.status === 'build_error') {
+          console.error(`Addon ${name} encountered a build error:`);
+          console.error(addon.errors, addon.ember_errors);
+          console.log(`Joost will have to implement some sort of error logic here..`);
         }
       });
     });

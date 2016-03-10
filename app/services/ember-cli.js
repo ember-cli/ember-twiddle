@@ -353,10 +353,11 @@ export default Ember.Service.extend({
 
       var dependencyResolver = this.get('dependencyResolver');
       dependencyResolver.resolveDependencies(twiddleJson.dependencies);
-      dependencyResolver.resolveAddons(twiddleJson.addons, twiddleJson.dependencies).then(() => {
-        console.log(twiddleJson);
-        resolve(twiddleJson);
-      });
+      if ('addons' in twiddleJson) {
+        dependencyResolver.resolveAddons(twiddleJson.addons, twiddleJson.dependencies).then(() => {
+          resolve(twiddleJson);
+        });
+      }
     });
   },
 
