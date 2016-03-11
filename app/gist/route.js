@@ -31,6 +31,7 @@ export default Ember.Route.extend({
       gist.save().then(() => {
         this.get('notify').info(`Saved to Gist ${gist.get('id')} on Github`);
         if(newGist) {
+          gist.set('gistId', gist.get('id'));
           this.transitionTo('gist.edit', gist).then(() => {
             this.send('setSaved');
           });
@@ -50,8 +51,9 @@ export default Ember.Route.extend({
           gist.get('files').toArray().forEach((file) => {
             file.set('gist', newGist);
           });
+          newGist.set('gistId', response.id);
           return newGist.save().then(() => {
-            this.transitionTo('gist.edit', newGist);
+            return this.transitionTo('gist.edit', newGist);
           });
         });
       }).catch(this.catchForkError.bind(this));
