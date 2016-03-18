@@ -359,7 +359,8 @@ export default Ember.Controller.extend({
     },
 
     addComponent() {
-      let path = prompt('Component path (without file extension)', 'my-component');
+      const defaultPath = this.get('emberCli.usePods') ? 'my-component' : 'components/my-component';
+      let path = prompt('Component path (without file extension)', defaultPath);
       if (Ember.isBlank(path)){
         return;
       }

@@ -8,10 +8,12 @@ export default function(app, url) {
 
     // Wait until iframe loads
     return new Ember.RSVP.Promise(function (resolve) {
-      iframe_window.addEventListener('load', function () {
-        iframe_window.removeEventListener('load');
+      function onWindowLoad() {
+        iframe_window.removeEventListener('load', onWindowLoad);
         resolve();
-      });
+      }
+
+      iframe_window.addEventListener('load', onWindowLoad);
     });
   });
 

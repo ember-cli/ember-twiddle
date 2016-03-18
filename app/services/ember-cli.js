@@ -29,11 +29,13 @@ const requiredFiles = [
 const availableBlueprints = {
   'templates/application': {
     blueprint: 'templates/application',
-    filePath: 'application/template.hbs'
+    filePath: 'templates/application.hbs',
+    podFilePath: 'application/templates.hbs'
   },
   'controllers/application': {
     blueprint: 'controllers/application',
-    filePath: 'application/controller.js'
+    filePath: 'controllers/application.js',
+    podFilePath: 'application/controller.js'
   },
   'app': {
     blueprint: 'app',
@@ -45,15 +47,18 @@ const availableBlueprints = {
   },
   'component-hbs': {
     blueprint: 'component-hbs',
-    filePath: 'my-component/template.hbs'
+    filePath: 'templates/components/my-component.hbs',
+    podFilePath: 'my-component/template.hbs'
   },
   'component-js': {
     blueprint: 'component-js',
-    filePath: 'my-component/component.js'
+    filePath: 'components/my-component.js',
+    podFilePath: 'my-component/component.js'
   },
   'controller': {
     blueprint: 'controller',
-    filePath: 'my-route/controller.js'
+    filePath: 'controllers/my-route.js',
+    podFilePath: 'my-route/controller.js'
   },
   'initializers/router': {
     blueprint: 'initializers/router',
@@ -61,7 +66,7 @@ const availableBlueprints = {
   },
   'initializers/mouse-events': {
     blueprint: 'initializers/mouse-events',
-    filePath: 'initializers/mouse-events.js'
+    filePath: 'initializers/mouse-events'
   },
   'model': {
     blueprint: 'model',
@@ -73,7 +78,8 @@ const availableBlueprints = {
   },
   'route': {
     blueprint: 'route',
-    filePath: 'my-route/route.js'
+    filePath: 'routes/my-route.js',
+    podFilePath: 'my-route/route.js'
   },
   'service': {
     blueprint: 'service',
@@ -81,7 +87,8 @@ const availableBlueprints = {
   },
   'template': {
     blueprint: 'template',
-    filePath: 'my-route/template.hbs'
+    filePath: 'templates/my-route.hbs',
+    podFilePath: 'my-route/template.hbs'
   },
   'router': {
     blueprint: 'router',
@@ -154,6 +161,12 @@ export default Ember.Service.extend({
   dependencyResolver: inject.service(),
   store: inject.service(),
 
+  usePods: false,
+
+  setup(gist) {
+    this._getTwiddleJson(gist);
+  },
+
   generate(type) {
     return this.get('store').createRecord('gistFile', this.buildProperties(type));
   },
@@ -168,7 +181,7 @@ export default Ember.Service.extend({
       }
 
       return {
-        filePath: blueprint.filePath,
+        filePath: this.get('usePods') ? blueprint.podFilePath || blueprint.filePath : blueprint.filePath,
         content: content.replace(/<\%\=(.*)\%\>/gi,'')
       };
     }
@@ -336,11 +349,26 @@ export default Ember.Service.extend({
     out.push(this.compileJs(configJs, 'config/environment'));
   },
 
+  _getTwiddleJson(gist) {
+    let twiddleJson = gist.get('files').findBy('filePath', 'twiddle.json');
+
+    if (!twiddleJson) {
+      return;
+    }
+
+    twiddleJson = JSON.parse(twiddleJson.get('content'));
+
+    // set usePods
+    this.set('usePods', (twiddleJson.options && twiddleJson.options['use_pods']) || false);
+
+    return twiddleJson;
+  },
+
   getTwiddleJson (gist) {
-    var twiddleJson = JSON.parse(gist.get('files').findBy('filePath', 'twiddle.json').get('content'));
+    let twiddleJson = this._getTwiddleJson(gist);
 
     // Fill in any missing required dependencies
-    var dependencies = JSON.parse(blueprints['twiddle.json']).dependencies;
+    let dependencies = JSON.parse(blueprints['twiddle.json']).dependencies;
     requiredDependencies.forEach(function(dep) {
       if (!twiddleJson.dependencies[dep] && dependencies[dep]) {
         if (dep === 'ember-template-compiler') {
@@ -351,23 +379,34 @@ export default Ember.Service.extend({
       }
     });
 
-    var dependencyResolver = this.get('dependencyResolver');
+    const dependencyResolver = this.get('dependencyResolver');
     dependencyResolver.resolveDependencies(twiddleJson.dependencies);
 
     return twiddleJson;
   },
 
-  updateDependencyVersion(gist, dependencyName, version) {
+  _updateTwiddleJson(gist, updateFn) {
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      var twiddle = gist.get('files').findBy('filePath', 'twiddle.json');
+      const twiddle = gist.get('files').findBy('filePath', 'twiddle.json');
 
-      var json;
+      let json;
       try {
         json = JSON.parse(twiddle.get('content'));
       } catch (e) {
         return reject(e);
       }
 
+      json = updateFn(json);
+
+      json = JSON.stringify(json, null, '  ');
+      twiddle.set('content', json);
+
+      resolve();
+    });
+  },
+
+  updateDependencyVersion(gist, dependencyName, version) {
+    return this._updateTwiddleJson(gist, (json) => {
       json.dependencies[dependencyName] = version;
 
       // since ember and ember-template-compiler should always have the same
@@ -377,33 +416,17 @@ export default Ember.Service.extend({
         json.dependencies['ember-template-compiler'] = version;
       }
 
-      json = JSON.stringify(json, null, '  ');
-      twiddle.set('content', json);
-
-      resolve();
+      return json;
     });
   },
 
   ensureTestingEnabled(gist) {
-    return new Ember.RSVP.Promise(function(resolve, reject) {
-      var twiddle = gist.get('files').findBy('filePath', 'twiddle.json');
-
-      var json;
-      try {
-        json = JSON.parse(twiddle.get('content'));
-      } catch (e) {
-        return reject(e);
-      }
-
+    return this._updateTwiddleJson(gist, (json) => {
       if (!json.options) {
         json.options = {};
       }
       json.options["enable-testing"] = true;
-
-      json = JSON.stringify(json, null, '  ');
-      twiddle.set('content', json);
-
-      resolve();
+      return json;
     });
   },
 
