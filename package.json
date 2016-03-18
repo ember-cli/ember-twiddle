@@ -1,7 +1,7 @@
 {
   "name": "ember-twiddle",
-  "version": "0.6.4",
-  "description": "Small description for ember-twiddle goes here",
+  "version": "0.6.5",
+  "description": "https://ember-twiddle.com",
   "private": true,
   "directories": {
     "doc": "doc",
@@ -12,7 +12,7 @@
     "build": "ember build",
     "test": "ember test"
   },
-  "repository": "",
+  "repository": "https://github.com/ember-cli/ember-twiddle",
   "engines": {
     "node": ">= 0.10.0"
   },
