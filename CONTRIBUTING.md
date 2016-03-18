@@ -57,3 +57,11 @@ Make use of the many generators for code, try `ember help generate` for more det
 * `ember build` (development)
 * `ember build --environment production` (production)
 
+### Design
+
+* Follow the Ember styleguide.
+* Do not use any Ember trademarked items, including:
+  * Tomster
+  * Ember logo
+* Otherwise, try to keep the overall theme as close to other Ember websites as possible.
+
