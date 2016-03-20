@@ -464,7 +464,7 @@ export default Ember.Service.extend({
  */
 function babelOpts(moduleName) {
   return {
-    modules:'amd',
+    modules:'amdStrict',
     moduleIds:true,
     moduleId: moduleName,
     plugins: [ hbsPlugin ]

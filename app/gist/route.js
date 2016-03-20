@@ -31,6 +31,7 @@ export default Ember.Route.extend({
       gist.save().then(() => {
         this.get('notify').info(`Saved to Gist ${gist.get('id')} on Github`);
         if(newGist) {
+          gist.set('gistId', gist.get('id'));
           this.transitionTo('gist.edit', gist).then(() => {
             this.send('setSaved');
           });
@@ -50,8 +51,9 @@ export default Ember.Route.extend({
           gist.get('files').toArray().forEach((file) => {
             file.set('gist', newGist);
           });
+          newGist.set('gistId', response.id);
           return newGist.save().then(() => {
-            this.transitionTo('gist.edit', newGist);
+            return this.transitionTo('gist.edit', newGist);
           });
         });
       }).catch(this.catchForkError.bind(this));
@@ -102,6 +104,10 @@ export default Ember.Route.extend({
       let firstError = error.errors[0];
       if (firstError.code === "unprocessable") {
         this.get('notify').error("The gist is invalid, and could not be saved.");
+        return;
+      }
+      if (firstError.code === "missing_field") {
+        this.get('notify').error("The contents of a file is completely empty, so the gist could not be saved.");
         return;
       }
     }
