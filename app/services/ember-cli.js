@@ -336,7 +336,7 @@ export default Ember.Service.extend({
   },
 
   getTwiddleJson (gist) {
-    return new Ember.RSVP.Promise((resolve, reject) => {
+    return new Ember.RSVP.Promise((resolve) => {
       var twiddleJson = JSON.parse(gist.get('files').findBy('filePath', 'twiddle.json').get('content'));
 
       // Fill in any missing required dependencies

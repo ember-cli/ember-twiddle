@@ -71,9 +71,9 @@ export default Ember.Service.extend({
   },
 
   resolveAddon(name, value) {
-    return new Ember.RSVP.Promise(function(resolve, reject) {
+    return new Ember.RSVP.Promise(function(resolve) {
       let url = `https://nl1fctyzr7.execute-api.us-east-1.amazonaws.com/staging/addon?addon=${name}&addon_version=${value}&ember_version=1.13.15`;
-      $.getJSON(url, function(data){
+      Ember.$.getJSON(url, function(data){
         resolve(data);
       });
     });

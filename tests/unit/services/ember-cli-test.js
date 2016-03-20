@@ -58,13 +58,13 @@ test("getTwiddleJson() resolves dependencies", function(assert) {
     })])
   });
 
-  var twiddleJson = service.getTwiddleJson(gist);
-
-  assert.deepEqual(twiddleJson.dependencies, {
-    'ember': "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.9/ember.debug.js",
-    'ember-template-compiler': "//cdnjs.cloudflare.com/ajax/libs/ember.js/2.0.1/ember-template-compiler.js",
-    'ember-data': "//cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.12.1/ember-data.js",
-    'jquery': "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
+  service.getTwiddleJson(gist).then(twiddleJson => {
+    assert.deepEqual(twiddleJson.dependencies, {
+      'ember': "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.9/ember.debug.js",
+      'ember-template-compiler': "//cdnjs.cloudflare.com/ajax/libs/ember.js/2.0.1/ember-template-compiler.js",
+      'ember-data': "//cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.12.1/ember-data.js",
+      'jquery': "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
+    });
   });
 });
 
@@ -167,26 +167,24 @@ test('compileHbs can include backticks', function(assert) {
 test("buildHtml works when testing not enabled", function(assert) {
   var service = this.subject();
 
-  service.getTwiddleJson = function() {
-    return {
-      "version": "0.5.0",
-      "EmberENV": {
-        "FEATURES": {}
-      },
-      "options": {
-        "enable-testing": false
-      },
-      "dependencies": {
-        "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
-      }
-    };
+  var twiddleJson = {
+    "version": "0.5.0",
+    "EmberENV": {
+      "FEATURES": {}
+    },
+    "options": {
+      "enable-testing": false
+    },
+    "dependencies": {
+      "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
+    }
   };
 
   var gist = Ember.Object.create({
     initialRoute: "/"
   });
 
-  var output = service.buildHtml(gist, '/* app */', '/* styles */');
+  var output = service.buildHtml(gist, '/* app */', '/* styles */', twiddleJson);
 
   assert.ok(output.indexOf("window.location.hash='/';") > 0, "output sets initialRoute");
   assert.ok(output.indexOf('EmberENV = {"FEATURES":{}}') > 0, "output contains feature flags");
@@ -201,24 +199,22 @@ test("buildHtml works when testing not enabled", function(assert) {
 test("buildHtml works when testing is enabled", function(assert) {
   var service = this.subject();
 
-  service.getTwiddleJson = function() {
-    return {
-      "version": "0.5.0",
-      "EmberENV": {
-        "FEATURES": {}
-      },
-      "options": {
-        "enable-testing": true
-      },
-      "dependencies": {
-        "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
-      }
-    };
+  var twiddleJson = {
+    "version": "0.5.0",
+    "EmberENV": {
+      "FEATURES": {}
+    },
+    "options": {
+      "enable-testing": true
+    },
+    "dependencies": {
+      "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
+    }
   };
 
   var gist = Ember.Object.create({});
 
-  var output = service.buildHtml(gist, '', '');
+  var output = service.buildHtml(gist, '', '', twiddleJson);
 
   assert.ok(output.indexOf("window.location.hash='/';") === -1, "output does not set initialRoute if not provided");
   assert.ok(output.indexOf('<div id="qunit"></div>') > 0, "output contains qunit div");
