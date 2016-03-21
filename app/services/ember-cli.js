@@ -358,11 +358,7 @@ export default Ember.Service.extend({
         reject();
       }
 
-      try {
-        twiddleJson = JSON.parse(twiddleJson.get('content'));
-      } catch(error) {
-        reject(error);
-      }
+      twiddleJson = JSON.parse(twiddleJson.get('content'));
 
       // set usePods
       this.set('usePods', (twiddleJson.options && twiddleJson.options['use_pods']) || false);

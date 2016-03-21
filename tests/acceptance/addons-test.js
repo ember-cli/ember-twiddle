@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import startApp from 'ember-twiddle/tests/helpers/start-app';
 
 module('Acceptance | addons', {
@@ -15,7 +15,7 @@ module('Acceptance | addons', {
   }
 });
 
-test('Addons work', function(assert) {
+skip('Addons work', function(assert) {
 
   const files = [
     {
@@ -48,7 +48,7 @@ test('Addons work', function(assert) {
                     "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/2.4.2/ember-data.js",
                     "ember-template-compiler": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/2.4.3/ember-template-compiler.js"
                   },
-                  addons: {
+                  "addons": {
                     "ember-truth-helpers": "1.2.0"
                   }
                 }`
