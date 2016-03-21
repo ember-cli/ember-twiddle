@@ -389,7 +389,7 @@ export default Ember.Service.extend({
       const dependencyResolver = this.get('dependencyResolver');
       dependencyResolver.resolveDependencies(twiddleJson.dependencies);
       if ('addons' in twiddleJson) {
-        dependencyResolver.resolveAddons(twiddleJson.addons, twiddleJson.dependencies).then(() => {
+        return dependencyResolver.resolveAddons(twiddleJson.addons, twiddleJson.dependencies).then(() => {
           return RSVP.resolve(twiddleJson);
         }).catch(() => {
           return RSVP.reject();

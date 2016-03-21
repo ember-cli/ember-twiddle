@@ -30,7 +30,7 @@ const CHANNEL_FILENAME_MAP = {
 
 const CHANNELS = ['release', 'beta', 'canary'];
 
-const { computed } = Ember;
+const { computed, RSVP } = Ember;
 
 export default Ember.Service.extend({
   resolveDependencies: function(dependencies) {
@@ -49,7 +49,7 @@ export default Ember.Service.extend({
       addonPromises[name] = this.resolveAddon(name, value);
     });
 
-    return Ember.RSVP.hash(addonPromises).then(hash => {
+    return RSVP.hash(addonPromises).then(hash => {
       Object.keys(addons).forEach((name) => {
         let addon = hash[name];
         if(addon.status === 'build_success') {
@@ -67,15 +67,14 @@ export default Ember.Service.extend({
           console.log(`Joost will have to implement some sort of error logic here..`);
         }
       });
+      return RSVP.resolve(dependencies);
     });
   },
 
   resolveAddon(name, value) {
-    return new Ember.RSVP.Promise(function(resolve) {
-      let url = `https://nl1fctyzr7.execute-api.us-east-1.amazonaws.com/staging/addon?addon=${name}&addon_version=${value}&ember_version=1.13.15`;
-      Ember.$.getJSON(url, function(data){
-        resolve(data);
-      });
+    return new RSVP.Promise(function(resolve) {
+      const url = `https://nl1fctyzr7.execute-api.us-east-1.amazonaws.com/staging/addon?addon=${name}&addon_version=${value}&ember_version=1.13.15`;
+      resolve(Ember.$.getJSON(url).then(data => RSVP.resolve(data)));
     });
   },
 
