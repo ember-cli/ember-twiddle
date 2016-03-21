@@ -9,7 +9,7 @@ import _template from "lodash/string/template";
 
 const hbsPlugin = new HtmlbarsInlinePrecompile(Ember.HTMLBars.precompile);
 
-const { inject } = Ember;
+const { inject, RSVP } = Ember;
 const twiddleAppName = 'demo-app';
 
 // These files will be included if not present
@@ -202,7 +202,7 @@ export default Ember.Service.extend({
    * @return {Ember Object}       Source code for built Ember app
    */
   compileGist (gist) {
-    var promise = new Ember.RSVP.Promise((resolve, reject) => {
+    var promise = new RSVP.Promise((resolve, reject) => {
       let errors = [];
       let out = [];
       let cssOut = [];
@@ -255,7 +255,7 @@ export default Ember.Service.extend({
     }
 
     // avoids security error
-    appJS += "window.history.pushState = function() {}; window.history.replaceState = function() {};";
+    appJS += "window.history.pushState = function() {}; window.history.replaceState = function() {}; window.sessionStorage = undefined;";
 
     // Hide toolbar since it is not working
     appCSS += `\n#qunit-testrunner-toolbar, #qunit-tests a[href] { display: none; }\n`;
@@ -349,7 +349,7 @@ export default Ember.Service.extend({
   },
 
   _getTwiddleJson(gist) {
-    return new Ember.RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve, reject) => {
       let twiddleJson = gist.get('files').findBy('filePath', 'twiddle.json');
 
       if (!twiddleJson) {
@@ -366,8 +366,7 @@ export default Ember.Service.extend({
   },
 
   getTwiddleJson (gist) {
-    return this._getTwiddleJson(gist).then(() => {
-      var twiddleJson = JSON.parse(gist.get('files').findBy('filePath', 'twiddle.json').get('content'));
+    return this._getTwiddleJson(gist).then((twiddleJson) => {
 
       // Fill in any missing required dependencies
       const dependencies = JSON.parse(blueprints['twiddle.json']).dependencies;
@@ -385,19 +384,18 @@ export default Ember.Service.extend({
       dependencyResolver.resolveDependencies(twiddleJson.dependencies);
       if ('addons' in twiddleJson) {
         dependencyResolver.resolveAddons(twiddleJson.addons, twiddleJson.dependencies).then(() => {
-          return Ember.RSVP.resolve(twiddleJson);
-        }).catch(() -> {
-          return Ember.RSVP.reject();
+          return RSVP.resolve(twiddleJson);
+        }).catch(() => {
+          return RSVP.reject();
         });
       }
-      else {
-        return Ember.RSVP.resolve(twiddleJson);
-      }
+
+      return RSVP.resolve(twiddleJson);
     });
   },
 
   _updateTwiddleJson(gist, updateFn) {
-    return new Ember.RSVP.Promise(function(resolve, reject) {
+    return new RSVP.Promise(function(resolve, reject) {
       const twiddle = gist.get('files').findBy('filePath', 'twiddle.json');
 
       let json;
