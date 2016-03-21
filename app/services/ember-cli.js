@@ -164,7 +164,9 @@ export default Ember.Service.extend({
   usePods: false,
 
   setup(gist) {
-    return this._getTwiddleJson(gist);
+    return this._getTwiddleJson(gist).catch(() => {
+      // do nothing if no twiddle.json
+    });
   },
 
   generate(type) {
@@ -238,12 +240,12 @@ export default Ember.Service.extend({
       this.addBoilerPlateFiles(out, gist);
       this.addConfig(out, gist);
 
-      this.getTwiddleJson(gist).then(twiddleJson => {
+      resolve(this.getTwiddleJson(gist).then(twiddleJson => {
         // Add boot code
         contentForAppBoot(out, {modulePrefix: twiddleAppName, dependencies: twiddleJson.dependencies});
 
-        resolve(this.buildHtml(gist, out.join('\n'), cssOut.join('\n'), twiddleJson));
-      });
+        return RSVP.resolve(this.buildHtml(gist, out.join('\n'), cssOut.join('\n'), twiddleJson));
+      }));
     });
 
     return promise;
@@ -356,7 +358,11 @@ export default Ember.Service.extend({
         reject();
       }
 
-      twiddleJson = JSON.parse(twiddleJson.get('content'));
+      try {
+        twiddleJson = JSON.parse(twiddleJson.get('content'));
+      } catch(error) {
+        reject(error);
+      }
 
       // set usePods
       this.set('usePods', (twiddleJson.options && twiddleJson.options['use_pods']) || false);
