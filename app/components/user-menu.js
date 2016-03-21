@@ -1,17 +1,23 @@
 import Ember from 'ember';
 import config from '../config/environment';
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
   tagName: 'ul',
   classNames: ['nav', 'nav-pills', 'user-menu'],
 
-  userName: Ember.computed.readOnly('session.currentUser.login'),
+  userName: computed.readOnly('session.currentUser.login'),
 
   version: config.APP.version,
   environment: config.environment,
   currentRevision: config.currentRevision,
 
-  currentVersionLink: Ember.computed('environment', 'version', 'currentRevision', function() {
+  v: computed('version', function() {
+    return this.get('version').charAt(0) === "v" ? "" : "v";
+  }),
+
+  currentVersionLink: computed('environment', 'version', 'currentRevision', function() {
     var baseLink = "https://github.com/ember-cli/ember-twiddle";
     var { environment, currentRevision, version } = this.getProperties('environment', 'currentRevision', 'version');
 
