@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
-const { inject } = Ember;
+const { inject, $ } = Ember;
+
+const CONFIRM_MSG = "Unsaved changes will be lost.";
 
 export default Ember.Route.extend({
   notify: inject.service('notify'),
@@ -14,11 +16,26 @@ export default Ember.Route.extend({
     });
   },
 
-  deactivate () {
+  activate() {
+    this.set('boundConfirmUnload', this.confirmUnload.bind(this));
+    $(window).on('beforeunload', this.get('boundConfirmUnload'));
+  },
+
+  deactivate() {
     var gist = this.controller.get('model');
     if (gist.get('isNew')) {
       this.get('store').unloadRecord(gist);
     }
+    $(window).off('beforeunload', this.get('boundConfirmUnload'));
+  },
+
+  confirmUnload(event) {
+    if (this.get('controller.unsaved')) {
+      if (!window.confirm(CONFIRM_MSG)) {
+        event.preventDefault();
+      }
+    }
+    return CONFIRM_MSG; // for Chrome
   },
 
   actions: {

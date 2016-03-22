@@ -28,9 +28,13 @@ module('Acceptance | twiddles', {
     stubValidSession(this.application, {
       "github-oauth2": {}
     });
+
+    this.cacheConfirm = window.confirm;
+    window.confirm = Ember.K;
   },
 
   afterEach: function() {
+    window.confirm = this.cacheConfirm;
     Ember.run(this.application, 'destroy');
   }
 });
