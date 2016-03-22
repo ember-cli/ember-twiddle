@@ -1,8 +1,9 @@
 import Ember from "ember";
+import DropdownSubmenuFixMixin from "../mixins/dropdown-submenu-fix";
 
 const { computed } = Ember;
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(DropdownSubmenuFixMixin, {
   tagName: 'li',
   classNames: ['dropdown'],
 

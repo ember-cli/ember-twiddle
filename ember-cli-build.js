@@ -67,6 +67,7 @@ module.exports = function(defaults) {
 
 
   app.import('bower_components/ember/ember-template-compiler.js');
+  app.import('vendor/bootstrap-dropdown-submenu-fix.css');
   app.import('vendor/hint.css');
   app.import('vendor/drags.js');
 
