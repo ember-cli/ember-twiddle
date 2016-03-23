@@ -18,7 +18,7 @@ test('it functions', function(assert) {
   this.on('liveReloadChanged', () => { liveReloadChangedCalledTimes++; });
   this.on('runNow', () => { runNowCalled = true; });
 
-  this.render(hbs`{{run-or-live-reload liveReloadChanged="liveReloadChanged" runNow="runNow"}}`);
+  this.render(hbs`{{run-or-live-reload liveReloadChanged=(action "liveReloadChanged") runNow=(action "runNow")}}`);
 
   let liveReloadCheckbox = this.$("#live-reload");
 

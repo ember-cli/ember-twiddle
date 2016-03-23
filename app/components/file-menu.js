@@ -36,7 +36,7 @@ export default Ember.Component.extend({
       this.attrs.removeFile(file);
     },
     saveGist(model) {
-      this.sendAction('saveGist', model);
+      this.attrs.saveGist(model);
     },
     share() {
       prompt('Ctrl + C ;-)', window.location.href);
@@ -54,16 +54,16 @@ export default Ember.Component.extend({
       prompt('Ctrl + C ;-)', embedCode);
     },
     fork(model) {
-      this.sendAction('fork', model);
+      this.attrs.fork(model);
     },
     copy() {
-      this.sendAction('copy');
+      this.attrs.copy();
     },
     deleteGist(model) {
       this.attrs.deleteGist(model);
     },
     signInViaGithub() {
-      this.sendAction('signInViaGithub');
+      this.attrs.signInViaGithub();
     }
   }
 });

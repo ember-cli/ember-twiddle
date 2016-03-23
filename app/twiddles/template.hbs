@@ -16,8 +16,8 @@
     </div>
 
     {{user-menu session=session
-                signInViaGithub="signInViaGithub"
-                signOut="signOut"
+                signInViaGithub=(route-action "signInViaGithub")
+                signOut=(route-action "signOut")
     }}
   </div>
 </nav>

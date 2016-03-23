@@ -65,11 +65,11 @@ moduleForComponent('file-menu', 'Integration | Component | file menu', {
                               addFile=(action "addFile")
                               renameFile=(action "renameFile")
                               removeFile=(action "removeFile")
-                              saveGist="saveGist"
-                              fork="fork"
-                              copy="copy"
+                              saveGist=(action "saveGist")
+                              fork=(action "fork")
+                              copy=(action "copy")
                               deleteGist=(action "deleteGist")
-                              signInViaGithub="signInViaGithub"}}`);
+                              signInViaGithub=(action "signInViaGithub")}}`);
   }
 });
 
