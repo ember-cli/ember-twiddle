@@ -23,9 +23,9 @@ moduleForComponent('user-menu', 'Integration | Component | user menu', {
     this.on('showTwiddles', () => { this.showTwiddlesCalled = true; });
 
     this.render(hbs`{{user-menu session=session
-                                signInViaGithub="signInViaGithub"
-                                signOut="signOut"
-                                showTwiddles="showTwiddles" }}`);
+                                signInViaGithub=(action "signInViaGithub")
+                                signOut=(action "signOut")
+                                showTwiddles=(action "showTwiddles")}}`);
   }
 });
 

@@ -29,10 +29,10 @@
                   renameFile=(action "renameFile")
                   removeFile=(action "removeFile")
                   deleteGist=(action "deleteGist")
-                  saveGist="saveGist"
-                  fork="fork"
-                  copy="copy"
-                  signInViaGithub="signInViaGithub"
+                  saveGist=(route-action "saveGist")
+                  fork=(route-action "fork")
+                  copy=(route-action "copy")
+                  signInViaGithub=(route-action "signInViaGithub")
       }}
 
       {{editor-mode-menu setKeyMap=(action "setEditorKeyMap")}}
@@ -46,9 +46,9 @@
     <hr>
 
     {{user-menu session=session
-                signInViaGithub="signInViaGithub"
-                signOut="signOut"
-                showTwiddles="showTwiddles"
+                signInViaGithub=(route-action "signInViaGithub")
+                signOut=(route-action "signOut")
+                showTwiddles=(route-action "showTwiddles")
     }}
 
     <div></div>
@@ -75,6 +75,8 @@
                                keyMap=settings.keyMap
                                numColumns=realNumColumns
                                fileTreeShown=fileTreeShown
+                               focusEditor=(action "focusEditor")
+                               selectFile=(action "selectFile")
                                contentChanged=(action "updateColumn")
                                removeColumn=(action "removeColumn")
                                addColumn=(action "addColumn")
@@ -95,9 +97,9 @@
                        buildErrors=buildErrors
       }}
     </div>
-    {{run-or-live-reload liveReloadChanged="liveReloadChanged" runNow="runNow"}}
+    {{run-or-live-reload liveReloadChanged=(action "liveReloadChanged") runNow=(action "runNow")}}
       <div class="url-bar">
-        {{input value=applicationUrl enter="urlChanged"}}
+        {{input value=applicationUrl enter=(route-action "urlChanged")}}
       </div>
     {{dummy-demo-app html=buildOutput}}
     {{#if fullScreen}}

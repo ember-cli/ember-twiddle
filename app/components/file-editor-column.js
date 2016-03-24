@@ -4,8 +4,6 @@ const { computed } = Ember;
 const MAX_COLUMNS = 3;
 
 export default Ember.Component.extend({
-  focusEditor: 'focusEditor',
-  selectFile: 'selectFile',
   keyMap: 'basic',
   file: null,
 
@@ -45,7 +43,7 @@ export default Ember.Component.extend({
 
     valueUpdated(_, __, changeObj) {
       const isUserChange = changeObj.origin !== 'setValue';
-      this.sendAction('contentChanged', isUserChange);
+      this.attrs.contentChanged(isUserChange);
     },
 
     removeColumn(col) {
