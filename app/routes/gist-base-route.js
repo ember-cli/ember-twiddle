@@ -22,7 +22,7 @@ export default Ember.Route.extend({
   actions: {
     willTransition(transition) {
       const gistController = this.controllerFor('gist');
-      if (gistController.get('unsaved')) {
+      if (gistController.get('unsaved') === true) {
         if (!window.confirm(CONFIRM_MSG)) {
           transition.abort();
         }

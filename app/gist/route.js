@@ -30,12 +30,12 @@ export default Ember.Route.extend({
   },
 
   confirmUnload(event) {
-    if (this.get('controller.unsaved')) {
+    if (this.get('controller.unsaved') === true) {
       if (!window.confirm(CONFIRM_MSG)) {
         event.preventDefault();
       }
+      return CONFIRM_MSG; // for Chrome
     }
-    return CONFIRM_MSG; // for Chrome
   },
 
   actions: {
