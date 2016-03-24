@@ -26,7 +26,10 @@ export default GistRoute.extend({
     // reset copyCurrentTwiddle, so it is not shown in the URL: this QP is only
     // needed when initializing the model for this route
     controller.set('copyCurrentTwiddle', false);
-
-    this.controllerFor('gist').set('unsaved', true);
+    
+    const gistController = this.controllerFor('gist');
+    Ember.run.schedule('afterRender', function() {
+      gistController.set('unsaved', false);
+    });
   }
 });
