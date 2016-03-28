@@ -28,7 +28,7 @@ const CHANNEL_FILENAME_MAP = {
   'ember-data': 'ember-data.js'
 };
 
-const CHANNELS = ['release', 'beta', 'canary'];
+const CHANNELS = ['canary', 'beta', 'release'];
 
 const { computed, RSVP } = Ember;
 
