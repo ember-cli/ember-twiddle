@@ -11,7 +11,8 @@ const MAX_COLUMNS = 3;
 export default Ember.Component.extend({
   emberCli: inject.service('ember-cli'),
   dependencyResolver: inject.service(),
-  notify: inject.service('notify'),
+  notify: inject.service(),
+  store: inject.service(),
 
   numColumns: 1,
   fullScreen: false,
@@ -346,7 +347,7 @@ export default Ember.Component.extend({
 
     titleChanged() {
       this.set('unsaved', true);
-      this.send('titleUpdated');
+      this.get('titleUpdated')();
     },
 
     showFileTree() {
@@ -355,14 +356,6 @@ export default Ember.Component.extend({
 
     hideFileTree() {
       this.set('fileTreeShown', false);
-    },
-
-    deleteGist (gist) {
-      if(confirm(`Are you sure you want to remove this gist from Github?\n\n${gist.get('description')}`)) {
-        gist.destroyRecord();
-        this.transitionToRoute('gist.new');
-        this.get('notify').info(`Gist ${gist.get('id')} was deleted from Github`);
-      }
     },
 
     addComponent() {
@@ -535,16 +528,14 @@ export default Ember.Component.extend({
       }
 
       this._updateOpenFiles();
-      this.transitionToRoute({queryParams: {numColumns: numColumns - 1}});
+      this.get('transitionQueryParams')({numColumns: numColumns - 1});
     },
 
     addColumn() {
       let numColumns = this.get('realNumColumns');
 
-      this.transitionToRoute({
-        queryParams: {
-          numColumns: numColumns + 1
-        }
+      this.get('transitionQueryParams')({
+        numColumns: numColumns + 1
       }).then(() => {
         this.initializeColumns();
         this._updateOpenFiles();
@@ -558,10 +549,8 @@ export default Ember.Component.extend({
     },
 
     exitFullScreen() {
-      this.transitionToRoute({
-        queryParams: {
-          fullScreen: false
-        }
+      this.get('transitionQueryParams')({
+        fullScreen: false
       }).then(() => {
         this.initializeColumns();
         this._updateOpenFiles();

@@ -17,6 +17,12 @@ export default Ember.Controller.extend({
     this.setupWindowUpdate();
   },
 
+  actions: {
+    transitionQueryParams(queryParams) {
+      return this.transitionToRoute({ queryParams: queryParams });
+    }
+  },
+
   setupWindowUpdate: function() {
     // TODO: this in a controller seems suspect, rather this should likely be
     // part of some handshake, to ensure no races exist. This should likley not

@@ -55,6 +55,14 @@ export default Ember.Route.extend({
       }).catch((this.catchSaveError.bind(this)));
     },
 
+    deleteGist (gist) {
+      if(confirm(`Are you sure you want to remove this gist from Github?\n\n${gist.get('description')}`)) {
+        gist.destroyRecord();
+        this.transitionToRoute('gist.new');
+        this.get('notify').info(`Gist ${gist.get('id')} was deleted from Github`);
+      }
+    },
+
     setSaved () {
       this.get('controller').set('unsaved', false);
     },
