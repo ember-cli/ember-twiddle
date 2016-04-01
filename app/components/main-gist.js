@@ -151,6 +151,11 @@ export default Ember.Component.extend({
    */
   initializeColumns() {
     const files = this.get('model.files');
+
+    if (!files) {
+      return;
+    }
+
     const openFileNames = this.get('openFiles').split(",");
     const openFiles = openFileNames.map((file) => files.findBy('fileName', file));
 
