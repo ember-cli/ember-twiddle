@@ -31,12 +31,12 @@ export default Ember.Controller.extend({
     // be something a controller would handle - (SP)
     window.addEventListener('message', (m) => {
       run(() => {
-        if(typeof m.data==='object' && 'setDemoAppUrl' in m.data) {
+        if(typeof m.data==='object' && 'setAppUrl' in m.data) {
           if (!this.get('isDestroyed')) {
             if (window.messagesWaiting > 0) {
               window.messagesWaiting = 0;
             }
-            const newRoute = m.data.setDemoAppUrl || '/';
+            const newRoute = m.data.setAppUrl || '/';
             this.setProperties({
               applicationUrl: newRoute,
               route: newRoute === "/" ? undefined : newRoute
