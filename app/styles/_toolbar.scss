@@ -69,14 +69,18 @@
       margin: 1em 0;
     }
   }
-
+  color: #fff;
   font-size: $font-size;
-  background: $ember-orange top center;
-  background-image: url("../images/navigation_background.png");
-  border-bottom: 1px solid $burnt-orange;
-  -moz-box-shadow: rgba(0,0,0,0.3) 0 0 3px;
-  -webkit-box-shadow: rgba(0,0,0,0.3) 0 0 3px;
-  box-shadow: rgba(0,0,0,0.3) 0 0 3px;
+  background: $ember-orange;
+  background-image: url(/images/header.svg);
+  background-position: top-center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 1rem 0;
+
+  @media (max-width: $screen-md-min) {
+    padding: 0;
+  }
 
   button.navbar-toggle {
     margin-top: 13px;
@@ -188,7 +192,6 @@
       text-transform: uppercase;
       font-weight: bold;
       color: #faf2ee;
-      text-shadow: rgba(0, 0, 0, 0.3) 0px 1px 0px;
 
       a {
         color: #ffffff;
@@ -204,7 +207,6 @@
       padding: 5px 10px;
       transition: background .3s;
       font-size: $font-size-larger;
-      text-shadow: $text-shadow;
       border-radius: 3px;
       border: 0;
       color: $bleached-orange;
@@ -226,12 +228,10 @@
       }
 
       &:hover {
-        text-shadow: none;
         background-color: $menu-hover-bg;
       }
 
       &.active {
-        text-shadow: none;
         background-color: $menu-bg;
         box-shadow: rgba(255,255,255,0.15) 0 1px 0px,inset rgba(0,0,0,0.17) 0 1px 1px;
         outline: 0;
@@ -246,7 +246,6 @@
 
   .dropdown {
     &.open .dropdown-toggle {
-      text-shadow: none;
       background-color: $menu-bg;
       box-shadow: rgba(255,255,255,0.15) 0 1px 0px,inset rgba(0,0,0,0.17) 0 1px 1px;
       border: 1px solid transparent;
@@ -263,11 +262,9 @@
     text-transform: uppercase;
     font-weight: bold;
     color: $bleached-orange;
-    text-shadow: $text-shadow;
     border: 1px solid transparent;
 
     &:hover, &:focus {
-      text-shadow: none;
       background-color: $menu-hover-bg;
     }
   }
@@ -288,7 +285,6 @@
     text-transform: uppercase;
     font-weight: bold;
     color: $bleached-orange;
-    text-shadow: $text-shadow;
     border: 1px solid transparent;
   }
 
