@@ -1,6 +1,6 @@
 import Ember from "ember";
 
-const { run } = Ember;
+const { RSVP, run } = Ember;
 
 export default Ember.Controller.extend({
   queryParams: ['numColumns', 'fullScreen', 'route', 'openFiles', 'fileTreeShown'],
@@ -19,7 +19,9 @@ export default Ember.Controller.extend({
 
   actions: {
     transitionQueryParams(queryParams) {
-      return this.transitionToRoute({ queryParams: queryParams });
+      return this.transitionToRoute({ queryParams: queryParams }).then(() => {
+        return RSVP.resolve(queryParams);
+      });
     }
   },
 

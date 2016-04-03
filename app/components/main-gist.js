@@ -169,18 +169,16 @@ export default Ember.Component.extend({
     const len = files.get('length');
     for (let i = 1; i <= numColumns; ++i) {
       if (!this.getColumnFile(i)) {
-        if (files) {
-          j = 0;
-          while (!this.isOpen(files.objectAt(j))) {
-            j++;
-            if (j >= len) {
-              return;
-            }
+        j = 0;
+        while (!this.isOpen(files.objectAt(j))) {
+          j++;
+          if (j >= len) {
+            return;
           }
-          let file = files.objectAt(j);
-          if (file) {
-            this.setColumnFile(i, file);
-          }
+        }
+        let file = files.objectAt(j);
+        if (file) {
+          this.setColumnFile(i, file);
         }
       }
     }
@@ -541,7 +539,8 @@ export default Ember.Component.extend({
 
       this.get('transitionQueryParams')({
         numColumns: numColumns + 1
-      }).then(() => {
+      }).then((queryParams) => {
+        this.setProperties(queryParams);
         this.initializeColumns();
         this._updateOpenFiles();
       });
