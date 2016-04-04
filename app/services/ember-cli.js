@@ -9,7 +9,7 @@ import _template from "lodash/string/template";
 
 const hbsPlugin = new HtmlbarsInlinePrecompile(Ember.HTMLBars.precompile);
 
-const { inject, RSVP } = Ember;
+const { computed, inject, RSVP } = Ember;
 const twiddleAppName = 'demo-app';
 
 // These files will be included if not present
@@ -144,12 +144,6 @@ const availableBlueprints = {
   }
 };
 
-const requiredDependencies = [
-  'jquery',
-  'ember',
-  'ember-template-compiler'
-];
-
 /**
  * A tiny browser version of the CLI build chain.
  * or more realistically: a hacked reconstruction of it.
@@ -158,15 +152,13 @@ const requiredDependencies = [
  * source code at https://github.com/ember-cli/ember-cli
  */
 export default Ember.Service.extend({
-  dependencyResolver: inject.service(),
   store: inject.service(),
+  twiddleJson: inject.service(),
 
-  usePods: false,
+  usePods: computed.readOnly('twiddleJson.usePods'),
 
   setup(gist) {
-    return this._getTwiddleJson(gist).catch(() => {
-      // do nothing if no twiddle.json
-    });
+    this.get('twiddleJson').setup(gist);
   },
 
   generate(type) {
@@ -212,25 +204,7 @@ export default Ember.Service.extend({
       this.checkRequiredFiles(out, gist);
 
       gist.get('files').forEach(file => {
-        try {
-          switch(file.get('extension')) {
-            case '.js':
-              out.push(this.compileJs(file.get('content'), file.get('filePath')));
-              break;
-            case '.hbs':
-              out.push(this.compileHbs(file.get('content'), file.get('filePath')));
-              break;
-            case '.css':
-              cssOut.push(this.compileCss(file.get('content'), file.get('filePath')));
-              break;
-            case '.json':
-              break;
-          }
-        }
-        catch(e) {
-          e.message = `${file.get('filePath')}: ${e.message}`;
-          errors.push(e);
-        }
+        this.compileFile(file, errors, out, cssOut);
       });
 
       if (errors.length) {
@@ -240,7 +214,7 @@ export default Ember.Service.extend({
       this.addBoilerPlateFiles(out, gist);
       this.addConfig(out, gist);
 
-      resolve(this.getTwiddleJson(gist).then(twiddleJson => {
+      resolve(this.get('twiddleJson').getTwiddleJson(gist).then(twiddleJson => {
         // Add boot code
         contentForAppBoot(out, {modulePrefix: twiddleAppName, dependencies: twiddleJson.dependencies});
 
@@ -249,6 +223,31 @@ export default Ember.Service.extend({
     });
 
     return promise;
+  },
+
+  compileFile(file, errors, out, cssOut) {
+    const content = file.get('content');
+    const filePath = file.get('filePath');
+
+    try {
+      switch(file.get('extension')) {
+        case '.js':
+          out.push(this.compileJs(content, filePath));
+          break;
+        case '.hbs':
+          out.push(this.compileHbs(content, filePath));
+          break;
+        case '.css':
+          cssOut.push(this.compileCss(content, filePath));
+          break;
+        case '.json':
+          break;
+      }
+    }
+    catch(e) {
+      e.message = `${file.get('filePath')}: ${e.message}`;
+      errors.push(e);
+    }
   },
 
   buildHtml (gist, appJS, appCSS, twiddleJSON) {
@@ -263,12 +262,27 @@ export default Ember.Service.extend({
     appCSS += `\n#qunit-testrunner-toolbar, #qunit-tests a[href] { display: none; }\n`;
 
     let index = blueprints['index.html'];
-    let deps = twiddleJSON.dependencies;
 
-    let depCssLinkTags = '';
-    let depScriptTags ='';
+    let { depScriptTags, depCssLinkTags, testStuff } = this.buildDependencies(twiddleJSON);
+
     let appScriptTag = `<script type="text/javascript">${appJS}</script>`;
     let appStyleTag = `<style type="text/css">${appCSS}</style>`;
+
+    index = index.replace('{{content-for \'head\'}}', `${depCssLinkTags}\n${appStyleTag}`);
+    index = index.replace('{{content-for \'body\'}}', `${depScriptTags}\n${appScriptTag}\n${testStuff}\n<div id="root"></div>`);
+
+    // replace the {{build-timestamp}} placeholder with the number of
+    // milliseconds since the Unix Epoch:
+    // http://momentjs.com/docs/#/displaying/unix-offset/
+    index = index.replace('{{build-timestamp}}', +moment());
+
+    return index;
+  },
+
+  buildDependencies(twiddleJSON) {
+    let deps = twiddleJSON.dependencies;
+    let depCssLinkTags = '';
+    let depScriptTags = '';
     let testStuff = '';
 
     let EmberENV = twiddleJSON.EmberENV || {};
@@ -308,15 +322,7 @@ export default Ember.Service.extend({
       testStuff += `<script type="text/javascript">require("demo-app/tests/test-helper");</script>`;
     }
 
-    index = index.replace('{{content-for \'head\'}}', `${depCssLinkTags}\n${appStyleTag}`);
-    index = index.replace('{{content-for \'body\'}}', `${depScriptTags}\n${appScriptTag}\n${testStuff}\n<div id="root"></div>`);
-
-    // replace the {{build-timestamp}} placeholder with the number of
-    // milliseconds since the Unix Epoch:
-    // http://momentjs.com/docs/#/displaying/unix-offset/
-    index = index.replace('{{build-timestamp}}', +moment());
-
-    return index;
+    return { depScriptTags, depCssLinkTags, testStuff };
   },
 
   checkRequiredFiles (out, gist) {
@@ -348,97 +354,6 @@ export default Ember.Service.extend({
 
     let configJs = 'export default ' + JSON.stringify(config);
     out.push(this.compileJs(configJs, 'config/environment'));
-  },
-
-  _getTwiddleJson(gist) {
-    return new RSVP.Promise((resolve, reject) => {
-      let twiddleJson = gist.get('files').findBy('filePath', 'twiddle.json');
-
-      if (!twiddleJson) {
-        reject();
-      }
-
-      twiddleJson = JSON.parse(twiddleJson.get('content'));
-
-      // set usePods
-      this.set('usePods', (twiddleJson.options && twiddleJson.options['use_pods']) || false);
-
-      resolve(twiddleJson);
-    });
-  },
-
-  getTwiddleJson (gist) {
-    return this._getTwiddleJson(gist).then((twiddleJson) => {
-
-      // Fill in any missing required dependencies
-      const dependencies = JSON.parse(blueprints['twiddle.json']).dependencies;
-      requiredDependencies.forEach(function(dep) {
-        if (!twiddleJson.dependencies[dep] && dependencies[dep]) {
-          if (dep === 'ember-template-compiler') {
-            twiddleJson.dependencies[dep] = twiddleJson.dependencies['ember'].replace('ember.debug.js', 'ember-template-compiler.js');
-          } else {
-            twiddleJson.dependencies[dep] = dependencies[dep];
-          }
-        }
-      });
-
-      const dependencyResolver = this.get('dependencyResolver');
-      dependencyResolver.resolveDependencies(twiddleJson.dependencies);
-      if ('addons' in twiddleJson) {
-        return dependencyResolver.resolveAddons(twiddleJson.addons, twiddleJson.dependencies).then(() => {
-          return RSVP.resolve(twiddleJson);
-        }).catch(() => {
-          return RSVP.reject();
-        });
-      }
-
-      return RSVP.resolve(twiddleJson);
-    });
-  },
-
-  _updateTwiddleJson(gist, updateFn) {
-    return new RSVP.Promise(function(resolve, reject) {
-      const twiddle = gist.get('files').findBy('filePath', 'twiddle.json');
-
-      let json;
-      try {
-        json = JSON.parse(twiddle.get('content'));
-      } catch (e) {
-        return reject(e);
-      }
-
-      json = updateFn(json);
-
-      json = JSON.stringify(json, null, '  ');
-      twiddle.set('content', json);
-
-      resolve();
-    });
-  },
-
-  updateDependencyVersion(gist, dependencyName, version) {
-    return this._updateTwiddleJson(gist, (json) => {
-      json.dependencies[dependencyName] = version;
-
-      // since ember and ember-template-compiler should always have the same
-      // version, we update the version for the ember-template-compiler too, if
-      // the ember dependency is updated
-      if (dependencyName === 'ember' && json.dependencies.hasOwnProperty('ember-template-compiler')) {
-        json.dependencies['ember-template-compiler'] = version;
-      }
-
-      return json;
-    });
-  },
-
-  ensureTestingEnabled(gist) {
-    return this._updateTwiddleJson(gist, (json) => {
-      if (!json.options) {
-        json.options = {};
-      }
-      json.options["enable-testing"] = true;
-      return json;
-    });
   },
 
   /**
@@ -481,6 +396,14 @@ export default Ember.Service.extend({
         return code;
     }
     return '';
+  },
+
+  updateDependencyVersion(gist, dependencyName, version) {
+    return this.get('twiddleJson').updateDependencyVersion(gist, dependencyName, version);
+  },
+
+  ensureTestingEnabled(gist) {
+    return this.get('twiddleJson').ensureTestingEnabled(gist);
   }
 });
 

@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 moduleFor('service:ember-cli', 'Unit | Service | ember cli', {
   // Specify the other units that are required for this test.
-  needs: ['model:gist','model:gistFile', 'service:dependency-resolver']
+  needs: ['model:gist','model:gistFile', 'service:dependency-resolver', 'service:twiddle-json']
 });
 
 test('compiling a gist works', function(assert) {
@@ -36,90 +36,6 @@ test('compiling a gist works', function(assert) {
       assert.ok(output.indexOf('define("demo-app/controllers/application"')>-1, 'build contains controller');
       assert.ok(output.indexOf('define("demo-app/config/environment"')>-1, 'build contains config');
     });
-  });
-});
-
-test("getTwiddleJson() resolves dependencies", function(assert) {
-  var service = this.subject();
-
-  var gist = Ember.Object.create({
-    files: Ember.A([Ember.Object.create({
-      filePath: 'twiddle.json',
-      content: `
-        {
-          "dependencies": {
-            "ember": "1.13.9",
-            "ember-template-compiler": "2.0.1",
-            "ember-data": "1.12.1",
-            "jquery": "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
-          }
-        }
-      `
-    })])
-  });
-
-  service.getTwiddleJson(gist).then(twiddleJson => {
-    assert.deepEqual(twiddleJson.dependencies, {
-      'ember': "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.9/ember.debug.js",
-      'ember-template-compiler': "//cdnjs.cloudflare.com/ajax/libs/ember.js/2.0.1/ember-template-compiler.js",
-      'ember-data': "//cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.12.1/ember-data.js",
-      'jquery': "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
-    });
-  });
-});
-
-test("updateDependencyVersion() updates the version of the dependency in twiddle.json", function(assert) {
-  assert.expect(2);
-
-  var service = this.subject();
-
-  var gist = Ember.Object.create({
-    files: Ember.A([Ember.Object.create({
-      filePath: 'twiddle.json',
-      content: `
-        {
-          "dependencies": {
-            "ember": "1.13.9"
-          }
-        }
-      `
-    })])
-  });
-
-  service.updateDependencyVersion(gist, 'ember', 'release').then(function() {
-    var updatedContent = gist.get('files').findBy('filePath', 'twiddle.json').get('content');
-    var parsed = JSON.parse(updatedContent);
-
-    assert.equal(parsed.dependencies.ember, 'release');
-    assert.equal(parsed.dependencies.hasOwnProperty('ember-template-compiler'), false, "does not automatically add an ember-template-compiler dependency, when ember is updated");
-  });
-});
-
-test("updateDependencyVersion() updates the version of ember-template-compiler if ember is updated", function(assert) {
-  assert.expect(2);
-
-  var service = this.subject();
-
-  var gist = Ember.Object.create({
-    files: Ember.A([Ember.Object.create({
-      filePath: 'twiddle.json',
-      content: `
-        {
-          "dependencies": {
-            "ember": "1.13.9",
-            "ember-template-compiler": "1.13.9"
-          }
-        }
-      `
-    })])
-  });
-
-  service.updateDependencyVersion(gist, 'ember', 'release').then(function() {
-    var updatedContent = gist.get('files').findBy('filePath', 'twiddle.json').get('content');
-    var parsed = JSON.parse(updatedContent);
-
-    assert.equal(parsed.dependencies.ember, 'release');
-    assert.equal(parsed.dependencies['ember-template-compiler'], 'release');
   });
 });
 
