@@ -1,0 +1,17 @@
+<div class="table-responsive">
+  <table class="saved-twiddles table table-striped table-bordered">
+    <thead>
+      <th>SHA</th>
+      <th>Updated</th>
+      <th>Twiddle</th>
+      <th>Gist</th>
+      <th>Files</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      {{#each filteredModel as |gist|}}
+        {{saved-twiddles-row gist=gist}}
+      {{/each}}
+    </tbody>
+  </table>
+</div>
