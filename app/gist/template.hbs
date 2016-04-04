@@ -1,109 +1,12 @@
-<nav class="navbar-default">
-  <div class="row toolbar">
-    <div>
-      <div class="title">
-        {{title-input value=model.description titleChanged=(action "titleChanged")}}
-        {{saved-state-indicator model=model unsaved=unsaved}}
-      </div>
-
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsed-menu" aria-expanded="false">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-  </div>
-
-  <div id="collapsed-menu" class="collapse navbar-collapse row toolbar">
-    <ul class="nav-pills main-menu">
-      {{file-menu model=model
-                  session=session
-                  activeEditorCol=activeEditorCol
-                  activeFile=activeFile
-                  addFile=(action "addFile")
-                  addHelper=(action "addHelper")
-                  addComponent=(action "addComponent")
-                  addUnitTestFile=(action "addUnitTestFile")
-                  addIntegrationTestFile=(action "addIntegrationTestFile")
-                  addAcceptanceTestFile=(action "addAcceptanceTestFile")
-                  renameFile=(action "renameFile")
-                  removeFile=(action "removeFile")
-                  deleteGist=(action "deleteGist")
-                  saveGist=(route-action "saveGist")
-                  fork=(route-action "fork")
-                  copy=(route-action "copy")
-                  signInViaGithub=(route-action "signInViaGithub")
-      }}
-
-      {{editor-mode-menu setKeyMap=(action "setEditorKeyMap")}}
-
-      {{versions-menu versionSelected=(action "versionSelected")
-                      emberVersions=emberVersions
-                      emberDataVersions=emberDataVersions
-      }}
-    </ul>
-
-    <hr>
-
-    {{user-menu session=session
-                signInViaGithub=(route-action "signInViaGithub")
-                signOut=(route-action "signOut")
-                showTwiddles=(route-action "showTwiddles")
-    }}
-
-    <div></div>
-  </div>
-</nav>
-
-{{#twiddle-panes numColumns=realNumColumns fullScreen=fullScreen fileTreeShown=fileTreeShown}}
-  {{#unless fullScreen}}
-    {{#if fileTreeShown}}
-      <div class="col-md-4 file-tree">
-        {{file-tree model=model
-                    openFile=(action "openFile")
-                    hideFileTree=(action "hideFileTree")
-        }}
-      </div>
-    {{/if}}
-
-    {{#each columns as |column|}}
-      {{#if column.show}}
-        <div class="col-md-4 code {{if column.active 'active' ''}}">
-          {{file-editor-column col=column.col
-                               file=column.file
-                               allFiles=model.files
-                               keyMap=settings.keyMap
-                               numColumns=realNumColumns
-                               fileTreeShown=fileTreeShown
-                               focusEditor=(action "focusEditor")
-                               selectFile=(action "selectFile")
-                               contentChanged=(action "updateColumn")
-                               removeColumn=(action "removeColumn")
-                               addColumn=(action "addColumn")
-                               showFileTree=(action "showFileTree")
-          }}
-        </div>
-      {{/if}}
-    {{/each}}
-  {{/unless}}
-
-  <div class="col-md-4 output {{if fullScreen 'full-screen'}}">
-    <div class="header">
-      {{#if noColumns}}
-        <span class="glyphicon glyphicon-plus" {{action 'addColumn'}} title="Show an editor panel"></span>
-      {{/if}}
-      {{build-messages notify=notify
-                       isBuilding=isBuilding
-                       buildErrors=buildErrors
-      }}
-    </div>
-    {{run-or-live-reload liveReloadChanged=(action "liveReloadChanged") runNow=(action "runNow")}}
-      <div class="url-bar">
-        {{input value=applicationUrl enter=(route-action "urlChanged")}}
-      </div>
-    {{dummy-demo-app html=buildOutput}}
-    {{#if fullScreen}}
-      <a class="exit-full-screen-link" {{action 'exitFullScreen'}}>Edit Twiddle</a>
-    {{/if}}
-  </div>
-{{/twiddle-panes}}
+{{main-gist model=model
+            session=session
+            numColumns=numColumns
+            fullScreen=fullScreen
+            openFiles=openFiles
+            fileTreeShown=fileTreeShown
+            route=route
+            applicationUrl=applicationUrl
+            unsaved=unsaved
+            transitionQueryParams=(action "transitionQueryParams")
+            titleUpdated=(route-action "titleUpdated")
+}}
