@@ -1,0 +1,56 @@
+<nav class="navbar-default">
+  <div class="row toolbar">
+    <div>
+      <div class="title">
+        {{title-input value=model.description titleChanged=(action this.attrs.titleChanged)}}
+        {{saved-state-indicator model=model unsaved=unsaved}}
+      </div>
+
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsed-menu" aria-expanded="false">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+  </div>
+
+  <div id="collapsed-menu" class="collapse navbar-collapse row toolbar">
+    <ul class="nav-pills main-menu">
+      {{file-menu model=model
+                  session=session
+                  activeEditorCol=activeEditorCol
+                  activeFile=activeFile
+                  addFile=(action this.attrs.addFile)
+                  addHelper=(action this.attrs.addHelper)
+                  addComponent=(action this.attrs.addComponent)
+                  addUnitTestFile=(action this.attrs.addUnitTestFile)
+                  addIntegrationTestFile=(action this.attrs.addIntegrationTestFile)
+                  addAcceptanceTestFile=(action this.attrs.addAcceptanceTestFile)
+                  renameFile=(action this.attrs.renameFile)
+                  removeFile=(action this.attrs.removeFile)
+                  deleteGist=(route-action "deleteGist")
+                  saveGist=(route-action "saveGist")
+                  fork=(route-action "fork")
+                  copy=(route-action "copy")
+                  signInViaGithub=(route-action "signInViaGithub")
+      }}
+
+      {{editor-mode-menu setKeyMap=(action this.attrs.setEditorKeyMap)}}
+
+      {{versions-menu versionSelected=(action this.attrs.versionSelected)
+                      emberVersions=emberVersions
+                      emberDataVersions=emberDataVersions
+      }}
+    </ul>
+
+    <hr>
+
+    {{user-menu session=session
+                signInViaGithub=(route-action "signInViaGithub")
+                signOut=(route-action "signOut")
+                showTwiddles=(route-action "showTwiddles")
+    }}
+
+    <div></div>
+  </div>
+</nav>

@@ -1,14 +1,13 @@
 import Ember from "ember";
 import Settings from '../models/settings';
-import ErrorMessages from 'ember-twiddle/helpers/error-messages';
-import Column from '../utils/column';
-import { task, timeout } from "ember-concurrency";
+import ColumnsMixin from "../mixins/columns";
+import FilesMixin from "../mixins/files";
+import TestFilesMixin from "../mixins/test-files";
+import AppBuilderMixin from "../mixins/app-builder";
 
-const { computed, inject } = Ember;
+const { inject } = Ember;
 
-const MAX_COLUMNS = 3;
-
-export default Ember.Component.extend({
+export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestFilesMixin, {
   emberCli: inject.service('ember-cli'),
   dependencyResolver: inject.service(),
   notify: inject.service(),
@@ -23,9 +22,6 @@ export default Ember.Component.extend({
     this.createColumns();
     this.set('activeEditorCol', '1');
   },
-
-  emberVersions: computed.readOnly('dependencyResolver.emberVersions'),
-  emberDataVersions: computed.readOnly('dependencyResolver.emberDataVersions'),
 
   /**
    * Output from the build, sets the `code` attr on the component
@@ -56,8 +52,6 @@ export default Ember.Component.extend({
    * @type {Number}
    */
   activeEditorCol: null,
-
-  columns: null,
 
   settings: Settings.create(),
 
@@ -91,220 +85,6 @@ export default Ember.Component.extend({
     }
   },
 
-  /**
-   * Build the application and set the iframe code
-   */
-  buildApp: task(function *() {
-    this.set('isBuilding', true);
-    this.set('buildErrors', []);
-    this.set('model.initialRoute', this.get('route'));
-
-    try {
-      const buildOutput = yield this.get('emberCli').compileGist(this.get('model'));
-      this.set('isBuilding', false);
-      this.set('buildOutput', buildOutput);
-    } catch(errors) {
-      this.set('isBuilding', false);
-      if (Ember.isArray(errors)) {
-        this.set('buildErrors', errors);
-        errors.forEach(error => {
-          console.error(error);
-        });
-      } else {
-        console.error(errors);
-      }
-    }
-  }),
-
-  realNumColumns: computed('numColumns', function() {
-    return Math.min(this.get('numColumns'), MAX_COLUMNS);
-  }),
-  noColumns: computed.equal('numColumns', 0),
-
-  /**
-   * Creates the column objects
-   */
-  createColumns() {
-    let columns = [];
-    for (let i = 0; i < MAX_COLUMNS; ++i) {
-      let col = (i + 1) + "";
-      columns.pushObject(Column.create({
-        col: col,
-        controller: this
-      }));
-    }
-    this.set('columns', columns);
-  },
-
-  /**
-   * Clears the columns
-   */
-  clearColumns() {
-    let numColumns = this.get('realNumColumns');
-    for (let i = 1; i <= numColumns; ++i) {
-      this.setColumnFile(i, undefined);
-    }
-  },
-
-  /**
-   * Set the initial files in the columns
-   */
-  initializeColumns() {
-    const files = this.get('model.files');
-
-    if (!files) {
-      return;
-    }
-
-    const openFileNames = this.get('openFiles').split(",");
-    const openFiles = openFileNames.map((file) => files.findBy('fileName', file));
-
-    for (let i = 1; i <= openFiles.length; ++i) {
-      this.setColumnFile(i, openFiles[i - 1]);
-    }
-
-    const numColumns = this.get('realNumColumns');
-
-    let j = 0;
-    const len = files.get('length');
-    for (let i = 1; i <= numColumns; ++i) {
-      if (!this.getColumnFile(i)) {
-        j = 0;
-        while (!this.isOpen(files.objectAt(j))) {
-          j++;
-          if (j >= len) {
-            return;
-          }
-        }
-        let file = files.objectAt(j);
-        if (file) {
-          this.setColumnFile(i, file);
-        }
-      }
-    }
-  },
-
-  /**
-   * Returns true if the passed in file is currently open
-   * @param {Object} one of the files in the gist
-   * @return {boolean}
-   */
-  isOpen(file) {
-    if (!file) {
-      return false;
-    }
-
-    for (let i = 1; i <= MAX_COLUMNS; ++i) {
-      let colFile = this.getColumnFile(i);
-      if (colFile && colFile.get('fileName') === file.get('fileName')){
-        return false;
-      }
-    }
-
-    return true;
-  },
-
-  hasPath(filePath) {
-    const files = this.get('model.files');
-    const file = files.findBy('filePath', filePath);
-    return file !== undefined;
-  },
-
-  rebuildApp: task(function *() {
-    if (this.get('isLiveReload')) {
-      yield timeout(500);
-      yield this.get('buildApp').perform();
-    }
-  }).restartable(),
-
-  createFile(filePath, fileProperties, fileColumn=1) {
-    if (filePath) {
-      if(this.hasPath(filePath)) {
-        alert(`A file with the name ${filePath} already exists`);
-        return;
-      }
-
-      fileProperties.filePath = filePath;
-      let file = this.get('store').createRecord('gistFile', fileProperties);
-
-      this.get('model.files').pushObject(file);
-      this.get('notify').info(`File ${file.get('filePath')} was added`);
-      this.setColumnFile(fileColumn, file);
-      this.set('activeEditorCol', '1');
-      this.send('contentsChanged');
-      this._updateOpenFiles();
-    }
-  },
-
-  /*
-   *  Test whether path is valid.  Presently only tests whether components are hyphenated.
-   */
-  isPathInvalid(type, path){
-    let errorMsg = null;
-    if (type.match(/^component/)) {
-      if (!path.match(/[^\/]+-[^\/]+(\/(component\.js|template\.hbs))?$/)) {
-        errorMsg = ErrorMessages.componentsNeedHyphens;
-      }
-    }
-    if (errorMsg) {
-      alert(errorMsg);
-      return true;
-    }
-    return false;
-  },
-
-  getColumnFile(column) {
-    return this.get('columns').objectAt(column - 1).get('file');
-  },
-
-  setColumnFile(column, file) {
-    this.get('columns').objectAt(column - 1).set('file', file);
-  },
-
-  _updateOpenFiles() {
-    const columns = this.get('columns');
-    const fileNames = columns.map(column => column.get('file.fileName'));
-    const openFiles = fileNames.join(",").replace(/^,|,$/g, '');
-    this.set('openFiles', openFiles);
-  },
-
-  ensureTestHelperExists() {
-    this._ensureExists('tests/test-helper.js', 'test-helper');
-  },
-
-  ensureTestResolverExists() {
-    this._ensureExists('tests/helpers/resolver.js', 'test-resolver');
-  },
-
-  ensureTestStartAppHelperExists() {
-    this._ensureExists('tests/helpers/start-app.js', 'test-start-app');
-  },
-
-  ensureTestDestroyAppHelperExists() {
-    this._ensureExists('tests/helpers/destroy-app.js', 'test-destroy-app');
-  },
-
-  ensureTestModuleForAcceptanceHelperExists() {
-    this._ensureExists('tests/helpers/module-for-acceptance.js', 'test-module-for-acceptance');
-  },
-
-  _ensureExists(filePath, blueprint) {
-    if (!this.hasPath(filePath)) {
-      const fileProperties = this.get('emberCli').buildProperties(blueprint);
-      this.createFile(filePath, fileProperties);
-    }
-  },
-
-  calculateFileVarsForTests(blueprint) {
-    const fileProperties = this.get('emberCli').buildProperties(blueprint);
-    const filePath = prompt('File path', fileProperties.filePath);
-    const splitFilePath = filePath.split('/');
-    const file = splitFilePath[splitFilePath.length - 1];
-    const name = file.replace('-test.js', '');
-    return { filePath, name };
-
-  },
-
   actions: {
     contentsChanged() {
       this.set('unsaved', true);
@@ -332,16 +112,11 @@ export default Ember.Component.extend({
 
     selectFile (file) {
       this.set('activeFile', file);
-      this._updateOpenFiles();
+      this.updateOpenFiles();
     },
 
     openFile(filePath) {
-      let file = this.get('model.files').findBy('filePath', filePath);
-      let activeCol = this.get('activeEditorCol') || '1';
-      this.setColumnFile(activeCol, file);
-      this.set('activeEditorCol', activeCol);
-      this.set('activeFile', file);
-      this._updateOpenFiles();
+      this.openFile(filePath);
     },
 
     runNow () {
@@ -368,103 +143,32 @@ export default Ember.Component.extend({
         return;
       }
 
-      //strip file extension if present
-      path = path.replace(/\.[^/.]+$/, "");
-
-      if (this.isPathInvalid('component', path)) {
-        return;
-      }
-      ['js', 'hbs'].forEach((fileExt, i)=>{
-        let fileProperties = this.get('emberCli').buildProperties(`component-${fileExt}`);
-        let notPodPrefix = "components/";
-        let filePath;
-        if (path.substr(0, notPodPrefix.length) === notPodPrefix) {
-          filePath =  `${fileExt === 'hbs' ? 'templates/' : ''}${path}.${fileExt}`;
-        } else {
-          filePath = path + "/" + (fileExt === 'hbs' ? 'template.hbs' : 'component.js');
-        }
-        let fileColumn = i+1;
-        this.createFile(filePath, fileProperties, fileColumn);
-      });
+      this.addComponent(path);
     },
 
     addHelper() {
       let type = 'helper';
       let fileProperties = this.get('emberCli').buildProperties(type);
       let filePath = prompt('File path', fileProperties.filePath);
-      let splitFilePath = filePath.split('/');
-      let file = splitFilePath[splitFilePath.length - 1];
-      let name = file.replace('.js', '').camelize();
 
-      fileProperties = this.get('emberCli').buildProperties(type, {
-        camelizedModuleName: name
-      });
-
-      if (this.isPathInvalid(type, filePath)) {
-        return;
-      }
-      this.createFile(filePath, fileProperties);
+      this.addHelper(type, filePath);
     },
 
     addUnitTestFile(type) {
-      this.get('emberCli').ensureTestingEnabled(this.get('model')).then(() => {
-        this.ensureTestHelperExists();
-        this.ensureTestResolverExists();
-        const blueprint = type + "-" + 'test';
-        const { filePath, name } = this.calculateFileVarsForTests(blueprint);
-
-        const fileProperties = this.get('emberCli').buildProperties(blueprint, {
-          dasherizedModuleName: name,
-          friendlyTestDescription: 'TODO: put something here'
-        });
-
-        if (this.isPathInvalid(blueprint, filePath)) {
-          return;
-        }
-        this.createFile(filePath, fileProperties);
+      this.ensureTestingEnabled().then(() => {
+        this.createUnitTestFile(type);
       });
     },
 
     addIntegrationTestFile(type) {
-      this.get('emberCli').ensureTestingEnabled(this.get('model')).then(() => {
-        this.ensureTestHelperExists();
-        this.ensureTestResolverExists();
-        const blueprint = type + '-test';
-        const { filePath, name } = this.calculateFileVarsForTests(blueprint);
-
-        const fileProperties = this.get('emberCli').buildProperties(blueprint, {
-          testType: 'integration',
-          componentPathName: name,
-          friendlyTestDescription: 'TODO: put something here'
-        });
-
-        if (this.isPathInvalid(blueprint, filePath)) {
-          return;
-        }
-        this.createFile(filePath, fileProperties);
+      this.ensureTestingEnabled().then(() => {
+        this.createIntegrationTestFile(type);
       });
     },
 
     addAcceptanceTestFile() {
-      this.get('emberCli').ensureTestingEnabled(this.get('model')).then(() => {
-        this.ensureTestHelperExists();
-        this.ensureTestResolverExists();
-        this.ensureTestStartAppHelperExists();
-        this.ensureTestDestroyAppHelperExists();
-        this.ensureTestModuleForAcceptanceHelperExists();
-        const blueprint = 'acceptance-test';
-        const { filePath, name } = this.calculateFileVarsForTests(blueprint);
-
-        const fileProperties = this.get('emberCli').buildProperties(blueprint, {
-          testFolderRoot: '../..',
-          dasherizedModuleName: name,
-          friendlyTestName: 'TODO: put something here'
-        });
-
-        if (this.isPathInvalid(blueprint, filePath)) {
-          return;
-        }
-        this.createFile(filePath, fileProperties);
+      this.ensureTestingEnabled().then(() => {
+        this.createAcceptanceTestFile();
       });
     },
 
@@ -473,65 +177,23 @@ export default Ember.Component.extend({
      * @param {String|null} type Blueprint name or null for empty file
      */
     addFile (type) {
-      let fileProperties = type ? this.get('emberCli').buildProperties(type) : {filePath:'file.js'};
-      let filePath = fileProperties.filePath;
-
-      if (['twiddle.json','router', 'css'].indexOf(type)===-1) {
-        filePath = prompt('File path', filePath);
-      }
-      if (this.isPathInvalid(type, filePath)) {
-        return;
-      }
-      this.createFile(filePath, fileProperties);
-      this._updateOpenFiles();
+      this.addFile(type);
     },
 
     renameFile (file) {
-      let filePath = prompt('File path', file.get('filePath'));
-      if (filePath) {
-        if(this.get('model.files').findBy('filePath', filePath)) {
-          alert(`A file with the name ${filePath} already exists`);
-          return;
-        }
-
-        file.set('filePath', filePath);
-        this.get('notify').info(`File ${file.get('filePath')} was added`);
-        this._updateOpenFiles();
-      }
+      this.renameFile(file);
     },
 
     removeFile (file) {
       if(confirm(`Are you sure you want to remove this file?\n\n${file.get('filePath')}`)) {
-        file.deleteRecord();
-        this.get('notify').info(`File ${file.get('filePath')} was deleted`);
-        this._removeFileFromColumns(file);
-        if (this.get('activeFile') === file) {
-          this.setProperties({
-            activeFile: null,
-            activeEditorCol: null
-          });
-        }
-
-        this._updateOpenFiles();
-        this.send('contentsChanged');
+        this.removeFile(file);
       }
     },
 
     removeColumn (col) {
-      let numColumns = this.get('realNumColumns');
-
-      for (var i = (col|0); i < numColumns; ++i) {
-        this.setColumnFile(i, this.getColumnFile(i + 1));
-      }
-      this.setColumnFile(numColumns, undefined);
-
-      let activeCol = this.get('activeEditorCol');
-      if (activeCol >= col) {
-        this.set('activeEditorCol', ((activeCol|0) - 1).toString());
-      }
-
-      this._updateOpenFiles();
-      this.get('transitionQueryParams')({numColumns: numColumns - 1});
+      this.removeColumn(col);
+      this.updateOpenFiles();
+      this.get('transitionQueryParams')({numColumns: this.get('realNumColumns') - 1});
     },
 
     addColumn() {
@@ -542,7 +204,7 @@ export default Ember.Component.extend({
       }).then((queryParams) => {
         this.setProperties(queryParams);
         this.initializeColumns();
-        this._updateOpenFiles();
+        this.updateOpenFiles();
       });
     },
 
@@ -557,7 +219,7 @@ export default Ember.Component.extend({
         fullScreen: false
       }).then(() => {
         this.initializeColumns();
-        this._updateOpenFiles();
+        this.updateOpenFiles();
       });
     },
 
@@ -565,14 +227,6 @@ export default Ember.Component.extend({
       const settings = this.get('settings');
       settings.set('keyMap', keyMap);
       settings.save();
-    }
-  },
-
-  _removeFileFromColumns (file) {
-    for (let i = 1; i <= MAX_COLUMNS; ++i) {
-      if (this.getColumnFile(i) === file) {
-        this.setColumnFile(i, null);
-      }
     }
   }
 });

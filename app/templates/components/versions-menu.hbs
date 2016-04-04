@@ -7,7 +7,7 @@
     <a tabindex="-1" data-toggle="dropdown">Ember.js</a>
 
     <ul class="dropdown dropdown-menu" >
-      {{#each emberVersions as |version| }}
+      {{#each versions as |version| }}
         <li><a class="test-set-ember-version" {{action versionSelected "ember" version }}>{{version}}</a></li>
       {{/each}}
     </ul>
@@ -17,7 +17,7 @@
     <a tabindex="-1" data-toggle="dropdown">Ember-Data</a>
 
     <ul class="dropdown dropdown-menu" >
-      {{#each emberDataVersions as |version| }}
+      {{#each dataVersions as |version| }}
         <li><a class="test-set-ember-data-version" {{action versionSelected "ember-data" version }}>{{version}}</a></li>
       {{/each}}
     </ul>

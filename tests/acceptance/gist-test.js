@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from 'ember-twiddle/tests/helpers/start-app';
 import { findMapText } from 'ember-twiddle/tests/helpers/util';
-import ErrorMessages from 'ember-twiddle/helpers/error-messages';
+import ErrorMessages from 'ember-twiddle/utils/error-messages';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
 
 
