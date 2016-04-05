@@ -4,7 +4,7 @@ import ResizeMixin from 'ember-twiddle/lib/resize-mixin';
 const { $, on, inject } = Ember;
 
 export default Ember.Component.extend(ResizeMixin, {
-  demoApp: inject.service(),
+  app: inject.service(),
 
   iframeId: 'dummy-content-iframe',
   classNames: ['content'],
@@ -36,7 +36,7 @@ export default Ember.Component.extend(ResizeMixin, {
       ifrm.document.close();
     }
 
-    this.get('demoApp').setCurrentIFrame(ifrm);
+    this.get('app').setCurrentIFrame(ifrm);
 
     if (Ember.testing) {
       ifrm = ifrm.contentWindow;
@@ -50,7 +50,7 @@ export default Ember.Component.extend(ResizeMixin, {
     let offset = this.$().offset(), width = this.$().width(),
       height = this.$().height();
 
-    $('#demo-app').css({
+    $('#app').css({
       top:    offset.top,
       left:   offset.left,
       width:  width,

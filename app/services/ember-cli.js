@@ -10,7 +10,7 @@ import _template from "lodash/string/template";
 const hbsPlugin = new HtmlbarsInlinePrecompile(Ember.HTMLBars.precompile);
 
 const { inject, RSVP } = Ember;
-const twiddleAppName = 'demo-app';
+const twiddleAppName = 'app';
 
 // These files will be included if not present
 const boilerPlateJs = [
@@ -305,7 +305,7 @@ export default Ember.Service.extend({
         </div>
         <div id="test-root"></div>`;
 
-      testStuff += `<script type="text/javascript">require("demo-app/tests/test-helper");</script>`;
+      testStuff += `<script type="text/javascript">require("app/tests/test-helper");</script>`;
     }
 
     index = index.replace('{{content-for \'head\'}}', `${depCssLinkTags}\n${appStyleTag}`);
@@ -342,7 +342,7 @@ export default Ember.Service.extend({
 
   addConfig (out) {
     let config = {
-      modulePrefix: "demo-app",
+      modulePrefix: "app",
       TWIDDLE_ORIGIN: location.origin
     };
 
