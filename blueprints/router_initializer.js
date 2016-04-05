@@ -1,18 +1,18 @@
-import Router from 'demo-app/router';
+import Router from 'app/router';
 import Ember from 'ember';
-import config from 'demo-app/config/environment';
+import config from 'app/config/environment';
 
 Router.reopen({
   updateUrlBar: Ember.on('didTransition', function() {
     window.parent.postMessage({
-      setDemoAppUrl: this.get('url')
+      setAppUrl: this.get('url')
     }, config.TWIDDLE_ORIGIN);
   }),
 
-  listenForOutsideDemoAppUrlChanges: Ember.on('init', function() {
+  listenForOutsideAppUrlChanges: Ember.on('init', function() {
     var router = this;
 
-    function demoAppUrlChanged(event) {
+    function appUrlChanged(event) {
       if (event.origin !== config.TWIDDLE_ORIGIN) {
         return;
       }
@@ -22,7 +22,7 @@ Router.reopen({
       }
     }
 
-    window.addEventListener('message', demoAppUrlChanged, false);
+    window.addEventListener('message', appUrlChanged, false);
   })
 });
 

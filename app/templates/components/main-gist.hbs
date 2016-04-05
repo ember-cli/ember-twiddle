@@ -101,7 +101,7 @@
       <div class="url-bar">
         {{input value=applicationUrl enter=(route-action "urlChanged")}}
       </div>
-    {{dummy-demo-app html=buildOutput}}
+    {{dummy-app html=buildOutput}}
     {{#if fullScreen}}
       <a class="exit-full-screen-link" {{action 'exitFullScreen'}}>Edit Twiddle</a>
     {{/if}}

@@ -6,7 +6,7 @@ const CONFIRM_MSG = "Unsaved changes will be lost.";
 
 export default Ember.Route.extend({
   notify: inject.service('notify'),
-  demoApp: inject.service(),
+  app: inject.service(),
 
   titleToken: Ember.computed.readOnly('controller.model.description'),
 
@@ -106,7 +106,7 @@ export default Ember.Route.extend({
     },
 
     urlChanged: function(newUrl) {
-      this.get('demoApp').postMessage({ newUrl });
+      this.get('app').postMessage({ newUrl });
     }
   },
 
