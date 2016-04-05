@@ -1,8 +1,17 @@
+import Ember from "ember";
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('versions-menu', 'Integration | Component | versions menu', {
-  integration: true
+  integration: true,
+
+  beforeEach() {
+    this.depResolverStub = Ember.Service.extend({
+      emberVersions: ['1.2.3']
+    });
+    this.register('service:dependency-resolver', this.depResolverStub);
+    this.inject.service('dependency-resolver', { as: 'dependencyResolver' });
+  }
 });
 
 test('it renders', function(assert) {
@@ -13,9 +22,7 @@ test('it renders', function(assert) {
     assert.equal(version, '1.2.3');
   });
 
-  this.set('emberVersions', ['1.2.3']);
-  this.render(hbs`{{versions-menu versionSelected=(action "versionSelected")
-                                  emberVersions=emberVersions }}`);
+  this.render(hbs`{{versions-menu versionSelected=(action "versionSelected")}}`);
 
   this.$('.test-set-ember-version:contains("1.2.3")').click();
 });
