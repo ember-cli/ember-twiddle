@@ -291,10 +291,14 @@ export default Ember.Service.extend({
 
     Object.keys(deps).forEach(function(depKey) {
       let dep = deps[depKey];
-      if (dep.substr(dep.lastIndexOf(".")) === '.css') {
+      let extension = dep.substr(dep.lastIndexOf("."));
+      extension = extension.split("?")[0];
+      if (extension === '.css') {
         depCssLinkTags += `<link rel="stylesheet" type="text/css" href="${dep}">`;
-      } else if (dep.substr(dep.lastIndexOf(".")) === '.js') {
+      } else if (extension === '.js') {
         depScriptTags += `<script type="text/javascript" src="${dep}"></script>`;
+      } else {
+        console.warn("Could not determine extension of " + dep);
       }
     });
 
