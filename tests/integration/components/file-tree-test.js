@@ -35,11 +35,15 @@ moduleForComponent('file-tree', 'Integration | Component | file tree', {
 
     this.set('model', this.gist);
 
-    const waitForRender = new Ember.RSVP.Promise(resolve => {
-      this.set('didBecomeReady', () => {
-        resolve();
+    this.makeNewPromise = () => {
+      return new Ember.RSVP.Promise(resolve => {
+        this.set('didBecomeReady', () => {
+          resolve();
+        });
       });
-    });
+    };
+
+    const waitForRender = this.makeNewPromise();
     this.set('waitForRender', waitForRender);
   }
 });
@@ -101,5 +105,24 @@ test('can expand and collapse all', function(assert) {
     this.$('.twiddlicon-collapse-all').click();
 
     assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 nodes once you collapse all");
+  });
+});
+
+test('it updates when you rename a file', function(assert) {
+  assert.expect(2);
+
+  this.render(hbs`{{file-tree model=model
+                          didBecomeReady=(action didBecomeReady)}}`);
+
+  return this.get('waitForRender').then(() => {
+    this.$('.twiddlicon-expand-all').click();
+
+    assert.equal(this.$('.jstree-anchor').eq(0).text().trim(), "some-path.js");
+
+    this.set('model.files.firstObject.filePath', 'some-new-path.js');
+
+    return this.makeNewPromise();
+  }).then(() => {
+    assert.equal(this.$('.jstree-anchor').eq(0).text().trim(), "some-new-path.js", "Tree updated when file renamed");
   });
 });
