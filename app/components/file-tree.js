@@ -89,6 +89,12 @@ export default Ember.Component.extend({
       }
     },
 
+    didChange() {
+      if (this.attrs.didChange) {
+        this.attrs.didChange();
+      }
+    },
+
     hideFileTree() {
       this.attrs.hideFileTree();
     },
