@@ -4,7 +4,7 @@ const { computed } = Ember;
 export default Ember.Component.extend({
   jsTreeActionReceiver: null,
 
-  fileTreeHash: computed('model.files.[]', function() {
+  fileTreeHash: computed('model.files.@each.filePath', function() {
     const files = this.get('model.files') || [];
 
     return files.reduce((accumulator, file) => {
