@@ -10,7 +10,7 @@ module.exports = function(deployTarget) {
     },
     slack: {
       webhookURL: process.env.SLACK_WEB_HOOK_URL,
-      channel: '#ember-twiddle',
+      channel: '#-ember-twiddle',
       username: 'ember-twiddle-deploy-notifications',
       didDeploy: function(context) {
         var deployMessage = _getHumanDeployMessage(context);
