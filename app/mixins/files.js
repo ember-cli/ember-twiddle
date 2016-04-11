@@ -38,7 +38,7 @@ export default Ember.Mixin.create({
       }
     }
     if (errorMsg) {
-      alert(errorMsg);
+      window.alert(errorMsg);
       return true;
     }
     return false;
