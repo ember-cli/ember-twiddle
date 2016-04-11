@@ -75,14 +75,18 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
   /**
    * reinitialize component when the model has changed
    */
-  didReceiveAttrs({ oldAttrs, newAttrs }) {
+  didReceiveAttrs() {
     this._super.apply(this, arguments);
 
-    if (!oldAttrs || (oldAttrs && newAttrs && oldAttrs.model.value !== newAttrs.model.value)) {
+    const model = this.get('model');
+
+    if (model !== this._oldModel) {
       this.clearColumns();
       this.initializeColumns();
       this.get('rebuildApp').perform();
     }
+
+    this._oldModel = model;
   },
 
   actions: {
