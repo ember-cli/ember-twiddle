@@ -83,7 +83,9 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
     if (model !== this._oldModel) {
       this.clearColumns();
       this.initializeColumns();
-      this.get('rebuildApp').perform();
+      Ember.run(() => {
+        this.get('rebuildApp').perform();
+      });
     }
 
     this._oldModel = model;

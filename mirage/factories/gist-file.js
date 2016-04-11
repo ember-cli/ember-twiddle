@@ -5,6 +5,9 @@ import Mirage/*, {faker} */ from 'ember-cli-mirage';
 
 export default Mirage.Factory.extend({
   type() {
+    if (!this.filename) {
+      return "";
+    }
     let extension = this.filename.substring(this.filename.lastIndexOf("."), this.filename.length);
     switch (extension) {
       case ".hbs":
@@ -18,6 +21,9 @@ export default Mirage.Factory.extend({
     }
   },
   language() {
+    if (!this.filename) {
+      return "";
+    }
     let extension = this.filename.substring(this.filename.lastIndexOf("."), this.filename.length);
     switch (extension) {
       case ".hbs":
@@ -34,7 +40,7 @@ export default Mirage.Factory.extend({
     return `https://gist.githubusercontent.com/${this.login}/${this.gist_id}/raw/${this.commit}/${this.filename}`;
   },
   size() {
-    return this.content.length;
+    return this.content && this.content.length;
   },
   truncated: false
 });
