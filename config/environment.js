@@ -8,6 +8,7 @@ module.exports = function(environment) {
     locationType: 'auto',
     host: 'https://api.github.com',
     githubOauthUrl: 'http://localhost:9999/authenticate/',
+    addonUrl: 'https://v55gcng7te.execute-api.us-east-1.amazonaws.com/staging/addon',
     assetsHost: '/',
     EmberENV: {
       FEATURES: {
