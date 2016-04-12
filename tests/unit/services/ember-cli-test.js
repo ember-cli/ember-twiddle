@@ -147,4 +147,13 @@ test("fixTwiddleAppNames works", function(assert) {
   assert.equal(service.fixTwiddleAppNames('import {a, b} from "demo-app/c.js";'), 'import {a, b} from "twiddle/c.js";');
   assert.equal(service.fixTwiddleAppNames("import a, {b, c} from 'demo-app/d';"), "import a, {b, c} from 'twiddle/d';");
   assert.equal(service.fixTwiddleAppNames("import {bc, cd}, ab from 'demo-app/de';"), "import {bc, cd}, ab from 'twiddle/de';");
+  assert.equal(service.fixTwiddleAppNames(`import {
+  a,
+  b,
+  c
+} from 'demo-app/utils';`), `import {
+  a,
+  b,
+  c
+} from 'twiddle/utils';`);
 });

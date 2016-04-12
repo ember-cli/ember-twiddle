@@ -416,7 +416,7 @@ export default Ember.Service.extend({
   fixTwiddleAppNames(code) {
     oldTwiddleAppNames.forEach((oldName) => {
       code = code.replace(new RegExp(
-        `import\\ (\\w+|\\{.*\\}|\\w+,\\ \\{.*\\}|\\{.*\\},\\ \\w+)\\ from\\ ([\\'\\"])${oldName}\\/`, 'g'),
+        `import\\ ([^]+?)\\ from\\ ([\\'\\"])${oldName}\\/`, 'g'),
         "import $1 from $2twiddle/");
     });
     return code;
