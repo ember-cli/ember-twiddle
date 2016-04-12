@@ -29,12 +29,12 @@ test('compiling a gist works', function(assert) {
   Ember.run(function() {
     service.compileGist(gist).then(function(output) {
       output = output.replace(/define\('([a-z0-9\-\/]+)'/gi,'define("$1"');
-      assert.ok(output.indexOf('define("app/router"')>-1, 'build contains router');
-      assert.ok(output.indexOf('define("app/initializers/router"')>-1, 'build contains router initializer');
-      assert.ok(output.indexOf('define("app/app"')>-1, 'build contains app');
-      assert.ok(output.indexOf('define("app/templates/application"')>-1, 'build contains template');
-      assert.ok(output.indexOf('define("app/controllers/application"')>-1, 'build contains controller');
-      assert.ok(output.indexOf('define("app/config/environment"')>-1, 'build contains config');
+      assert.ok(output.indexOf('define("twiddle/router"')>-1, 'build contains router');
+      assert.ok(output.indexOf('define("twiddle/initializers/router"')>-1, 'build contains router initializer');
+      assert.ok(output.indexOf('define("twiddle/app"')>-1, 'build contains app');
+      assert.ok(output.indexOf('define("twiddle/templates/application"')>-1, 'build contains template');
+      assert.ok(output.indexOf('define("twiddle/controllers/application"')>-1, 'build contains controller');
+      assert.ok(output.indexOf('define("twiddle/config/environment"')>-1, 'build contains config');
     });
   });
 });
@@ -69,7 +69,7 @@ test('compileHbs includes moduleName', function(assert) {
   var service = this.subject();
   var result = service.compileHbs('foo', 'somePath/here.hbs');
 
-  assert.ok(result.indexOf('moduleName: "app/somePath/here"') > -1, 'moduleName included');
+  assert.ok(result.indexOf('moduleName: "twiddle/somePath/here"') > -1, 'moduleName included');
 });
 
 test('compileHbs can include backticks', function(assert) {
