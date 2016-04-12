@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from '../config/environment';
 
 const EMBER_VERSIONS = ['2.5.0', '2.4.5', '2.3.2', '2.2.2', '2.1.2', '2.0.3', '1.13.13', '1.12.2'];
 const EMBER_DATA_VERSIONS = ['2.5.0', '2.4.3', '2.3.3', '2.2.1', '2.1.0', '2.0.1', '1.13.15'];
@@ -73,7 +74,7 @@ export default Ember.Service.extend({
 
   resolveAddon(name, value) {
     return new RSVP.Promise(function(resolve) {
-      const url = `https://nl1fctyzr7.execute-api.us-east-1.amazonaws.com/staging/addon?addon=${name}&addon_version=${value}&ember_version=1.13.15`;
+      const url = `${config.addonUrl}?ember_version=1.13.15&addon=${name}&addon_version=${value}`;
       resolve(Ember.$.getJSON(url).then(data => RSVP.resolve(data)));
     });
   },
