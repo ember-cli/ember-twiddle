@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import config from 'app/config/environment';
+import config from '../config/environment';
 
 export default {
   name: 'mouse-events',

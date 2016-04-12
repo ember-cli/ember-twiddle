@@ -1,6 +1,6 @@
-import Router from 'app/router';
+import Router from '../router';
 import Ember from 'ember';
-import config from 'app/config/environment';
+import config from '../config/environment';
 
 Router.reopen({
   updateUrlBar: Ember.on('didTransition', function() {
