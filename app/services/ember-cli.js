@@ -11,6 +11,7 @@ const hbsPlugin = new HtmlbarsInlinePrecompile(Ember.HTMLBars.precompile);
 
 const { computed, inject, RSVP } = Ember;
 const twiddleAppName = 'twiddle';
+const oldTwiddleAppNames = ['demo-app', 'app'];
 
 // These files will be included if not present
 const boilerPlateJs = [
@@ -369,6 +370,7 @@ export default Ember.Service.extend({
    * @return {String}            Transpiled module code
    */
   compileJs (code, filePath) {
+    code = this.fixTwiddleAppNames(code);
     let moduleName = this.nameWithModule(filePath);
     return Babel.transform(code, babelOpts(moduleName)).code;
   },
@@ -408,6 +410,14 @@ export default Ember.Service.extend({
 
   ensureTestingEnabled(gist) {
     return this.get('twiddleJson').ensureTestingEnabled(gist);
+  },
+
+  // For backwards compatibility with old names for the twiddle app
+  fixTwiddleAppNames(code) {
+    oldTwiddleAppNames.forEach((oldName) => {
+      code = code.replace(new RegExp(`import\\ (\\w+)\\ from\\ ([\\'\\"])${oldName}\\/`, 'g'), "import $1 from $2twiddle/");
+    });
+    return code;
   }
 });
 
