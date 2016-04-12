@@ -9,7 +9,7 @@ import _template from "lodash/string/template";
 
 const hbsPlugin = new HtmlbarsInlinePrecompile(Ember.HTMLBars.precompile);
 
-const { computed, inject, RSVP } = Ember;
+const { computed, inject, RSVP, $ } = Ember;
 const twiddleAppName = 'twiddle';
 
 // These files will be included if not present
@@ -212,9 +212,11 @@ export default Ember.Service.extend({
       }
 
       this.addBoilerPlateFiles(out, gist);
-      this.addConfig(out, gist);
 
       resolve(this.get('twiddleJson').getTwiddleJson(gist).then(twiddleJson => {
+
+        this.addConfig(out, gist, twiddleJson);
+
         // Add boot code
         contentForAppBoot(out, {modulePrefix: twiddleAppName, dependencies: twiddleJson.dependencies});
 
@@ -350,11 +352,13 @@ export default Ember.Service.extend({
     });
   },
 
-  addConfig (out) {
+  addConfig (out, gist, twiddleJson) {
     let config = {
       modulePrefix: twiddleAppName,
       TWIDDLE_ORIGIN: location.origin
     };
+
+    config = $.extend((twiddleJson.ENV || {}), config);
 
     let configJs = 'export default ' + JSON.stringify(config);
     out.push(this.compileJs(configJs, 'config/environment'));
