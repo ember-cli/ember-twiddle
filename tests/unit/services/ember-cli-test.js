@@ -138,3 +138,11 @@ test("buildHtml works when testing is enabled", function(assert) {
   assert.ok(output.indexOf('<div id="ember-testing-container">') > 0, "output contains testing container");
   assert.ok(output.indexOf('<div id="ember-testing"></div>') > 0, "output contains testing div");
 });
+
+test("fixTwiddleAppNames works", function(assert) {
+  var service = this.subject();
+
+  assert.equal(service.fixTwiddleAppNames("import a from 'app/b';"), "import a from 'twiddle/b';");
+  assert.equal(service.fixTwiddleAppNames('import a from "demo-app/b";'), 'import a from "twiddle/b";');
+  assert.equal(service.fixTwiddleAppNames('import {a, b} from "demo-app/c.js";'), 'import {a, b} from "twiddle/c.js";');
+});
