@@ -72,13 +72,13 @@ export default ApplicationSerializer.extend({
       // If the name was changed, we need to update the ID
       // because the server will echo a different ID.
       if('fileName' in changedAttrs && changedAttrs.fileName[0]) {
-        record.set('id', changedAttrs.fileName[1]);
+        fileSnapshot.id = changedAttrs.fileName[1];
       }
 
       filesJson[fileKey] = {
         filename: fileSnapshot.attr('fileName'),
         content: fileSnapshot.attr('content'),
-        type: fileSnapshot.attr('fileType'),
+        type: fileSnapshot.attr('fileType')
       };
     });
 
