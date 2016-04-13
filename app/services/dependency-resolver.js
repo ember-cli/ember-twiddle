@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import config from '../config/environment';
+import { task, timeout } from 'ember-concurrency';
 
 const EMBER_VERSIONS = ['2.5.0', '2.4.5', '2.3.2', '2.2.2', '2.1.2', '2.0.3', '1.13.13', '1.12.2'];
 const EMBER_DATA_VERSIONS = ['2.5.0', '2.4.3', '2.3.3', '2.2.1', '2.1.0', '2.0.1', '1.13.15'];
@@ -43,34 +44,50 @@ export default Ember.Service.extend({
   },
 
   resolveAddons: function(addons, dependencies) {
-    let addonPromises = {};
-    Object.keys(addons).forEach((name) => {
-      var value = addons[name];
-
-      addonPromises[name] = this.resolveAddon(name, value);
+    const taskInstance = this.get('resolveAddonsTask').perform(addons, dependencies);
+    return taskInstance.then(() => {
+      return RSVP.resolve(taskInstance.value);
     });
+  },
 
-    return RSVP.hash(addonPromises).then(hash => {
-      Object.keys(addons).forEach((name) => {
-        let addon = hash[name];
-        if(addon.status === 'build_success') {
+  resolveAddonsTask: task(function *(addons, dependencies) {
+    let done = false;
+    while (!done) {
+      let addonPromises = {};
+      let addonNames = Object.keys(addons);
+      for (let i = 0; i < addonNames.length; ++i) {
+        const name = addonNames[i];
+        const value = addons[name];
+        addonPromises[name] = this.resolveAddon(name, value);
+      }
+      let hash = yield RSVP.hash(addonPromises);
+      let allAddonsLoaded = true;
+      for (let j = 0; j < addonNames.length; ++j) {
+        const name = addonNames[j];
+        const addon = hash[name];
+        if (addon.status === 'build_success') {
           dependencies[name] = addon.addon_js;
           dependencies[name+'_css'] = addon.addon_css;
           console.log(`Addon ${name} is loaded...`);
-        }
-        else if (addon.status === 'building') {
-          console.log(`Addon ${name} is currently building...`);
-          console.log(`Joost will have to implement some sort of refresh logic here..`);
-        }
-        else if (addon.status === 'build_error') {
+          delete addons[name];
+        } else if (addon.status === 'building') {
+          console.log(`Addon ${name} is still building...`);
+          allAddonsLoaded = false;
+        } else if (addon.status === 'build_error') {
           console.error(`Addon ${name} encountered a build error:`);
           console.error(addon.errors, addon.ember_errors);
-          console.log(`Joost will have to implement some sort of error logic here..`);
+          allAddonsLoaded = false;
+          throw addon;
         }
-      });
-      return RSVP.resolve(dependencies);
-    });
-  },
+      }
+      if (allAddonsLoaded) {
+        done = true;
+      } else {
+        yield timeout(1000);
+      }
+    }
+    return dependencies;
+  }),
 
   resolveAddon(name, value) {
     return new RSVP.Promise(function(resolve) {

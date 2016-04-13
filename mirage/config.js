@@ -1,4 +1,5 @@
 import AddonFixture from "./fixtures/addon";
+import config from "../config/environment";
 
 export default function() {}
 
@@ -25,7 +26,7 @@ export function testConfig() {
     return schema.db.users.find(1);
   });
 
-  this.get('https://nl1fctyzr7.execute-api.us-east-1.amazonaws.com/staging/addon', function() {
+  this.get(config.addonUrl, function() {
     return AddonFixture;
   });
 }
