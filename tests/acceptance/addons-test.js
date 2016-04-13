@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { module, skip } from 'qunit';
+import { module, test } from 'qunit';
 import startApp from 'ember-twiddle/tests/helpers/start-app';
 
 module('Acceptance | addons', {
@@ -15,7 +15,7 @@ module('Acceptance | addons', {
   }
 });
 
-skip('Addons work', function(assert) {
+test('Addons work', function(assert) {
 
   const files = [
     {
