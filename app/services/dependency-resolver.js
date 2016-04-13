@@ -46,7 +46,7 @@ export default Ember.Service.extend({
   resolveAddons: function(addons, dependencies) {
     const taskInstance = this.get('resolveAddonsTask').perform(addons, dependencies);
     return taskInstance.then(() => {
-      return RSVP.resolve(task.value);
+      return RSVP.resolve(taskInstance.value);
     });
   },
 
