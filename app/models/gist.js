@@ -35,7 +35,7 @@ export default DS.Model.extend({
   fork: memberAction({ path: "forks", type: 'POST' }),
 
   /**
-    Called by GistFile.registerDeleteOnGist to make sure we
+    Called by GistFile.deleteRecord to make sure we
     register deleted files on the server.
    */
   registerDeletedFile (fileId) {
