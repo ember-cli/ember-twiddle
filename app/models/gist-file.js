@@ -36,8 +36,14 @@ export default DS.Model.extend({
    */
   deleteRecord() {
     this._super(...arguments);
-    if(this.get('gist')) {
-      this.get('gist').registerDeletedFile(this.get('id'));
+    const gist = this.get('gist');
+    if(gist) {
+      gist.registerDeletedFile(this.get('id'));
+
+      // Following should not be necessary. Bug in ember data?
+      try {
+        gist.get('files').removeObject(this);
+      } catch(e) {}
     }
   }
 });
