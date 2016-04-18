@@ -11,7 +11,7 @@
     "ember-cli-codemirror-shim": "~0.0.1",
     "bootstrap-sass": "~3.3.5",
     "dom-ruler": "0.1.13",
-    "pretender": "~1.0.0",
+    "pretender": "~1.1.0",
     "ember-inflector": "~1.3.1",
     "lodash": "~3.10.1",
     "Faker": "~3.1.0",
