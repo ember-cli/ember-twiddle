@@ -1,28 +1,26 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from 'ember-twiddle/tests/helpers/start-app';
+import Ember from "ember";
+import { test } from 'qunit';
+import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 
-module('Acceptance | routing', {
+const { Test } = Ember;
+
+moduleForAcceptance('Acceptance | routing', {
   beforeEach: function() {
-    this.application = startApp();
-
     this.registerWaiter = () => {
       window.messagesWaiting = 1;
       this._waiter = () => {
         return window.messagesWaiting === 0;
       };
-      Ember.Test.registerWaiter(this._waiter);
+      Test.registerWaiter(this._waiter);
     };
   },
 
   afterEach: function() {
     window.messagesWaiting = 0;
     if (this._waiter) {
-      Ember.Test.unregisterWaiter(this._waiter);
+      Test.unregisterWaiter(this._waiter);
       this._waiter = null;
     }
-
-    Ember.run(this.application, 'destroy');
   }
 });
 
