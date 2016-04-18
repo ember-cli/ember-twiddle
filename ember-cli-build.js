@@ -123,32 +123,46 @@ module.exports = function(defaults) {
 function getEmberCLIBlueprints() {
   var fs = require('fs');
   var fileMap = {};
-  var cliPath = 'node_modules/ember-cli';
-  var cliBlueprintFiles = {
-    'app': 'app/files/app/app.js',
-    'component-hbs': 'component/files/__root__/__templatepath__/__templatename__.hbs',
-    'component-js': 'component/files/__root__/__path__/__name__.js',
-    'controller': 'controller/files/__root__/__path__/__name__.js',
-    'model': 'model/files/__root__/__path__/__name__.js',
-    'route': 'route/files/__root__/__path__/__name__.js',
-    'router': 'app/files/app/router.js',
-    'service': 'service/files/__root__/__path__/__name__.js',
-    'template': 'template/files/__root__/__path__/__name__.hbs',
-    'helper': 'helper/files/__root__/helpers/__name__.js',
-    'test-helper': 'app/files/tests/test-helper.js',
-    'test-resolver': 'app/files/tests/helpers/resolver.js',
-    'test-destroy-app': 'app/files/tests/helpers/destroy-app.js',
-    'test-module-for-acceptance': 'app/files/tests/helpers/module-for-acceptance.js',
-    'controller-test': 'controller-test/files/tests/unit/__path__/__test__.js',
-    'route-test': 'route-test/files/tests/unit/__path__/__test__.js',
-    'service-test': 'service-test/files/tests/unit/__path__/__test__.js',
-    'component-test': 'component-test/files/tests/__testType__/__path__/__test__.js',
-    'acceptance-test': 'acceptance-test/files/tests/acceptance/__name__-test.js'
+
+  var blueprintFiles = {
+    "cliBlueprintFiles": {
+      "path": "node_modules/ember-cli",
+      "files": {
+        "app": "app/files/app/app.js",
+        "router": "app/files/app/router.js",
+        "test-helper": 'app/files/tests/test-helper.js',
+        "test-resolver": 'app/files/tests/helpers/resolver.js',
+        "test-destroy-app": 'app/files/tests/helpers/destroy-app.js',
+        "test-module-for-acceptance": 'app/files/tests/helpers/module-for-acceptance.js'
+      }
+    },
+    "legacyBlueprintFiles": {
+      "path": 'node_modules/ember-cli/node_modules/ember-cli-legacy-blueprints',
+      "files": {
+        'component-hbs': 'component/files/__root__/__templatepath__/__templatename__.hbs',
+        'component-js': 'component/files/__root__/__path__/__name__.js',
+        'controller': 'controller/files/__root__/__path__/__name__.js',
+        'model': 'model/files/__root__/__path__/__name__.js',
+        'route': 'route/files/__root__/__path__/__name__.js',
+        'service': 'service/files/__root__/__path__/__name__.js',
+        'template': 'template/files/__root__/__path__/__name__.hbs',
+        'helper': 'helper/files/__root__/helpers/__name__.js',
+        'controller-test': 'controller-test/qunit-files/tests/unit/__path__/__test__.js',
+        'route-test': 'route-test/qunit-files/tests/unit/__path__/__test__.js',
+        'service-test': 'service-test/qunit-files/tests/unit/__path__/__test__.js',
+        'component-test': 'component-test/qunit-files/tests/__testType__/__path__/__test__.js',
+        'acceptance-test': 'acceptance-test/qunit-files/tests/acceptance/__name__-test.js'
+      }
+    }
   };
 
-  for (var blueprintName in cliBlueprintFiles) {
-    var filePath = cliPath + '/blueprints/' + cliBlueprintFiles[blueprintName];
-    fileMap[blueprintName] = fs.readFileSync(filePath).toString();
+  for (var list in blueprintFiles) {
+    var path = blueprintFiles[list].path;
+    var files = blueprintFiles[list].files;
+    for (var blueprintName in files) {
+      var filePath = path + '/blueprints/' + files[blueprintName];
+      fileMap[blueprintName] = fs.readFileSync(filePath).toString();
+    }
   }
 
   // Location should be 'none' in router.js
