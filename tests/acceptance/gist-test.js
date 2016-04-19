@@ -319,7 +319,7 @@ test('unsaved indicator', function(assert) {
   }
 
   click(firstColumnTextarea);
-  fillIn(firstColumnTextarea, "some text");
+  fillIn(firstColumnTextarea, "\"some text\";");
   triggerEvent(firstColumnTextarea, "blur");
 
   andThen(function() {

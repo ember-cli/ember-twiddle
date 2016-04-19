@@ -92,10 +92,10 @@ test('Dependencies can be changed via the UI', function(assert) {
 
   andThen(function() {
     click('.versions-menu .dropdown-toggle');
-    click('.test-set-ember-version:contains("2.1.2")');
+    click('.test-set-ember-data-version:contains("2.1.0")');
 
     click('.versions-menu .dropdown-toggle');
-    click('.test-set-ember-data-version:contains("2.1.0")');
+    click('.test-set-ember-version:contains("2.1.2")');
 
     waitForLoadedIFrame();
   });
