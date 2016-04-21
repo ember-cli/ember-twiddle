@@ -1,16 +1,7 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from 'ember-twiddle/tests/helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 
-module('Acceptance | older version', {
-  beforeEach: function() {
-    this.application = startApp();
-  },
-
-  afterEach: function() {
-    Ember.run(this.application, 'destroy');
-  }
-});
+moduleForAcceptance('Acceptance | older version');
 
 test('Able to run a gist using an older version of Ember', function(assert) {
 

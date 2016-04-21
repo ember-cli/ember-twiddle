@@ -1,16 +1,9 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from 'ember-twiddle/tests/helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 
-module('Acceptance | title input', {
+moduleForAcceptance('Acceptance | title input', {
   beforeEach: function() {
-    this.application = startApp();
-
     server.create('user', 'octocat');
-  },
-
-  afterEach: function() {
-    Ember.run(this.application, 'destroy');
   }
 });
 

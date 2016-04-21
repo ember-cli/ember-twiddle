@@ -1,12 +1,12 @@
 import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from 'ember-twiddle/tests/helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
 
-module('Acceptance | twiddles', {
-  beforeEach: function() {
-    this.application = startApp();
+const { K } = Ember;
 
+moduleForAcceptance('Acceptance | twiddles', {
+  beforeEach: function() {
     server.create('user', 'octocat');
     const owner = server.create('owner', {login: 'octocat'});
     const file = server.create('gist-file', {
@@ -30,12 +30,11 @@ module('Acceptance | twiddles', {
     });
 
     this.cacheConfirm = window.confirm;
-    window.confirm = Ember.K;
+    window.confirm = K;
   },
 
   afterEach: function() {
     window.confirm = this.cacheConfirm;
-    Ember.run(this.application, 'destroy');
   }
 });
 

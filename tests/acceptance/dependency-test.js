@@ -1,16 +1,7 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from 'ember-twiddle/tests/helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 
-module('Acceptance | dependencies', {
-  beforeEach: function() {
-    this.application = startApp();
-  },
-
-  afterEach: function() {
-    Ember.run(this.application, 'destroy');
-  }
-});
+moduleForAcceptance('Acceptance | dependencies');
 
 const TWIDDLE_SHOWING_VERSIONS = [
   {
@@ -101,10 +92,10 @@ test('Dependencies can be changed via the UI', function(assert) {
 
   andThen(function() {
     click('.versions-menu .dropdown-toggle');
-    click('.test-set-ember-version:contains("2.1.2")');
+    click('.test-set-ember-data-version:contains("2.1.0")');
 
     click('.versions-menu .dropdown-toggle');
-    click('.test-set-ember-data-version:contains("2.1.0")');
+    click('.test-set-ember-version:contains("2.1.2")');
 
     waitForLoadedIFrame();
   });

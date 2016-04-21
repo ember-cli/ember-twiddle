@@ -1,6 +1,5 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from 'ember-twiddle/tests/helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 import { findMapText } from 'ember-twiddle/tests/helpers/util';
 import ErrorMessages from 'ember-twiddle/utils/error-messages';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
@@ -20,9 +19,8 @@ const plusGlyph = ".code .glyphicon-plus";
 
 let promptValue = '';
 
-module('Acceptance | gist', {
+moduleForAcceptance('Acceptance | gist', {
   beforeEach: function() {
-    this.application = startApp();
     this.cacheConfirm = window.confirm;
     this.cachePrompt = window.prompt;
     this.cacheAlert = window.alert;
@@ -33,7 +31,6 @@ module('Acceptance | gist', {
   },
 
   afterEach: function() {
-    Ember.run(this.application, 'destroy');
     window.confirm = this.cacheConfirm;
     window.prompt = this.cachePrompt;
     window.alert = this.cacheAlert;
@@ -322,7 +319,7 @@ test('unsaved indicator', function(assert) {
   }
 
   click(firstColumnTextarea);
-  fillIn(firstColumnTextarea, "some text");
+  fillIn(firstColumnTextarea, "\"some text\";");
   triggerEvent(firstColumnTextarea, "blur");
 
   andThen(function() {

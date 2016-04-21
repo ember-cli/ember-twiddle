@@ -1,21 +1,18 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from 'ember-twiddle/tests/helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 
 const firstColumn = '.code:eq(0)';
 const firstFilePicker = firstColumn + ' .dropdown-toggle';
 const fileMenu = '.main-menu .dropdown-toggle';
 const addTemplateAction = '.test-template-action';
 
-module('Acceptance | use pods', {
+moduleForAcceptance('Acceptance | use pods', {
   beforeEach: function() {
-    this.application = startApp();
     this.cachePrompt = window.prompt;
     window.prompt = (text, defaultResponse) => defaultResponse;
   },
 
   afterEach: function() {
-    Ember.run(this.application, 'destroy');
     window.prompt = this.cachePrompt;
   }
 });
