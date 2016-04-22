@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
-    "ember": "2.5.0",
+    "ember": "2.5.1",
     "ember-data": "2.5.2",
-    "ember-template-compiler": "2.5.0"
+    "ember-template-compiler": "2.5.1"
   }
 }
