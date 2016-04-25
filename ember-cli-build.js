@@ -4,7 +4,6 @@ module.exports = function(defaults) {
   var funnel = require('broccoli-funnel');
   var concat = require('broccoli-concat');
   var mergeTrees = require('broccoli-merge-trees');
-  var pickFiles = require('broccoli-static-compiler');
   var babelTranspiler = require('broccoli-babel-transpiler');
   var path = require('path');
 
