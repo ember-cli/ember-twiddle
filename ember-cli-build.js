@@ -122,6 +122,7 @@ module.exports = function(defaults) {
 // own blueprints
 function getEmberCLIBlueprints() {
   var fs = require('fs');
+  var path = require('path');
   var fileMap = {};
 
   var blueprintFiles = {
@@ -137,7 +138,7 @@ function getEmberCLIBlueprints() {
       }
     },
     "legacyBlueprintFiles": {
-      "path": 'node_modules/ember-cli/node_modules/ember-cli-legacy-blueprints',
+      "path": path.dirname(require.resolve('ember-cli-legacy-blueprints')),
       "files": {
         'component-hbs': 'component/files/__root__/__templatepath__/__templatename__.hbs',
         'component-js': 'component/files/__root__/__path__/__name__.js',
@@ -157,10 +158,10 @@ function getEmberCLIBlueprints() {
   };
 
   for (var list in blueprintFiles) {
-    var path = blueprintFiles[list].path;
+    var blueprintPath = blueprintFiles[list].path;
     var files = blueprintFiles[list].files;
     for (var blueprintName in files) {
-      var filePath = path + '/blueprints/' + files[blueprintName];
+      var filePath = blueprintPath + '/blueprints/' + files[blueprintName];
       fileMap[blueprintName] = fs.readFileSync(filePath).toString();
     }
   }
