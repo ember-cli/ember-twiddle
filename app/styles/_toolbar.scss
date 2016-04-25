@@ -35,6 +35,7 @@
     .dropdown-toggle {
       display: block;
       border-radius: 0;
+      box-shadow: none;
     }
 
     .dropdown-menu {
@@ -42,8 +43,8 @@
       float: none;
       border: 0;
       border-radius: 0;
-      background-color: #E1563F;
       box-shadow: none;
+      background: inherit;
 
       .dropdown-submenu > .dropdown-menu {
         margin-left: 1em;
@@ -71,7 +72,7 @@
   }
   color: #fff;
   font-size: $font-size;
-  background: $ember-orange;
+  background: $header-bg;
   background-image: url(/images/header.svg);
   background-position: top center;
   background-repeat: no-repeat;
@@ -233,7 +234,6 @@
 
       &.active {
         background-color: $menu-bg;
-        box-shadow: rgba(255,255,255,0.15) 0 1px 0px,inset rgba(0,0,0,0.17) 0 1px 1px;
         outline: 0;
       }
     }
@@ -247,7 +247,6 @@
   .dropdown {
     &.open .dropdown-toggle {
       background-color: $menu-bg;
-      box-shadow: rgba(255,255,255,0.15) 0 1px 0px,inset rgba(0,0,0,0.17) 0 1px 1px;
       border: 1px solid transparent;
     }
   }
@@ -290,10 +289,14 @@
 
   &.navbar-collapse {
     @media (max-width: $screen-md-min) {
-      background: $ember-orange;
+      background: $header-bg;
+      background-image: url(/images/header.svg);
+      background-position: 50% -60px;
+      background-repeat: no-repeat;
+      background-size: cover;
       padding: 0;
       border: 0;
+      box-shadow: none;
     }
   }
-
 }
