@@ -137,7 +137,7 @@ function getEmberCLIBlueprints() {
       }
     },
     "legacyBlueprintFiles": {
-      "path": 'node_modules/ember-cli/node_modules/ember-cli-legacy-blueprints',
+      "path": require('path').dirname(require.resolve('ember-cli-legacy-blueprints')),
       "files": {
         'component-hbs': 'component/files/__root__/__templatepath__/__templatename__.hbs',
         'component-js': 'component/files/__root__/__path__/__name__.js',

@@ -68,6 +68,7 @@
   "dependencies": {
     "babel": "^5.8.38",
     "babel-plugin-htmlbars-inline-precompile": "0.0.5",
+    "ember-cli-legacy-blueprints": "^0.1.0",
     "ember-cli-sri": "2.1.0",
     "ember-cli-uglify": "1.2.0",
     "ember-data": "2.5.2",
