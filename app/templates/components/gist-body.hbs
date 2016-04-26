@@ -41,10 +41,13 @@
       }}
     </div>
     {{run-or-live-reload liveReloadChanged=(action this.attrs.liveReloadChanged) runNow=(action this.attrs.runNow)}}
-      <div class="url-bar">
-        {{input value=applicationUrl enter=(route-action "urlChanged")}}
-      </div>
-    {{dummy-app html=buildOutput}}
+    <div class="url-bar">
+      {{input value=applicationUrl enter=(route-action "urlChanged")}}
+    </div>
+    {{#if isBuilding}}
+      <div class="ember-load-indicator">Building...</div>
+    {{/if}}
+    {{dummy-app html=buildOutput isBuilding=isBuilding}}
     {{#if fullScreen}}
       <a class="exit-full-screen-link" {{action (action this.attrs.exitFullScreen)}}>Edit Twiddle</a>
     {{/if}}
