@@ -52,9 +52,9 @@
     "ember-cli-qunit": "~1.4.1",
     "ember-cli-release": "0.2.8",
     "ember-cli-sass": "5.3.1",
-    "ember-concurrency": "0.6.1",
+    "ember-concurrency": "0.6.2",
     "ember-git-version": "0.1.0",
-    "ember-load": "0.0.7",
+    "ember-load": "0.0.8",
     "ember-lodash": "0.0.7",
     "ember-moment": "6.1.0",
     "ember-notify": "~5.0.3",
@@ -63,7 +63,7 @@
     "ivy-codemirror": "1.4.0",
     "moment": "~2.13.0",
     "moment-timezone": "0.5.3",
-    "torii": "0.8.0-beta.1"
+    "torii": "0.8.0"
   },
   "dependencies": {
     "babel": "^5.8.38",
