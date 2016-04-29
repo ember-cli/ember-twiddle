@@ -18,6 +18,10 @@ export default Ember.Component.extend(ResizeMixin, {
       this.element.removeChild(this.element.firstElementChild);
     }
 
+    if (this.get('isBuilding')) {
+      return;
+    }
+
     let ifrm = document.createElement('iframe');
     ifrm.id = this.iframeId;
     let supportsSrcDoc = ('srcdoc' in ifrm);
