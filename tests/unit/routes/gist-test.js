@@ -1,6 +1,8 @@
 import Ember from "ember";
 import { moduleFor, test } from 'ember-qunit';
 
+const { RSVP } = Ember;
+
 moduleFor('route:gist', {
   beforeEach() {
     this._originalConfirm = window.confirm;
@@ -15,7 +17,7 @@ moduleFor('route:gist', {
 
 test('deleting a gist requires confirmation', function(assert) {
   let controller = this.subject({
-    transitionToRoute() {},
+    transitionTo() { return RSVP.resolve(); },
     notify: {
       info() {}
     }

@@ -337,7 +337,7 @@ test('own gist can be copied into a new one', function(assert) {
   runGist([
     {
       filename: 'application.template.hbs',
-      content: 'hello world!',
+      content: 'hello world!'
     }
   ]);
 
