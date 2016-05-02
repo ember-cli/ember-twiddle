@@ -58,8 +58,9 @@ export default Ember.Route.extend({
     deleteGist (gist) {
       if(confirm(`Are you sure you want to remove this gist from Github?\n\n${gist.get('description')}`)) {
         gist.destroyRecord();
-        this.transitionToRoute('gist.new');
-        this.get('notify').info(`Gist ${gist.get('id')} was deleted from Github`);
+        this.transitionTo('gist.new').then(() => {
+          this.get('notify').info(`Gist ${gist.get('id')} was deleted from Github`);
+        });
       }
     },
 
