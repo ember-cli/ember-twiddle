@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ResizeMixin from 'ember-twiddle/lib/resize-mixin';
+import ResizeMixin from 'ember-twiddle/mixins/resize';
 
 const { $, on, inject } = Ember;
 
@@ -52,9 +52,9 @@ export default Ember.Component.extend(ResizeMixin, {
 
   didResize: on('didInsertElement', function () {
     let offset = this.$().offset(), width = this.$().width(),
-      height = this.$().height();
+        height = this.$().height();
 
-    $('#app').css({
+    $('#root').css({
       top:    offset.top,
       left:   offset.left,
       width:  width,
