@@ -35,6 +35,10 @@ export function testConfig() {
     return new Mirage.Response(200, {}, response);
   });
 
+  this.delete('/gists/:id', () => {
+    return new Mirage.Response(204);
+  });
+
   this.get('/user', function(schema) {
     return schema.db.users.find(1);
   });
