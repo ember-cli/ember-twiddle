@@ -11,8 +11,8 @@
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="loader.css">
-    <link rel="stylesheet" href="assets/vendor.css">
-    <link rel="stylesheet" href="assets/ember-twiddle.css">
+    <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+    <link rel="stylesheet" href="{{rootURL}}assets/ember-twiddle.css">
     <link href='//fonts.googleapis.com/css?family=Maven+Pro:400,500,700' rel='stylesheet' type='text/css'>
 
     {{content-for 'head-footer'}}
@@ -28,8 +28,8 @@
     <div id="app">
     </div>
 
-    <script src="assets/vendor.js"></script>
-    <script src="assets/ember-twiddle.js"></script>
+    <script src="{{rootURL}}assets/vendor.js"></script>
+    <script src="{{rootURL}}assets/ember-twiddle.js"></script>
 
     {{content-for 'body-footer'}}
 
