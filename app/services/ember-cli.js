@@ -1,4 +1,4 @@
-import Babel from "npm:babel";
+import Babel from "npm:babel-core";
 import Path from 'npm:path';
 import HtmlbarsInlinePrecompile from 'npm:babel-plugin-htmlbars-inline-precompile';
 import blueprints from '../lib/blueprints';
