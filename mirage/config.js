@@ -35,6 +35,11 @@ export function testConfig() {
     return new Mirage.Response(200, {}, response);
   });
 
+  this.post('/gists/:id/forks', function(schema, request) {
+    let gist = server.create('gist', { id: faker.random.uuid() });
+    return new Mirage.Response(200, {}, gist);
+  });
+
   this.delete('/gists/:id', () => {
     return new Mirage.Response(204);
   });
