@@ -7,8 +7,11 @@ export default Ember.Component.extend(DropdownSubmenuFixMixin, {
   tagName: 'li',
   classNames: ['dropdown'],
 
-  belongsToUser: computed('model.ownerLogin', 'session.currentUser.login', function() {
-    return this.get('model.ownerLogin') === this.get('session.currentUser.login');
+  // show fork option only if does not belong to user and is not a revision, otherwise show copy
+  // Github api does not permit forking if you own the gist already
+  // Github does not provide api for forking a revision
+  showFork: computed('model.ownerLogin', 'session.currentUser.login', 'isRevision', function() {
+    return !this.get('isRevision') && this.get('model.ownerLogin') !== this.get('session.currentUser.login');
   }),
 
   actions: {

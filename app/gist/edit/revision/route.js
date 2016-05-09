@@ -15,5 +15,12 @@ export default GistEditRoute.extend({
     }).then((response) => {
       return response.get('firstObject');
     });
-  }
+  },
+
+  setupController(...args) {
+    this._super(...args);
+
+    const gistController = this.controllerFor('gist');
+    gistController.set('isRevision', true);
+  },
 });
