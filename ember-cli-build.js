@@ -142,7 +142,6 @@ function getEmberCLIBlueprints() {
         'component-hbs': 'component/files/__root__/__templatepath__/__templatename__.hbs',
         'component-js': 'component/files/__root__/__path__/__name__.js',
         'controller': 'controller/files/__root__/__path__/__name__.js',
-        'model': 'model/files/__root__/__path__/__name__.js',
         'route': 'route/files/__root__/__path__/__name__.js',
         'service': 'service/files/__root__/__path__/__name__.js',
         'template': 'template/files/__root__/__path__/__name__.hbs',
@@ -177,6 +176,7 @@ function getEmberCLIBlueprints() {
   fileMap['app.css'] = fs.readFileSync('blueprints/app.css').toString();
   fileMap['index.html'] = fs.readFileSync('blueprints/index.html').toString();
   fileMap['test-start-app'] = fs.readFileSync('blueprints/start-app.js').toString();
+  fileMap['model'] = fs.readFileSync('blueprints/model.js').toString();
 
   return 'export default ' + JSON.stringify(fileMap);
 }
