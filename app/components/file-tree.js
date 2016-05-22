@@ -1,4 +1,6 @@
 import Ember from "ember";
+import config from '../config/environment';
+
 const { computed } = Ember;
 
 export default Ember.Component.extend({
@@ -55,6 +57,11 @@ export default Ember.Component.extend({
     const fileTreeKeys = Object.keys(fileTreeHash);
     const fileTreeObjects = fileTreeKeys.map(key => fileTreeHash[key]);
 
+    let fileObjects = fileTreeObjects.filter(fileTreeObject => {
+      return fileTreeObject.isFile;
+    });
+    let shouldStartOpened = fileObjects.length <= config.maxNumFilesInitiallyExpanded;
+
     return fileTreeObjects.map(treeObject => {
       const treeDataObject = {
         id: treeObject.path,
@@ -68,6 +75,12 @@ export default Ember.Component.extend({
         treeDataObject.icon = 'glyphicon glyphicon-file light-gray';
       } else {
         treeDataObject.icon = 'glyphicon glyphicon-folder-open yellow';
+      }
+
+      if(shouldStartOpened) {
+        treeDataObject.state = {
+          opened: true
+        };
       }
 
       return treeDataObject;

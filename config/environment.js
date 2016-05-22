@@ -10,6 +10,7 @@ module.exports = function(environment) {
     githubOauthUrl: 'http://localhost:9999/authenticate/',
     addonUrl: 'https://v55gcng7te.execute-api.us-east-1.amazonaws.com/staging/addon',
     assetsHost: '/',
+    maxNumFilesInitiallyExpanded: 12,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -44,7 +45,7 @@ module.exports = function(environment) {
 
     ENV['ember-cli-mirage'] = {
       enabled: false
-    }
+    };
   }
 
   if (environment === 'test') {
