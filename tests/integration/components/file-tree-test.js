@@ -1,4 +1,6 @@
 import Ember from "ember";
+import config from '../../../config/environment';
+
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -43,6 +45,10 @@ moduleForComponent('file-tree', 'Integration | Component | file tree', {
       });
     };
 
+    // if maximum Number of Files expanded is one less than the number of files,
+    // the tree will be initially collapsed
+    config.maxNumFilesInitiallyExpanded = 4;
+
     const waitForRender = this.makeNewPromise('didBecomeReady');
     this.set('waitForRender', waitForRender);
   }
@@ -76,6 +82,17 @@ test('it has 2 initial nodes', function(assert) {
     this.$('.jstree-ocl').click();
 
     assert.equal(this.$('.jstree-anchor').length, 5, "There are 5 nodes once you expand the some folder");
+  });
+});
+
+test('it has all initial nodes expanded if the maxNumFilesInitiallyExpanded is set to more than the number of files in the app', function(assert) {
+  assert.expect(1);
+  config.maxNumFilesInitiallyExpanded = 6;
+  this.render(hbs`{{file-tree model=model
+                          didBecomeReady=(action didBecomeReady)}}`);
+
+  return this.get('waitForRender').then(() => {
+    assert.equal(this.$('.jstree-anchor').length, 9, "All initial nodes are expanded");
   });
 });
 
