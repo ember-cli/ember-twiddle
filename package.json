@@ -19,11 +19,13 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "babel": "^5.8.38",
     "broccoli-asset-rev": "^2.4.2",
     "broccoli-babel-transpiler": "~5.5.0",
     "broccoli-concat": "2.2.0",
     "broccoli-funnel": "^1.0.1",
     "broccoli-merge-trees": "^1.1.1",
+    "browserify": "^13.0.1",
     "dc-tabs": "0.1.0",
     "dedent": "~0.6.0",
     "ember-ajax": "~2.4.1",

@@ -5,7 +5,9 @@ module.exports = function(defaults) {
   var concat = require('broccoli-concat');
   var mergeTrees = require('broccoli-merge-trees');
   var babelTranspiler = require('broccoli-babel-transpiler');
+  var browserify = require('browserify');
   var path = require('path');
+  var fs = require('fs');
 
   var env = EmberApp.env();
   var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
@@ -35,7 +37,12 @@ module.exports = function(defaults) {
     'ember-cli-bootstrap-sassy': {
       'js': ['dropdown', 'collapse']
     },
-    fileCreator: [{filename: '/lib/blueprints.js', content: blueprintsCode}],
+    fileCreator: [
+      {
+        filename: '/lib/blueprints.js',
+        content: blueprintsCode
+      }
+    ],
     sourcemaps: {
       enabled: !isProductionLikeBuild
     },
@@ -65,6 +72,12 @@ module.exports = function(defaults) {
     }
   });
 
+  if (isFastboot) {
+    var b = browserify();
+    b.add(require.resolve('babel/polyfill'));
+    fs.writeFileSync('vendor/polyfill.js', b.bundle());
+    app.import('vendor/polyfill.js', { prepend: true });
+  }
 
   app.import('bower_components/ember/ember-template-compiler.js');
 
