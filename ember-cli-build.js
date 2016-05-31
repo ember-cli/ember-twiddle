@@ -9,6 +9,7 @@ module.exports = function(defaults) {
 
   var env = EmberApp.env();
   var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
+  var isFastboot = process.env.EMBER_CLI_FASTBOOT;
   var prepend = null;
 
   if(isProductionLikeBuild) {
@@ -51,7 +52,7 @@ module.exports = function(defaults) {
       }
     },
     babel: {
-      includePolyfill: true
+      includePolyfill: !isFastboot
     },
 
     tests: true,
@@ -66,9 +67,12 @@ module.exports = function(defaults) {
 
 
   app.import('bower_components/ember/ember-template-compiler.js');
+
+  if (!isFastboot) {
+    app.import('vendor/drags.js');
+  }
   app.import('vendor/bootstrap-dropdown-submenu-fix.css');
   app.import('vendor/hint.css');
-  app.import('vendor/drags.js');
 
   var loaderTree = funnel(path.dirname(require.resolve('loader.js')), {
     files: ['loader.js'],
