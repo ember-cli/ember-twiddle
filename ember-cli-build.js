@@ -75,7 +75,9 @@ module.exports = function(defaults) {
   if (isFastboot) {
     var b = browserify();
     b.add(require.resolve('babel/polyfill'));
-    fs.writeFileSync('vendor/polyfill.js', b.bundle());
+    b.bundle(function(err, buf) {
+      fs.writeFileSync('vendor/polyfill.js', buf);
+    });
     app.import('vendor/polyfill.js', { prepend: true });
   }
 
