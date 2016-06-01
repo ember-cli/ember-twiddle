@@ -1,8 +1,10 @@
 import Ember from "ember";
 
-const { RSVP, run } = Ember;
+const { inject, RSVP, run } = Ember;
 
 export default Ember.Controller.extend({
+  fastboot: inject.service(),
+
   queryParams: ['numColumns', 'fullScreen', 'route', 'openFiles', 'fileTreeShown'],
   numColumns: 1,
   fullScreen: false,
@@ -14,7 +16,9 @@ export default Ember.Controller.extend({
 
   init(...args) {
     this._super(...args);
-    this.setupWindowUpdate();
+    if (!this.get('fastboot.isFastBoot')) {
+      this.setupWindowUpdate();
+    }
   },
 
   actions: {
