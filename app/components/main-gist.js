@@ -12,6 +12,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
   dependencyResolver: inject.service(),
   notify: inject.service(),
   store: inject.service(),
+  fastboot: inject.service(),
 
   numColumns: 1,
   fullScreen: false,
@@ -19,6 +20,9 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
 
   init(...args) {
     this._super(...args);
+    this.set('settings', Settings.create({
+      isFastBoot: this.get('fastboot.isFastBoot')
+    }));
     this.createColumns();
     this.set('activeEditorCol', '1');
   },
@@ -53,7 +57,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
    */
   activeEditorCol: null,
 
-  settings: Settings.create(),
+  settings: null,
 
   /**
    * Errors during build

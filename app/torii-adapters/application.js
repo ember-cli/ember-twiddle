@@ -1,7 +1,7 @@
 import config from '../config/environment';
 import Ember from 'ember';
 
-const { inject } = Ember;
+const { inject, isBlank, RSVP } = Ember;
 
 export default Ember.Object.extend({  /**
    * Resolve the user over the Github API using the token
@@ -11,12 +11,15 @@ export default Ember.Object.extend({  /**
 
   store: inject.service(),
   ajax: inject.service(),
+  fastboot: inject.service(),
 
   resolveUser (token) {
     config.TMP_TORII_TOKEN = token;
     return this.get('store').find('user', 'current').then((user) => {
       config.TMP_TORII_TOKEN = null;
-      localStorage.setItem('fiddle_gh_session', token);
+      if (!this.get('fastboot.isFastBoot')) {
+        localStorage.setItem('fiddle_gh_session', token);
+      }
       return { currentUser: user, token: token };
     });
   },
@@ -26,9 +29,15 @@ export default Ember.Object.extend({  /**
    * @return Promise
    */
   fetch () {
+    if (this.get('fastboot.isFastBoot')) {
+      return RSVP.reject();
+    }
+
     var token = localStorage.getItem('fiddle_gh_session');
 
-    if(Ember.isBlank(token)) { return Ember.RSVP.reject(); }
+    if (isBlank(token)) {
+      return Ember.RSVP.reject();
+    }
 
     return this.resolveUser(token);
   },
@@ -47,7 +56,11 @@ export default Ember.Object.extend({  /**
    * @return Promise
    */
   close () {
-    localStorage.removeItem('fiddle_gh_session');
-    return Ember.RSVP.resolve();
+    if (this.get('fastboot.isFastBoot')) {
+      return Ember.RSVP.reject();
+    } else {
+      localStorage.removeItem('fiddle_gh_session');
+      return Ember.RSVP.resolve();
+    }
   }
 });
