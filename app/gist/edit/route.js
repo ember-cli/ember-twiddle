@@ -22,7 +22,9 @@ export default GistRoute.extend({
       if (error && error.errors && error.errors.length > 0) {
         let error1 = error.errors[0];
         if (error1.status === "404") {
-          alert('The gist is missing or secret.');
+          if (alert) {
+            alert('The gist is missing or secret.');
+          }
           return this.transitionTo('gist.new');
         }
       }

@@ -99,7 +99,9 @@ export default Ember.Route.extend({
 
     signInViaGithub () {
       this.session.open('github-oauth2').catch(function(error) {
-        alert('Could not sign you in: ' + error.message);
+        if (alert) {
+          alert('Could not sign you in: ' + error.message);
+        }
         throw error;
       });
     },

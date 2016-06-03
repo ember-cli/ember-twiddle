@@ -36,7 +36,7 @@ export default Ember.Object.extend({  /**
     var token = localStorage.getItem('fiddle_gh_session');
 
     if (isBlank(token)) {
-      return Ember.RSVP.reject();
+      return RSVP.reject();
     }
 
     return this.resolveUser(token);
