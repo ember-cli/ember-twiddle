@@ -3,7 +3,7 @@ import Ember from 'ember';
 const { run } = Ember;
 
 moduleForModel('gist-file', 'Unit | Model | gist file', {
-  needs: ['model:gist', 'model:gist-revision']
+  needs: ['model:gist', 'model:gist-revision', 'model:gist-version']
 });
 
 test('it calls "registerDeletedFile" on gist relationship when deleting a record', function(assert) {

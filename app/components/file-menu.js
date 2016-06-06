@@ -68,6 +68,9 @@ export default Ember.Component.extend(DropdownSubmenuFixMixin, {
     },
     signInViaGithub() {
       this.attrs.signInViaGithub();
+    },
+    showRevision(id) {
+      this.attrs.showRevision(id);
     }
   }
 });

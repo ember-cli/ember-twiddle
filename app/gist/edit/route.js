@@ -30,6 +30,10 @@ export default GistRoute.extend({
       }
 
       return true;
+    },
+
+    showRevision: function(id) {
+      this.transitionTo('gist.edit.revision', this.paramsFor('gist.edit', 'gistId'), id);
     }
   }
 });

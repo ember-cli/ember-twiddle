@@ -63,6 +63,17 @@
           <li><a {{action 'copy'}} class="test-copy-action">Copy Twiddle</a></li>
         {{/if}}
         <li><a {{action 'deleteGist' model}} class="test-delete-action">Delete Twiddle</a></li>
+        <li role="presentation" class="divider"></li>
+        {{#if model.history.length}}
+          <li class="dropdown dropdown-submenu">
+            <a data-toggle="dropdown">Previous Revisions</a>
+            <ul class="dropdown-menu">
+              {{#each model.history as |version|}}
+                <li><a {{action "showRevision" version.id}} class="test-version-action">{{version.shortId}}</a></li>
+              {{/each}}
+            </ul>
+          </li>
+        {{/if}}
       {{/unless}}
     {{else}}
       <li><a {{action 'signInViaGithub'}} class="test-sign-in-action">Sign in with Github to Save</a></li>

@@ -3,7 +3,7 @@ import ApplicationSerializer from './application';
 export default ApplicationSerializer.extend({
   attrs: {
     files: { embedded: 'always' },
-    history: { deserialize: 'records', serialize: false },
+    history: { embedded: 'always', deserialize: 'records', serialize: false },
   },
 
   init(...args) {
@@ -85,13 +85,13 @@ export default ApplicationSerializer.extend({
     json[key] = filesJson;
   },
 
-  // Not implemented yet.
   normalizeHistory (payload) {
     if (payload.history) {
       for(var i=0; i<payload.history.length; i++) {
-        payload.history[i].id = payload.history[i].version;
-        payload.history[i].short_id = payload.history[i].version.substring(0,7);
-        delete payload.history[i].version;
+        let version = payload.history[i];
+        version.id = version.version;
+        version.short_id = version.version.substring(0,7);
+        delete version.version;
       }
     }
   },
