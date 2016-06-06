@@ -5,10 +5,13 @@ module.exports = function(defaults) {
   var concat = require('broccoli-concat');
   var mergeTrees = require('broccoli-merge-trees');
   var babelTranspiler = require('broccoli-babel-transpiler');
+  var browserify = require('browserify');
   var path = require('path');
+  var fs = require('fs');
 
   var env = EmberApp.env();
   var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
+  var isFastboot = process.env.EMBER_CLI_FASTBOOT;
   var prepend = null;
 
   if(isProductionLikeBuild) {
@@ -34,7 +37,12 @@ module.exports = function(defaults) {
     'ember-cli-bootstrap-sassy': {
       'js': ['dropdown', 'collapse']
     },
-    fileCreator: [{filename: '/lib/blueprints.js', content: blueprintsCode}],
+    fileCreator: [
+      {
+        filename: '/lib/blueprints.js',
+        content: blueprintsCode
+      }
+    ],
     sourcemaps: {
       enabled: !isProductionLikeBuild
     },
@@ -51,7 +59,7 @@ module.exports = function(defaults) {
       }
     },
     babel: {
-      includePolyfill: true
+      includePolyfill: !isFastboot
     },
 
     tests: true,
@@ -64,11 +72,22 @@ module.exports = function(defaults) {
     }
   });
 
+  if (isFastboot) {
+    var b = browserify();
+    b.add(require.resolve('babel/polyfill'));
+    b.bundle(function(err, buf) {
+      fs.writeFileSync('vendor/polyfill.js', buf);
+    });
+    app.import('vendor/polyfill.js', { prepend: true });
+  }
 
   app.import('bower_components/ember/ember-template-compiler.js');
+
+  if (!isFastboot) {
+    app.import('vendor/drags.js');
+  }
   app.import('vendor/bootstrap-dropdown-submenu-fix.css');
   app.import('vendor/hint.css');
-  app.import('vendor/drags.js');
 
   var loaderTree = funnel(path.dirname(require.resolve('loader.js')), {
     files: ['loader.js'],

@@ -4,6 +4,9 @@
 /dist
 /tmp
 
+#intermediate files
+/vendor/polyfill.js
+
 # dependencies
 /node_modules
 /bower_components

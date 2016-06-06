@@ -17,7 +17,7 @@ export default ObjectProxy.extend({
   init() {
     const storageKey = get(this, 'storageKey');
     const defaultSettings = get(this, 'defaultSettings');
-    const localSettings = JSON.parse(localStorage.getItem(storageKey)) || {};
+    const localSettings = get(this, 'isFastBoot') ? {} : JSON.parse(localStorage.getItem(storageKey)) || {};
 
     set(this, 'content', _merge(defaultSettings, localSettings));
 
@@ -28,6 +28,8 @@ export default ObjectProxy.extend({
     const storageKey = get(this, 'storageKey');
     const newSettings = JSON.stringify(get(this, 'content'));
 
-    localStorage.setItem(storageKey, newSettings);
+    if (!get(this, 'isFastBoot')) {
+      localStorage.setItem(storageKey, newSettings);
+    }
   }
 });

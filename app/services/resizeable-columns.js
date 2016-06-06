@@ -1,12 +1,15 @@
 import Ember from "ember";
 
-const { $, run } = Ember;
+const { $, inject, run } = Ember;
 
 export default Ember.Service.extend({
+  fastboot: inject.service(),
 
   init() {
     this._super(...arguments);
-    this.setupMouseEventsFromIframe();
+    if (!this.get('fastboot.isFastBoot')) {
+      this.setupMouseEventsFromIframe();
+    }
   },
 
   setupMouseEventsFromIframe() {

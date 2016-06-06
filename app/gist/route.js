@@ -7,6 +7,7 @@ const CONFIRM_MSG = "Unsaved changes will be lost.";
 export default Ember.Route.extend({
   notify: inject.service('notify'),
   app: inject.service(),
+  fastboot: inject.service(),
 
   titleToken: Ember.computed.readOnly('controller.model.description'),
 
@@ -17,6 +18,9 @@ export default Ember.Route.extend({
   },
 
   activate() {
+    if (this.get('fastboot.isFastBoot')) {
+      return;
+    }
     this.set('boundConfirmUnload', this.confirmUnload.bind(this));
     $(window).on('beforeunload', this.get('boundConfirmUnload'));
   },
@@ -26,7 +30,9 @@ export default Ember.Route.extend({
     if (gist.get('isNew')) {
       this.get('store').unloadRecord(gist);
     }
-    $(window).off('beforeunload', this.get('boundConfirmUnload'));
+    if (!this.get('fastboot.isFastBoot')) {
+      $(window).off('beforeunload', this.get('boundConfirmUnload'));
+    }
   },
 
   confirmUnload(event) {
@@ -93,7 +99,9 @@ export default Ember.Route.extend({
 
     signInViaGithub () {
       this.session.open('github-oauth2').catch(function(error) {
-        alert('Could not sign you in: ' + error.message);
+        if (alert) {
+          alert('Could not sign you in: ' + error.message);
+        }
         throw error;
       });
     },
