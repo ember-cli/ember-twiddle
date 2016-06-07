@@ -64,15 +64,19 @@
         {{/if}}
         <li><a {{action 'deleteGist' model}} class="test-delete-action">Delete Twiddle</a></li>
         <li role="presentation" class="divider"></li>
-        {{#if model.history.length}}
-          <li class="dropdown dropdown-submenu">
-            <a data-toggle="dropdown">Previous Revisions</a>
-            <ul class="dropdown-menu">
-              {{#each model.history as |version|}}
-                <li><a {{action "showRevision" version.id}} class="test-version-action">{{version.shortId}}</a></li>
-              {{/each}}
-            </ul>
-          </li>
+        {{#if isRevision}}
+          <li><a {{action 'showCurrentVersion'}} class="test-show-current-version">Show Current Version</a></li>
+        {{else}}
+          {{#if model.history.length}}
+            <li class="dropdown dropdown-submenu">
+              <a data-toggle="dropdown">Previous Revisions</a>
+              <ul class="dropdown-menu">
+                {{#each model.history as |version|}}
+                  <li><a {{action "showRevision" version.id}} class="test-version-action">{{version.shortId}}</a></li>
+                {{/each}}
+              </ul>
+            </li>
+          {{/if}}
         {{/if}}
       {{/unless}}
     {{else}}

@@ -1,6 +1,8 @@
 import Ember from "ember";
 import GistRoute from "ember-twiddle/routes/gist-base-route";
 
+const { get } = Ember;
+
 export default GistRoute.extend({
   model (params) {
     this.get('store').unloadAll('gistFile');
@@ -15,6 +17,10 @@ export default GistRoute.extend({
     Ember.run.schedule('afterRender', function() {
       gistController.set('unsaved', false);
     });
+  },
+
+  serialize(gist) {
+    return { gistId: get(gist, 'id') || get(gist, 'gistId') };
   },
 
   actions: {

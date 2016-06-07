@@ -23,4 +23,12 @@ export default GistEditRoute.extend({
     const gistController = this.controllerFor('gist');
     gistController.set('isRevision', true);
   },
+
+  actions: {
+    showCurrentVersion() {
+      this.store.find('gist', this.paramsFor('gist.edit').gistId).then((model) => {
+        this.transitionTo('gist.edit', model);
+      });
+    }
+  }
 });
