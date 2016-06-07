@@ -89,8 +89,8 @@ export default ApplicationSerializer.extend({
     if (payload.history) {
       for(var i=0; i<payload.history.length; i++) {
         let version = payload.history[i];
-        version.id = version.version;
-        version.short_id = version.version.substring(0,7);
+        version.id = version.version || version.id;
+        version.short_id = version.id.substring(0,7);
         delete version.version;
       }
     }
@@ -103,5 +103,5 @@ export default ApplicationSerializer.extend({
     else {
       this._super.apply(this, arguments);
     }
-  },
+  }
 });

@@ -23,6 +23,7 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
+    "createGist",
     "runGist",
     "runRevision",
     "waitForLoadedIFrame",

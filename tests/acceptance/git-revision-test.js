@@ -67,3 +67,51 @@ test('Able to copy a revision into new gist', function(assert) {
     assert.equal(outputContents('div'), 'hello world!');
   });
 });
+
+test('Able to go from current version to revision and back via the UI', function(assert) {
+  // set owner of gist as currently logged in user
+  stubValidSession(this.application, {
+    currentUser: { login: "Gaurav0" },
+    "github-oauth2": {}
+  });
+
+  const files = [
+    {
+      filename: "application.template.hbs",
+      content: "Hello, World!"
+    }
+  ];
+
+  runGist(files);
+
+  andThen(() => {
+    assert.equal(outputContents('div'), 'Hello, World!');
+  });
+
+  createGist({
+    files: [
+      {
+        filename: "application.template.hbs",
+        content: "Hello, ..."
+      }
+    ],
+    type: 'revision',
+    commit: "921e8958fe32b5a1b724fa6754d0dd904cfa9e62",
+    login: 'octocat',
+    doNotCreateGist: true
+  });
+
+  click(".test-version-action");
+  waitForLoadedIFrame();
+
+  andThen(() => {
+    assert.equal(outputContents('div'), 'Hello, ...');
+  });
+
+  click(".test-show-current-version");
+  waitForLoadedIFrame();
+
+  andThen(() => {
+    assert.equal(outputContents('div'), 'Hello, World!');
+  });
+});
