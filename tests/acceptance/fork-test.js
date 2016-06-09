@@ -46,6 +46,6 @@ test('can fork a gist', function(assert) {
 
     let url = window.location.href;
     let route = url.substr(url.lastIndexOf('/'));
-    assert.ok(route === '/89bd9d8d-69a6-474e-8f46-7cc8796ed151');
+    assert.equal(route, '/bd9d8d69-a674-4e0f-867c-c8796ed151a0');
   });
 });

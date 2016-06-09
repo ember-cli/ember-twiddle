@@ -3,6 +3,7 @@ import resolver from './helpers/resolver';
 import {
   setResolver
 } from 'ember-qunit';
+import createGist from "./helpers/create-gist";
 import runGist from "./helpers/run-gist";
 import runRevision from "./helpers/run-revision";
 import waitForLoadedIFrame from './helpers/wait-for-loaded-iframe';
@@ -20,6 +21,7 @@ Ember.Test.registerHelper('outputContents', function(app, selector) {
   return output.find(selector).text().trim();
 });
 
+Ember.Test.registerHelper('createGist', createGist);
 Ember.Test.registerAsyncHelper('runGist', runGist);
 Ember.Test.registerAsyncHelper('runRevision', runRevision);
 Ember.Test.registerAsyncHelper('waitForLoadedIFrame', waitForLoadedIFrame);

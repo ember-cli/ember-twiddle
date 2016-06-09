@@ -17,7 +17,7 @@ export default DS.Model.extend({
   updatedAt: attr('date'),
   ownerLogin: attr('string'),
   files: hasMany('gistFile', { async: false }),
-  history: hasMany('gistRevision', { async: false }),
+  history: hasMany('gistVersion', { async: false }),
   public: attr('boolean', { defaultValue: true }),
 
   currentRevision: oneWay('history.firstObject.shortId'),
