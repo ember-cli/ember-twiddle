@@ -3,7 +3,7 @@ import ApplicationSerializer from './application';
 export default ApplicationSerializer.extend({
   attrs: {
     files: { embedded: 'always' },
-    history: { embedded: 'always', deserialize: 'records', serialize: false },
+    history: { embedded: 'always', deserialize: 'records', serialize: false }
   },
 
   init(...args) {
