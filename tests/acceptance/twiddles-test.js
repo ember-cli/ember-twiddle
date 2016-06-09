@@ -14,15 +14,17 @@ moduleForAcceptance('Acceptance | twiddles', {
       filename: "twiddle.json",
       content: '{ "dependencies": {} }'
     });
+    const files = {};
+    files[file.filename] = file;
     server.create('gist', {
       id: '35de43cb81fc35ddffb2',
       owner: owner,
-      files: [file]
+      files: files
     });
     server.create('gist', {
       id: '74bae9a34142370ff5a3',
       owner: owner,
-      files: [file]
+      files: files
     });
 
     stubValidSession(this.application, {

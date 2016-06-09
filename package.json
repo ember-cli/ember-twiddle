@@ -1,6 +1,6 @@
 {
   "name": "ember-twiddle",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "https://ember-twiddle.com",
   "private": true,
   "directories": {
@@ -74,7 +74,7 @@
     "babel-plugin-htmlbars-inline-precompile": "0.0.5",
     "ember-cli-sri": "~2.1.0",
     "ember-cli-uglify": "~1.2.0",
-    "ember-data": "2.5.3",
+    "ember-data": "2.6.0",
     "ember-disable-proxy-controllers": "1.0.1",
     "ember-export-application-global": "~1.0.5",
     "ember-load-initializers": "~0.5.1",
