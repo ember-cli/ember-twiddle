@@ -326,7 +326,8 @@ export default Ember.Service.extend({
         </div>
         <div id="test-root"></div>`;
 
-      testStuff += `<script type="text/javascript">require("${twiddleAppName}/tests/test-helper");</script>`;
+      let moreCode = "requirejs.entries['ember-cli/test-loader'] = requirejs.entries['ember-cli-test-loader/test-support/index'];";
+      testStuff += `<script type="text/javascript">${moreCode}require("${twiddleAppName}/tests/test-helper");</script>`;
     }
 
     return { depScriptTags, depCssLinkTags, testStuff };
