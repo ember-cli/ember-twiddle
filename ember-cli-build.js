@@ -96,7 +96,14 @@ module.exports = function(defaults) {
 
   var testLoaderTree = funnel("node_modules/ember-cli-test-loader/addon-test-support", {
     files: ['index.js'],
-    destDir: '/ember-cli-test-loader'
+    getDestinationPath: function() {
+      return "assets/test-loader.js";
+    }
+  });
+  testLoaderTree = babelTranspiler(testLoaderTree, {
+    modules:'amdStrict',
+    moduleIds:true,
+    moduleId: "ember-cli-test-loader/test-support/index"
   });
 
   var emberDataShims = funnel('vendor', {

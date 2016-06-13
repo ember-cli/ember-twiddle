@@ -310,7 +310,7 @@ export default Ember.Service.extend({
     const testingEnabled = twiddleJSON.options && twiddleJSON.options["enable-testing"];
 
     if (testingEnabled) {
-      const testJSFiles = ['ember-cli-test-loader/index.js', 'assets/test-support.js', 'testem.js'];
+      const testJSFiles = ['assets/test-loader.js', 'assets/test-support.js', 'testem.js'];
 
       testJSFiles.forEach(jsFile => {
         depScriptTags += `<script type="text/javascript" src="${config.assetsHost}${jsFile}?${config.APP.version}"></script>`;
