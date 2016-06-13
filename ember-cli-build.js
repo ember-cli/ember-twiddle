@@ -103,7 +103,9 @@ module.exports = function(defaults) {
   testLoaderTree = babelTranspiler(testLoaderTree, {
     modules:'amdStrict',
     moduleIds:true,
-    moduleId: "ember-cli/test-loader"
+    getModuleId: function() {
+      return "ember-cli/test-loader";
+    }
   });
 
   var emberDataShims = funnel('vendor', {
