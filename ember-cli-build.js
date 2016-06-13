@@ -15,7 +15,7 @@ module.exports = function(defaults) {
   var prepend = null;
 
   if(isProductionLikeBuild) {
-    prepend = env === 'production' ? '//assets.ember-twiddle.com/' : '//canary-assets.ember-twiddle.com/';
+     prepend = env === 'production' ? '//assets.ember-twiddle.com/' : '//canary-assets.ember-twiddle.com/';
   }
 
   var blueprintsCode = getEmberCLIBlueprints();
@@ -94,6 +94,11 @@ module.exports = function(defaults) {
     destDir: '/assets'
   });
 
+  var testLoaderTree = funnel("node_modules/ember-cli-test-loader/addon-test-support", {
+    files: ['index.js'],
+    destDir: '/ember-cli-test-loader'
+  });
+
   var emberDataShims = funnel('vendor', {
     files: ['ember-data-shims.js']
   });
@@ -132,7 +137,7 @@ module.exports = function(defaults) {
     outputFile: '/assets/twiddle-deps.js'
   });
 
-  return mergeTrees([app.toTree(), twiddleVendorTree, loaderTree]);
+  return mergeTrees([app.toTree(), twiddleVendorTree, loaderTree, testLoaderTree]);
 };
 
 // This copies code out of ember-cli's blueprints into

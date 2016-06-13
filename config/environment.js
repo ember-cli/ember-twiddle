@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'ember-twiddle',
     environment: environment,
-    baseURL: '/',
+    rootURL: '/',
     locationType: 'auto',
     host: 'https://api.github.com',
     githubOauthUrl: 'http://localhost:9999/authenticate/',
@@ -49,7 +49,6 @@ module.exports = function(environment) {
   }
 
   if (environment === 'test') {
-    ENV.baseURL = '/';
     ENV.locationType = 'auto';
 
     // keep test console output quieter
