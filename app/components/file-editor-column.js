@@ -41,9 +41,9 @@ export default Ember.Component.extend({
       this.sendAction('selectFile', file);
     },
 
-    valueUpdated(_, __, changeObj) {
+    valueUpdated(value, __, changeObj) {
       const isUserChange = changeObj.origin !== 'setValue';
-      this.attrs.contentChanged(isUserChange);
+      this.attrs.contentChanged(isUserChange, value);
     },
 
     removeColumn(col) {

@@ -327,6 +327,51 @@ test('unsaved indicator', function(assert) {
   });
 });
 
+test('editing a file updates gist', function(assert) {
+  const files = [
+    {
+      filename: "application.template.hbs",
+      content: "{{outlet}}"
+    }
+  ];
+
+  runGist(files);
+
+  andThen(function() {
+    promptValue = "templates/index.hbs";
+  });
+
+  click(fileMenu);
+  click(addTemplateAction);
+  click(firstFilePicker);
+
+  andThen(function() {
+    assert.equal(find(firstColumnTextarea).val(), "");
+  });
+
+  // Below doesn't work in phantomjs:
+  if (/PhantomJS/.test(window.navigator.userAgent)) {
+    return;
+  }
+
+  click(firstColumnTextarea);
+  fillIn(firstColumnTextarea, '<div class="index">some text</div>');
+  triggerEvent(firstColumnTextarea, "blur");
+
+  andThen(function() {
+    assert.equal(find(firstColumnTextarea).val(), '<div class="index">some text</div>');
+  });
+
+  click("#live-reload");
+  click(".run-now");
+  waitForLoadedIFrame();
+
+  andThen(function() {
+    assert.equal(outputContents('.index'), 'some text');
+  });
+
+});
+
 test('own gist can be copied into a new one', function(assert) {
   // set owner of gist as currently logged in user
   stubValidSession(this.application, {
