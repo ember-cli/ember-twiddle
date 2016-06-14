@@ -218,8 +218,9 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
       });
     },
 
-    updateColumn(isUserChange) {
+    updateColumn(isUserChange, content) {
       if(isUserChange) {
+        this.set('activeFile.content', content);
         this.send('contentsChanged');
       }
     },
