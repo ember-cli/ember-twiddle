@@ -44,13 +44,14 @@
 
 {{#if file}}
 {{ivy-codemirror
-    value         = file.content
-    mode          = editorMode
-    keyMap        = keyMap
-    lineNumbers   = true
-    fixedGutter   = true
-    lineWrapping  = true
-    tabSize       = 2
-    valueUpdated  = "valueUpdated"
+    value=file.content
+    options=(hash
+      mode=editorMode
+      keyMap=keyMap
+      lineNumbers=true
+      fixedGutter=true
+      lineWrapping=true
+      tabSize=2)
+    valueUpdated="valueUpdated"
 }}
 {{/if}}

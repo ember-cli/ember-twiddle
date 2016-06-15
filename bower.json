@@ -7,7 +7,6 @@
     "ember-qunit-notifications": "0.1.0",
     "jquery": "1.11.3",
     "codemirror": "~5.15.2",
-    "ember-cli-codemirror-shim": "~0.0.1",
     "bootstrap-sass": "~3.3.5",
     "dom-ruler": "0.1.13",
     "pretender": "~1.1.0",
