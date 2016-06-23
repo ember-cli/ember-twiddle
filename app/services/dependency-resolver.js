@@ -32,6 +32,8 @@ const CHANNEL_FILENAME_MAP = {
 
 const CHANNELS = ['canary', 'beta', 'release'];
 
+const POLL_INTERVAL = 10000;
+
 const { computed, RSVP } = Ember;
 
 export default Ember.Service.extend({
@@ -83,7 +85,7 @@ export default Ember.Service.extend({
       if (allAddonsLoaded) {
         done = true;
       } else {
-        yield timeout(1000);
+        yield timeout(POLL_INTERVAL);
       }
     }
     return dependencies;
