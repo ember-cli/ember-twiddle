@@ -77,7 +77,7 @@ export default Ember.Service.extend({
           allAddonsLoaded = false;
         } else if (addon.status === 'build_error') {
           console.error(`Addon ${name} encountered a build error:`);
-          console.error(addon.errors, addon.ember_errors);
+          console.error(addon.error_log);
           allAddonsLoaded = false;
           throw addon;
         }
