@@ -45,14 +45,14 @@ export default Ember.Service.extend({
     });
   },
 
-  resolveAddons: function(addons, dependencies) {
-    const taskInstance = this.get('resolveAddonsTask').perform(addons, dependencies);
+  resolveAddons: function(addons, dependencies, emberVersion) {
+    const taskInstance = this.get('resolveAddonsTask').perform(addons, dependencies, emberVersion);
     return taskInstance.then(() => {
       return RSVP.resolve(taskInstance.value);
     });
   },
 
-  resolveAddonsTask: task(function *(addons, dependencies) {
+  resolveAddonsTask: task(function *(addons, dependencies, emberVersion) {
     let done = false;
     while (!done) {
       let addonPromises = {};
@@ -60,7 +60,7 @@ export default Ember.Service.extend({
       for (let i = 0; i < addonNames.length; ++i) {
         const name = addonNames[i];
         const value = addons[name];
-        addonPromises[name] = this.resolveAddon(name, value);
+        addonPromises[name] = this.resolveAddon(name, value, emberVersion);
       }
       let hash = yield RSVP.hash(addonPromises);
       let allAddonsLoaded = true;
@@ -91,9 +91,9 @@ export default Ember.Service.extend({
     return dependencies;
   }),
 
-  resolveAddon(name, value) {
+  resolveAddon(name, value, emberVersion) {
     return new RSVP.Promise(function(resolve) {
-      const url = `${config.addonUrl}?ember_version=1.13.15&addon=${name}&addon_version=${value}`;
+      const url = `${config.addonUrl}?ember_version=${emberVersion}&addon=${name}&addon_version=${value}`;
       resolve(Ember.$.getJSON(url).then(data => RSVP.resolve(data)));
     });
   },
