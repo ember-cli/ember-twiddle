@@ -12,5 +12,6 @@
     "ember": "2.6.0",
     "ember-data": "2.6.1",
     "ember-template-compiler": "2.6.0"
-  }
+  },
+  "addons": {}
 }
