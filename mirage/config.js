@@ -1,6 +1,9 @@
 import AddonFixture from "./fixtures/addon";
 import config from "../config/environment";
 import Mirage, { faker } from "ember-cli-mirage";
+import Ember from "ember";
+
+const { assign } = Ember;
 
 export default function() {}
 
@@ -25,7 +28,7 @@ export function testConfig() {
 
   this.post('/gists', function(schema, request) {
     let gist = server.create('gist', { id: faker.random.uuid() });
-    let response = Ember.assign(gist, JSON.parse(request.requestBody));
+    let response = assign(gist, JSON.parse(request.requestBody));
     return new Mirage.Response(200, {}, response);
   });
 
@@ -35,7 +38,7 @@ export function testConfig() {
     return new Mirage.Response(200, {}, response);
   });
 
-  this.post('/gists/:id/forks', function(schema, request) {
+  this.post('/gists/:id/forks', () => {
     let gist = server.create('gist', { id: faker.random.uuid() });
     return new Mirage.Response(200, {}, gist);
   });
