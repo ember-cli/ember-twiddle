@@ -54,4 +54,8 @@ export function testConfig() {
   this.get(config.addonUrl, function() {
     return AddonFixture;
   });
+
+  this.get("https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.10/ember-template-compiler.map", function() {
+    return Mirage.Response(404, {}, "");
+  });
 }
