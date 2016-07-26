@@ -1,5 +1,7 @@
 import { moduleForModel, test } from 'ember-qunit';
 import Ember from 'ember';
+import DS from 'ember-data';
+
 const { run } = Ember;
 
 moduleForModel('gist-file', 'Unit | Model | gist file', {
