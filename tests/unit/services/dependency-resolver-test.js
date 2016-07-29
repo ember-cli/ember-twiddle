@@ -131,3 +131,21 @@ test('canary channel can be specified for version', function(assert) {
     'ember-data': '//s3.amazonaws.com/builds.emberjs.com/canary/ember-data.js'
   });
 });
+
+test('alpha channel can be specified for version', function(assert) {
+  var service = this.subject();
+
+  var dependencies = {
+    'ember': 'alpha',
+    'ember-template-compiler': 'alpha',
+    'ember-data': 'alpha',
+  };
+
+  service.resolveDependencies(dependencies);
+
+  assert.deepEqual(dependencies, {
+    'ember': '//s3.amazonaws.com/builds.emberjs.com/alpha/ember.debug.js',
+    'ember-template-compiler': '//s3.amazonaws.com/builds.emberjs.com/alpha/ember-template-compiler.js',
+    'ember-data': '//s3.amazonaws.com/builds.emberjs.com/alpha/ember-data.js'
+  });
+});

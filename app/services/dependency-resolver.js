@@ -30,7 +30,7 @@ const CHANNEL_FILENAME_MAP = {
   'ember-data': 'ember-data.js'
 };
 
-const CHANNELS = ['canary', 'beta', 'release'];
+const CHANNELS = ['alpha', 'canary', 'beta', 'release'];
 
 const POLL_INTERVAL = 10000;
 
