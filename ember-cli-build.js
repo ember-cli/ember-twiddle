@@ -69,7 +69,7 @@ module.exports = function(defaults) {
       'ember.js': {
         staging:  'bower_components/ember/ember.prod.js'
       },
-      'ember-testing.js': null
+      'ember-testing.js': []
     }
   });
 
