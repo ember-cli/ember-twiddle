@@ -30,6 +30,7 @@ test("getTwiddleJson() resolves dependencies", function(assert) {
     assert.deepEqual(twiddleJson.dependencies, {
       'ember': "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.9/ember.debug.js",
       'ember-template-compiler': "//cdnjs.cloudflare.com/ajax/libs/ember.js/2.0.1/ember-template-compiler.js",
+      'ember-testing': "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.9/ember-testing.js",
       'ember-data': "//cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.12.1/ember-data.js",
       'jquery': "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
     });
@@ -88,5 +89,33 @@ test("updateDependencyVersion() updates the version of ember-template-compiler i
 
     assert.equal(parsed.dependencies.ember, 'release');
     assert.equal(parsed.dependencies['ember-template-compiler'], 'release');
+  });
+});
+
+test("updateDependencyVersion() updates the version of ember-testing if ember is updated", function(assert) {
+  assert.expect(2);
+
+  var service = this.subject();
+
+  var gist = Ember.Object.create({
+    files: Ember.A([Ember.Object.create({
+      filePath: 'twiddle.json',
+      content: `
+        {
+          "dependencies": {
+            "ember": "1.13.9",
+            "ember-testing": "1.13.9"
+          }
+        }
+      `
+    })])
+  });
+
+  service.updateDependencyVersion(gist, 'ember', 'release').then(function() {
+    var updatedContent = gist.get('files').findBy('filePath', 'twiddle.json').get('content');
+    var parsed = JSON.parse(updatedContent);
+
+    assert.equal(parsed.dependencies.ember, 'release');
+    assert.equal(parsed.dependencies['ember-testing'], 'release');
   });
 });

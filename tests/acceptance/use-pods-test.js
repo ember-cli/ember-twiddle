@@ -45,8 +45,7 @@ test('Use pods option works', function(assert) {
                   "dependencies": {
                     "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
                     "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/2.4.3/ember.debug.js",
-                    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/2.4.0/ember-data.js",
-                    "ember-template-compiler": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/2.4.3/ember-template-compiler.js"
+                    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/2.4.0/ember-data.js"
                   }
                 }`
     }
