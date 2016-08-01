@@ -68,7 +68,8 @@ module.exports = function(defaults) {
     vendorFiles: {
       'ember.js': {
         staging:  'bower_components/ember/ember.prod.js'
-      }
+      },
+      'ember-testing.js': null
     }
   });
 
@@ -82,6 +83,10 @@ module.exports = function(defaults) {
   }
 
   app.import('bower_components/ember/ember-template-compiler.js');
+
+  if (env === "test") {
+    app.import('bower_components/ember/ember-testing.js', { type: 'test' });
+  }
 
   if (!isFastboot) {
     app.import('vendor/drags.js');

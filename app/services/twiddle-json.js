@@ -6,7 +6,13 @@ const { inject, RSVP } = Ember;
 const requiredDependencies = [
   'jquery',
   'ember',
-  'ember-template-compiler'
+  'ember-template-compiler',
+  'ember-testing'
+];
+
+const dependentDependencies = [
+  'ember-template-compiler',
+  'ember-testing'
 ];
 
 export default Ember.Service.extend({
@@ -44,8 +50,8 @@ export default Ember.Service.extend({
       const dependencies = JSON.parse(blueprints['twiddle.json']).dependencies;
       requiredDependencies.forEach(function(dep) {
         if (!twiddleJson.dependencies[dep] && dependencies[dep]) {
-          if (dep === 'ember-template-compiler') {
-            twiddleJson.dependencies[dep] = twiddleJson.dependencies['ember'].replace('ember.debug.js', 'ember-template-compiler.js');
+          if (dependentDependencies.includes(dep)) {
+            twiddleJson.dependencies[dep] = twiddleJson.dependencies['ember'].replace('ember.debug.js', dep + '.js');
           } else {
             twiddleJson.dependencies[dep] = dependencies[dep];
           }
@@ -94,8 +100,12 @@ export default Ember.Service.extend({
       // since ember and ember-template-compiler should always have the same
       // version, we update the version for the ember-template-compiler too, if
       // the ember dependency is updated
-      if (dependencyName === 'ember' && json.dependencies.hasOwnProperty('ember-template-compiler')) {
-        json.dependencies['ember-template-compiler'] = version;
+      if (dependencyName === 'ember') {
+        dependentDependencies.forEach((dep) => {
+          if (json.dependencies.hasOwnProperty(dep)) {
+            json.dependencies[dep] = version;
+          }
+        });
       }
 
       return json;

@@ -18,6 +18,11 @@ const CDN_MAP = {
     fileName: 'ember-template-compiler.js'
   },
 
+  'ember-testing': {
+    library: 'ember.js',
+    fileName: 'ember-testing.js'
+  },
+
   'ember-data': {
     library: 'ember-data.js',
     fileName: 'ember-data.js'
@@ -27,6 +32,7 @@ const CDN_MAP = {
 const CHANNEL_FILENAME_MAP = {
   'ember': 'ember.debug.js',
   'ember-template-compiler': 'ember-template-compiler.js',
+  'ember-testing': 'ember-testing.js',
   'ember-data': 'ember-data.js'
 };
 
@@ -102,6 +108,7 @@ export default Ember.Service.extend({
     switch (name) {
       case 'ember':
       case 'ember-template-compiler':
+      case 'ember-testing':
       case 'ember-data':
         return this.resolveEmberDependency(name, value);
 

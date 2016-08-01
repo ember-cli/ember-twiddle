@@ -68,7 +68,8 @@ const TWIDDLE_WITH_ROUTES = [
                   "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
                   "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.10/ember.debug.js",
                   "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.13.13/ember-data.js",
-                  "ember-template-compiler": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.10/ember-template-compiler.js"
+                  "ember-template-compiler": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.10/ember-template-compiler.js",
+                  "ember-testing": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.10/ember-testing.js"
                 }
               }`
   }
