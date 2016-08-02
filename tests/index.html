@@ -30,6 +30,12 @@
     <script src="{{rootURL}}assets/ember-twiddle.js"></script>
     <script src="{{rootURL}}assets/tests.js"></script>
 
+    <script>
+      window.assetMap = {
+        testSupport: "{{rootURL}}assets/test-support.js"
+      };
+    </script>
+
     {{content-for "body-footer"}}
     {{content-for "test-body-footer"}}
   </body>

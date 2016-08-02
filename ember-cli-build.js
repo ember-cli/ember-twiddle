@@ -28,7 +28,7 @@ module.exports = function(defaults) {
       enabled: isProductionLikeBuild,
       prepend: prepend,
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg', 'eot', 'ttf', 'woff', 'woff2', 'ico'],
-      exclude: ['test-loader', 'test-support', 'testem']
+      exclude: ['test-loader', 'test-support.css', 'testem']
     },
     codemirror: {
       modes: ['xml', 'javascript', 'handlebars', 'htmlmixed', 'css'],

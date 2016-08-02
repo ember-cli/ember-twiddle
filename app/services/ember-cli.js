@@ -310,11 +310,13 @@ export default Ember.Service.extend({
     const testingEnabled = twiddleJSON.options && twiddleJSON.options["enable-testing"];
 
     if (testingEnabled) {
-      const testJSFiles = ['assets/test-loader.js', 'assets/test-support.js', 'testem.js'];
+      const testJSFiles = ['assets/test-loader.js', 'testem.js'];
 
       testJSFiles.forEach(jsFile => {
         depScriptTags += `<script type="text/javascript" src="${config.assetsHost}${jsFile}?${config.APP.version}"></script>`;
       });
+
+      depScriptTags += `<script type="text/javascript" src="${window.assetMap.testSupport}"></script>`;
 
       depCssLinkTags += `<link rel="stylesheet" type="text/css" href="${config.assetsHost}assets/test-support.css?${config.APP.version}">`;
 
