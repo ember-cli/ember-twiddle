@@ -1,4 +1,4 @@
-import GistEditRoute from "../route";
+import GistEditRoute from "../edit";
 
 export default GistEditRoute.extend({
 
