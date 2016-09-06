@@ -219,7 +219,14 @@ export default Ember.Service.extend({
         this.addConfig(out, gist, twiddleJSON);
 
         // Add boot code
-        contentForAppBoot(out, { modulePrefix: twiddleAppName, dependencies: twiddleJSON.dependencies, twiddleJSON });
+        contentForAppBoot(
+          out,
+          {
+            modulePrefix: twiddleAppName,
+            dependencies: twiddleJSON.dependencies,
+            testingEnabled: testingEnabled(twiddleJSON)
+          }
+        );
 
         return RSVP.resolve(this.buildHtml(gist, out.join('\n'), cssOut.join('\n'), twiddleJSON));
       }));
@@ -473,7 +480,7 @@ function contentForAppBoot (content, config) {
     content.push('  require("'+mod+'").__esModule=true;');
   });
 
-  if (!testingEnabled(config.twiddleJSON)) {
+  if (!config.testingEnabled) {
     content.push('  require("' +
       config.modulePrefix +
       '/app")["default"].create(' +
