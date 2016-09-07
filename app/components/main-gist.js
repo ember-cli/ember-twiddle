@@ -76,6 +76,8 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
    */
   fileTreeShown: true,
 
+  testsEnabled: Ember.computed.oneWay('emberCli.enableTesting'),
+
   /**
    * reinitialize component when the model has changed
    */
@@ -238,6 +240,11 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
       const settings = this.get('settings');
       settings.set('keyMap', keyMap);
       settings.save();
+    },
+
+    switchTests(testsEnabled) {
+      this.get('emberCli').setTesting(this.get('model'), testsEnabled);
+      this.get('rebuildApp').perform();
     }
   }
 });

@@ -157,6 +157,7 @@ export default Ember.Service.extend({
   twiddleJson: inject.service(),
 
   usePods: computed.readOnly('twiddleJson.usePods'),
+  enableTesting: false,
 
   setup(gist) {
     this.get('twiddleJson').setup(gist);
@@ -217,6 +218,7 @@ export default Ember.Service.extend({
       resolve(this.get('twiddleJson').getTwiddleJson(gist).then(twiddleJSON => {
 
         this.addConfig(out, gist, twiddleJSON);
+        this.set('enableTesting', testingEnabled(twiddleJSON));
 
         // Add boot code
         contentForAppBoot(
@@ -439,6 +441,10 @@ export default Ember.Service.extend({
         "import $1 from $2twiddle/");
     });
     return code;
+  },
+
+  setTesting(gist, enabled = true) {
+    this.get('twiddleJson').setTesting(gist, enabled);
   }
 });
 

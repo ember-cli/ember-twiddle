@@ -113,11 +113,15 @@ export default Ember.Service.extend({
   },
 
   ensureTestingEnabled(gist) {
+    return this.setTesting(gist, true);
+  },
+
+  setTesting(gist, enabled = true) {
     return this._updateTwiddleJson(gist, (json) => {
       if (!json.options) {
         json.options = {};
       }
-      json.options["enable-testing"] = true;
+      json.options["enable-testing"] = enabled;
       return json;
     });
   }
