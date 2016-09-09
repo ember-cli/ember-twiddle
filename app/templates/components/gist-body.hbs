@@ -39,11 +39,11 @@
                        isBuilding=isBuilding
                        buildErrors=buildErrors
       }}
-      <label class="checkbox-inline">
-        {{better-checkbox id="switch-tests" checked=testsEnabled action=(action this.attrs.switchTests)}}
-        Run Tests
-      </label>
     </div>
+    <label class="checkbox-inline twiddle-run-tests">
+      {{better-checkbox id="switch-tests" checked=testsEnabled action=(action this.attrs.switchTests)}}
+      Run Tests
+    </label>
     {{run-or-live-reload liveReloadChanged=(action this.attrs.liveReloadChanged) runNow=(action this.attrs.runNow)}}
     <div class="url-bar">
       {{input value=applicationUrl enter=(route-action "urlChanged")}}
