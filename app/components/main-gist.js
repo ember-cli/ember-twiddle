@@ -5,7 +5,7 @@ import FilesMixin from "../mixins/files";
 import TestFilesMixin from "../mixins/test-files";
 import AppBuilderMixin from "../mixins/app-builder";
 
-const { inject } = Ember;
+const { inject, computed } = Ember;
 
 export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestFilesMixin, {
   emberCli: inject.service('ember-cli'),
@@ -18,8 +18,8 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
   fullScreen: false,
   openFiles: "",
 
-  init(...args) {
-    this._super(...args);
+  init() {
+    this._super(...arguments);
     this.set('settings', Settings.create({
       isFastBoot: this.get('fastboot.isFastBoot')
     }));
@@ -76,11 +76,13 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
    */
   fileTreeShown: true,
 
+  testsEnabled: computed.oneWay('emberCli.enableTesting'),
+
   /**
    * reinitialize component when the model has changed
    */
   didReceiveAttrs() {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
 
     const model = this.get('model');
 
@@ -238,6 +240,16 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
       const settings = this.get('settings');
       settings.set('keyMap', keyMap);
       settings.save();
+    },
+
+    switchTests(testsEnabled) {
+      this.ensureTestHelperExists();
+      this.ensureTestResolverExists();
+      this.ensureTestStartAppHelperExists();
+      this.ensureTestDestroyAppHelperExists();
+
+      this.get('emberCli').setTesting(this.get('model'), testsEnabled);
+      this.get('rebuildApp').perform();
     }
   }
 });

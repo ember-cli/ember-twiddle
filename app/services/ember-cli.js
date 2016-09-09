@@ -157,6 +157,7 @@ export default Ember.Service.extend({
   twiddleJson: inject.service(),
 
   usePods: computed.readOnly('twiddleJson.usePods'),
+  enableTesting: false,
 
   setup(gist) {
     this.get('twiddleJson').setup(gist);
@@ -197,7 +198,7 @@ export default Ember.Service.extend({
    * @return {Ember Object}       Source code for built Ember app
    */
   compileGist (gist) {
-    var promise = new RSVP.Promise((resolve, reject) => {
+    let promise = new RSVP.Promise((resolve, reject) => {
       let errors = [];
       let out = [];
       let cssOut = [];
@@ -214,14 +215,23 @@ export default Ember.Service.extend({
 
       this.addBoilerPlateFiles(out, gist);
 
-      resolve(this.get('twiddleJson').getTwiddleJson(gist).then(twiddleJson => {
+      resolve(this.get('twiddleJson').getTwiddleJson(gist).then(twiddleJSON => {
 
-        this.addConfig(out, gist, twiddleJson);
+        this.addConfig(out, gist, twiddleJSON);
+        this.set('enableTesting', testingEnabled(twiddleJSON));
 
         // Add boot code
-        contentForAppBoot(out, {modulePrefix: twiddleAppName, dependencies: twiddleJson.dependencies});
+        contentForAppBoot(
+          out,
+          {
+            modulePrefix: twiddleAppName,
+            dependencies: twiddleJSON.dependencies,
+            testingEnabled: testingEnabled(twiddleJSON),
+            legacyTesting: legacyTesting(twiddleJSON)
+          }
+        );
 
-        return RSVP.resolve(this.buildHtml(gist, out.join('\n'), cssOut.join('\n'), twiddleJson));
+        return RSVP.resolve(this.buildHtml(gist, out.join('\n'), cssOut.join('\n'), twiddleJSON));
       }));
     });
 
@@ -272,7 +282,14 @@ export default Ember.Service.extend({
     let appStyleTag = `<style type="text/css">${appCSS}</style>`;
 
     index = index.replace('{{content-for \'head\'}}', `${depCssLinkTags}\n${appStyleTag}`);
-    index = index.replace('{{content-for \'body\'}}', `${depScriptTags}\n${appScriptTag}\n${testStuff}\n<div id="root"></div>`);
+
+    let contentForBody = `${depScriptTags}\n${appScriptTag}\n${testStuff}\n`;
+
+    if (!testingEnabled(twiddleJSON) || legacyTesting(twiddleJSON)) {
+      contentForBody += '<div id="root"></div>';
+    }
+
+    index = index.replace('{{content-for \'body\'}}', contentForBody);
 
     // replace the {{build-timestamp}} placeholder with the number of
     // milliseconds since the Unix Epoch:
@@ -307,9 +324,7 @@ export default Ember.Service.extend({
 
     depScriptTags += `<script type="text/javascript" src="${config.assetsHost}assets/twiddle-deps.js?${config.APP.version}"></script>`;
 
-    const testingEnabled = twiddleJSON.options && twiddleJSON.options["enable-testing"];
-
-    if (testingEnabled) {
+    if (testingEnabled(twiddleJSON)) {
       const testJSFiles = ['assets/test-loader.js', 'testem.js'];
 
       testJSFiles.forEach(jsFile => {
@@ -427,6 +442,10 @@ export default Ember.Service.extend({
         "import $1 from $2twiddle/");
     });
     return code;
+  },
+
+  setTesting(gist, enabled = true) {
+    this.get('twiddleJson').setTesting(gist, enabled);
   }
 });
 
@@ -468,11 +487,13 @@ function contentForAppBoot (content, config) {
     content.push('  require("'+mod+'").__esModule=true;');
   });
 
-  content.push('  require("' +
-    config.modulePrefix +
-    '/app")["default"].create(' +
-    calculateAppConfig(config) +
-    ');');
+  if (!config.testingEnabled || config.legacyTesting) {
+    content.push('  require("' +
+      config.modulePrefix +
+      '/app")["default"].create(' +
+      calculateAppConfig(config) +
+      ');');
+  }
 }
 
 /**
@@ -482,4 +503,12 @@ function calculateAppConfig(config) {
   let appConfig = config.APP || {};
   appConfig.rootElement="#root";
   return JSON.stringify(appConfig);
+}
+
+function testingEnabled(twiddleJSON) {
+  return twiddleJSON && twiddleJSON.options && twiddleJSON.options["enable-testing"];
+}
+
+function legacyTesting(twiddleJSON) {
+  return twiddleJSON && twiddleJSON.options && twiddleJSON.options["legacy-testing"];
 }
