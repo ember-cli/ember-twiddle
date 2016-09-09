@@ -226,7 +226,8 @@ export default Ember.Service.extend({
           {
             modulePrefix: twiddleAppName,
             dependencies: twiddleJSON.dependencies,
-            testingEnabled: testingEnabled(twiddleJSON)
+            testingEnabled: testingEnabled(twiddleJSON),
+            legacyTesting: legacyTesting(twiddleJSON)
           }
         );
 
@@ -284,7 +285,7 @@ export default Ember.Service.extend({
 
     let contentForBody = `${depScriptTags}\n${appScriptTag}\n${testStuff}\n`;
 
-    if (!testingEnabled(twiddleJSON)) {
+    if (!testingEnabled(twiddleJSON) || legacyTesting(twiddleJSON)) {
       contentForBody += '<div id="root"></div>';
     }
 
@@ -486,7 +487,7 @@ function contentForAppBoot (content, config) {
     content.push('  require("'+mod+'").__esModule=true;');
   });
 
-  if (!config.testingEnabled) {
+  if (!config.testingEnabled || config.legacyTesting) {
     content.push('  require("' +
       config.modulePrefix +
       '/app")["default"].create(' +
@@ -506,4 +507,8 @@ function calculateAppConfig(config) {
 
 function testingEnabled(twiddleJSON) {
   return twiddleJSON && twiddleJSON.options && twiddleJSON.options["enable-testing"];
+}
+
+function legacyTesting(twiddleJSON) {
+  return twiddleJSON && twiddleJSON.options && twiddleJSON.options["legacy-testing"];
 }
