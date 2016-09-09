@@ -3,8 +3,8 @@
     {{#if fileTreeShown}}
       <div class="col-md-4 file-tree">
         {{file-tree model=model
-                    openFile=(action this.attrs.openFile)
-                    hideFileTree=(action this.attrs.hideFileTree)
+                    openFile=(action this.openFile)
+                    hideFileTree=(action this.hideFileTree)
         }}
       </div>
     {{/if}}
@@ -18,12 +18,12 @@
                                keyMap=settings.keyMap
                                numColumns=numColumns
                                fileTreeShown=fileTreeShown
-                               focusEditor=(action this.attrs.focusEditor)
-                               selectFile=(action this.attrs.selectFile)
-                               contentChanged=(action this.attrs.updateColumn)
-                               removeColumn=(action this.attrs.removeColumn)
-                               addColumn=(action this.attrs.addColumn)
-                               showFileTree=(action this.attrs.showFileTree)
+                               focusEditor=(action this.focusEditor)
+                               selectFile=(action this.selectFile)
+                               contentChanged=(action this.updateColumn)
+                               removeColumn=(action this.removeColumn)
+                               addColumn=(action this.addColumn)
+                               showFileTree=(action this.showFileTree)
           }}
         </div>
       {{/if}}
@@ -33,7 +33,7 @@
   <div class="col-md-4 output {{if fullScreen 'full-screen'}}">
     <div class="header">
       {{#if noColumns}}
-        <span class="glyphicon glyphicon-plus" {{action (action this.attrs.addColumn)}} title="Show an editor panel"></span>
+        <span class="glyphicon glyphicon-plus" {{action (action this.addColumn)}} title="Show an editor panel"></span>
       {{/if}}
       {{build-messages notify=notify
                        isBuilding=isBuilding
@@ -41,10 +41,10 @@
       }}
     </div>
     <label class="checkbox-inline twiddle-run-tests">
-      {{better-checkbox id="switch-tests" checked=testsEnabled action=(action this.attrs.switchTests)}}
+      {{better-checkbox id="switch-tests" checked=testsEnabled action=(action this.switchTests)}}
       Run Tests
     </label>
-    {{run-or-live-reload liveReloadChanged=(action this.attrs.liveReloadChanged) runNow=(action this.attrs.runNow)}}
+    {{run-or-live-reload liveReloadChanged=(action this.liveReloadChanged) runNow=(action this.runNow)}}
     <div class="url-bar">
       {{input value=applicationUrl enter=(route-action "urlChanged")}}
     </div>
@@ -53,7 +53,7 @@
     {{/if}}
     {{dummy-app html=buildOutput isBuilding=isBuilding}}
     {{#if fullScreen}}
-      <a class="exit-full-screen-link" {{action (action this.attrs.exitFullScreen)}}>Edit Twiddle</a>
+      <a class="exit-full-screen-link" {{action (action this.exitFullScreen)}}>Edit Twiddle</a>
     {{/if}}
   </div>
 {{/twiddle-panes}}
