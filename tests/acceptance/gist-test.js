@@ -196,7 +196,7 @@ test('can add service', function(assert){
     assert.equal(fileNames[3], promptValue, 'Added the file with the right name');
 
     let columnFiles = findMapText(displayedFiles);
-    assert.ok(columnFiles.contains(promptValue), 'Added file is displayed');
+    assert.ok(columnFiles.includes(promptValue), 'Added file is displayed');
   });
 });
 
@@ -222,7 +222,7 @@ test('can add helper', function(assert){
     assert.equal(fileNames[3], promptValue, 'Added the file with the right name');
 
     let columnFiles = findMapText(displayedFiles);
-    assert.ok(columnFiles.contains(promptValue), 'Added file is displayed');
+    assert.ok(columnFiles.includes(promptValue), 'Added file is displayed');
   });
 });
 
@@ -248,7 +248,7 @@ test('can add unit test', function(assert){
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
 
     let columnFiles = findMapText(displayedFiles);
-    assert.ok(columnFiles.contains(promptValue), 'Added file is displayed');
+    assert.ok(columnFiles.includes(promptValue), 'Added file is displayed');
   });
 });
 
@@ -274,7 +274,7 @@ test('can add integration test', function(assert){
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
 
     let columnFiles = findMapText(displayedFiles);
-    assert.ok(columnFiles.contains(promptValue), 'Added file is displayed');
+    assert.ok(columnFiles.includes(promptValue), 'Added file is displayed');
   });
 });
 
@@ -300,7 +300,7 @@ test('can add acceptance test', function(assert){
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
 
     let columnFiles = findMapText(displayedFiles);
-    assert.ok(columnFiles.contains(promptValue), 'Added file is displayed');
+    assert.ok(columnFiles.includes(promptValue), 'Added file is displayed');
   });
 });
 
