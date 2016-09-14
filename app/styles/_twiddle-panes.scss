@@ -14,8 +14,6 @@
   }
 
   .twiddle-pane {
-    -webkit-flex: 1;
-    flex: 1;
     padding: 0;
     height: 100%;
     border-right: 1px solid #e4e2e2;
@@ -24,6 +22,19 @@
 
     @media (max-width: $screen-md-min) {
       margin-bottom: 60px;
+    }
+  }
+
+  .twiddle-pane.code, .twiddle-pane.output {
+    -webkit-flex: 1;
+    flex: 1;
+  }
+
+  .twiddle-pane.file-tree {
+    min-width: 180px;
+
+    .js-tree {
+      padding: 0 10px;
     }
   }
 
