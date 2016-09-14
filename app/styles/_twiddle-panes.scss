@@ -66,8 +66,8 @@
     font-size: 16px;
     background-color: $grey-1;
 
-    .nav-left+.file-picker {
-      margin-left: 30px;
+    span+.build-msgs {
+      margin-left: 10px;
     }
 
     .nav-right {
