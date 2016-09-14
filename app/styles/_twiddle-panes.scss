@@ -10,7 +10,6 @@
   @media (min-width: $screen-md-min) {
     display: -webkit-flex;
     display: flex;
-    align-content: stretch;
   }
 
   .twiddle-pane {
@@ -30,8 +29,8 @@
     flex: 1;
   }
 
-  .twiddle-pane.file-tree {
-    min-width: 180px;
+  .twiddle-pane.file-tree .jstree {
+    margin: 0 10px;
   }
 
   .handle + .twiddle-pane {
