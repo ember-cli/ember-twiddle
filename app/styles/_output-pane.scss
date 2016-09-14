@@ -28,6 +28,7 @@
   background-color: transparent;
   position: relative;
   left: -2px;
+  z-index: 100;
 
   @media (min-width: $screen-md-min) {
     height: 100%;
