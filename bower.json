@@ -2,9 +2,8 @@
   "name": "ember-twiddle",
   "version": "0.10.5",
   "dependencies": {
-    "ember": "2.7.0",
+    "ember": "2.8.0",
     "ember-cli-shims": "0.1.1",
-    "ember-qunit-notifications": "0.1.0",
     "jquery": "1.11.3",
     "codemirror": "~5.17.0",
     "bootstrap-sass": "~3.3.5",
@@ -17,8 +16,7 @@
   },
   "resolutions": {
     "codemirror": "~5.17.0",
-    "ember": "2.7.0",
-    "FakeXMLHttpRequest": "^1.3.0",
-    "qunit-notifications": "~0.1.0"
+    "ember": "2.8.0",
+    "FakeXMLHttpRequest": "^1.3.0"
   }
 }

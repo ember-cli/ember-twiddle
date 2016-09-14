@@ -13,7 +13,7 @@ test('it calls "registerDeletedFile" on gist relationship when deleting a record
 
   const adapter = DS.Adapter.extend({
     createRecord() {
-      return Ember.RSVP.resolve();
+      return Ember.RSVP.resolve({ id: 1 });
     }
   });
   this.register('adapter:application', adapter);
