@@ -39,12 +39,12 @@
                        isBuilding=isBuilding
                        buildErrors=buildErrors
       }}
+      <label class="checkbox-inline twiddle-run-tests">
+        {{better-checkbox id="switch-tests" checked=testsEnabled action=(action this.switchTests)}}
+        Run Tests
+      </label>
+      {{run-or-live-reload liveReloadChanged=(action this.liveReloadChanged) runNow=(action this.runNow)}}
     </div>
-    <label class="checkbox-inline twiddle-run-tests">
-      {{better-checkbox id="switch-tests" checked=testsEnabled action=(action this.switchTests)}}
-      Run Tests
-    </label>
-    {{run-or-live-reload liveReloadChanged=(action this.liveReloadChanged) runNow=(action this.runNow)}}
     <div class="url-bar">
       {{input value=applicationUrl enter=(route-action "urlChanged")}}
     </div>

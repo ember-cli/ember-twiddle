@@ -18,11 +18,9 @@
 }
 
 .run-or-live-reload {
-  position: absolute;
-  right: 0;
-  top: 8px;
-  margin: 10px 25px;
   text-align: right;
+  margin-left: 10px;
+  font-size: 14px;
 }
 
 .handle {
@@ -37,9 +35,7 @@
 }
 
 .twiddle-run-tests {
-  position: absolute;
-  right: 106px;
-  top: 10px;
-  margin: 10px 25px;
+  margin-left: auto;
   text-align: right;
+  font-size: 14px;
 }
