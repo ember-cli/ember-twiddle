@@ -1,7 +1,7 @@
 {{#twiddle-panes numColumns=numColumns fullScreen=fullScreen fileTreeShown=fileTreeShown}}
   {{#unless fullScreen}}
     {{#if fileTreeShown}}
-      <div class="col-md-4 file-tree">
+      <div class="twiddle-pane file-tree">
         {{file-tree model=model
                     openFile=(action this.openFile)
                     hideFileTree=(action this.hideFileTree)
@@ -11,7 +11,7 @@
 
     {{#each columns as |column|}}
       {{#if column.show}}
-        <div class="col-md-4 code {{if column.active 'active' ''}}">
+        <div class="twiddle-pane code {{if column.active 'active' ''}}">
           {{file-editor-column col=column.col
                                file=column.file
                                allFiles=model.files
@@ -30,7 +30,7 @@
     {{/each}}
   {{/unless}}
 
-  <div class="col-md-4 output {{if fullScreen 'full-screen'}}">
+  <div class="twiddle-pane output {{if fullScreen 'full-screen'}}">
     <div class="header">
       {{#if noColumns}}
         <span class="glyphicon glyphicon-plus" {{action (action this.addColumn)}} title="Show an editor panel"></span>

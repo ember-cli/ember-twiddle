@@ -10,22 +10,24 @@
   @media (min-width: $screen-md-min) {
     display: -webkit-flex;
     display: flex;
+    align-content: stretch;
   }
 
-  .col-md-4 {
-    -webkit-flex: 0.5;
-    flex: 0.5;
+  .twiddle-pane {
+    -webkit-flex: 1;
+    flex: 1;
     padding: 0;
     height: 100%;
     border-right: 1px solid #e4e2e2;
     cursor: normal;
+    position: relative;
 
     @media (max-width: $screen-md-min) {
       margin-bottom: 60px;
     }
   }
 
-  .handle + .col-md-4 {
+  .handle + .twiddle-pane {
     margin-left: -3px;
   }
 
