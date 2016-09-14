@@ -11,7 +11,7 @@
 
     {{#each columns as |column|}}
       {{#if column.show}}
-        <div class="twiddle-pane code {{if column.active 'active' ''}}">
+        <div class="twiddle-pane code {{if column.active 'active'}}">
           {{file-editor-column col=column.col
                                file=column.file
                                allFiles=model.files
