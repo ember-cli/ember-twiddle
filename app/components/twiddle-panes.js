@@ -16,7 +16,7 @@ export default Ember.Component.extend({
     if (!this.get('media.isMobile')) {
       this.$('.twiddle-pane').after('<div class="handle"></div>');
       this.$('.handle').last().remove();
-      this.$('.handle').drags({ pane: '.twiddle-pane' });
+      this.$('.handle').drags({ pane: '.twiddle-pane', min: 20 });
     }
   },
 

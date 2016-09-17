@@ -7,7 +7,7 @@
       return;
     }
 
-    opt = $.extend({handle:"",pane:"",cursor:"col-resize", min: 25}, opt);
+    opt = $.extend({ handle:"",pane:"",cursor:"col-resize", min: 25, minWidth: 200 }, opt);
 
     var $el;
     if(opt.handle === "") {
@@ -55,7 +55,7 @@
       var leftPercentage = (((e.pageX - prev.offset().left) + (pos_x - drg_w / 2)) / total);
       var rightPercentage = 1 - leftPercentage;
 
-      if(leftPercentage * 100 < opt.min || rightPercentage * 100 < opt.min)
+      if(leftWidth <= opt.minWidth || leftPercentage * 100 < opt.min || rightPercentage * 100 < opt.min)
       {
         return;
       }
