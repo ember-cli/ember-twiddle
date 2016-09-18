@@ -56,6 +56,10 @@
     border-right: none;
     position: relative;
 
+    .header {
+      padding-right: 28px;
+    }
+
     span {
       display: inline-block;
     }

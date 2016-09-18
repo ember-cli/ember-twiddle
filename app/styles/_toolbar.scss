@@ -114,7 +114,7 @@
 
     @media (min-width: $screen-md-min) {
       position: absolute;
-      right: ($topbar-height - $topbar-control-height) / 2;
+      right: 0;
       top: ($topbar-height - $topbar-control-height) / 2;
     }
 
@@ -154,7 +154,7 @@
 
     @media (min-width: $screen-md-min) {
       position: absolute;
-      left: ($topbar-height - $topbar-control-height) / 2;
+      left: 0;
       top: ($topbar-height - $topbar-control-height) / 2;
     }
 
@@ -172,6 +172,7 @@
 
     @media (min-width: $screen-md-min) {
       position: absolute;
+      top: 6px;
       left: 50%;
       margin-left: -400px;
       width: 800px;
