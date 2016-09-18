@@ -1,17 +1,15 @@
-<nav class="navbar-default">
-  <div class="row toolbar">
-    <div>
-      <div class="title">
-        {{title-input value=model.description titleChanged=(action this.attrs.titleChanged)}}
-        {{saved-state-indicator model=model unsaved=unsaved}}
-      </div>
-
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsed-menu" aria-expanded="false">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+<nav class="navbar-default gist-header">
+  <div class="row toolbar visible-toolbar">
+    <div class="title">
+      {{title-input value=model.description titleChanged=(action this.attrs.titleChanged)}}
+      {{saved-state-indicator model=model unsaved=unsaved}}
     </div>
+
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsed-menu" aria-expanded="false">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
   </div>
 
   <div id="collapsed-menu" class="collapse navbar-collapse row toolbar">

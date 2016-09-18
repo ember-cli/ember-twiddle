@@ -16,16 +16,16 @@ test('it renders', function(assert) {
 
   this.render(hbs`
     {{#twiddle-panes numColumns=numColumns}}
-      <div class="col-md-4"></div>
-      <div class="col-md-4"></div>
-      <div class="col-md-4"></div>
-      <div class="col-md-4"></div>
+      <div class="twiddle-pane"></div>
+      <div class="twiddle-pane"></div>
+      <div class="twiddle-pane"></div>
+      <div class="twiddle-pane"></div>
     {{/twiddle-panes}}
   `);
 
   assert.equal(this.$('.handle').length, 3, 'Renders 3 handles if 4 columns');
 
-  this.$('.col-md-4').last().after('<div class="col-md-4"></div>');
+  this.$('.twiddle-pane').last().after('<div class="twiddle-pane"></div>');
   this.set('numColumns', 5);
 
   assert.equal(this.$('.handle').length, 4, 'Increases handles to 4 if a column is inserted');

@@ -12,20 +12,43 @@
     display: flex;
   }
 
-  .col-md-4 {
-    -webkit-flex: 0.5;
-    flex: 0.5;
+  .twiddle-pane {
     padding: 0;
     height: 100%;
+    min-width: 200px;
     border-right: 1px solid #e4e2e2;
     cursor: normal;
+    position: relative;
 
     @media (max-width: $screen-md-min) {
       margin-bottom: 60px;
     }
   }
 
-  .handle + .col-md-4 {
+  .twiddle-pane.code, .twiddle-pane.output {
+    -webkit-flex: 1;
+    flex: 1;
+  }
+
+  .twiddle-pane.file-tree {
+    @media (min-width: $screen-md-min) {
+      max-width: 40%;
+    }
+
+    > .ember-view {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .jstree {
+      height: 100%;
+      overflow-x: auto;
+      padding: 0 10px;
+    }
+  }
+
+  .handle + .twiddle-pane {
     margin-left: -3px;
   }
 
@@ -33,8 +56,11 @@
     border-right: none;
     position: relative;
 
+    .header {
+      padding-right: 28px;
+    }
+
     span {
-      margin: 16px 25px;
       display: inline-block;
     }
 
@@ -59,33 +85,21 @@
   }
 
   .header {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
     height: $code-header-height;
+    min-height: $code-header-height;
     border-bottom: 1px solid $grey-3;
     font-size: 16px;
     background-color: $grey-1;
-    position: relative;
 
-    .nav-left {
-      position: absolute;
-      top: 18px;
-      left: 15px;
-    }
-
-    .file-picker {
-      margin-left: 15px;
-      margin-top: 8px;
-      margin-bottom: 0;
-      position: absolute;
-    }
-
-    .nav-left+.file-picker {
-      margin-left: 30px;
+    span+.build-msgs {
+      margin-left: 10px;
     }
 
     .nav-right {
-      position: absolute;
-      top: 20px;
-      right: 15px;
+      margin-left: auto;
     }
 
     .glyphicon {
@@ -129,6 +143,18 @@
       padding-bottom: 3px;
       padding-left: 3px;
     }
+
+    .nav-pills {
+      max-width: 90%;
+
+      > li {
+        max-width: 100%;
+
+        > a {
+          overflow: hidden;
+        }
+      }
+    }
   }
 
   .full-screen {
@@ -151,5 +177,16 @@
     text-align: center;
     color: $dropdown-link-color;
     cursor: pointer;
+  }
+}
+
+.gist-header {
+  position: relative;
+
+  > .visible-toolbar {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

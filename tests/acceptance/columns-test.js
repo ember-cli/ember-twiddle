@@ -13,7 +13,7 @@ const plusGlyph = ".code .glyphicon-plus";
 const removeGlyph = firstColumn + " .glyphicon-remove";
 const outputPlusGlyph = ".output .glyphicon-plus";
 const showFileTreeGlyph = firstColumn + " .glyphicon-chevron-right";
-const hideFileTreeGlyph = ".col-md-4:first-of-type .glyphicon-chevron-left";
+const hideFileTreeGlyph = ".twiddle-pane:first-of-type .glyphicon-chevron-left";
 
 test('you can add and remove columns', function(assert) {
   visit('/');

@@ -114,7 +114,7 @@
 
     @media (min-width: $screen-md-min) {
       position: absolute;
-      right: ($topbar-height - $topbar-control-height) / 2;
+      right: 0;
       top: ($topbar-height - $topbar-control-height) / 2;
     }
 
@@ -154,7 +154,7 @@
 
     @media (min-width: $screen-md-min) {
       position: absolute;
-      left: ($topbar-height - $topbar-control-height) / 2;
+      left: 0;
       top: ($topbar-height - $topbar-control-height) / 2;
     }
 
@@ -167,10 +167,12 @@
     padding: 13px 0;
     text-align: center;
     display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
 
     @media (min-width: $screen-md-min) {
       position: absolute;
-      top: 0;
+      top: 6px;
       left: 50%;
       margin-left: -400px;
       width: 800px;
@@ -190,6 +192,7 @@
     }
 
     .indicator {
+      display: inline;
       text-transform: uppercase;
       font-weight: bold;
       color: #faf2ee;
@@ -204,8 +207,7 @@
     }
 
     .input-edit {
-      display: inline-block;
-      padding: 5px 10px;
+      display: inline;
       transition: background .3s;
       font-size: $font-size-larger;
       border-radius: 3px;
