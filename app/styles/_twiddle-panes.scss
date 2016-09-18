@@ -31,9 +31,20 @@
   }
 
   .twiddle-pane.file-tree {
+    @media (min-width: $screen-md-min) {
+      max-width: 40%;
+    }
+
+    > .ember-view {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
 
     .jstree {
-      margin: 0 10px;
+      height: 100%;
+      overflow-x: auto;
+      padding: 0 10px;
     }
   }
 
@@ -74,6 +85,7 @@
     align-items: center;
     padding: 0 15px;
     height: $code-header-height;
+    min-height: $code-header-height;
     border-bottom: 1px solid $grey-3;
     font-size: 16px;
     background-color: $grey-1;
