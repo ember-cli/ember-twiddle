@@ -143,6 +143,18 @@
       padding-bottom: 3px;
       padding-left: 3px;
     }
+
+    .nav-pills {
+      max-width: 90%;
+
+      > li {
+        max-width: 100%;
+
+        > a {
+          overflow: hidden;
+        }
+      }
+    }
   }
 
   .full-screen {
