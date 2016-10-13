@@ -4,7 +4,7 @@ import { moduleFor, test } from 'ember-qunit';
 moduleFor('service:twiddle-json', 'Unit | Service | twiddle json', {
   // Specify the other units that are required for this test.
   // needs: ['service:foo']
-  needs: ["service:dependency-resolver"]
+  needs: ["service:dependency-resolver", "service:notify"]
 });
 
 test("getTwiddleJson() resolves dependencies", function(assert) {

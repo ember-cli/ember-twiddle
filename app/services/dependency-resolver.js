@@ -40,9 +40,11 @@ const CHANNELS = ['alpha', 'canary', 'beta', 'release'];
 
 const POLL_INTERVAL = 10000;
 
-const { computed, RSVP } = Ember;
+const { computed, inject, RSVP } = Ember;
 
 export default Ember.Service.extend({
+  notify: inject.service(),
+
   resolveDependencies: function(dependencies) {
     Object.keys(dependencies).forEach((name) => {
       var value = dependencies[name];
@@ -68,25 +70,40 @@ export default Ember.Service.extend({
         const value = addons[name];
         addonPromises[name] = this.resolveAddon(name, value, emberVersion);
       }
-      let hash = yield RSVP.hash(addonPromises);
       let allAddonsLoaded = true;
-      for (let j = 0; j < addonNames.length; ++j) {
-        const name = addonNames[j];
-        const addon = hash[name];
-        if (addon.status === 'build_success') {
-          dependencies[name] = addon.addon_js;
-          dependencies[name+'_css'] = addon.addon_css;
-          console.log(`Addon ${name} is loaded...`);
-          delete addons[name];
-        } else if (addon.status === 'building') {
-          console.log(`Addon ${name} is still building...`);
-          allAddonsLoaded = false;
-        } else if (addon.status === 'build_error') {
-          console.error(`Addon ${name} encountered a build error:`);
-          console.error(addon.error_log);
-          allAddonsLoaded = false;
-          throw addon;
+      try {
+        let hash = yield RSVP.hash(addonPromises);
+        for (let j = 0; j < addonNames.length; ++j) {
+          const name = addonNames[j];
+          const addon = hash[name];
+          if (addon.status === 'build_success') {
+            dependencies[name] = addon.addon_js;
+            dependencies[name+'_css'] = addon.addon_css;
+            console.log(`Addon ${name} is loaded...`);
+            delete addons[name];
+          } else if (addon.status === 'building') {
+            console.log(`Addon ${name} is still building...`);
+            allAddonsLoaded = false;
+          } else if (addon.status === 'build_error') {
+            console.error(`Addon ${name} encountered a build error:`);
+            if (addon.error_log) {
+              console.error(addon.error_log);
+            }
+            allAddonsLoaded = false;
+            throw addon;
+          } else {
+            console.error(addon);
+          }
         }
+      } catch(e) {
+        try {
+          this.get('notify').error(JSON.parse(e.responseText).errorMessage, {
+            closeAfter: 10000
+          });
+        } catch(e2) {
+          console.error(e);
+        }
+        throw e;
       }
       if (allAddonsLoaded) {
         done = true;
