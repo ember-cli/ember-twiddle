@@ -22,7 +22,7 @@ export default Ember.Mixin.create({
         errors.forEach(error => {
           console.error(error);
         });
-      } else {
+      } else if (errors) {
         console.error(errors);
       }
     }

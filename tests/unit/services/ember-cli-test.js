@@ -3,7 +3,13 @@ import Ember from 'ember';
 
 moduleFor('service:ember-cli', 'Unit | Service | ember cli', {
   // Specify the other units that are required for this test.
-  needs: ['model:gist','model:gistFile', 'service:dependency-resolver', 'service:twiddle-json']
+  needs: [
+    'model:gist',
+    'model:gistFile',
+    'service:dependency-resolver',
+    'service:twiddle-json',
+    'service:notify'
+  ]
 });
 
 test('compiling a gist works', function(assert) {
