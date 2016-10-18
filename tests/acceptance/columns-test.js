@@ -3,7 +3,7 @@ import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptan
 
 moduleForAcceptance('Acceptance | columns', {
   beforeEach: function() {
-    server.create('user', 'octocat');
+    server.create('user', { login: 'octocat' });
   }
 });
 

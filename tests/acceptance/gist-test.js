@@ -27,7 +27,7 @@ moduleForAcceptance('Acceptance | gist', {
     window.confirm = () => true;
     window.prompt = () => promptValue;
 
-    server.create('user', 'octocat');
+    server.create('user', { login: 'octocat' });
   },
 
   afterEach: function() {

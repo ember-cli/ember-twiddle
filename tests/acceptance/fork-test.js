@@ -1,21 +1,22 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
-import { faker } from 'ember-cli-mirage';
+import Mirage from 'ember-cli-mirage';
 
 moduleForAcceptance('Acceptance | fork gist', {
   beforeEach: function() {
     this.cacheConfirm = window.confirm;
     window.confirm = () => true;
-    this.cacheRandom = faker.random;
-    faker.seed(0.1);
+    server.create('user', { login: 'octocat' });
 
-    server.create('user', 'octocat');
+    server.post('/gists/:id/forks', () => {
+      let gist = server.create('gist', { id: 'bd9d8d69-a674-4e0f-867c-c8796ed151a0' });
+      return new Mirage.Response(200, {}, gist);
+    });
   },
 
   afterEach: function() {
     window.confirm = this.cacheConfirm;
-    faker.random = this.cacheRandom;
   }
 });
 

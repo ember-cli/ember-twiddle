@@ -7,7 +7,7 @@ moduleForAcceptance('Acceptance | delete gist', {
     this.cacheConfirm = window.confirm;
     window.confirm = () => true;
 
-    server.create('user', 'octocat');
+    server.create('user', { login: 'octocat' });
   },
 
   afterEach: function() {

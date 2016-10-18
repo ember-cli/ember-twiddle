@@ -7,7 +7,7 @@ const { K } = Ember;
 
 moduleForAcceptance('Acceptance | twiddles', {
   beforeEach: function() {
-    server.create('user', 'octocat');
+    server.create('user', { login: 'octocat' });
     const owner = server.create('owner', {login: 'octocat'});
     const file = server.create('gist-file', {
       login: "octocat",
