@@ -5,7 +5,7 @@ const { computed } = Ember;
 
 export default Ember.Component.extend({
   tagName: 'ul',
-  classNames: ['nav', 'nav-pills', 'user-menu'],
+  classNames: ['user-menu', 'dropup'],
 
   userName: computed.readOnly('session.currentUser.login'),
 

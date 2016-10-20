@@ -6,7 +6,7 @@ const { computed, inject } = Ember;
 export default Ember.Component.extend(DropdownSubmenuFixMixin, {
   dependencyResolver: inject.service(),
   tagName: 'li',
-  classNames: ['dropdown', 'versions-menu'],
+  classNames: ['dropdown', 'dropup', 'versions-menu'],
 
   versions: computed.readOnly('dependencyResolver.emberVersions'),
   dataVersions: computed.readOnly('dependencyResolver.emberDataVersions')
