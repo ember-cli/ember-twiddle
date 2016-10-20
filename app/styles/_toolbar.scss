@@ -9,54 +9,11 @@
     height: $topbar-height;
   }
 
-  @media (max-width: $screen-md-min) {
-    position: relative;
-    z-index: 100;
-    opacity: 1;
 
-    >div, >ul {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-
-    .nav-pills > li {
-      float: none;
-    }
-
-    .nav-pills > li + li {
-      margin-left: 0;
-    }
-
-    .dropdown-toggle {
-      display: block;
-      border-radius: 0;
-      box-shadow: none;
-    }
-
-    .dropdown-menu {
-      position: static;
-      float: none;
-      border: 0;
-      border-radius: 0;
-      box-shadow: none;
-      background: inherit;
-
-      .dropdown-submenu > .dropdown-menu {
-        margin-left: 1em;
-        margin-top: 0;
-      }
-
-      .divider {
-        background-color: lighten($burnt-orange, 10%);
-      }
-
-      a {
-        color: #fff;
-
-        &:hover {
-          background-color: lighten($burnt-orange, 10%);
-        }
-      }
+  .dropdown-menu {
+    .dropdown-submenu > .dropdown-menu {
+      top: auto;
+      margin-bottom: -31px;
     }
   }
 
