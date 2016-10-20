@@ -9,6 +9,12 @@
     height: $topbar-height;
   }
 
+  .dropdown .caret {
+    position: absolute;
+    right: 10px;
+    top: 13px;
+  }
+
 
   .dropdown-menu {
     .dropdown-submenu > .dropdown-menu {
