@@ -413,7 +413,8 @@ export default Ember.Service.extend({
 
     const mungedCode = (code || '')
             .replace(/\\/g, "\\\\") // Prevent backslashes from being escaped
-            .replace(/`/g, "\\`"); // Prevent backticks from causing syntax errors
+            .replace(/`/g, "\\`") // Prevent backticks from causing syntax errors
+            .replace(/\$/g, "\\$"); // Allow ${} expressions in the code
 
     return this.compileJs('export default Ember.HTMLBars.compile(`' + mungedCode + '`, { moduleName: `' + moduleName + '`});', filePath);
   },

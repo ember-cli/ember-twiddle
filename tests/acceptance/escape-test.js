@@ -8,7 +8,7 @@ test('Able to escape moustache tag', function(assert) {
   const files = [
     {
       filename: "application.template.hbs",
-      content: "\\{{Moustache}}"
+      content: "\\{{Moustache}} ${{stuff}}"
     }
   ];
 
@@ -17,6 +17,6 @@ test('Able to escape moustache tag', function(assert) {
   andThen(function() {
     const outputDiv = 'div';
 
-    assert.equal(outputContents(outputDiv), '{{Moustache}}', 'Moustache tag is escaped');
+    assert.equal(outputContents(outputDiv), '{{Moustache}} $', 'Moustache tag is escaped');
   });
 });
