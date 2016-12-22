@@ -1,3 +1,11 @@
+.sidebar-toolbar {
+  background: $header-bg;
+  background-image: url(/images/header.svg);
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .toolbar {
   .nav-pills > li > a {
     display: block;

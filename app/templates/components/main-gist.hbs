@@ -5,8 +5,10 @@
     open=leftSideBarOpen
     onToggle=(action (mut leftSideBarOpen))
   }}
-        {{#paper-toolbar as |toolbar|}}
-          {{#paper-toolbar-tools}}Left Sidenav{{/paper-toolbar-tools}}
+        {{#paper-toolbar class='sidebar-toolbar' as |toolbar|}}
+          {{#paper-toolbar-tools}}
+            Ember Twiddle
+          {{/paper-toolbar-tools}}
         {{/paper-toolbar}}
         {{#paper-content padding=true class='sidebar-content'}}
           {{gist-header model=model
