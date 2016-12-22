@@ -1,49 +1,51 @@
-<div class="header">
-  {{#if showFileTreeOpenIcon}}
-    <span class="nav-left">
-      <span class="hint--bottom hint--rounded" data-hint="Show project files" >
-        <span class="glyphicon glyphicon-chevron-right" {{action 'showFileTree'}}></span>
-      </span>
-    </span>
-  {{/if}}
-  <ul class="nav nav-pills file-picker">
-    <li class="dropdown">
-      {{#if allFiles.length}}
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        {{#if file}}
-          {{file.filePath}}
-        {{else}}
-          No file selected
-        {{/if}}
-        <b class="caret"></b>
-      </a>
-      {{else}}
-      <a>No files available</a>
-      {{/if}}
-      <ul class="dropdown-menu">
-      {{#each allFiles as |file|}}
-        <li><a {{action 'selectFile' file}}>{{file.filePath}}</a></li>
-      {{else}}
-        <li class="disabled"><a>No files available</a></li>
-      {{/each}}
-      </ul>
-    </li>
-  </ul>
-
-  <span class="nav-right">
-    <span class="hint--bottom hint--rounded" data-hint="Hide this panel">
-      <span class="glyphicon glyphicon-remove" {{action 'removeColumn' col}}></span>
-    </span>
-    {{#if isLastColumn}}
-      <span class="hint--bottom hint--rounded" data-hint="Show another panel">
-        <span class="glyphicon glyphicon-plus hint--bottom hint--rounded" {{action 'addColumn'}}></span>
+{{#paper-toolbar}}
+  {{#paper-toolbar-tools}}
+    {{#if showFileTreeOpenIcon}}
+      <span class="nav-left">
+        <span class="hint--bottom hint--rounded" data-hint="Show project files" >
+          <span class="glyphicon glyphicon-chevron-right" {{action 'showFileTree'}}></span>
+        </span>
       </span>
     {{/if}}
-  </span>
-</div>
+    <ul class="nav nav-pills file-picker">
+      <li class="dropdown">
+        {{#if allFiles.length}}
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          {{#if file}}
+            {{file.filePath}}
+          {{else}}
+            No file selected
+          {{/if}}
+          <b class="caret"></b>
+        </a>
+        {{else}}
+        <a>No files available</a>
+        {{/if}}
+        <ul class="dropdown-menu">
+        {{#each allFiles as |file|}}
+          <li><a {{action 'selectFile' file}}>{{file.filePath}}</a></li>
+        {{else}}
+          <li class="disabled"><a>No files available</a></li>
+        {{/each}}
+        </ul>
+      </li>
+    </ul>
+
+    <span class="nav-right">
+      <span class="hint--bottom hint--rounded" data-hint="Hide this panel">
+        <span class="glyphicon glyphicon-remove" {{action 'removeColumn' col}}></span>
+      </span>
+      {{#if isLastColumn}}
+        <span class="hint--bottom hint--rounded" data-hint="Show another panel">
+          <span class="glyphicon glyphicon-plus hint--bottom hint--rounded" {{action 'addColumn'}}></span>
+        </span>
+      {{/if}}
+    </span>
+  {{/paper-toolbar-tools}}
+{{/paper-toolbar}}
 
 {{#if file}}
-{{ivy-codemirror
+  {{ivy-codemirror
     value=file.content
     options=(hash
       mode=editorMode
@@ -53,5 +55,5 @@
       lineWrapping=true
       tabSize=2)
     valueUpdated="valueUpdated"
-}}
+  }}
 {{/if}}

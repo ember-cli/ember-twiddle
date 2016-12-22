@@ -5,66 +5,65 @@
     open=leftSideBarOpen
     onToggle=(action (mut leftSideBarOpen))
   }}
-        {{#paper-toolbar class='sidebar-toolbar' as |toolbar|}}
-          {{#paper-toolbar-tools}}
-            Ember Twiddle
-          {{/paper-toolbar-tools}}
-        {{/paper-toolbar}}
-        {{#paper-content padding=true class='sidebar-content'}}
-          {{gist-header model=model
-            session=session
-            unsaved=unsaved
-            activeEditorCol=activeEditorCol
-            activeFile=activeFile
-            isRevision=isRevision
-            titleChanged=(action "titleChanged")
-            addFile=(action "addFile")
-            addHelper=(action "addHelper")
-            addComponent=(action "addComponent")
-            addUnitTestFile=(action "addUnitTestFile")
-            addIntegrationTestFile=(action "addIntegrationTestFile")
-            addAcceptanceTestFile=(action "addAcceptanceTestFile")
-            renameFile=(action "renameFile")
-            removeFile=(action "removeFile")
-            setEditorKeyMap=(action "setEditorKeyMap")
-            versionSelected=(action "versionSelected")
-            openFile=(action "openFile")
-            hideFileTree=(action "hideFileTree")
-          }}
-        {{/paper-content}}
-      {{/paper-sidenav}}
+    {{#paper-toolbar class='sidebar-toolbar' as |toolbar|}}
+      {{#paper-toolbar-tools}}
+        Ember Twiddle
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+    {{#paper-content padding=true class='sidebar-content'}}
+      {{gist-header model=model
+        session=session
+        unsaved=unsaved
+        activeEditorCol=activeEditorCol
+        activeFile=activeFile
+        isRevision=isRevision
+        titleChanged=(action "titleChanged")
+        addFile=(action "addFile")
+        addHelper=(action "addHelper")
+        addComponent=(action "addComponent")
+        addUnitTestFile=(action "addUnitTestFile")
+        addIntegrationTestFile=(action "addIntegrationTestFile")
+        addAcceptanceTestFile=(action "addAcceptanceTestFile")
+        renameFile=(action "renameFile")
+        removeFile=(action "removeFile")
+        setEditorKeyMap=(action "setEditorKeyMap")
+        versionSelected=(action "versionSelected")
+        openFile=(action "openFile")
+        hideFileTree=(action "hideFileTree")
+      }}
+    {{/paper-content}}
+  {{/paper-sidenav}}
 
-      {{#paper-card-content class="flex"}}
-        <div class="layout-fill layout-column">
-          {{#paper-sidenav-toggle name="left" as |toggleAction|}}
-            {{#paper-button raised=true classNames="hide-gt-sm" onClick=(action toggleAction)}}
-              Toggle
-            {{/paper-button}}
-          {{/paper-sidenav-toggle}}
-          {{gist-body model=model
-            columns=columns
-            settings=settings
-            numColumns=realNumColumns
-            fullScreen=fullScreen
-            fileTreeShown=fileTreeShown
-            notify=notify
-            isBuilding=isBuilding
-            buildErrors=buildErrors
-            applicationUrl=applicationUrl
-            buildOutput=buildOutput
-            testsEnabled=testsEnabled
-            focusEditor=(action "focusEditor")
-            selectFile=(action "selectFile")
-            updateColumn=(action "updateColumn")
-            removeColumn=(action "removeColumn")
-            addColumn=(action "addColumn")
-            showFileTree=(action "showFileTree")
-            liveReloadChanged=(action "liveReloadChanged")
-            runNow=(action "runNow")
-            exitFullScreen=(action "exitFullScreen")
-            switchTests=(action "switchTests")
-          }}
-        </div>
-      {{/paper-card-content}}
-    {{/paper-sidenav-container}}
-
+  {{#paper-card-content class="flex"}}
+    <div class="layout-fill layout-column main-content">
+      {{#paper-sidenav-toggle name="left" as |toggleAction|}}
+        {{#paper-button raised=true classNames="hide-gt-sm" onClick=(action toggleAction)}}
+          Toggle
+        {{/paper-button}}
+      {{/paper-sidenav-toggle}}
+      {{gist-body model=model
+        columns=columns
+        settings=settings
+        numColumns=realNumColumns
+        fullScreen=fullScreen
+        fileTreeShown=fileTreeShown
+        notify=notify
+        isBuilding=isBuilding
+        buildErrors=buildErrors
+        applicationUrl=applicationUrl
+        buildOutput=buildOutput
+        testsEnabled=testsEnabled
+        focusEditor=(action "focusEditor")
+        selectFile=(action "selectFile")
+        updateColumn=(action "updateColumn")
+        removeColumn=(action "removeColumn")
+        addColumn=(action "addColumn")
+        showFileTree=(action "showFileTree")
+        liveReloadChanged=(action "liveReloadChanged")
+        runNow=(action "runNow")
+        exitFullScreen=(action "exitFullScreen")
+        switchTests=(action "switchTests")
+      }}
+    </div>
+  {{/paper-card-content}}
+{{/paper-sidenav-container}}

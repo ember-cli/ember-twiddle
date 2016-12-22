@@ -22,17 +22,19 @@
   {{/unless}}
 
   <div class="twiddle-pane output {{if fullScreen 'full-screen'}}">
-    <div class="header">
-      {{#if noColumns}}
-        <span class="glyphicon glyphicon-plus" {{action (action this.addColumn)}} title="Show an editor panel"></span>
-      {{/if}}
-      {{build-messages notify=notify isBuilding=isBuilding buildErrors=buildErrors}}
-      <label class="checkbox-inline twiddle-run-tests">
-        {{better-checkbox id="switch-tests" checked=testsEnabled action=(action this.switchTests)}}
-        Run Tests
-      </label>
-      {{run-or-live-reload liveReloadChanged=(action this.liveReloadChanged) runNow=(action this.runNow)}}
-    </div>
+    {{#paper-toolbar}}
+      {{#paper-toolbar-tools}}
+        {{#if noColumns}}
+          <span class="glyphicon glyphicon-plus" {{action (action this.addColumn)}} title="Show an editor panel"></span>
+        {{/if}}
+        {{build-messages notify=notify isBuilding=isBuilding buildErrors=buildErrors}}
+        <label class="checkbox-inline twiddle-run-tests">
+          {{better-checkbox id="switch-tests" checked=testsEnabled action=(action this.switchTests)}}
+          Run Tests
+        </label>
+        {{run-or-live-reload liveReloadChanged=(action this.liveReloadChanged) runNow=(action this.runNow)}}
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
 
     <div class="url-bar">
       {{input value=applicationUrl enter=(route-action "urlChanged")}}
