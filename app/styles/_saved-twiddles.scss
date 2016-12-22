@@ -13,9 +13,17 @@ div.table-responsive {
 
   tbody tr:hover {
     background-color: $pale-orange;
+    
+    a {
+      color: white;
+    }
   }
   
   a {
     text-decoration: underline;
+    color: $pale-orange;
+  }
+  a:hover {
+    text-decoration: none;
   }
 }
