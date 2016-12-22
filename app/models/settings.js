@@ -3,8 +3,7 @@ import _merge from 'lodash/object/merge';
 
 const {
   ObjectProxy,
-  get,
-  set
+  get
 } = Ember;
 
 export default ObjectProxy.extend({
@@ -18,8 +17,10 @@ export default ObjectProxy.extend({
     const storageKey = get(this, 'storageKey');
     const defaultSettings = get(this, 'defaultSettings');
     const localSettings = get(this, 'isFastBoot') ? {} : JSON.parse(localStorage.getItem(storageKey)) || {};
+    const newSettings = _merge(defaultSettings, localSettings);
 
-    set(this, 'content', _merge(defaultSettings, localSettings));
+    this.content = Ember.Object.create(newSettings);
+    this.content.setProperties(this.content);
 
     this._super(...arguments);
   },

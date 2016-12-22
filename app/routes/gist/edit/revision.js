@@ -2,7 +2,6 @@ import GistEditRoute from "../edit";
 
 export default GistEditRoute.extend({
 
-  controllerName: 'gist',
   templateName: 'gist',
 
   model(params) {
