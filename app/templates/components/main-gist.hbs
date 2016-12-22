@@ -1,25 +1,45 @@
-{{gist-header model=model
-              session=session
-              unsaved=unsaved
-              activeEditorCol=activeEditorCol
-              activeFile=activeFile
-              isRevision=isRevision
-              titleChanged=(action "titleChanged")
-              addFile=(action "addFile")
-              addHelper=(action "addHelper")
-              addComponent=(action "addComponent")
-              addUnitTestFile=(action "addUnitTestFile")
-              addIntegrationTestFile=(action "addIntegrationTestFile")
-              addAcceptanceTestFile=(action "addAcceptanceTestFile")
-              renameFile=(action "renameFile")
-              removeFile=(action "removeFile")
-              setEditorKeyMap=(action "setEditorKeyMap")
-              versionSelected=(action "versionSelected")
-              openFile=(action "openFile")
-              hideFileTree=(action "hideFileTree")
-}}
+{{#paper-sidenav-container class="inner-sidenav"}}
+  {{#paper-sidenav
+    class="md-whiteframe-z2"
+    name="left"
+    open=leftSideBarOpen
+    onToggle=(action (mut leftSideBarOpen))
+  }}
+        {{#paper-toolbar as |toolbar|}}
+          {{#paper-toolbar-tools}}Left Sidenav{{/paper-toolbar-tools}}
+        {{/paper-toolbar}}
+        {{#paper-content padding=true class='sidebar-content'}}
+          {{gist-header model=model
+            session=session
+            unsaved=unsaved
+            activeEditorCol=activeEditorCol
+            activeFile=activeFile
+            isRevision=isRevision
+            titleChanged=(action "titleChanged")
+            addFile=(action "addFile")
+            addHelper=(action "addHelper")
+            addComponent=(action "addComponent")
+            addUnitTestFile=(action "addUnitTestFile")
+            addIntegrationTestFile=(action "addIntegrationTestFile")
+            addAcceptanceTestFile=(action "addAcceptanceTestFile")
+            renameFile=(action "renameFile")
+            removeFile=(action "removeFile")
+            setEditorKeyMap=(action "setEditorKeyMap")
+            versionSelected=(action "versionSelected")
+            openFile=(action "openFile")
+            hideFileTree=(action "hideFileTree")
+          }}
+        {{/paper-content}}
+      {{/paper-sidenav}}
 
-{{gist-body model=model
+      {{#paper-card-content class="flex"}}
+        <div class="layout-fill layout-column">
+          {{#paper-sidenav-toggle name="left" as |toggleAction|}}
+            {{#paper-button raised=true classNames="hide-gt-sm" onClick=(action toggleAction)}}
+              Toggle
+            {{/paper-button}}
+          {{/paper-sidenav-toggle}}
+          {{gist-body model=model
             columns=columns
             settings=settings
             numColumns=realNumColumns
@@ -41,4 +61,8 @@
             runNow=(action "runNow")
             exitFullScreen=(action "exitFullScreen")
             switchTests=(action "switchTests")
-}}
+          }}
+        </div>
+      {{/paper-card-content}}
+    {{/paper-sidenav-container}}
+

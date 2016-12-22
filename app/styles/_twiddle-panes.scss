@@ -1,4 +1,5 @@
 .twiddle-panes {
+/*
   margin: 0;
   margin-left: 0;
   position: absolute;
@@ -6,7 +7,7 @@
   bottom: 0;
   left: 250px;
   right: 0;
-
+*/
   @media (min-width: $screen-md-min) {
     display: -webkit-flex;
     display: flex;

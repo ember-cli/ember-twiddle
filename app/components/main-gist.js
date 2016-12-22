@@ -14,6 +14,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
   store: inject.service(),
   fastboot: inject.service(),
 
+  classNames: ['main-gist'],
   numColumns: 1,
   fullScreen: false,
   openFiles: "",

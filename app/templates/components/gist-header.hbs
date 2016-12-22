@@ -8,47 +8,47 @@
 
     <div class="twiddle-pane file-tree">
       {{file-tree model=model
-                  openFile=(action this.openFile)
+        openFile=(action this.openFile)
       }}
     </div>
 
     <ul class="main-menu">
       {{file-menu model=model
-                  session=session
-                  activeEditorCol=activeEditorCol
-                  activeFile=activeFile
-                  isRevision=isRevision
-                  addFile=(action this.attrs.addFile)
-                  addHelper=(action this.attrs.addHelper)
-                  addComponent=(action this.attrs.addComponent)
-                  addUnitTestFile=(action this.attrs.addUnitTestFile)
-                  addIntegrationTestFile=(action this.attrs.addIntegrationTestFile)
-                  addAcceptanceTestFile=(action this.attrs.addAcceptanceTestFile)
-                  renameFile=(action this.attrs.renameFile)
-                  removeFile=(action this.attrs.removeFile)
-                  deleteGist=(route-action "deleteGist")
-                  saveGist=(route-action "saveGist")
-                  fork=(route-action "fork")
-                  copy=(route-action "copy")
-                  signInViaGithub=(route-action "signInViaGithub")
-                  showRevision=(route-action "showRevision")
-                  showCurrentVersion=(route-action "showCurrentVersion")
+        session=session
+        activeEditorCol=activeEditorCol
+        activeFile=activeFile
+        isRevision=isRevision
+        addFile=(action this.attrs.addFile)
+        addHelper=(action this.attrs.addHelper)
+        addComponent=(action this.attrs.addComponent)
+        addUnitTestFile=(action this.attrs.addUnitTestFile)
+        addIntegrationTestFile=(action this.attrs.addIntegrationTestFile)
+        addAcceptanceTestFile=(action this.attrs.addAcceptanceTestFile)
+        renameFile=(action this.attrs.renameFile)
+        removeFile=(action this.attrs.removeFile)
+        deleteGist=(route-action "deleteGist")
+        saveGist=(route-action "saveGist")
+        fork=(route-action "fork")
+        copy=(route-action "copy")
+        signInViaGithub=(route-action "signInViaGithub")
+        showRevision=(route-action "showRevision")
+        showCurrentVersion=(route-action "showCurrentVersion")
       }}
 
       {{editor-mode-menu setKeyMap=(action this.attrs.setEditorKeyMap)}}
 
       {{versions-menu versionSelected=(action this.attrs.versionSelected)
-                      emberVersions=emberVersions
-                      emberDataVersions=emberDataVersions
+        emberVersions=emberVersions
+        emberDataVersions=emberDataVersions
       }}
     </ul>
 
     <hr>
 
     {{user-menu session=session
-                signInViaGithub=(route-action "signInViaGithub")
-                signOut=(route-action "signOut")
-                showTwiddles=(route-action "showTwiddles")
+      signInViaGithub=(route-action "signInViaGithub")
+      signOut=(route-action "signOut")
+      showTwiddles=(route-action "showTwiddles")
     }}
   </div>
 </nav>

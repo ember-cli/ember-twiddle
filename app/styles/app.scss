@@ -1,3 +1,4 @@
+@import "ember-paper";
 @import "variables";
 @import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "vendor/twiddlicon/twiddlicon.scss";
@@ -8,3 +9,16 @@
 @import "output-pane";
 @import "dropdown";
 @import "saved-twiddles";
+
+#main-app,
+#main-app > div:not(#paper-wormhole),
+.main-container,
+.main-gist,
+.gist-body,
+.gist-header,
+.inner-sidenav,
+.sidebar-content,
+.twiddle-panes {
+  width: 100%;
+  height: 100%;
+}
