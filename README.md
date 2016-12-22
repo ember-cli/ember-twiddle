@@ -1,4 +1,4 @@
-# [ember-twiddle](http://ember-twiddle.com)
+# [ember-twiddle](https://ember-twiddle.com)
 
 [![Build Status][travis-badge]][travis-badge-url] [![Code Climate](https://codeclimate.com/github/ember-cli/ember-twiddle/badges/gpa.svg)](https://codeclimate.com/github/ember-cli/ember-twiddle)
 

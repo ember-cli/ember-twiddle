@@ -6,7 +6,8 @@ notifications:
 sudo: false
 cache:
   directories:
-  - node_modules
+  - $HOME/.npm
+  - $HOME/.cache
 before_install:
 - npm config set spin false
 - npm install -g bower
