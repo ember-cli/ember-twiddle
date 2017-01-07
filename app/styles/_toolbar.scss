@@ -39,9 +39,6 @@
     display: block;
     border-color: $burnt-orange;
     margin: 1em 0;
-    position: absolute;
-    bottom: 82px;
-    width: 100%;
   }
 
   @media (max-width: $screen-md-min) {
@@ -75,29 +72,20 @@
   }
 
   .file-tree {
-    position: absolute;
-    top: 70px;
-    bottom: 207px;
-    left: 0;
-    right: 0;
     overflow: auto;
 
     .jstree-default .jstree-hovered {
-        background: rgba(0, 0, 0, 0.13);
-        box-shadow: none;
+      background: rgba(0, 0, 0, 0.13);
+      box-shadow: none;
     }
 
     .jstree-default .jstree-clicked {
-        background: #b95252;
-        box-shadow: none;
+      background: #b95252;
+      box-shadow: none;
     }
   }
 
   .user-menu {
-    position: absolute;
-    bottom: 5px;
-    width: 100%;
-
     a {
       display: block;
     }
@@ -126,9 +114,6 @@
 
   .main-menu {
     text-align: left;
-    bottom: 100px;
-    position: absolute;
-    width: 100%;
 
     a {
       display: block;
@@ -141,9 +126,6 @@
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
-    position: absolute;
-    top: 6px;
-    width: 100%;
     color: #333;
 
     h1 {

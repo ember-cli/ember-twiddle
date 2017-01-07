@@ -1,6 +1,6 @@
 {{#paper-sidenav-container class="inner-sidenav"}}
   {{#paper-sidenav
-    class="md-whiteframe-z2"
+    class="md-whiteframe-z2 layout-column"
     name="left"
     open=leftSideBarOpen
     onToggle=(action (mut leftSideBarOpen))
@@ -10,8 +10,10 @@
         Ember Twiddle
       {{/paper-toolbar-tools}}
     {{/paper-toolbar}}
-    {{#paper-content padding=true class='sidebar-content'}}
-      {{gist-header model=model
+
+    {{#paper-content class='sidebar-content flex'}}
+      {{gist-header class="flex"
+        model=model
         session=session
         unsaved=unsaved
         activeEditorCol=activeEditorCol
