@@ -3,6 +3,7 @@
     class="md-whiteframe-z2 layout-column"
     name="left"
     open=leftSideBarOpen
+    closeOnClick=false
     onToggle=(action (mut leftSideBarOpen))
   }}
     {{#paper-toolbar class='sidebar-toolbar' as |toolbar|}}
@@ -29,7 +30,7 @@
         renameFile=(action "renameFile")
         removeFile=(action "removeFile")
         setEditorKeyMap=(action "setEditorKeyMap")
-        versionSelected=(action "versionSelected")
+        versionChanged=(action "rebuildApp")
         openFile=(action "openFile")
         hideFileTree=(action "hideFileTree")
       }}

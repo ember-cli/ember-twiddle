@@ -104,13 +104,8 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
       this.get('rebuildApp').perform();
     },
 
-    versionSelected: function(dependency, version) {
-      var gist = this.get('model');
-      var emberCli = this.get('emberCli');
-
-      emberCli.updateDependencyVersion(gist, dependency, version).then(() => {
-        this.get('rebuildApp').perform();
-      });
+    rebuildApp() {
+      this.get('rebuildApp').perform();
     },
 
     liveReloadChanged(isLiveReload) {

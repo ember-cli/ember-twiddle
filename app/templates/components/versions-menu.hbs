@@ -6,7 +6,7 @@
   {{/menu.trigger}}
   {{#menu.content width=4 as |content|}}
     {{#each versions as |version| }}
-      {{#content.menu-item onClick=(action versionSelected "ember" version)}}
+      {{#content.menu-item onClick=(action "versionSelected" "ember" version)}}
         {{version}}
       {{/content.menu-item}}
     {{/each}}
@@ -21,7 +21,7 @@
   {{/menu.trigger}}
   {{#menu.content width=4 as |content|}}
     {{#each dataVersions as |version| }}
-      {{#content.menu-item onClick=(action versionSelected "ember-data" version)}}
+      {{#content.menu-item onClick=(action "versionSelected" "ember-data" version)}}
         {{version}}
       {{/content.menu-item}}
     {{/each}}

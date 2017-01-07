@@ -36,7 +36,8 @@
 
       {{paper-divider}}
 
-      {{versions-menu versionSelected=(action this.attrs.versionSelected)
+      {{versions-menu model=model
+        onVersionChanged=(action this.attrs.versionChanged)
         emberVersions=emberVersions
         emberDataVersions=emberDataVersions
       }}
