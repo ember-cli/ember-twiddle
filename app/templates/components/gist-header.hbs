@@ -48,29 +48,27 @@
 
       {{paper-divider}}
 
-      {{#paper-menu as |menu|}}
+      {{#paper-menu position='target-right target' as |menu|}}
         {{#menu.trigger class='layout-column'}}
-          {{#paper-button}}
+          {{#paper-button class='md-menu-origin'}}
             {{paper-icon 'help outline' size=21}}
             Help
+            {{paper-icon 'arrow drop up'}}
           {{/paper-button}}
         {{/menu.trigger}}
-        {{#menu.content width=4 as |content|}}
+        {{#menu.content width=3 as |content|}}
           {{#if currentVersionLink}}
-            {{#content.menu-item}}
+            {{#content.menu-item class='md-menu-align-target'}}
               Ember Twiddle {{v}}{{version}}
             {{/content.menu-item}}
           {{/if}}
-          {{#content.menu-item}}
-            {{#paper-button}}
-              Github
-            {{/paper-button}}
+
+          {{#content.menu-item class='md-menu-align-target' onClick='aa'}}
+            Github
           {{/content.menu-item}}
 
-          {{#content.menu-item}}
-            {{#paper-button}}
-              Issue Tracker
-            {{/paper-button}}
+          {{#content.menu-item class='md-menu-align-target' onClick='aa'}}
+            Issue Tracker
           {{/content.menu-item}}
         {{/menu.content}}
       {{/paper-menu}}

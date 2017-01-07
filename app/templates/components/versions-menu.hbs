@@ -1,27 +1,29 @@
-{{#paper-menu as |menu|}}
+{{#paper-menu position='target-right target' as |menu|}}
   {{#menu.trigger class='layout-column'}}
-    {{#paper-button}}
+    {{#paper-button class='md-menu-origin'}}
       Ember
+      {{paper-icon 'arrow drop up'}}
     {{/paper-button}}
   {{/menu.trigger}}
-  {{#menu.content width=4 as |content|}}
+  {{#menu.content width=2 as |content|}}
     {{#each versions as |version| }}
-      {{#content.menu-item onClick=(action "versionSelected" "ember" version)}}
+      {{#content.menu-item class='md-menu-align-target' onClick=(action 'versionSelected' 'ember' version)}}
         {{version}}
       {{/content.menu-item}}
     {{/each}}
   {{/menu.content}}
 {{/paper-menu}}
 
-{{#paper-menu as |menu|}}
+{{#paper-menu position='target-right target' as |menu|}}
   {{#menu.trigger class='layout-column'}}
-    {{#paper-button}}
+    {{#paper-button class='md-menu-origin'}}
       Ember Data
+      {{paper-icon 'arrow drop up'}}
     {{/paper-button}}
   {{/menu.trigger}}
-  {{#menu.content width=4 as |content|}}
+  {{#menu.content width=2 as |content|}}
     {{#each dataVersions as |version| }}
-      {{#content.menu-item onClick=(action "versionSelected" "ember-data" version)}}
+      {{#content.menu-item class='md-menu-align-target' onClick=(action 'versionSelected' 'ember-data' version)}}
         {{version}}
       {{/content.menu-item}}
     {{/each}}

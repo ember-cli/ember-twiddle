@@ -1,22 +1,23 @@
 {{#if session.isAuthenticated}}
-  {{#paper-menu as |menu|}}
-    {{#menu.trigger}}
-      {{#paper-button}}
+  {{#paper-menu position='target-right target' as |menu|}}
+    {{#menu.trigger class='layout-column'}}
+      {{#paper-button class='signed-in-btn md-menu-origin'}}
         <span class="user-avatar">
-          <img src="{{session.currentUser.avatarUrl32}}" />
+          <img src="{{session.currentUser.avatarUrl38}}" />
         </span>
-        {{userName}} <b class="caret"></b>
+        {{userName}}
+        {{paper-icon 'arrow drop up'}}
       {{/paper-button}}
     {{/menu.trigger}}
 
-    {{#menu.content width=4 as |content|}}
-      {{#content.menu-item onClick='showTwiddles'}}
+    {{#menu.content width=3 as |content|}}
+      {{#content.menu-item class='md-menu-align-target' onClick='showTwiddles'}}
         My Saved Twiddles
       {{/content.menu-item}}
 
       {{paper-divider}}
 
-      {{#content.menu-item onClick='signOut'}}
+      {{#content.menu-item class='md-menu-align-target' onClick='signOut'}}
         Sign Out
       {{/content.menu-item}}
     {{/menu.content}}

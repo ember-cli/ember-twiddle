@@ -1,16 +1,15 @@
-{{#paper-menu as |menu|}}
+{{#paper-menu position='target-right target' as |menu|}}
   {{#menu.trigger class='layout-column'}}
-    {{#paper-button}}
+    {{#paper-button class='md-menu-origin'}}
       {{paper-icon 'keyboard' size=21}}
       Keystroke Mode
+      {{paper-icon 'arrow drop up'}}
     {{/paper-button}}
   {{/menu.trigger}}
-  {{#menu.content width=4 as |content|}}
+  {{#menu.content width=2 as |content|}}
     {{#each modes as |mode|}}
-      {{#content.menu-item onClick=(action 'setKeyMap' mode.id)}}
-        {{#paper-button}}
-          {{mode.label}}
-        {{/paper-button}}
+      {{#content.menu-item class='md-menu-align-target' onClick=(action 'setKeyMap' mode.id)}}
+        {{mode.label}}
       {{/content.menu-item}}
     {{/each}}
   {{/menu.content}}

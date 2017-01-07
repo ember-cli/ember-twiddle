@@ -86,29 +86,24 @@
   }
 
   .user-menu {
-    a {
-      display: block;
+    .signed-in-btn {
+      line-height: 43px;
     }
 
     .user-avatar {
       display: inline-block;
-      width: $topbar-control-height;
+      width: 38px;
       height: 100%;
       overflow: hidden;
       float: left;
-      margin-right: 5px;
       line-height: normal;
-      border-radius: 3px;
+      border-radius: 30px;
       background-color: #ccc;
+      margin: 5px;
 
       img {
-        width: $topbar-control-height;
-        height: $topbar-control-height;
-      }
-
-      &.unauthenticated {
-        background-image: url("../images/github32-inverse-faf2ee.svg");
-        height: 32px;
+        width: 38px;
+        height: 38px;
       }
     }
   }

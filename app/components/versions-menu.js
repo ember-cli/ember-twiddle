@@ -1,9 +1,8 @@
 import Ember from 'ember';
-import DropdownSubmenuFixMixin from "../mixins/dropdown-submenu-fix";
 
 const { computed, inject } = Ember;
 
-export default Ember.Component.extend(DropdownSubmenuFixMixin, {
+export default Ember.Component.extend({
   emberCli: inject.service('ember-cli'),
   dependencyResolver: inject.service(),
   classNames: ['versions-menu'],
