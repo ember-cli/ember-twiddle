@@ -1,10 +1,12 @@
 import Ember from 'ember';
+import config from '../config/environment';
 
 const { inject, $ } = Ember;
 
 const CONFIRM_MSG = "Unsaved changes will be lost.";
 
 export default Ember.Route.extend({
+  toriiProvider: config.toriiProvider,
   notify: inject.service('notify'),
   app: inject.service(),
   fastboot: inject.service(),
@@ -12,7 +14,7 @@ export default Ember.Route.extend({
   titleToken: Ember.computed.readOnly('controller.model.description'),
 
   beforeModel () {
-    return this.session.fetch('github-oauth2').catch(function() {
+    return this.session.fetch(this.get('toriiProvider')).catch(function() {
       // Swallow error for now
     });
   },
@@ -98,7 +100,7 @@ export default Ember.Route.extend({
     },
 
     signInViaGithub () {
-      this.session.open('github-oauth2').catch(function(error) {
+      this.session.open(this.get('toriiProvider')).catch(function(error) {
         if (alert) {
           alert('Could not sign you in: ' + error.message);
         }
