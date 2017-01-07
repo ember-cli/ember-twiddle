@@ -99,6 +99,7 @@
       margin-right: 5px;
       line-height: normal;
       border-radius: 3px;
+      background-color: #ccc;
 
       img {
         width: $topbar-control-height;
@@ -106,7 +107,7 @@
       }
 
       &.unauthenticated {
-        background: url("../images/github32-inverse-faf2ee.svg");
+        background-image: url("../images/github32-inverse-faf2ee.svg");
         height: 32px;
       }
     }
@@ -114,6 +115,10 @@
 
   .main-menu {
     text-align: left;
+
+    md-menu > button {
+      text-align: left;
+    }
 
     a {
       display: block;
@@ -203,26 +208,12 @@
     padding: 0 1em 0 0;
   }
 
-  .dropdown-toggle, .sign-in {
-    height: $topbar-control-height;
-    line-height: $topbar-control-height - 2;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #333;
-    border: 1px solid transparent;
-
-    &:hover, &:focus {
-      background-color: $menu-hover-bg;
-    }
+  .signin-btn {
+    text-align: left;
   }
 
   .dropdown-toggle {
     padding: 0 1em;
-  }
-
-  .sign-in {
-    cursor: pointer;
-    padding: 0 .5em;
   }
 
   .signing-in {

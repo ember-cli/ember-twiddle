@@ -4,8 +4,7 @@ import config from '../config/environment';
 const { computed } = Ember;
 
 export default Ember.Component.extend({
-  tagName: 'ul',
-  classNames: ['user-menu', 'dropup'],
+  classNames: ['user-menu', 'layout-column'],
 
   userName: computed.readOnly('session.currentUser.login'),
 
