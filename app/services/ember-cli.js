@@ -157,6 +157,7 @@ export default Ember.Service.extend({
   twiddleJson: inject.service(),
 
   usePods: computed.readOnly('twiddleJson.usePods'),
+  versions: computed.readOnly('twiddleJson.versions'),
   enableTesting: false,
 
   setup(gist) {
@@ -216,7 +217,6 @@ export default Ember.Service.extend({
       this.addBoilerPlateFiles(out, gist);
 
       resolve(this.get('twiddleJson').getTwiddleJson(gist).then(twiddleJSON => {
-
         this.addConfig(out, gist, twiddleJSON);
         this.set('enableTesting', testingEnabled(twiddleJSON));
 
