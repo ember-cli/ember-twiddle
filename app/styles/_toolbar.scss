@@ -31,13 +31,9 @@
     }
   }
 
-  color: #fff;
+  color: #333;
   font-size: $font-size;
-  background: $header-bg;
-  background-image: url(/images/header.svg);
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: #f9f9f9;
 
   hr {
     display: block;
@@ -148,13 +144,14 @@
     position: absolute;
     top: 6px;
     width: 100%;
+    color: #333;
 
     h1 {
       margin: 10px;
     }
 
     .saved-twiddles-header {
-      color: $bleached-orange;
+      color: #333;
       font-size: $font-size-larger;
     }
 
@@ -162,10 +159,10 @@
       display: inline;
       text-transform: uppercase;
       font-weight: bold;
-      color: #faf2ee;
+      color: #666;
 
       a {
-        color: #ffffff;
+        color: #666;
         text-decoration: none;
         &:hover {
           border-bottom: dotted 1px;
@@ -179,7 +176,7 @@
       font-size: $font-size-larger;
       border-radius: 3px;
       border: 0;
-      color: $bleached-orange;
+      color: #333;
       cursor: pointer;
 
       input {
@@ -190,7 +187,7 @@
       }
 
       .glyphicon {
-        color: $bleached-orange;
+        color: #333;
       }
 
       &.active .glyphicon {
@@ -229,7 +226,7 @@
     line-height: $topbar-control-height - 2;
     text-transform: uppercase;
     font-weight: bold;
-    color: $bleached-orange;
+    color: #333;
     border: 1px solid transparent;
 
     &:hover, &:focus {
@@ -252,7 +249,7 @@
     line-height: $topbar-control-height - 2;
     text-transform: uppercase;
     font-weight: bold;
-    color: $bleached-orange;
+    color: #333;
     border: 1px solid transparent;
   }
 
