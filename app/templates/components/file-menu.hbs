@@ -9,38 +9,38 @@
     <li class="dropdown dropdown-submenu">
       <a data-toggle="dropdown">Add...</a>
       <ul class="dropdown-menu">
-        <li><a {{action 'addFile' ''}}>Other (empty file)</a></li>
+        <li><a {{action addFile ''}}>Other (empty file)</a></li>
         <li class="dropdown dropdown-submenu">
-          <a {{action 'addComponent'}} class="add-component-link">Component (js and hbs)</a>
+          <a {{action addComponent}} class="add-component-link">Component (js and hbs)</a>
           <ul class="dropdown-menu">
-            <li><a {{action 'addFile' 'component-hbs'}}>hbs only</a></li>
-            <li><a {{action 'addFile' 'component-js'}}>js only</a></li>
+            <li><a {{action addFile 'component-hbs'}}>hbs only</a></li>
+            <li><a {{action addFile 'component-js'}}>js only</a></li>
           </ul>
         </li>
-        <li><a {{action 'addFile' 'model'}}>Model</a></li>
-        <li><a {{action 'addFile' 'controller'}}>Controller</a></li>
-        <li><a {{action 'addFile' 'route'}}>Route</a></li>
-        <li><a {{action 'addFile' 'template'}} class="test-template-action">Template</a></li>
-        <li><a {{action 'addFile' 'service'}} class="test-add-service-link">Service</a></li>
-        <li><a {{action 'addHelper' 'helper'}} class="test-add-helper-link">Helper</a></li>
-        <li><a {{action 'addFile' 'router'}}>Router</a></li>
-        <li><a {{action 'addFile' 'css'}}>CSS</a></li>
+        <li><a {{action addFile 'model'}}>Model</a></li>
+        <li><a {{action addFile 'controller'}}>Controller</a></li>
+        <li><a {{action addFile 'route'}}>Route</a></li>
+        <li><a {{action addFile 'template'}} class="test-template-action">Template</a></li>
+        <li><a {{action addFile 'service'}} class="test-add-service-link">Service</a></li>
+        <li><a {{action addHelper 'helper'}} class="test-add-helper-link">Helper</a></li>
+        <li><a {{action addFile 'router'}}>Router</a></li>
+        <li><a {{action addFile 'css'}}>CSS</a></li>
         <li class="dropdown dropdown-submenu">
           <a data-toggle="dropdown">Tests</a>
           <ul class="dropdown-menu">
-            <li><a {{action 'addAcceptanceTestFile'}} class="test-add-acceptance-test-link">Acceptance</a></li>
+            <li><a {{action addAcceptanceTestFile}} class="test-add-acceptance-test-link">Acceptance</a></li>
             <li class="dropdown dropdown-submenu">
               <a data-toggle="dropdown">Integration</a>
               <ul class="dropdown-menu">
-                <li><a {{action 'addIntegrationTestFile' 'component'}} class="test-add-component-test-link">Component</a></li>
+                <li><a {{action addIntegrationTestFile 'component'}} class="test-add-component-test-link">Component</a></li>
               </ul>
             </li>
             <li class="dropdown dropdown-submenu">
               <a data-toggle="dropdown">Unit</a>
               <ul class="dropdown-menu">
-                <li><a {{action 'addUnitTestFile' 'controller'}}>Controller</a></li>
-                <li><a {{action 'addUnitTestFile' 'route'}} class="test-add-route-test-link">Route</a></li>
-                <li><a {{action 'addUnitTestFile' 'service'}}>Service</a></li>
+                <li><a {{action addUnitTestFile 'controller'}}>Controller</a></li>
+                <li><a {{action addUnitTestFile 'route'}} class="test-add-route-test-link">Route</a></li>
+                <li><a {{action addUnitTestFile 'service'}}>Service</a></li>
               </ul>
             </li>
           </ul>
@@ -48,31 +48,31 @@
       </ul>
     </li>
     {{#if activeEditorCol}}
-      <li><a {{action 'renameFile' activeFile}} class="test-rename-action">Move {{activeFile.filePath}}</a></li>
-      <li><a {{action 'removeFile' activeFile}} class="test-remove-action">Delete {{activeFile.filePath}}</a></li>
+      <li><a {{action renameFile activeFile}} class="test-rename-action">Move {{activeFile.filePath}}</a></li>
+      <li><a {{action removeFile activeFile}} class="test-remove-action">Delete {{activeFile.filePath}}</a></li>
     {{/if}}
     {{#if session.isAuthenticated}}
       <li role="presentation" class="divider"></li>
-      <li><a {{action 'saveGist' model}} class="test-save-action">Save to Github Gist</a></li>
+      <li><a {{action saveGist model}} class="test-save-action">Save to Github Gist</a></li>
       {{#unless model.isNew}}
         <li><a {{action 'share'}}>Share Twiddle</a></li>
         <li><a {{action 'embed'}}>Embed Twiddle</a></li>
         {{#if showFork}}
-          <li><a {{action 'fork' model}} class="test-fork-action">Fork Twiddle</a></li>
+          <li><a {{action fork model}} class="test-fork-action">Fork Twiddle</a></li>
         {{else}}
-          <li><a {{action 'copy'}} class="test-copy-action">Copy Twiddle</a></li>
+          <li><a {{action copy}} class="test-copy-action">Copy Twiddle</a></li>
         {{/if}}
-        <li><a {{action 'deleteGist' model}} class="test-delete-action">Delete Twiddle</a></li>
+        <li><a {{action deleteGist model}} class="test-delete-action">Delete Twiddle</a></li>
         <li role="presentation" class="divider"></li>
         {{#if isRevision}}
-          <li><a {{action 'showCurrentVersion'}} class="test-show-current-version">Show Current Version</a></li>
+          <li><a {{action showCurrentVersion}} class="test-show-current-version">Show Current Version</a></li>
         {{else}}
           {{#if model.history.length}}
             <li class="dropdown dropdown-submenu">
               <a data-toggle="dropdown">Previous Revisions</a>
               <ul class="dropdown-menu">
                 {{#each model.history as |version|}}
-                  <li><a {{action "showRevision" version.id}} class="test-version-action">{{version.shortId}}</a></li>
+                  <li><a {{action showRevision version.id}} class="test-version-action">{{version.shortId}}</a></li>
                 {{/each}}
               </ul>
             </li>
@@ -80,7 +80,7 @@
         {{/if}}
       {{/unless}}
     {{else}}
-      <li><a {{action 'signInViaGithub'}} class="test-sign-in-action">Sign in with Github to Save</a></li>
+      <li><a {{action signInViaGithub}} class="test-sign-in-action">Sign in with Github to Save</a></li>
     {{/if}}
   {{/if}}
 </ul>

@@ -112,12 +112,23 @@ export default Ember.Route.extend({
       this.session.close();
     },
 
-    showTwiddles: function() {
+    showTwiddles() {
       this.transitionTo('twiddles');
     },
 
-    urlChanged: function(newUrl) {
+    urlChanged(newUrl) {
       this.get('app').postMessage({ newUrl });
+    },
+
+    showCurrentVersion() {
+      this.get('store').unloadAll('gistFile');
+      this.store.find('gist', this.paramsFor('gist.edit').gistId).then((model) => {
+        this.transitionTo('gist.edit', model);
+      });
+    },
+
+    showRevision(id) {
+      this.transitionTo('gist.edit.revision', this.paramsFor('gist.edit', 'gistId'), id);
     }
   },
 
