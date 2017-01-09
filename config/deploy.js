@@ -39,7 +39,8 @@ module.exports = function(deployTarget) {
     };
   }
 
-  if (deployTarget === 'production') {
+  // github enterprise deployements shouldn't use S3.
+  if (deployTarget === 'production' && process.env.TORII_PROVIDER === 'github-oauth2') {
     ENV['s3'] = {
       accessKeyId: process.env['AWS_ACCESS_KEY_ID'],
       secretAccessKey: process.env['AWS_ACCESS_KEY_SECRET'],

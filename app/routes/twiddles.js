@@ -1,10 +1,11 @@
 import Ember from 'ember';
+import config from '../config/environment';
 
 export default Ember.Route.extend({
   titleToken: 'My Saved Twiddles',
-
+  toriiProvider: config.toriiProvider,
   beforeModel() {
-    return this.session.fetch('github-oauth2').catch(error => {
+    return this.session.fetch(this.get('toriiProvider')).catch(error => {
       if (!error) {
         this.transitionTo('/');
       }
