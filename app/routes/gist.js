@@ -47,7 +47,7 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    saveGist (gist) {
+    saveGist(gist) {
       var newGist = gist.get('isNew');
       if (!newGist && gist.get('ownerLogin') !== this.get('session.currentUser.login')) {
         this.send('fork', gist);
@@ -97,19 +97,6 @@ export default Ember.Route.extend({
           copyCurrentTwiddle: true
         }
       });
-    },
-
-    signInViaGithub () {
-      this.session.open(this.get('toriiProvider')).catch(function(error) {
-        if (alert) {
-          alert('Could not sign you in: ' + error.message);
-        }
-        throw error;
-      });
-    },
-
-    signOut () {
-      this.session.close();
     },
 
     showTwiddles() {
