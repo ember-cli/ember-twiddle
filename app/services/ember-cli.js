@@ -1,17 +1,16 @@
 import Babel from "npm:babel-core";
 import Path from 'npm:path';
-import HtmlbarsInlinePrecompile from 'npm:babel-plugin-htmlbars-inline-precompile';
+import HbsPlugin from '../plugins/hbs-plugin';
 import blueprints from '../lib/blueprints';
 import config from '../config/environment';
 import Ember from 'ember';
 import moment from 'moment';
 import _template from "lodash/string/template";
 
-const hbsPlugin = new HtmlbarsInlinePrecompile(Ember.HTMLBars.precompile);
-
 const { computed, inject, RSVP, $ } = Ember;
 const twiddleAppName = 'twiddle';
 const oldTwiddleAppNames = ['demo-app', 'app'];
+const hbsPlugin = new HbsPlugin(Babel);
 
 // These files will be included if not present
 const boilerPlateJs = [
