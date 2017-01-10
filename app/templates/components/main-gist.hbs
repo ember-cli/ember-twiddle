@@ -9,8 +9,9 @@
     {{#paper-toolbar class='sidebar-toolbar' as |toolbar|}}
       {{#paper-toolbar-tools}}
         Ember Twiddle
+        <span class="flex"></span>
         {{#paper-button iconButton=true onClick=(action (mut leftSideBarOpen) (not leftSideBarOpen))}}
-          {{paper-icon 'menu'}}
+          {{paper-icon 'chevron left'}}
         {{/paper-button}}
       {{/paper-toolbar-tools}}
     {{/paper-toolbar}}
