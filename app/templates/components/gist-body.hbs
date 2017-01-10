@@ -25,13 +25,15 @@
     {{#paper-toolbar}}
       {{#paper-toolbar-tools}}
         {{#if noColumns}}
-          <span class="glyphicon glyphicon-plus" {{action (action this.addColumn)}} title="Show an editor panel"></span>
+          {{#paper-button iconButton=true title='Show an editor panel' onClick=(action this.addColumn)}}
+            {{paper-icon 'add'}}
+          {{/paper-button}}
         {{/if}}
         {{build-messages notify=notify isBuilding=isBuilding buildErrors=buildErrors}}
-        <label class="checkbox-inline twiddle-run-tests">
-          {{better-checkbox id="switch-tests" checked=testsEnabled action=(action this.switchTests)}}
+        <span class="flex"></span>
+        {{#paper-checkbox value=testsEnabled onChange=(action this.switchTests)}}
           Run Tests
-        </label>
+        {{/paper-checkbox}}
         {{run-or-live-reload liveReloadChanged=(action this.liveReloadChanged) runNow=(action this.runNow)}}
       {{/paper-toolbar-tools}}
     {{/paper-toolbar}}

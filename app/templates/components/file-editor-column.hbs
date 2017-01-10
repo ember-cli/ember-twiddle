@@ -7,38 +7,40 @@
         </span>
       </span>
     {{/if}}
-    <ul class="nav nav-pills file-picker">
-      <li class="dropdown">
+
+    {{#paper-menu disabled=(not allFiles.length) position='target-right target' as |menu|}}
+      {{#menu.trigger class='layout-column'}}
         {{#if allFiles.length}}
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          {{#if file}}
-            {{file.filePath}}
-          {{else}}
-            No file selected
-          {{/if}}
-          <b class="caret"></b>
-        </a>
+          {{#paper-button class='md-menu-origin'}}
+            {{#if file}}
+              {{file.filePath}}
+            {{else}}
+              No file selected
+            {{/if}}
+            {{paper-icon 'arrow drop down'}}
+          {{/paper-button}}
         {{else}}
-        <a>No files available</a>
+          No files available
         {{/if}}
-        <ul class="dropdown-menu">
+      {{/menu.trigger}}
+      {{#menu.content width=2 as |content|}}
         {{#each allFiles as |file|}}
-          <li><a {{action 'selectFile' file}}>{{file.filePath}}</a></li>
-        {{else}}
-          <li class="disabled"><a>No files available</a></li>
+          {{#content.menu-item class='md-menu-align-target' onClick=(action 'selectFile' file)}}
+            {{file.filePath}}
+          {{/content.menu-item}}
         {{/each}}
-        </ul>
-      </li>
-    </ul>
+      {{/menu.content}}
+    {{/paper-menu}}
+    <span class="flex"></span>
 
     <span class="nav-right">
-      <span class="hint--bottom hint--rounded" data-hint="Hide this panel">
-        <span class="glyphicon glyphicon-remove" {{action 'removeColumn' col}}></span>
-      </span>
+      {{#paper-button iconButton=true title='Hide this panel' onClick=(action 'removeColumn' col)}}
+        {{paper-icon 'remove' size=18}}
+      {{/paper-button}}
       {{#if isLastColumn}}
-        <span class="hint--bottom hint--rounded" data-hint="Show another panel">
-          <span class="glyphicon glyphicon-plus hint--bottom hint--rounded" {{action 'addColumn'}}></span>
-        </span>
+        {{#paper-button iconButton=true title='Add another panel' onClick=(action 'addColumn')}}
+          {{paper-icon 'add' size=18}}
+        {{/paper-button}}
       {{/if}}
     </span>
   {{/paper-toolbar-tools}}

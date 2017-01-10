@@ -29,6 +29,15 @@
       border-bottom: 1px solid $grey-3;
       background-color: $grey-1;
       color: #333;
+
+      md-icon {
+        color: #666;
+      }
+
+      md-menu button {
+        color: #333 !important;
+        text-transform: none;
+      }
     }
 
     @media (max-width: $screen-md-min) {
