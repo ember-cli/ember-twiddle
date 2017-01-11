@@ -1,10 +1,11 @@
 {{#if isBuilding}}
-    Building...
+  {{paper-progress-circular}}
+  Building...
 {{else}}
-    Output
-    ({{#if buildErrors}}
-        <a {{action 'showErrors'}}>{{buildErrors.length}} build errors</a>
-    {{else}}
-        build ok.
-    {{/if}})
+  Output
+  ({{#if buildErrors~}}
+    <a {{action 'showErrors'}}>{{buildErrors.length}} build errors</a>
+  {{~else~}}
+    build ok.
+  {{~/if}})
 {{/if}}
