@@ -35,11 +35,11 @@
 
     <span class="nav-right">
       {{#paper-button iconButton=true title='Hide this panel' onClick=(action 'removeColumn' col)}}
-        {{paper-icon 'remove' size=18}}
+        {{paper-icon 'remove'}}
       {{/paper-button}}
       {{#if isLastColumn}}
         {{#paper-button iconButton=true title='Add another panel' onClick=(action 'addColumn')}}
-          {{paper-icon 'add' size=18}}
+          {{paper-icon 'add circle outline'}}
         {{/paper-button}}
       {{/if}}
     </span>
