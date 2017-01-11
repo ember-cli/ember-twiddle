@@ -29,12 +29,29 @@
             {{paper-icon 'add'}}
           {{/paper-button}}
         {{/if}}
+
         {{build-messages notify=notify isBuilding=isBuilding buildErrors=buildErrors}}
         <span class="flex"></span>
-        {{#paper-checkbox value=testsEnabled onChange=(action this.switchTests)}}
-          Run Tests
-        {{/paper-checkbox}}
-        {{run-or-live-reload liveReloadChanged=(action this.liveReloadChanged) runNow=(action this.runNow)}}
+
+        {{#paper-menu position='target-right target' as |menu|}}
+          {{#menu.trigger class='layout-column'}}
+            {{#paper-button class='md-menu-origin' iconButton=true}}
+              {{paper-icon 'more vert'}}
+            {{/paper-button}}
+          {{/menu.trigger}}
+          {{#menu.content width=2 as |content|}}
+            {{#content.menu-item class='md-menu-align-target'}}
+              <div>
+                {{#paper-checkbox value=testsEnabled onChange=(action this.switchTests)}}
+                  Run Tests
+                {{/paper-checkbox}}
+              </div>
+            {{/content.menu-item}}
+            {{#content.menu-item class='md-menu-align-target'}}
+              {{run-or-live-reload liveReloadChanged=(action this.liveReloadChanged) runNow=(action this.runNow)}}
+            {{/content.menu-item}}
+          {{/menu.content}}
+        {{/paper-menu}}
       {{/paper-toolbar-tools}}
     {{/paper-toolbar}}
 
