@@ -24,6 +24,12 @@
   <div class="twiddle-pane output {{if fullScreen 'full-screen'}}">
     {{#paper-toolbar}}
       {{#paper-toolbar-tools}}
+        {{#paper-sidenav-toggle name='left' as |toggleAction|}}
+          {{#paper-button class='hide-gt-sm' iconButton=true onClick=(action toggleAction)}}
+            {{paper-icon 'menu'}}
+          {{/paper-button}}
+        {{/paper-sidenav-toggle}}
+
         {{#if noColumns}}
           {{#paper-button iconButton=true title='Show an editor panel' onClick=(action this.addColumn)}}
             {{paper-icon 'add circle outline'}}

@@ -2,6 +2,7 @@
   {{#paper-sidenav
     class="md-whiteframe-z2 layout-column"
     name="left"
+    lockedOpen='gt-sm'
     open=leftSideBarOpen
     closeOnClick=false
     onToggle=(action (mut leftSideBarOpen))
@@ -10,9 +11,11 @@
       {{#paper-toolbar-tools}}
         Ember Twiddle
         <span class="flex"></span>
-        {{#paper-button iconButton=true onClick=(action (mut leftSideBarOpen) (not leftSideBarOpen))}}
-          {{paper-icon 'chevron left'}}
-        {{/paper-button}}
+        {{#paper-sidenav-toggle name='left' as |toggleAction|}}
+          {{#paper-button iconButton=true onClick=(action toggleAction)}}
+            {{paper-icon 'chevron left'}}
+          {{/paper-button}}
+        {{/paper-sidenav-toggle}}
       {{/paper-toolbar-tools}}
     {{/paper-toolbar}}
 
@@ -43,11 +46,6 @@
 
   {{#paper-card-content class="flex"}}
     <div class="layout-fill layout-column main-content">
-      {{#paper-sidenav-toggle name="left" as |toggleAction|}}
-        {{#paper-button raised=true classNames="hide-gt-sm" onClick=(action toggleAction)}}
-          Toggle
-        {{/paper-button}}
-      {{/paper-sidenav-toggle}}
       {{gist-body model=model
         columns=columns
         settings=settings
