@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  keyMap: 'Basic',
   modes: [
     { id: 'basic', label: 'Basic' },
     { id: 'vim', label: 'Vim' },
@@ -10,6 +11,13 @@ export default Ember.Component.extend({
 
   actions: {
     setKeyMap(keyMap) {
+      let modes = this.get('modes');
+      let mode = modes.findBy('id', keyMap);
+
+      if (mode) {
+        this.set('keyMap', mode.label);
+      }
+
       this.attrs.setKeyMap(keyMap);
     }
   }
