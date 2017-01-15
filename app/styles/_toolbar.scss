@@ -80,6 +80,11 @@
       line-height: 20px;
       min-height: 20px;
       margin: 4px 6px;
+      text-transform: none;
+
+      & > md-icon {
+        line-height: 14px;
+      }
     }
   }
 
