@@ -13,6 +13,10 @@
 
 {{#ivy-tree as |tree|}}
   {{#each fileTreeData.children as |datum|}}
-    {{file-tree-folder datum=datum tree=tree handleSelectTreeNode=(action 'handleSelectTreeNode')}}
+    {{file-tree-folder datum=datum tree=tree
+      selected=treeService.selected
+      onSelected=(action (mut treeService.selected))
+      handleSelectTreeNode=(action 'handleSelectTreeNode')
+      removeFile=removeFile}}
   {{/each}}
 {{/ivy-tree}}

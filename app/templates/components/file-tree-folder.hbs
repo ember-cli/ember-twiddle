@@ -1,13 +1,23 @@
 {{#if datum.children}}
   {{#tree.treeitem isExpanded=datum.state.opened
     class='tree-folder'
+    onSelect=(action onSelected datum.id)
     onToggle=(action (mut datum.state.opened)) as |treeitem|}}
     {{#paper-button class='tree-node'}}
       {{paper-icon (if datum.state.opened 'folder open' 'folder') size=17}} {{datum.text}}
     {{/paper-button}}
+    {{#if (eq selected datum.id)}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon 'delete' size=17}}
+      {{/paper-button}}
+    {{/if}}
     {{#treeitem.group as |newtree|}}
       {{#each datum.children as |child|}}
-        {{file-tree-folder datum=child tree=newtree handleSelectTreeNode=handleSelectTreeNode}}
+        {{file-tree-folder datum=child tree=newtree
+          selected=selected
+          removeFile=removeFile
+          onSelected=onSelected
+          handleSelectTreeNode=handleSelectTreeNode}}
       {{/each}}
     {{/treeitem.group}}
   {{/tree.treeitem}}

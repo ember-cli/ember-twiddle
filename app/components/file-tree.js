@@ -2,10 +2,11 @@ import Ember from "ember";
 import config from '../config/environment';
 import FlatToNested from 'npm:flat-to-nested';
 
-const { computed } = Ember;
+const { inject, computed } = Ember;
 const flatToNested = new FlatToNested();
 
 export default Ember.Component.extend({
+  treeService: inject.service('tree'),
   jsTreeActionReceiver: null,
 
   fileTreeHash: computed('model.files.@ach.filePath', function() {

@@ -8,10 +8,12 @@
     <div class="twiddle-pane file-tree flex">
       {{file-tree model=model
         openFile=(action this.openFile)
+        removeFile=(action this.attrs.removeFile)
       }}
     </div>
 
     {{#paper-list class='layout-column main-menu flex-nogrow'}}
+      {{!--
       {{file-menu model=model
         session=session
         activeEditorCol=activeEditorCol
@@ -33,6 +35,7 @@
         showRevision=(route-action "showRevision")
         showCurrentVersion=(route-action "showCurrentVersion")
       }}
+      --}}
 
       {{paper-divider}}
 
