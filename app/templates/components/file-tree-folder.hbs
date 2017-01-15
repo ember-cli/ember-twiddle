@@ -1,0 +1,18 @@
+{{#if datum.children}}
+  {{#tree.treeitem class='tree-folder' as |treeitem|}}
+    {{#paper-button class='tree-node'}}
+      {{paper-icon 'folder' size=18}} {{datum.text}}
+    {{/paper-button}}
+    {{#treeitem.group as |newtree|}}
+      {{#each datum.children as |child|}}
+        {{file-tree-folder datum=child tree=newtree handleSelectTreeNode=handleSelectTreeNode}}
+      {{/each}}
+    {{/treeitem.group}}
+  {{/tree.treeitem}}
+{{else}}
+  {{#tree.treeitem class='tree-file'}}
+    {{#paper-button class='tree-node' onClick=(action handleSelectTreeNode datum)}}
+      {{paper-icon 'insert drive file' size=18}} {{datum.text}}
+    {{/paper-button}}
+  {{/tree.treeitem}}
+{{/if}}

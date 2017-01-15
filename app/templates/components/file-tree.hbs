@@ -10,9 +10,9 @@
     </span>
   </div>
 </div>
-{{ember-jstree data=fileTreeData
-               actionReceiver=jsTreeActionReceiver
-               eventDidSelectNode=(action "handleSelectTreeNode")
-               eventDidBecomeReady=(action "didBecomeReady")
-               eventDidChange=(action "didChange")
-}}
+
+{{#ivy-tree as |tree|}}
+  {{#each fileTreeData.children as |datum|}}
+    {{file-tree-folder datum=datum tree=tree handleSelectTreeNode=(action 'handleSelectTreeNode')}}
+  {{/each}}
+{{/ivy-tree}}

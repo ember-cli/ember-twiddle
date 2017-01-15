@@ -74,14 +74,12 @@
   .file-tree {
     overflow: auto;
 
-    .jstree-default .jstree-hovered {
-      background: rgba(0, 0, 0, 0.13);
-      box-shadow: none;
-    }
-
-    .jstree-default .jstree-clicked {
-      background: #b95252;
-      box-shadow: none;
+    .tree-folder button,
+    .tree-file button {
+      font-size: 13px;
+      line-height: 20px;
+      min-height: 20px;
+      margin: 4px 6px;
     }
   }
 
