@@ -8,7 +8,6 @@ module.exports = function(defaults) {
   var browserify = require('browserify');
   var path = require('path');
   var fs = require('fs');
-  var assetsHost = process.env.TWIDDLE_ASSET_HOST || '/';
 
   var env = EmberApp.env();
   var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
@@ -16,7 +15,7 @@ module.exports = function(defaults) {
   var prepend = null;
 
   if(isProductionLikeBuild) {
-     prepend = env === 'production' ? assetsHost : '//canary-assets.ember-twiddle.com/';
+     prepend = env === 'production' ? (process.env.TWIDDLE_ASSET_HOST || '//assets.ember-twiddle.com/') : '//canary-assets.ember-twiddle.com/';
   }
 
   var blueprintsCode = getEmberCLIBlueprints();
