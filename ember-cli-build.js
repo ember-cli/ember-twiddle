@@ -43,6 +43,11 @@ module.exports = function(defaults) {
         content: blueprintsCode
       }
     ],
+    nodeAssets: {
+      'path-browser': {
+        import: ['path.js']
+      }
+    },
     sourcemaps: {
       enabled: !isProductionLikeBuild
     },
@@ -67,7 +72,7 @@ module.exports = function(defaults) {
 
     vendorFiles: {
       'ember.js': {
-        staging:  'bower_components/ember/ember.prod.js'
+        staging: 'bower_components/ember/ember.prod.js'
       },
       'ember-testing.js': []
     }
@@ -75,7 +80,7 @@ module.exports = function(defaults) {
 
   if (isFastboot) {
     var b = browserify();
-    b.add(require.resolve('babel/polyfill'));
+    b.add(require.resolve('babel-core/browser-polyfill'));
     b.bundle(function(err, buf) {
       fs.writeFileSync('vendor/polyfill.js', buf);
     });
@@ -83,6 +88,9 @@ module.exports = function(defaults) {
   }
 
   app.import('bower_components/ember/ember-template-compiler.js');
+  app.import('bower_components/babel/browser.js');
+  app.import('vendor/shims/babel.js');
+  app.import('vendor/shims/path.js');
 
   if (env === "test") {
     app.import('bower_components/ember/ember-testing.js', { type: 'test' });
