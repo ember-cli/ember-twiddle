@@ -20,9 +20,8 @@ cache:
 
 before_install:
 - npm config set spin false
-- npm install -g bower
+- npm install -g bower phantomjs-prebuilt
 - bower --version
-- npm install phantomjs-prebuilt
 - phantomjs --version
 
 install:

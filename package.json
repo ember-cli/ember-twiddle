@@ -30,7 +30,7 @@
     "ember-ajax": "~2.4.1",
     "ember-api-actions": "~0.1.4",
     "ember-autoresize": "~0.5.17",
-    "ember-cli": "2.10.0",
+    "ember-cli": "2.10.1",
     "ember-cli-app-version": "^2.0.0",
     "ember-cli-babel": "^5.1.7",
     "ember-cli-bootstrap-sassy": "~0.5.5",
