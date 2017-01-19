@@ -11,11 +11,9 @@
       {{#paper-toolbar-tools}}
         Ember Twiddle
         <span class="flex"></span>
-        {{#paper-sidenav-toggle name='left' as |toggleAction|}}
-          {{#paper-button iconButton=true onClick=(action toggleAction)}}
-            {{paper-icon 'chevron left'}}
-          {{/paper-button}}
-        {{/paper-sidenav-toggle}}
+        {{#paper-button iconButton=true onClick=(action (mut leftSideBarOpen) false)}}
+          {{paper-icon 'chevron left'}}
+        {{/paper-button}}
       {{/paper-toolbar-tools}}
     {{/paper-toolbar}}
 
@@ -47,6 +45,7 @@
   {{#paper-card-content class="flex"}}
     <div class="layout-fill layout-column main-content">
       {{gist-body model=model
+        leftSideBarOpen=leftSideBarOpen
         columns=columns
         settings=settings
         numColumns=realNumColumns

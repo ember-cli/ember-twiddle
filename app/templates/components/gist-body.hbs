@@ -1,9 +1,11 @@
 {{#twiddle-panes numColumns=numColumns fullScreen=fullScreen fileTreeShown=fileTreeShown}}
   {{#unless fullScreen}}
-    {{#each columns as |column|}}
+    {{#each columns as |column index|}}
       {{#if column.show}}
         <div class="twiddle-pane code {{if column.active 'active'}}">
           {{file-editor-column col=column.col
+            isFirstColumn=(eq index 0)
+            leftSideBarOpen=leftSideBarOpen
             file=column.file
             allFiles=model.files
             keyMap=settings.keyMap
@@ -24,12 +26,6 @@
   <div class="twiddle-pane output {{if fullScreen 'full-screen'}}">
     {{#paper-toolbar}}
       {{#paper-toolbar-tools}}
-        {{#paper-sidenav-toggle name='left' as |toggleAction|}}
-          {{#paper-button class='hide-gt-sm' iconButton=true onClick=(action toggleAction)}}
-            {{paper-icon 'menu'}}
-          {{/paper-button}}
-        {{/paper-sidenav-toggle}}
-
         {{#if noColumns}}
           {{#paper-button iconButton=true title='Show an editor panel' onClick=(action this.addColumn)}}
             {{paper-icon 'add circle outline'}}

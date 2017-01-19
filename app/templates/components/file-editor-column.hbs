@@ -1,5 +1,11 @@
 {{#paper-toolbar}}
   {{#paper-toolbar-tools}}
+    {{#if (and isFirstColumn (not leftSideBarOpen))}}
+      {{#paper-button iconButton=true onClick=(action (mut leftSideBarOpen) true)}}
+        {{paper-icon 'menu'}}
+      {{/paper-button}}
+    {{/if}}
+
     {{#if showFileTreeOpenIcon}}
       <span class="nav-left">
         <span class="hint--bottom hint--rounded" data-hint="Show project files" >
