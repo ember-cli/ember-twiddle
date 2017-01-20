@@ -19,7 +19,6 @@
   "author": "Ember Twiddle Contributors",
   "license": "MIT",
   "devDependencies": {
-    "babel": "^5.8.38",
     "broccoli-asset-rev": "^2.4.5",
     "broccoli-babel-transpiler": "~5.6.1",
     "broccoli-concat": "^2.3.2",
@@ -30,8 +29,7 @@
     "ember-ajax": "2.5.3",
     "ember-api-actions": "~0.1.4",
     "ember-autoresize": "~0.5.17",
-    "ember-browserify": "~1.1.13",
-    "ember-cli": "2.10.0",
+    "ember-cli": "2.10.1",
     "ember-cli-app-version": "^2.0.0",
     "ember-cli-babel": "^5.1.7",
     "ember-cli-build-notifications": "0.2.0",
@@ -51,6 +49,7 @@
     "ember-cli-legacy-blueprints": "^0.1.0",
     "ember-cli-mirage": "0.2.3",
     "ember-cli-moment-shim": "~2.2.1",
+    "ember-cli-node-assets": "~0.1.6",
     "ember-cli-qunit": "^2.1.0",
     "ember-cli-release": "1.0.0-beta.2",
     "ember-cli-sass": "~6.0.0",
@@ -76,10 +75,11 @@
     "ivy-tree": "0.1.1",
     "loader.js": "~4.0.10",
     "moment": "~2.15.2",
-    "moment-timezone": "~0.5.4",
-    "torii": "0.8.1"
+    "moment-timezone": "~0.5.4"
   },
   "dependencies": {
-    "babel-core": "^5.8.38"
+    "babel-core": "^5.8.38",
+    "path-browser": "^2.2.1",
+    "torii": "0.8.0"
   }
 }

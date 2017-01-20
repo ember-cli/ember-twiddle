@@ -1,5 +1,5 @@
-import Babel from "npm:babel-core";
-import Path from 'npm:path';
+import Babel from 'babel-core';
+import Path from 'path';
 import HbsPlugin from '../plugins/hbs-plugin';
 import blueprints from '../lib/blueprints';
 import config from '../config/environment';
@@ -188,7 +188,8 @@ export default Ember.Service.extend({
     let name = filePath.replace(/^app\//, '');
 
     return Path.join(twiddleAppName,
-      Path.dirname(name), Path.basename(name, Path.extname(name)));
+      Path.relative('.', Path.dirname(name)),
+      Path.basename(name, Path.extname(name)));
   },
 
   /**

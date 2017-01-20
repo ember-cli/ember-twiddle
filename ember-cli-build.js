@@ -8,7 +8,6 @@ module.exports = function(defaults) {
   var browserify = require('browserify');
   var path = require('path');
   var fs = require('fs');
-  var assetsHost = process.env.TWIDDLE_ASSET_HOST || '/';
 
   var env = EmberApp.env();
   var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
@@ -16,7 +15,7 @@ module.exports = function(defaults) {
   var prepend = null;
 
   if(isProductionLikeBuild) {
-     prepend = env === 'production' ? assetsHost : '//canary-assets.ember-twiddle.com/';
+     prepend = env === 'production' ? (process.env.TWIDDLE_ASSET_HOST || '//assets.ember-twiddle.com/') : '//canary-assets.ember-twiddle.com/';
   }
 
   var blueprintsCode = getEmberCLIBlueprints();
@@ -41,6 +40,11 @@ module.exports = function(defaults) {
         content: blueprintsCode
       }
     ],
+    nodeAssets: {
+      'path-browser': {
+        import: ['path.js']
+      }
+    },
     sourcemaps: {
       enabled: !isProductionLikeBuild
     },
@@ -65,7 +69,7 @@ module.exports = function(defaults) {
 
     vendorFiles: {
       'ember.js': {
-        staging:  'bower_components/ember/ember.prod.js'
+        staging: 'bower_components/ember/ember.prod.js'
       },
       'ember-testing.js': []
     }
@@ -73,7 +77,7 @@ module.exports = function(defaults) {
 
   if (isFastboot) {
     var b = browserify();
-    b.add(require.resolve('babel/polyfill'));
+    b.add(require.resolve('babel-core/browser-polyfill'));
     b.bundle(function(err, buf) {
       fs.writeFileSync('vendor/polyfill.js', buf);
     });
@@ -81,6 +85,9 @@ module.exports = function(defaults) {
   }
 
   app.import('bower_components/ember/ember-template-compiler.js');
+  app.import('bower_components/babel/browser.js');
+  app.import('vendor/shims/babel.js');
+  app.import('vendor/shims/path.js');
 
   if (env === "test") {
     app.import('bower_components/ember/ember-testing.js', { type: 'test' });

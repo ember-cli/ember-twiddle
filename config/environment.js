@@ -16,6 +16,7 @@ module.exports = function(environment) {
     locationType: 'auto',
     host: host,
     githubOauthUrl: githubOauthURL,
+    githubApiKey: githubApiKey,
     addonUrl: 'https://emw2ujz4u1.execute-api.us-east-1.amazonaws.com/canary/addon',
     assetsHost: assetsHost,
     maxNumFilesInitiallyExpanded: 12,
@@ -42,13 +43,6 @@ module.exports = function(environment) {
       providers: {}
     },
   };
-
-  // computed property name didn't work so I had to do this:
-  ENV.torii.providers[toriiProvider] = {
-    scope: 'gist',
-    apiKey: githubApiKey
-  };
-
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
@@ -77,8 +71,9 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.githubOauthUrl = githubOauthURL;
-    ENV.assetsHost = assetsHost;
+    ENV.githubOauthUrl = process.env.GATEKEEPER_URL || 'https://ember-twiddle.herokuapp.com/authenticate/';
+    ENV.assetsHost = process.env.TWIDDLE_ASSET_HOST || '//assets.ember-twiddle.com/';
+    ENV.githubApiKey = process.env.GH_API_KEY || '3df37009938c0790d952'
     // we only need to set the baseUrl if we are using GH Enterprise
     if( toriiGHEBaseURL ) {
       ENV.torii.providers[toriiProvider].baseUrl = toriiGHEBaseURL;
@@ -90,6 +85,12 @@ module.exports = function(environment) {
   if (environment === 'staging') {
     ENV.githubOauthUrl = 'https://canary-twiddle-gatekeeper.herokuapp.com/authenticate/';
     ENV.assetsHost = '//canary-assets.ember-twiddle.com/';
+    ENV.githubApiKey = '085e033505c9d26ec27a';
+  }
+
+  ENV.torii.providers[toriiProvider] = {
+    scope: 'gist',
+    apiKey: ENV.githubApiKey
   }
 
   return ENV;
