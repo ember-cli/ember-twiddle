@@ -17,13 +17,14 @@ export default Ember.Component.extend({
     return this.get('version').charAt(0) === "v" ? "" : "v";
   }),
 
-  currentVersionLink: computed('environment', 'version', 'currentRevision', function() {
+  currentVersionLink: computed('environment', 'v', 'version', 'currentRevision', function() {
     var baseLink = "https://github.com/ember-cli/ember-twiddle";
-    var { environment, currentRevision, version } = this.getProperties('environment', 'currentRevision', 'version');
+    var { environment, currentRevision, v, version } = this.getProperties('environment', 'currentRevision', 'v', 'version');
+    var tagName = `${v}${version}`;
 
     switch (environment) {
       case 'production':
-        return `${baseLink}/releases/tag/${version}`;
+        return `${baseLink}/releases/tag/${tagName}`;
 
       case 'staging':
         return `${baseLink}/commit/${currentRevision}`;

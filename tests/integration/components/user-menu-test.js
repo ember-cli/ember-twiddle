@@ -65,7 +65,7 @@ test('shows link to release when in production environment', function(assert) {
   this.render(hbs`{{user-menu environment="production" version="4.0.4" }}`);
 
   assert.equal(this.$('.test-current-version-link').length, 1);
-  assert.equal(this.$('.test-current-version-link').attr('href'), "https://github.com/ember-cli/ember-twiddle/releases/tag/4.0.4");
+  assert.equal(this.$('.test-current-version-link').attr('href'), "https://github.com/ember-cli/ember-twiddle/releases/tag/v4.0.4");
   assert.equal(this.$('.test-current-version-link').text().trim(), "Ember Twiddle v4.0.4");
 });
 
