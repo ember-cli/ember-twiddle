@@ -29,6 +29,7 @@
     "ember-ajax": "2.5.3",
     "ember-api-actions": "~0.1.4",
     "ember-autoresize": "~0.5.17",
+    "ember-browserify": "1.1.13",
     "ember-cli": "2.10.1",
     "ember-cli-app-version": "^2.0.0",
     "ember-cli-babel": "^5.1.7",
