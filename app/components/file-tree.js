@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   treeService: inject.service('tree'),
   jsTreeActionReceiver: null,
 
-  fileTreeHash: computed('model.files.@ach.filePath', function() {
+  fileTreeHash: computed('model.files.@each.filePath', function() {
     const files = this.get('model.files') || [];
 
     return files.reduce((accumulator, file) => {
