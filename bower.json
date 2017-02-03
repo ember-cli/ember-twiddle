@@ -1,6 +1,6 @@
 {
   "name": "ember-twiddle",
-  "version": "0.10.7",
+  "version": "0.11.1",
   "dependencies": {
     "ember": "~2.10.2",
     "ember-cli-shims": "0.1.3",
