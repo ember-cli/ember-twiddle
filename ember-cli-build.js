@@ -86,6 +86,7 @@ module.exports = function(defaults) {
 
   app.import('bower_components/ember/ember-template-compiler.js');
   app.import('bower_components/babel/browser.js');
+  app.import('vendor/flat-to-nested.js');
   app.import('vendor/shims/babel.js');
   app.import('vendor/shims/path.js');
 

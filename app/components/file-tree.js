@@ -1,6 +1,6 @@
-import Ember from "ember";
+import Ember from 'ember';
 import config from '../config/environment';
-import FlatToNested from 'npm:flat-to-nested';
+import FlatToNested from 'flat-to-nested';
 
 const { inject, computed } = Ember;
 const flatToNested = new FlatToNested();
