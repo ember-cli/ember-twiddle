@@ -23,7 +23,7 @@ test('it has default settings when no local settings are present', function(asse
   const settings = this.subject();
 
   assert.deepEqual(getProperties(settings, 'keyMap'), {
-    keyMap: 'basic'
+    keyMap: 'default'
   }, 'default settings are present');
 });
 
