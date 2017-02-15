@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  keyMap: 'Basic',
+  keyMap: 'Default',
   modes: [
     { id: 'default', label: 'Default' },
     { id: 'basic', label: 'Basic' },
