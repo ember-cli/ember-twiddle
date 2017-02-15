@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   keyMap: 'Basic',
   modes: [
+    { id: 'default', label: 'Default' },
     { id: 'basic', label: 'Basic' },
     { id: 'vim', label: 'Vim' },
     { id: 'emacs', label: 'Emacs' },
