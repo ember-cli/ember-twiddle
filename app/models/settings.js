@@ -10,7 +10,7 @@ export default ObjectProxy.extend({
   storageKey: 'ember_twiddle_settings',
 
   defaultSettings: {
-    keyMap: 'basic'
+    keyMap: 'default'
   },
 
   init() {
