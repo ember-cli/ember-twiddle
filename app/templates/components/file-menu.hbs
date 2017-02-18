@@ -1,9 +1,122 @@
-<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-  File <b class="caret"></b>
-</a>
-
+{{#paper-menu position='target-right target' as |menu|}}
+  {{#menu.trigger class='layout-column'}}
+    {{#paper-button class='md-menu-origin'}}
+      {{paper-icon 'insert drive file' size=21}}
+      File
+      {{paper-icon 'arrow drop up'}}
+    {{/paper-button}}
+  {{/menu.trigger}}
+  {{#menu.content width=4 as |content|}}
+    {{#content.menu-item class='md-menu-align-target test-new-twiddle' onClick=(route-action 'transitionTo' 'gist.new')}}
+      New Twiddle
+    {{/content.menu-item}}
+    {{#if model}}
+      {{paper-divider}}
+      {{#paper-menu position='target-right target' as |menu|}}
+        {{#menu.trigger class='layout-column nested-menu-trigger'}}
+          {{#paper-button class='md-menu-origin'}}
+            Add File..
+            {{paper-icon 'expand more'}}
+          {{/paper-button}}
+        {{/menu.trigger}}
+        {{#menu.content width=3 as |content|}}
+          {{#content.menu-item class='md-menu-align-target test-new-twiddle' onClick=(action addFile '')}}
+            Other (empty file)
+          {{/content.menu-item}}
+          {{#content.menu-item}}
+            {{#paper-menu position='target-right target' as |menu|}}
+              {{#menu.trigger class='layout-column nested-menu-trigger'}}
+                {{#paper-button class='md-menu-origin'}}
+                  Component (js and hbs)
+                  {{paper-icon 'expand more'}}
+                {{/paper-button}}
+              {{/menu.trigger}}
+              {{#menu.content width=3 as |content|}}
+                {{#content.menu-item class='layout-column' onClick=(action addFile 'component-hbs')}}
+                  hbs only
+                {{/content.menu-item}}
+                {{#content.menu-item class='layout-column' onClick=(action addFile 'component-js')}}
+                  js only
+                {{/content.menu-item}}
+              {{/menu.content}}
+            {{/paper-menu}}
+          {{/content.menu-item}}
+          {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'model')}}
+            Model
+          {{/content.menu-item}}
+          {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'controller')}}
+            Controller
+          {{/content.menu-item}}
+          {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'route')}}
+            Route
+          {{/content.menu-item}}
+          {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'template')}}
+            Template
+          {{/content.menu-item}}
+          {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'service')}}
+            Service
+          {{/content.menu-item}}
+          {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'helper')}}
+            Helper
+          {{/content.menu-item}}
+          {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'router')}}
+            Router
+          {{/content.menu-item}}
+          {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'css')}}
+            CSS
+          {{/content.menu-item}}
+          {{#paper-menu position='target-right target' as |menu|}}
+            {{#menu.trigger class='layout-column nested-menu-trigger'}}
+              {{#paper-button class='md-menu-origin'}}
+                Tests
+                {{paper-icon 'expand more'}}
+              {{/paper-button}}
+            {{/menu.trigger}}
+            {{#menu.content width=3 as |content|}}
+              {{#content.menu-item class='layout-column test-add-acceptance-test-link' onClick=(action addAcceptanceTestFile)}}
+                Acceptance
+              {{/content.menu-item}}
+              {{#paper-menu position='target-right target' as |menu|}}
+                {{#menu.trigger class='layout-column nested-menu-trigger'}}
+                  {{#paper-button class='md-menu-origin'}}
+                    Integration
+                    {{paper-icon 'expand more'}}
+                  {{/paper-button}}
+                {{/menu.trigger}}
+                {{#menu.content width=3 as |content|}}
+                  {{#content.menu-item class='layout-column test-add-component-test-link' onClick=(action addIntegrationTestFile 'component')}}
+                    Component
+                  {{/content.menu-item}}
+                {{/menu.content}}
+              {{/paper-menu}}
+              {{#paper-menu position='target-right target' as |menu|}}
+                {{#menu.trigger class='layout-column nested-menu-trigger'}}
+                  {{#paper-button class='md-menu-origin'}}
+                    Unit
+                    {{paper-icon 'expand more'}}
+                  {{/paper-button}}
+                {{/menu.trigger}}
+                {{#menu.content width=3 as |content|}}
+                  {{#content.menu-item class='layout-column' onClick=(action addUnitTestFile 'controller')}}
+                    Controller
+                  {{/content.menu-item}}
+                  {{#content.menu-item class='layout-column test-add-route-test-link' onClick=(action addUnitTestFile 'route')}}
+                    Route
+                  {{/content.menu-item}}
+                  {{#content.menu-item class='layout-column' onClick=(action addUnitTestFile 'service')}}
+                    Service
+                  {{/content.menu-item}}
+                {{/menu.content}}
+              {{/paper-menu}}
+            {{/menu.content}}
+          {{/paper-menu}}
+        {{/menu.content}}
+      {{/paper-menu}}
+    {{/if}}
+  {{/menu.content}}
+{{/paper-menu}}
+{{!--
 <ul class="dropdown-menu dropdown-menu-right">
-  <li>{{#link-to 'gist.new' class="test-new-twiddle" }}New Twiddle{{/link-to}}</li>
   {{#if model}}
     <li role="presentation" class="divider"></li>
     <li class="dropdown dropdown-submenu">
@@ -84,3 +197,4 @@
     {{/if}}
   {{/if}}
 </ul>
+--}}

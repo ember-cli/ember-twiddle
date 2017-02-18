@@ -237,3 +237,13 @@
     }
   }
 }
+
+.nested-menu-trigger {
+  padding: 0;
+
+  button {
+    text-transform: none;
+    font-weight: 400;
+    text-align: left;
+  }
+}

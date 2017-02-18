@@ -1,11 +1,11 @@
-import Ember from "ember";
+import Ember from 'ember';
 import config from '../config/environment';
 
 export default Ember.Route.extend({
   toriiProvider: config.toriiProvider,
 
   title(tokens) {
-    return "Ember Twiddle - " + tokens.join(" - ");
+    return 'Ember Twiddle - ' + tokens.join(' - ');
   },
 
   actions: {
@@ -24,6 +24,16 @@ export default Ember.Route.extend({
 
     signOut () {
       this.session.close();
+    },
+
+    transitionTo() {
+      let args = [].slice.call(arguments, 0);
+
+      if (args[args.length - 1] instanceof Ember.$.Event) {
+        args = args.slice(0, -1);
+      }
+
+      this.transitionTo(...args);
     }
   }
 });
