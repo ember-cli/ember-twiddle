@@ -43,7 +43,7 @@ export default Ember.Service.extend({
     });
   },
 
-  getTwiddleJson (gist) {
+  getTwiddleJson(gist) {
     return this._getTwiddleJson(gist).then((twiddleJson) => {
 
       // Fill in any missing required dependencies

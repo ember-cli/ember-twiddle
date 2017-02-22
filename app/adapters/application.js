@@ -40,7 +40,7 @@ export default DS.RESTAdapter.extend({
     @param {DS.Snapshot} snapshot
     @return {Promise} promise
   */
-  updateRecord: function(store, type, snapshot) {
+  updateRecord(store, type, snapshot) {
     var data = {};
     var serializer = store.serializerFor(type.modelName);
 

@@ -9,7 +9,7 @@ export default Ember.Component.extend(ResizeMixin, {
   iframeId: 'dummy-content-iframe',
   classNames: ['content'],
 
-  didReceiveAttrs: function() {
+  didReceiveAttrs() {
     if(!this.element) {
       return;
     }
