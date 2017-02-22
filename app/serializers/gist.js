@@ -11,13 +11,13 @@ export default ApplicationSerializer.extend({
     this.set('seq', 0);
   },
 
-  normalizeSingleResponse: function(store, primaryModelClass, payload, id, requestType) {
+  normalizeSingleResponse(store, primaryModelClass, payload, id, requestType) {
     this.normalizeGist(payload, false);
 
     return this._super(store, primaryModelClass, payload, id, requestType);
   },
 
-  normalizeArrayResponse: function(store, primaryModelClass, payload, id, requestType) {
+  normalizeArrayResponse(store, primaryModelClass, payload, id, requestType) {
     payload.forEach(function(hash) {
       this.normalizeGist(hash, true);
     }.bind(this));
@@ -25,7 +25,7 @@ export default ApplicationSerializer.extend({
     return this._super(store, primaryModelClass, payload, id, requestType);
   },
 
-  normalizeGist: function(payload, isArray) {
+  normalizeGist(payload, isArray) {
     this.normalizeFiles(payload, isArray);
     this.normalizeHistory(payload);
     if (payload.owner) {
@@ -33,7 +33,7 @@ export default ApplicationSerializer.extend({
     }
   },
 
-  normalizeFiles (payload, isArray) {
+  normalizeFiles(payload, isArray) {
     var normalizedFiles = [];
 
     for(var origName in payload.files) {
@@ -51,7 +51,7 @@ export default ApplicationSerializer.extend({
     payload.files = normalizedFiles;
   },
 
-  serializeFiles (snapshot, json, relationship) {
+  serializeFiles(snapshot, json, relationship) {
     var files = snapshot.hasMany(relationship.key);
     var deletedFiles = snapshot.record.get('deletedFiles');
     var key = this.keyForRelationship(relationship.key);
@@ -85,7 +85,7 @@ export default ApplicationSerializer.extend({
     json[key] = filesJson;
   },
 
-  normalizeHistory (payload) {
+  normalizeHistory(payload) {
     if (payload.history) {
       for(var i=0; i<payload.history.length; i++) {
         let version = payload.history[i];
@@ -96,7 +96,7 @@ export default ApplicationSerializer.extend({
     }
   },
 
-  serializeHasMany: function(snapshot, json, relationship) {
+  serializeHasMany(snapshot, json, relationship) {
     if(relationship.key === 'files') {
       this.serializeFiles(snapshot, json, relationship);
     }

@@ -117,7 +117,7 @@ export default Ember.Mixin.create({
     }
   },
 
-  removeFileFromColumns (file) {
+  removeFileFromColumns(file) {
     for (let i = 1; i <= MAX_COLUMNS; ++i) {
       if (this.getColumnFile(i) === file) {
         this.setColumnFile(i, null);

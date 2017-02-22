@@ -29,7 +29,7 @@ export default Ember.Mixin.create({
     }
   },
 
-  setupWindowUpdate: function() {
+  setupWindowUpdate() {
     // TODO: this in a controller seems suspect, rather this should likely be
     // part of some handshake, to ensure no races exist. This should likley not
     // be something a controller would handle - (SP)

@@ -2,11 +2,12 @@ import DS from 'ember-data';
 
 export default DS.JSONSerializer.extend(DS.EmbeddedRecordsMixin, {
   isNewSerializerAPI: true,
-  keyForAttribute: function(key) {
+
+  keyForAttribute(key) {
     return key.decamelize();
   },
 
-  keyForRelationship: function(key) {
+  keyForRelationship(key) {
     return key.decamelize();
   },
 });

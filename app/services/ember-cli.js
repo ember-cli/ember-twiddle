@@ -182,7 +182,7 @@ export default Ember.Service.extend({
     }
   },
 
-  nameWithModule: function (filePath) {
+  nameWithModule(filePath) {
     // Remove app prefix if present
     let name = filePath.replace(/^app\//, '');
 
@@ -197,7 +197,7 @@ export default Ember.Service.extend({
    * @param  {Gist} gist    Gist to build
    * @return {Ember Object}       Source code for built Ember app
    */
-  compileGist (gist) {
+  compileGist(gist) {
     let promise = new RSVP.Promise((resolve, reject) => {
       let errors = [];
       let out = [];
@@ -263,7 +263,7 @@ export default Ember.Service.extend({
     }
   },
 
-  buildHtml (gist, appJS, appCSS, twiddleJSON) {
+  buildHtml(gist, appJS, appCSS, twiddleJSON) {
     if (gist.get('initialRoute')) {
       appJS += "window.location.hash='" + gist.get('initialRoute') + "';";
     }
@@ -350,7 +350,7 @@ export default Ember.Service.extend({
     return { depScriptTags, depCssLinkTags, testStuff };
   },
 
-  checkRequiredFiles (out, gist) {
+  checkRequiredFiles(out, gist) {
     requiredFiles.forEach(filePath => {
       var file = gist.get('files').findBy('filePath', filePath);
       if(!file) {
@@ -362,7 +362,7 @@ export default Ember.Service.extend({
     });
   },
 
-  addBoilerPlateFiles (out, gist) {
+  addBoilerPlateFiles(out, gist) {
     boilerPlateJs.forEach(blueprintName => {
       let blueprint = availableBlueprints[blueprintName];
       if(!gist.get('files').findBy('filePath', blueprint.filePath)) {
@@ -371,7 +371,7 @@ export default Ember.Service.extend({
     });
   },
 
-  addConfig (out, gist, twiddleJson) {
+  addConfig(out, gist, twiddleJson) {
     let config = {
       modulePrefix: twiddleAppName,
       TWIDDLE_ORIGIN: location.origin
@@ -391,7 +391,7 @@ export default Ember.Service.extend({
    * @param  {String} filePath   File path (will be used for module name)
    * @return {String}            Transpiled module code
    */
-  compileJs (code, filePath) {
+  compileJs(code, filePath) {
     code = this.fixTwiddleAppNames(code);
     let moduleName = this.nameWithModule(filePath);
     return Babel.transform(code, babelOpts(moduleName)).code;
@@ -404,7 +404,7 @@ export default Ember.Service.extend({
    * @param  {String} filePath   File path (will be used for module name)
    * @return {String}            AMD module code
    */
-  compileHbs (code, filePath) {
+  compileHbs(code, filePath) {
     // TODO: Is there a way to precompile using the template compiler brought in via twiddle.json?
     // let templateCode = Ember.HTMLBars.precompile(code || '');
 
@@ -470,7 +470,7 @@ function babelOpts(moduleName) {
  * @param  {Object} config  App configuration
  * @return {Array}          Code buffer
  */
-function contentForAppBoot (content, config) {
+function contentForAppBoot(content, config) {
 
   // Some modules are not actually transpiled so Babel
   // doesn't recognize them properly...

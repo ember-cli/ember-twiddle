@@ -38,7 +38,7 @@ export default DS.Model.extend({
     Called by GistFile.deleteRecord to make sure we
     register deleted files on the server.
    */
-  registerDeletedFile (fileId) {
+  registerDeletedFile(fileId) {
     var deletedFiles = this.get('deletedFiles') || [];
     if(!this.get('isNew')) {
       deletedFiles.push(fileId);
