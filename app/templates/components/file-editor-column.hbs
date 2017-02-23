@@ -46,16 +46,14 @@
     {{/paper-menu}}
     <span class="flex"></span>
 
-    <span class="nav-right">
-      {{#paper-button iconButton=true title='Hide this panel' onClick=(action 'removeColumn' col)}}
-        {{paper-icon 'remove'}}
+    {{#paper-button iconButton=true title='Hide this panel' onClick=(action 'removeColumn' col)}}
+      {{paper-icon 'remove'}}
+    {{/paper-button}}
+    {{#if isLastColumn}}
+      {{#paper-button iconButton=true title='Add another panel' onClick=(action 'addColumn')}}
+        {{paper-icon 'add circle outline'}}
       {{/paper-button}}
-      {{#if isLastColumn}}
-        {{#paper-button iconButton=true title='Add another panel' onClick=(action 'addColumn')}}
-          {{paper-icon 'add circle outline'}}
-        {{/paper-button}}
-      {{/if}}
-    </span>
+    {{/if}}
   {{/paper-toolbar-tools}}
 {{/paper-toolbar}}
 
