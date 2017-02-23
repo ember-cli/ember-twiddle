@@ -4,7 +4,7 @@ import GistRoute from "ember-twiddle/routes/gist-base-route";
 export default GistRoute.extend({
   emberCli: Ember.inject.service('ember-cli'),
 
-  model (params) {
+  model(params) {
     var model = this.get('store').createRecord('gist', {description: 'New Twiddle'});
 
     if (params.copyCurrentTwiddle) {
@@ -26,7 +26,7 @@ export default GistRoute.extend({
     // reset copyCurrentTwiddle, so it is not shown in the URL: this QP is only
     // needed when initializing the model for this route
     controller.set('copyCurrentTwiddle', false);
-    
+
     const gistController = this.controllerFor('gist');
     Ember.run.schedule('afterRender', function() {
       gistController.set('unsaved', false);

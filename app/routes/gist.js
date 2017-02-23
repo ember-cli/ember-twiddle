@@ -13,7 +13,7 @@ export default Ember.Route.extend({
 
   titleToken: Ember.computed.readOnly('controller.model.description'),
 
-  beforeModel () {
+  beforeModel() {
     return this.session.fetch(this.get('toriiProvider')).catch(function() {
       // Swallow error for now
     });
@@ -63,7 +63,7 @@ export default Ember.Route.extend({
       }).catch((this.catchSaveError.bind(this)));
     },
 
-    deleteGist (gist) {
+    deleteGist(gist) {
       if(confirm(`Are you sure you want to remove this gist from Github?\n\n${gist.get('description')}`)) {
         gist.destroyRecord();
         this.transitionTo('gist.new').then(() => {
@@ -72,11 +72,11 @@ export default Ember.Route.extend({
       }
     },
 
-    setSaved () {
+    setSaved() {
       this.get('controller').set('unsaved', false);
     },
 
-    fork (gist) {
+    fork(gist) {
       gist.fork().then((response) => {
         this.get('store').find('gist', response.id).then((newGist) => {
           gist.get('files').toArray().forEach((file) => {
@@ -91,7 +91,7 @@ export default Ember.Route.extend({
       }).catch(this.catchForkError.bind(this));
     },
 
-    copy () {
+    copy() {
       this.transitionTo('gist.new', {
         queryParams: {
           copyCurrentTwiddle: true

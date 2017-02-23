@@ -45,7 +45,7 @@ const { computed, inject, RSVP } = Ember;
 export default Ember.Service.extend({
   notify: inject.service(),
 
-  resolveDependencies: function(dependencies) {
+  resolveDependencies(dependencies) {
     Object.keys(dependencies).forEach((name) => {
       var value = dependencies[name];
 
@@ -53,7 +53,7 @@ export default Ember.Service.extend({
     });
   },
 
-  resolveAddons: function(addons, dependencies, emberVersion) {
+  resolveAddons(addons, dependencies, emberVersion) {
     const taskInstance = this.get('resolveAddonsTask').perform(addons, dependencies, emberVersion);
     return taskInstance.then(() => {
       return RSVP.resolve(taskInstance.value);
@@ -121,7 +121,7 @@ export default Ember.Service.extend({
     });
   },
 
-  resolveDependency: function(name, value) {
+  resolveDependency(name, value) {
     switch (name) {
       case 'ember':
       case 'ember-template-compiler':
@@ -134,7 +134,7 @@ export default Ember.Service.extend({
     }
   },
 
-  resolveEmberDependency: function(name, value) {
+  resolveEmberDependency(name, value) {
     if (VERSION_REGEX.test(value)) {
       return this.cdnURL(name, value);
     }
@@ -146,13 +146,13 @@ export default Ember.Service.extend({
     return value;
   },
 
-  channelURL: function(name, channel) {
+  channelURL(name, channel) {
     var fileName = CHANNEL_FILENAME_MAP[name];
 
     return `//s3.amazonaws.com/builds.emberjs.com/${channel}/${fileName}`;
   },
 
-  cdnURL: function(name, version) {
+  cdnURL(name, version) {
     var { library, fileName } = CDN_MAP[name];
 
     return `//cdnjs.cloudflare.com/ajax/libs/${library}/${version}/${fileName}`;

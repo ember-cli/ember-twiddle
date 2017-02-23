@@ -1,11 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-  setCurrentIFrame: function(iframe) {
+  setCurrentIFrame(iframe) {
     this.iframe = iframe;
   },
 
-  postMessage: function(data) {
+  postMessage(data) {
     if (this.iframe) {
       this.iframe.contentWindow.postMessage(data, '*');
     }

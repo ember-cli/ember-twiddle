@@ -4,7 +4,7 @@ import GistRoute from "ember-twiddle/routes/gist-base-route";
 const { get } = Ember;
 
 export default GistRoute.extend({
-  model (params) {
+  model(params) {
     this.get('store').unloadAll('gistFile');
 
     return this.get('store').find('gist', params.gistId);

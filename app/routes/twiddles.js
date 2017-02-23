@@ -4,6 +4,7 @@ import config from '../config/environment';
 export default Ember.Route.extend({
   titleToken: 'My Saved Twiddles',
   toriiProvider: config.toriiProvider,
+
   beforeModel() {
     return this.session.fetch(this.get('toriiProvider')).catch(error => {
       if (!error) {
@@ -20,7 +21,7 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    signOut: function() {
+    signOut() {
       this.session.close().then(() => {
         this.transitionTo('/');
       });

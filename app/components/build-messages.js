@@ -3,8 +3,9 @@ import Ember from "ember";
 export default Ember.Component.extend({
   tagName: 'span',
   classNames: ['build-msgs'],
+
   actions: {
-    showErrors () {
+    showErrors() {
       this.get('buildErrors').forEach((error) => {
         console.error(error);
       });
