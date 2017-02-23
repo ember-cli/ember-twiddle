@@ -1,9 +1,15 @@
 {{#paper-toolbar}}
   {{#paper-toolbar-tools}}
-    {{#if (and isFirstColumn (eq (not sidenavLockedOpen 'gt-md')))}}
-      {{#paper-button iconButton=true onClick=(action (mut sidenavLockedOpen) (if sidenavLockedOpen false 'gt-md'))}}
+    {{#if isFirstColumn}}
+      {{#paper-button class='hide-sm hide-xs' iconButton=true onClick=(action (mut sidenavLockedOpen) (if sidenavLockedOpen false 'gt-md'))}}
         {{paper-icon 'menu'}}
       {{/paper-button}}
+
+      {{#paper-sidenav-toggle name='left' as |toggleAction|}}
+        {{#paper-button class='hide-gt-sm' iconButton=true onClick=(action toggleAction)}}
+          {{paper-icon 'menu'}}
+        {{/paper-button}}
+      {{/paper-sidenav-toggle}}
     {{/if}}
 
     {{#if showFileTreeOpenIcon}}

@@ -12,8 +12,6 @@
     "lodash": "~3.10.1",
     "Faker": "~3.1.0",
     "jstree": "~3.3.0",
-    "hammer.js": "^2.0.8",
-    "matchMedia": "0.2.0",
     "babel": "^5.8.38"
   },
   "resolutions": {
