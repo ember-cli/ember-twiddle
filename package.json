@@ -65,7 +65,7 @@
     "ember-lodash": "0.0.10",
     "ember-moment": "7.0.0-beta.5",
     "ember-notify": "~5.1.6",
-    "ember-paper": "1.0.0-alpha.14",
+    "ember-paper": "miguelcobain/ember-paper#3d80782",
     "ember-resolver": "~2.0.3",
     "ember-responsive": "2.0.0",
     "ember-route-action-helper": "2.0.1",
