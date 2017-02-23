@@ -5,7 +5,6 @@ module.exports = function(defaults) {
   var concat = require('broccoli-concat');
   var mergeTrees = require('broccoli-merge-trees');
   var babelTranspiler = require('broccoli-babel-transpiler');
-  var browserify = require('browserify');
   var path = require('path');
   var fs = require('fs');
 
