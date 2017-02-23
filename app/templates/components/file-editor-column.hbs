@@ -1,8 +1,9 @@
 {{#paper-toolbar}}
-  {{#paper-toolbar-tools}}
+  {{#paper-toolbar-tools class="main-toolbar-tools"}}
+
     {{#if isFirstColumn}}
-      {{#paper-button class='hide-sm hide-xs' iconButton=true onClick=(action (mut sidenavLockedOpen) (if sidenavLockedOpen false 'gt-md'))}}
-        {{paper-icon 'menu'}}
+      {{#paper-button class='hide show-gt-sm' iconButton=true onClick=(action (mut sidenavLockedOpen) (if sidenavLockedOpen false 'gt-md'))}}
+        {{paper-icon (if sidenavLockedOpen 'chevron left' 'menu')}}
       {{/paper-button}}
 
       {{#paper-sidenav-toggle name='left' as |toggleAction|}}

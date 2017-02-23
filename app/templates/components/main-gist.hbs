@@ -10,10 +10,14 @@
     {{#paper-toolbar class='sidebar-toolbar' as |toolbar|}}
       {{#paper-toolbar-tools}}
         Ember Twiddle
-        <span class='flex'></span>
-        {{#paper-button onClick=(action (mut sidenavLockedOpen) (if sidenavLockedOpen false 'gt-md'))}}
-          {{paper-icon 'chevron left'}}
-        {{/paper-button}}
+        <span class="flex"></span>
+
+        {{#paper-sidenav-toggle name='left' as |toggleAction|}}
+          {{#paper-button class='hide-gt-sm' iconButton=true onClick=(action toggleAction)}}
+            {{paper-icon 'chevron left'}}
+          {{/paper-button}}
+        {{/paper-sidenav-toggle}}
+
       {{/paper-toolbar-tools}}
     {{/paper-toolbar}}
 

@@ -24,3 +24,11 @@ body,
 .tree-file[aria-level='2'] {
   margin-left: 1em;
 }
+
+// ember-paper removes the margin from the first button
+// in a toolbar. However, we're rendering two buttons for now
+// and hiding one of them depending on the breakpoints.
+// this also removes the margin from the second button.
+.md-toolbar-tools.main-toolbar-tools > .md-button:nth-child(2) {
+  margin-left: -8px;
+}
