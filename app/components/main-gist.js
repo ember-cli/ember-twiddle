@@ -19,6 +19,8 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
   fullScreen: false,
   openFiles: "",
 
+  sidenavLockedOpen: 'gt-sm',
+
   init() {
     this._super(...arguments);
     this.set('settings', Settings.create({
