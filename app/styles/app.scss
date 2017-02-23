@@ -32,3 +32,13 @@ body,
 .md-toolbar-tools.main-toolbar-tools > .md-button:nth-child(2) {
   margin-left: -8px;
 }
+
+// ember-basic-dropdown creates an additional div after the trigger this fix
+// takes into account the last `md-menu` and not only the last element
+.md-toolbar-tools > md-menu:nth-last-of-type(1) {
+  margin-right: -8px;
+
+  & > .md-button {
+    margin-right: 0;
+  }
+}
