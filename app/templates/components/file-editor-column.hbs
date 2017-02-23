@@ -1,6 +1,6 @@
 {{#paper-toolbar}}
   {{#paper-toolbar-tools}}
-    {{#if (and isFirstColumn (not sidenavLockedOpen 'gt-md'))}}
+    {{#if (and isFirstColumn (not (eq sidenavLockedOpen 'gt-md')))}}
       {{#paper-button iconButton=true onClick=(action (mut sidenavLockedOpen) (if sidenavLockedOpen false 'gt-md'))}}
         {{paper-icon 'menu'}}
       {{/paper-button}}
