@@ -31,7 +31,7 @@ test('Addons work', function(assert) {
     {
       filename: "twiddle.json",
       content: `{
-                  "version": "0.7.0",
+                  "version": "0.12.0",
                   "EmberENV": {
                     "FEATURES": {}
                   },
@@ -41,14 +41,73 @@ test('Addons work', function(assert) {
                   },
                   "dependencies": {
                     "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
-                    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/2.4.3/ember.debug.js",
-                    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/2.4.2/ember-data.js"
+                    "ember": "2.11.2",
+                    "ember-template-compiler": "2.11.2",
+                    "ember-testing": "2.11.2"
                   },
                   "addons": {
                     "ember-truth-helpers": "1.2.0"
                   }
                 }`
     }
+  ];
+
+  runGist(files);
+
+  andThen(function() {
+    const outputDiv = 'div';
+
+    assert.equal(outputContents(outputDiv), 'Welcome to Ember Twiddle');
+  });
+});
+
+test('Ember Data works as an addon', function (assert) {
+  const files = [
+    {
+      filename: "templates.application.hbs",
+      content: `Welcome to {{model.appName}}`
+    },
+    {
+      filename: "routes.application.js",
+      content: `import Ember from "ember";
+                export default Ember.Route.extend({
+                  model() {
+                    return this.get('store').createRecord('app', {
+                      appName: 'Ember Twiddle'
+                    });
+                  }
+                });`
+    },
+    {
+      filename: "models.app.js",
+      content: `import Ember from "ember";
+                import DS from "ember-data";
+                export default DS.Model.extend({
+                  appName: DS.attr('string')
+                });`
+    },
+    {
+      filename: "twiddle.json",
+      content: `{
+                  "version": "0.12.0",
+                  "EmberENV": {
+                    "FEATURES": {}
+                  },
+                  "options": {
+                    "use_pods": true,
+                    "enable-testing": false
+                  },
+                  "dependencies": {
+                    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
+                    "ember": "2.11.2",
+                    "ember-template-compiler": "2.11.2",
+                    "ember-testing": "2.11.2"
+                  },
+                  "addons": {
+                    "ember-data": "2.11.3"
+                  }
+                }`
+      }
   ];
 
   runGist(files);

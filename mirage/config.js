@@ -1,4 +1,5 @@
 import AddonFixture from "./fixtures/addon";
+import EmberDataFixture from "./fixtures/ember-data";
 import config from "../config/environment";
 import Mirage, { faker } from "ember-cli-mirage";
 import Ember from "ember";
@@ -51,7 +52,10 @@ export function testConfig() {
     return schema.db.users.find(1);
   });
 
-  this.get(config.addonUrl, function() {
+  this.get(config.addonUrl, function(schema, request) {
+    if (request.queryParams.addon === 'ember-data') {
+      return EmberDataFixture;
+    }
     return AddonFixture;
   });
 

@@ -45,7 +45,6 @@ export default Ember.Service.extend({
 
   getTwiddleJson(gist) {
     return this._getTwiddleJson(gist).then((twiddleJson) => {
-
       // Fill in any missing required dependencies
       const dependencies = JSON.parse(blueprints['twiddle.json']).dependencies;
       requiredDependencies.forEach(function(dep) {
@@ -57,6 +56,8 @@ export default Ember.Service.extend({
           }
         }
       });
+
+      twiddleJson = this._dedupEmberData(twiddleJson);
 
       const dependencyResolver = this.get('dependencyResolver');
       const emberVersion = twiddleJson.dependencies.ember;
@@ -95,6 +96,18 @@ export default Ember.Service.extend({
 
   updateDependencyVersion(gist, dependencyName, version) {
     return this._updateTwiddleJson(gist, (json) => {
+
+      // If Ember Data is brought in as an addon, update addon version,
+      // else update app version.
+      if (dependencyName === 'ember-data') {
+        if (json.addons && json.addons[dependencyName]) {
+          json.addons[dependencyName] = version;
+        } else {
+          json.dependencies[dependencyName] = version;
+        }
+        return json;
+      }
+
       json.dependencies[dependencyName] = version;
 
       // since ember and ember-template-compiler should always have the same
@@ -124,5 +137,14 @@ export default Ember.Service.extend({
       json.options["enable-testing"] = enabled;
       return json;
     });
+  },
+
+  _dedupEmberData(json) {
+    if (json.addons && json.addons.hasOwnProperty('ember-data')) {
+      if (json.dependencies && json.dependencies.hasOwnProperty('ember-data')) {
+        delete json.dependencies['ember-data'];
+      }
+    }
+    return json;
   }
 });

@@ -17,7 +17,7 @@
     });
   }
 
-  function processEmberDataShims() {
+  function processEmberDataShims(namespace) {
     var shims = {
       'ember-data':                          '',
       'ember-data/model':                    'Model',
@@ -36,9 +36,12 @@
     };
 
     for (var moduleName in shims) {
-      generateLazyModule('DS', moduleName, shims[moduleName]);
+      generateLazyModule(namespace, moduleName, shims[moduleName]);
     }
   }
 
-  processEmberDataShims();
+  var namespace = 'DS';
+  if (window[namespace]) {
+    processEmberDataShims(namespace);
+  }
 })();
