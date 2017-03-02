@@ -13,8 +13,10 @@ moduleFor('service:ember-cli', 'Unit | Service | ember cli', {
 });
 
 test('compiling a gist works', function(assert) {
+  let done = assert.async();
+
   assert.expect(7);
-  var service = this.subject();
+  let service = this.subject();
   assert.ok(service);
 
   var gist = Ember.Object.create({
@@ -41,6 +43,7 @@ test('compiling a gist works', function(assert) {
       assert.ok(output.indexOf('define("twiddle/templates/application"')>-1, 'build contains template');
       assert.ok(output.indexOf('define("twiddle/controllers/application"')>-1, 'build contains controller');
       assert.ok(output.indexOf('define("twiddle/config/environment"')>-1, 'build contains config');
+      done();
     });
   });
 });
