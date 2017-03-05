@@ -9,9 +9,9 @@ moduleForAcceptance('Acceptance | columns', {
 
 const columns = ".code";
 const firstColumn = ".code:eq(0)";
-const plusGlyph = ".code .glyphicon-plus";
-const removeGlyph = firstColumn + " .glyphicon-remove";
-const outputPlusGlyph = ".output .glyphicon-plus";
+const addColumnButton = ".code button[title='Add another panel']";
+const removeColumnButton = firstColumn + " button[title='Hide this panel']";
+const outputAddColumnButton = ".output button[title='Show an editor panel']";
 const showFileTreeGlyph = firstColumn + " .glyphicon-chevron-right";
 const hideFileTreeGlyph = ".twiddle-pane:first-of-type .glyphicon-chevron-left";
 
@@ -23,7 +23,7 @@ test('you can add and remove columns', function(assert) {
     assert.equal(find(columns).length, 1, 'There is one column to start');
     assert.ok(find(firstColumn).hasClass('active'), 'The first column starts out active');
 
-    find(plusGlyph).click();
+    find(addColumnButton).click();
   });
 
   andThen(function() {
@@ -32,7 +32,7 @@ test('you can add and remove columns', function(assert) {
     assert.ok(urlHas("openFiles=controllers.application.js,templates.application.hbs"),
       "URL contains correct openFiles query parameter 1");
 
-    find(plusGlyph).click();
+    find(addColumnButton).click();
   });
 
   andThen(function() {
@@ -41,7 +41,7 @@ test('you can add and remove columns', function(assert) {
     assert.ok(urlHas("openFiles=controllers.application.js,templates.application.hbs,twiddle.json"),
       "URL contains correct openFiles query parameter 1");
 
-    find(removeGlyph).click();
+    find(removeColumnButton).click();
   });
 
   andThen(function() {
@@ -50,7 +50,7 @@ test('you can add and remove columns', function(assert) {
     assert.ok(urlHas("openFiles=templates.application.hbs,twiddle.json"),
       "URL contains correct openFiles query parameter 2");
 
-    find(removeGlyph).click();
+    find(removeColumnButton).click();
   });
 
   andThen(function() {
@@ -58,7 +58,7 @@ test('you can add and remove columns', function(assert) {
     assert.equal(find(columns).length, 1, 'There are now 1 columns');
     assert.ok(urlHas("openFiles=twiddle.json"), "URL contains correct openFiles query parameter 3");
 
-    find(removeGlyph).click();
+    find(removeColumnButton).click();
   });
 
   andThen(function() {
@@ -66,7 +66,7 @@ test('you can add and remove columns', function(assert) {
     assert.equal(find(columns).length, 0, 'There are now 0 columns');
     assert.ok(!urlHas("openFiles"), "URL does not contain openFiles query parameter");
 
-    find(outputPlusGlyph).click();
+    find(outputAddColumnButton).click();
   });
 
   andThen(function() {
