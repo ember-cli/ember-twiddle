@@ -1,6 +1,5 @@
 {{#paper-toolbar}}
-  {{#paper-toolbar-tools class="main-toolbar-tools"}}
-
+  {{#paper-toolbar-tools class='main-toolbar-tools'}}
     {{#if isFirstColumn}}
       {{#paper-button class='hide show-gt-sm' iconButton=true onClick=(action (mut sidenavLockedOpen) (if sidenavLockedOpen false 'gt-md'))}}
         {{paper-icon (if sidenavLockedOpen 'chevron left' 'menu')}}
@@ -11,14 +10,6 @@
           {{paper-icon 'menu'}}
         {{/paper-button}}
       {{/paper-sidenav-toggle}}
-    {{/if}}
-
-    {{#if showFileTreeOpenIcon}}
-      <span class="nav-left">
-        <span class="hint--bottom hint--rounded" data-hint="Show project files" >
-          <span class="glyphicon glyphicon-chevron-right" {{action 'showFileTree'}}></span>
-        </span>
-      </span>
     {{/if}}
 
     {{#paper-menu disabled=(not allFiles.length) position='target-right target' as |menu|}}
@@ -46,11 +37,11 @@
     {{/paper-menu}}
     <span class="flex"></span>
 
-    {{#paper-button iconButton=true title='Hide this panel' onClick=(action 'removeColumn' col)}}
+    {{#paper-button data-test-remove-panel iconButton=true title='Hide this panel' onClick=(action 'removeColumn' col)}}
       {{paper-icon 'remove'}}
     {{/paper-button}}
     {{#if isLastColumn}}
-      {{#paper-button iconButton=true title='Add another panel' onClick=(action 'addColumn')}}
+      {{#paper-button data-test-add-panel iconButton=true title='Add another panel' onClick=(action 'addColumn')}}
         {{paper-icon 'add circle outline'}}
       {{/paper-button}}
     {{/if}}

@@ -28,7 +28,7 @@
     {{#paper-toolbar}}
       {{#paper-toolbar-tools}}
         {{#if noColumns}}
-          {{#paper-button iconButton=true title='Show an editor panel' onClick=(action this.addColumn)}}
+          {{#paper-button data-test-add-panel iconButton=true title='Show an editor panel' onClick=(action this.addColumn)}}
             {{paper-icon 'add circle outline'}}
           {{/paper-button}}
         {{/if}}
