@@ -1,0 +1,22 @@
+<div class='layout-column details'>
+  {{title-input value=gist.description titleChanged=titleChanged}}
+  <div class='layout-row'>
+    <div class={{if session.isAuthenticated 'flex-75' 'flex'}}>
+      {{saved-state-indicator model=gist unsaved=unsaved}}
+    </div>
+    {{#if session.isAuthenticated}}
+      {{#paper-button iconButton=true onClick=(action saveGist gist)}}
+        {{paper-icon 'save'}}
+      {{/paper-button}}
+      {{#if showFork}}
+        {{#paper-button iconButton=true onClick=(action fork gist)}}
+          {{paper-icon 'call split'}}
+        {{/paper-button}}
+      {{else}}
+        {{#paper-button iconButton=true onClick=(action copy gist)}}
+          {{paper-icon 'content copy' size=20}}
+        {{/paper-button}}
+      {{/if}}
+    {{/if}}
+  </div>
+</div>

@@ -123,16 +123,16 @@ md-toolbar.md-default-theme.sidebar-toolbar {
     }
   }
 
-  .title {
-    padding: 13px 0;
-    text-align: center;
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    color: #333;
+  .gist-card {
+    //color: #333;
+    background-color: #fdfdfd;
 
     h1 {
       margin: 10px;
+    }
+
+    .details {
+      padding: 10px;
     }
 
     .saved-twiddles-header {
@@ -141,14 +141,16 @@ md-toolbar.md-default-theme.sidebar-toolbar {
     }
 
     .indicator {
-      display: inline;
       text-transform: uppercase;
-      font-weight: bold;
       color: #666;
+      padding: 5px 0;
+      line-height: 1.2;
 
       a {
         color: #666;
         text-decoration: none;
+        border-bottom: 1px solid transparent;
+
         &:hover {
           border-bottom: dotted 1px;
         }
@@ -156,26 +158,27 @@ md-toolbar.md-default-theme.sidebar-toolbar {
     }
 
     .input-edit {
-      display: inline;
       transition: background .3s;
-      font-size: $font-size-larger;
-      border-radius: 3px;
+      font-size: $font-size-largest;
+      border-radius: 2px;
       border: 0;
       color: #333;
       cursor: pointer;
+      padding: 2px;
 
       input {
+        font-weight: 500;
         background-color: transparent;
         border: 0;
         outline: 0;
         box-sizing: content-box;
       }
 
-      .glyphicon {
-        color: #333;
+      md-icon {
+        line-height: 14px;
       }
 
-      &.active .glyphicon {
+      &.active md-icon {
         display: none;
       }
 

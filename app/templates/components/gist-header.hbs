@@ -1,11 +1,16 @@
-<nav class="navbar-default gist-header flex">
-  <div class="toolbar visible-toolbar layout-column">
-    <div class="title flex-8">
-      {{title-input value=model.description titleChanged=(action this.attrs.titleChanged)}}
-      {{saved-state-indicator model=model unsaved=unsaved}}
+<nav class='navbar-default gist-header flex'>
+  <div class='toolbar visible-toolbar layout-column'>
+    <div class='title flex-8'>
+      {{gist-card gist=model unsaved=unsaved
+        isRevision=isRevision
+        titleChanged=(action this.attrs.titleChanged)
+        saveGist=(route-action 'saveGist')
+        fork=(route-action 'fork')
+        copy=(route-action 'copy')
+      }}
     </div>
 
-    <div class="twiddle-pane file-tree flex">
+    <div class='twiddle-pane file-tree flex'>
       {{file-tree model=model
         openFile=(action this.openFile)
         removeFile=(action this.attrs.removeFile)
@@ -26,13 +31,13 @@
         addAcceptanceTestFile=(action this.attrs.addAcceptanceTestFile)
         renameFile=(action this.attrs.renameFile)
         removeFile=(action this.attrs.removeFile)
-        deleteGist=(route-action "deleteGist")
-        saveGist=(route-action "saveGist")
-        fork=(route-action "fork")
-        copy=(route-action "copy")
-        signInViaGithub=(route-action "signInViaGithub")
-        showRevision=(route-action "showRevision")
-        showCurrentVersion=(route-action "showCurrentVersion")
+        deleteGist=(route-action 'deleteGist')
+        saveGist=(route-action 'saveGist')
+        fork=(route-action 'fork')
+        copy=(route-action 'copy')
+        signInViaGithub=(route-action 'signInViaGithub')
+        showRevision=(route-action 'showRevision')
+        showCurrentVersion=(route-action 'showCurrentVersion')
       }}
 
       {{paper-divider}}
@@ -77,9 +82,9 @@
       {{paper-divider}}
 
       {{user-menu session=session
-        signInViaGithub=(route-action "signInViaGithub")
-        signOut=(route-action "signOut")
-        showTwiddles=(route-action "showTwiddles")
+        signInViaGithub=(route-action 'signInViaGithub')
+        signOut=(route-action 'signOut')
+        showTwiddles=(route-action 'showTwiddles')
       }}
     {{/paper-list}}
   </div>
