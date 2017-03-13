@@ -1,7 +1,7 @@
+<div>{{model.files.length}} files</div>
 {{#if unsaved}}
   <span class="test-unsaved-indicator">Unsaved</span>
 {{else}}
-  <div>{{model.files.length}} files</div>
   {{#unless model.isNew}}
     <a class="gist-link" href="{{model.htmlUrl}}" target="_blank">Saved, rev {{model.currentRevision}}</a>
   {{/unless}}
