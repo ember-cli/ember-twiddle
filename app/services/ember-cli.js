@@ -2,7 +2,6 @@ import Babel from 'babel-core';
 import Path from 'path';
 import HbsPlugin from '../plugins/hbs-plugin';
 import blueprints from '../lib/blueprints';
-import config from '../config/environment';
 import Ember from 'ember';
 import moment from 'moment';
 import _template from "lodash/string/template";
@@ -307,7 +306,7 @@ export default Ember.Service.extend({
 
     let EmberENV = twiddleJSON.EmberENV || {};
     depScriptTags += `<script type="text/javascript">EmberENV = ${JSON.stringify(EmberENV)};</script>`;
-    depScriptTags += `<script type="text/javascript" src="${config.assetsHost}assets/loader.js?${config.APP.version}"></script>`;
+    depScriptTags += `<script type="text/javascript" src="${window.assetMap.loader}"></script>`;
 
     Object.keys(deps).forEach(function(depKey) {
       let dep = deps[depKey];
@@ -322,18 +321,18 @@ export default Ember.Service.extend({
       }
     });
 
-    depScriptTags += `<script type="text/javascript" src="${config.assetsHost}assets/twiddle-deps.js?${config.APP.version}"></script>`;
+    depScriptTags += `<script type="text/javascript" src="${window.assetMap.twiddleDeps}"></script>`;
 
     if (testingEnabled(twiddleJSON)) {
-      const testJSFiles = ['assets/test-loader.js', 'testem.js'];
+      const testJSFiles = ['testLoader', 'testem'];
 
       testJSFiles.forEach(jsFile => {
-        depScriptTags += `<script type="text/javascript" src="${config.assetsHost}${jsFile}?${config.APP.version}"></script>`;
+        depScriptTags += `<script type="text/javascript" src="${window.assetMap[jsFile]}"></script>`;
       });
 
       depScriptTags += `<script type="text/javascript" src="${window.assetMap.testSupport}"></script>`;
 
-      depCssLinkTags += `<link rel="stylesheet" type="text/css" href="${config.assetsHost}assets/test-support.css?${config.APP.version}">`;
+      depCssLinkTags += `<link rel="stylesheet" type="text/css" href="${window.assetMap.testSupportCss}">`;
 
       testStuff += `
         <div id="qunit"></div>
