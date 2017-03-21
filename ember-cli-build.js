@@ -28,7 +28,7 @@ module.exports = function(defaults) {
       enabled: isProductionLikeBuild,
       prepend: prepend,
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg', 'eot', 'ttf', 'woff', 'woff2', 'ico'],
-      exclude: ['test-loader', 'test-support.css', 'testem']
+      exclude: []
     },
     codemirror: {
       modes: ['xml', 'javascript', 'handlebars', 'htmlmixed', 'css'],
@@ -156,7 +156,7 @@ module.exports = function(defaults) {
     outputFile: '/assets/twiddle-deps.js'
   });
 
-  return mergeTrees([app.toTree(), twiddleVendorTree, loaderTree, testLoaderTree]);
+  return app.toTree(mergeTrees([twiddleVendorTree, loaderTree, testLoaderTree]));
 };
 
 // This copies code out of ember-cli's blueprints into
