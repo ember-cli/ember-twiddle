@@ -144,6 +144,9 @@ module.exports = function(defaults) {
     modules: 'amdStrict'
   });
 
+  var finalQUnitTree = buildAddonTree('ember-qunit');
+  var finalTestHelpersTree = buildAddonTree('ember-test-helpers');
+
   var mergedDepsTree = mergeTrees([bowerTree, transpiledInitializersTree, transpiledResolverTree, emberDataShims]);
 
   var twiddleVendorTree = concat(mergedDepsTree, {
@@ -156,8 +159,30 @@ module.exports = function(defaults) {
     outputFile: '/assets/twiddle-deps.js'
   });
 
-  return app.toTree(mergeTrees([twiddleVendorTree, loaderTree, testLoaderTree]));
+  return app.toTree(mergeTrees([twiddleVendorTree, loaderTree, testLoaderTree, finalQUnitTree, finalTestHelpersTree]));
 };
+
+function buildAddonTree(addonName) {
+  var funnel = require('broccoli-funnel');
+  var concat = require('broccoli-concat');
+  var babelTranspiler = require('broccoli-babel-transpiler');
+  var path = require('path');
+
+  var baseTree = funnel(path.dirname(require.resolve(addonName)), {
+    include: ['**/*.js']
+  });
+
+  var transpiledTree = babelTranspiler(baseTree, {
+    loose: true,
+    moduleIds: true,
+    modules: 'amdStrict'
+  });
+
+  return concat(transpiledTree, {
+    inputFiles: ['**/*.js'],
+    outputFile: '/assets/' + addonName + '.js'
+  });
+}
 
 // This copies code out of ember-cli's blueprints into
 // app/lib/blueprints so we don't have to maintain our

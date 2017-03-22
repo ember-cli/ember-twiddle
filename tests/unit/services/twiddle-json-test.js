@@ -8,6 +8,7 @@ moduleFor('service:twiddle-json', 'Unit | Service | twiddle json', {
 });
 
 test("getTwiddleJson() resolves dependencies", function(assert) {
+  let done = assert.async();
   var service = this.subject();
 
   var gist = Ember.Object.create({
@@ -34,12 +35,14 @@ test("getTwiddleJson() resolves dependencies", function(assert) {
       'ember-data': "//cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.12.1/ember-data.js",
       'jquery': "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
     });
+    done();
   });
 });
 
 test("updateDependencyVersion() updates the version of the dependency in twiddle.json", function(assert) {
   assert.expect(2);
 
+  let done = assert.async();
   var service = this.subject();
 
   var gist = Ember.Object.create({
@@ -61,12 +64,14 @@ test("updateDependencyVersion() updates the version of the dependency in twiddle
 
     assert.equal(parsed.dependencies.ember, 'release');
     assert.equal(parsed.dependencies.hasOwnProperty('ember-template-compiler'), false, "does not automatically add an ember-template-compiler dependency, when ember is updated");
+    done();
   });
 });
 
 test("updateDependencyVersion() updates the version of ember-template-compiler if ember is updated", function(assert) {
   assert.expect(2);
 
+  let done = assert.async();
   var service = this.subject();
 
   var gist = Ember.Object.create({
@@ -89,12 +94,14 @@ test("updateDependencyVersion() updates the version of ember-template-compiler i
 
     assert.equal(parsed.dependencies.ember, 'release');
     assert.equal(parsed.dependencies['ember-template-compiler'], 'release');
+    done();
   });
 });
 
 test("updateDependencyVersion() updates the version of ember-testing if ember is updated", function(assert) {
   assert.expect(2);
 
+  let done = assert.async();
   var service = this.subject();
 
   var gist = Ember.Object.create({
@@ -117,5 +124,6 @@ test("updateDependencyVersion() updates the version of ember-testing if ember is
 
     assert.equal(parsed.dependencies.ember, 'release');
     assert.equal(parsed.dependencies['ember-testing'], 'release');
+    done();
   });
 });

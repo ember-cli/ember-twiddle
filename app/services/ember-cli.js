@@ -6,7 +6,7 @@ import Ember from 'ember';
 import moment from 'moment';
 import _template from "lodash/string/template";
 
-const { computed, inject, RSVP, $ } = Ember;
+const { computed, inject, RSVP, $, testing } = Ember;
 const twiddleAppName = 'twiddle';
 const oldTwiddleAppNames = ['demo-app', 'app'];
 const hbsPlugin = new HbsPlugin(Babel);
@@ -305,6 +305,8 @@ export default Ember.Service.extend({
     let testStuff = '';
 
     let EmberENV = twiddleJSON.EmberENV || {};
+    const isTestingEnabled = testingEnabled(twiddleJSON);
+
     depScriptTags += `<script type="text/javascript">EmberENV = ${JSON.stringify(EmberENV)};</script>`;
     depScriptTags += `<script type="text/javascript" src="${window.assetMap.loader}"></script>`;
 
@@ -323,7 +325,7 @@ export default Ember.Service.extend({
 
     depScriptTags += `<script type="text/javascript" src="${window.assetMap.twiddleDeps}"></script>`;
 
-    if (testingEnabled(twiddleJSON)) {
+    if (isTestingEnabled) {
       const testJSFiles = ['testLoader', 'testem'];
 
       testJSFiles.forEach(jsFile => {
@@ -342,8 +344,41 @@ export default Ember.Service.extend({
         </div>
         <div id="test-root"></div>`;
 
-      let moreCode = "requirejs.entries['ember-cli/test-loader'] = requirejs.entries['ember-cli-test-loader/test-support/index'] || requirejs.entries['assets/test-loader'] || requirejs.entries['ember-cli/test-loader'];";
+      let moreCode = "requirejs.entries['ember-cli/test-loader'] = requirejs.entries['ember-cli-test-loader/test-support/index'] || requirejs.entries['assets/test-loader'] || requirejs.entries['ember-cli/test-loader'];\n";
       testStuff += `<script type="text/javascript">${moreCode}require("${twiddleAppName}/tests/test-helper");</script>`;
+    }
+
+    if (testing) {
+      const testJSFiles = ['emberTestHelpers', 'emberQUnit'];
+
+      testJSFiles.forEach(jsFile => {
+        depScriptTags += `<script type="text/javascript" src="${window.assetMap[jsFile]}"></script>`;
+      });
+
+      // Temporary fix; real fix waiting for https://github.com/qunitjs/qunit/issues/1119
+      // Real fix should use copy of QUnitAdapter from ember-qunit.
+      testStuff += `<script type="text/javascript">
+        Ember.Test.adapter = Ember.Test.Adapter.create({
+          init() {
+            this.doneCallbacks = [];
+          },
+
+          asyncStart() {
+            this.doneCallbacks.push(QUnit.config.current.assert.async());
+          },
+
+          asyncEnd() {
+            this.doneCallbacks.pop()();
+          },
+
+          exception(error) {
+            QUnit.config.current.pushResult({
+              result: false,
+              message: Ember.inspect(error)
+            });
+          }
+        });
+      </script>`;
     }
 
     return { depScriptTags, depCssLinkTags, testStuff };
