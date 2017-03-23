@@ -348,7 +348,7 @@ export default Ember.Service.extend({
       testStuff += `<script type="text/javascript">${moreCode}require("${twiddleAppName}/tests/test-helper");</script>`;
     }
 
-    if (testing) {
+    if (testing || isTestingEnabled) {
       const testJSFiles = ['emberTestHelpers', 'emberQUnit'];
 
       testJSFiles.forEach(jsFile => {
@@ -358,26 +358,7 @@ export default Ember.Service.extend({
       // Temporary fix; real fix waiting for https://github.com/qunitjs/qunit/issues/1119
       // Real fix should use copy of QUnitAdapter from ember-qunit.
       testStuff += `<script type="text/javascript">
-        Ember.Test.adapter = Ember.Test.Adapter.create({
-          init() {
-            this.doneCallbacks = [];
-          },
-
-          asyncStart() {
-            this.doneCallbacks.push(QUnit.config.current.assert.async());
-          },
-
-          asyncEnd() {
-            this.doneCallbacks.pop()();
-          },
-
-          exception(error) {
-            QUnit.config.current.pushResult({
-              result: false,
-              message: Ember.inspect(error)
-            });
-          }
-        });
+        Ember.Test.adapter = require('ember-qunit').QUnitAdapter.create();
       </script>`;
     }
 
@@ -439,8 +420,6 @@ export default Ember.Service.extend({
    * @return {String}            AMD module code
    */
   compileHbs(code, filePath) {
-    // TODO: Is there a way to precompile using the template compiler brought in via twiddle.json?
-    // let templateCode = Ember.HTMLBars.precompile(code || '');
 
     // Compiles all templates at runtime.
     let moduleName = this.nameWithModule(filePath);
