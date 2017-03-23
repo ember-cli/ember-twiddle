@@ -348,7 +348,7 @@ export default Ember.Service.extend({
       testStuff += `<script type="text/javascript">${moreCode}require("${twiddleAppName}/tests/test-helper");</script>`;
     }
 
-    if (testing) {
+    if (testing || isTestingEnabled) {
       const testJSFiles = ['emberTestHelpers', 'emberQUnit'];
 
       testJSFiles.forEach(jsFile => {
