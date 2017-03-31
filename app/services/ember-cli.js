@@ -270,6 +270,9 @@ export default Ember.Service.extend({
     // avoids security error
     appJS += "window.history.pushState = function() {}; window.history.replaceState = function() {}; window.sessionStorage = undefined;";
 
+    // qunit
+    appJS += "window.QUnit = window.parent.QUnit;";
+
     // Hide toolbar since it is not working
     appCSS += `\n#qunit-testrunner-toolbar, #qunit-tests a[href] { display: none; }\n`;
 
