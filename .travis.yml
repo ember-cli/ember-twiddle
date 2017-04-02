@@ -14,18 +14,20 @@ addons:
     - google-chrome-stable
 
 cache:
+  yarn: true
   directories:
   - $HOME/.npm
   - $HOME/.cache
 
 before_install:
 - npm config set spin false
-- npm install -g bower phantomjs-prebuilt
+- npm install -g bower phantomjs-prebuilt yarn@~0.21.3
 - bower --version
 - phantomjs --version
+- yarn --version
 
 install:
-- npm install
+- yarn
 - bower install
 
 before_script:
@@ -34,7 +36,7 @@ before_script:
 - sleep 3 # give xvfb some time to start
 
 script:
-- npm test
+- yarn test
 
 after_script:
 - scripts/travis-deploy.sh
