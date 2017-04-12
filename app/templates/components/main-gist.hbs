@@ -1,78 +1,50 @@
-{{#paper-sidenav-container class='inner-sidenav'}}
-  {{#paper-sidenav
-    class='md-whiteframe-z2 layout-column'
-    name='left'
-    lockedOpen=sidenavLockedOpen
-    open=leftSideBarOpen
-    closeOnClick=false
-    onToggle=(action (mut leftSideBarOpen))
-  }}
-    {{#paper-toolbar class='sidebar-toolbar' as |toolbar|}}
-      {{#paper-toolbar-tools}}
-        Ember Twiddle
-        <span class="flex"></span>
-
-        {{#paper-sidenav-toggle name='left' as |toggleAction|}}
-          {{#paper-button class='hide-gt-sm' iconButton=true onClick=(action toggleAction)}}
-            {{paper-icon 'chevron left'}}
-          {{/paper-button}}
-        {{/paper-sidenav-toggle}}
-
-      {{/paper-toolbar-tools}}
-    {{/paper-toolbar}}
-
-    {{#paper-content class='sidebar-content flex'}}
-      {{gist-header class='flex'
-        model=model
-        session=session
-        unsaved=unsaved
-        activeEditorCol=activeEditorCol
-        activeFile=activeFile
-        isRevision=isRevision
-        titleChanged=(action 'titleChanged')
-        addFile=(action 'addFile')
-        addHelper=(action 'addHelper')
-        addComponent=(action 'addComponent')
-        addUnitTestFile=(action 'addUnitTestFile')
-        addIntegrationTestFile=(action 'addIntegrationTestFile')
-        addAcceptanceTestFile=(action 'addAcceptanceTestFile')
-        renameFile=(action 'renameFile')
-        removeFile=(action 'removeFile')
-        setEditorKeyMap=(action 'setEditorKeyMap')
-        versionChanged=(action 'rebuildApp')
-        openFile=(action 'openFile')
-        hideFileTree=(action 'hideFileTree')
-      }}
-    {{/paper-content}}
-  {{/paper-sidenav}}
-
-  {{#paper-card-content class='flex'}}
-    <div class='layout-fill layout-column main-content'>
-      {{gist-body model=model
-        leftSideBarOpen=leftSideBarOpen
-        sidenavLockedOpen=sidenavLockedOpen
-        columns=columns
-        settings=settings
-        numColumns=realNumColumns
-        fullScreen=fullScreen
-        fileTreeShown=fileTreeShown
-        notify=notify
-        isBuilding=isBuilding
-        buildErrors=buildErrors
-        applicationUrl=applicationUrl
-        buildOutput=buildOutput
-        testsEnabled=testsEnabled
-        focusEditor=(action 'focusEditor')
-        selectFile=(action 'selectFile')
-        updateColumn=(action 'updateColumn')
-        removeColumn=(action 'removeColumn')
-        addColumn=(action 'addColumn')
-        showFileTree=(action 'showFileTree')
-        liveReloadChanged=(action 'liveReloadChanged')
-        runNow=(action 'runNow')
-        exitFullScreen=(action 'exitFullScreen')
-        switchTests=(action 'switchTests')
-      }}
-    </div>
-  {{/paper-card-content}}
-{{/paper-sidenav-container}}
+{{#with (component 'gist-header'
+  class='flex'
+  model=model
+  session=session
+  unsaved=unsaved
+  activeEditorCol=activeEditorCol
+  activeFile=activeFile
+  isRevision=isRevision
+  titleChanged=(action 'titleChanged')
+  addFile=(action 'addFile')
+  addHelper=(action 'addHelper')
+  addComponent=(action 'addComponent')
+  addUnitTestFile=(action 'addUnitTestFile')
+  addIntegrationTestFile=(action 'addIntegrationTestFile')
+  addAcceptanceTestFile=(action 'addAcceptanceTestFile')
+  renameFile=(action 'renameFile')
+  removeFile=(action 'removeFile')
+  setEditorKeyMap=(action 'setEditorKeyMap')
+  versionChanged=(action 'rebuildApp')
+  openFile=(action 'openFile')
+  hideFileTree=(action 'hideFileTree')
+) as |twiddleSidebar|}}
+  {{#sidebar-container sidebarContentComponent=twiddleSidebar}}
+    {{gist-body model=model
+      leftSideBarOpen=leftSideBarOpen
+      sidenavLockedOpen=sidenavLockedOpen
+      columns=columns
+      settings=settings
+      numColumns=realNumColumns
+      fullScreen=fullScreen
+      fileTreeShown=fileTreeShown
+      notify=notify
+      isBuilding=isBuilding
+      buildErrors=buildErrors
+      applicationUrl=applicationUrl
+      buildOutput=buildOutput
+      testsEnabled=testsEnabled
+      focusEditor=(action 'focusEditor')
+      selectFile=(action 'selectFile')
+      updateColumn=(action 'updateColumn')
+      removeColumn=(action 'removeColumn')
+      addColumn=(action 'addColumn')
+      showFileTree=(action 'showFileTree')
+      liveReloadChanged=(action 'liveReloadChanged')
+      runNow=(action 'runNow')
+      exitFullScreen=(action 'exitFullScreen')
+      switchTests=(action 'switchTests')
+    }}
+  {{/sidebar-container}}
+{{/with}}
