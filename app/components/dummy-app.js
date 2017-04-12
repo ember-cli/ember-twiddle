@@ -14,12 +14,12 @@ export default Ember.Component.extend(ResizeMixin, {
       return;
     }
 
-    if(this.element.firstElementChild) {
-      this.element.removeChild(this.element.firstElementChild);
-    }
-
     if (this.get('isBuilding')) {
       return;
+    }
+
+    if (this.element.firstElementChild) {
+      this.element.removeChild(this.element.firstElementChild);
     }
 
     let ifrm = document.createElement('iframe');

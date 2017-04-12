@@ -24,7 +24,6 @@ export default function(app, options) {
                   const app = arguments[1] || arguments[0];
                   app.setupForTesting();
                   app.injectTestHelpers();
-                  window.QUnit = window.parent.QUnit;
                 }
               };`
   });

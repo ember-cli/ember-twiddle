@@ -2,8 +2,10 @@ import Ember from 'ember';
 import config from '../config/environment';
 import { task, timeout } from 'ember-concurrency';
 
-const EMBER_VERSIONS = ['2.11.0', '2.10.2', '2.9.1', '2.8.2', '2.7.3', '2.6.2', '2.5.1', '2.4.5', '2.3.2', '2.2.2', '2.1.2', '2.0.3', '1.13.13', '1.12.2'];
-const EMBER_DATA_VERSIONS = ['2.11.0', '2.10.0', '2.9.0', '2.8.1', '2.7.0', '2.6.2', '2.5.5', '2.4.3', '2.3.3', '2.2.1', '2.1.0', '2.0.1', '1.13.15'];
+const { computed, inject, RSVP, testing } = Ember;
+
+const EMBER_VERSIONS = ['2.12.0', '2.11.2', '2.10.2', '2.9.1', '2.8.2', '2.7.3', '2.6.2', '2.5.1', '2.4.5', '2.3.2', '2.2.2', '2.1.2', '2.0.3', '1.13.13', '1.12.2'];
+const EMBER_DATA_VERSIONS = ['2.12.1', '2.11.3', '2.10.0', '2.9.0', '2.8.1', '2.7.0', '2.6.2', '2.5.5', '2.4.3', '2.3.3', '2.2.1', '2.1.0', '2.0.1', '1.13.15'];
 
 const VERSION_REGEX = /^\d+.\d+.\d+(-beta\.\d+)?$/;
 
@@ -40,8 +42,6 @@ const CHANNELS = ['alpha', 'canary', 'beta', 'release'];
 
 const POLL_INTERVAL = 10000;
 
-const { computed, inject, RSVP } = Ember;
-
 export default Ember.Service.extend({
   notify: inject.service(),
 
@@ -77,9 +77,11 @@ export default Ember.Service.extend({
           const name = addonNames[j];
           const addon = hash[name];
           if (addon.status === 'build_success') {
-            dependencies[name] = addon.addon_js;
+            dependencies[name+'_js'] = addon.addon_js;
             dependencies[name+'_css'] = addon.addon_css;
-            console.log(`Addon ${name} is loaded...`);
+            if (!testing) {
+              console.log(`Addon ${name} is loaded...`);
+            }
             delete addons[name];
           } else if (addon.status === 'building') {
             console.log(`Addon ${name} is still building...`);

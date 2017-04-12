@@ -2,12 +2,11 @@ import Babel from 'babel-core';
 import Path from 'path';
 import HbsPlugin from '../plugins/hbs-plugin';
 import blueprints from '../lib/blueprints';
-import config from '../config/environment';
 import Ember from 'ember';
 import moment from 'moment';
 import _template from "lodash/string/template";
 
-const { computed, inject, RSVP, $ } = Ember;
+const { computed, inject, RSVP, $, testing } = Ember;
 const twiddleAppName = 'twiddle';
 const oldTwiddleAppNames = ['demo-app', 'app'];
 const hbsPlugin = new HbsPlugin(Babel);
@@ -271,6 +270,9 @@ export default Ember.Service.extend({
     // avoids security error
     appJS += "window.history.pushState = function() {}; window.history.replaceState = function() {}; window.sessionStorage = undefined;";
 
+    // qunit
+    appJS += "window.QUnit = window.parent.QUnit;";
+
     // Hide toolbar since it is not working
     appCSS += `\n#qunit-testrunner-toolbar, #qunit-tests a[href] { display: none; }\n`;
 
@@ -306,8 +308,10 @@ export default Ember.Service.extend({
     let testStuff = '';
 
     let EmberENV = twiddleJSON.EmberENV || {};
+    const isTestingEnabled = testingEnabled(twiddleJSON);
+
     depScriptTags += `<script type="text/javascript">EmberENV = ${JSON.stringify(EmberENV)};</script>`;
-    depScriptTags += `<script type="text/javascript" src="${config.assetsHost}assets/loader.js?${config.APP.version}"></script>`;
+    depScriptTags += `<script type="text/javascript" src="${window.assetMap.loader}"></script>`;
 
     Object.keys(deps).forEach(function(depKey) {
       let dep = deps[depKey];
@@ -322,18 +326,18 @@ export default Ember.Service.extend({
       }
     });
 
-    depScriptTags += `<script type="text/javascript" src="${config.assetsHost}assets/twiddle-deps.js?${config.APP.version}"></script>`;
+    depScriptTags += `<script type="text/javascript" src="${window.assetMap.twiddleDeps}"></script>`;
 
-    if (testingEnabled(twiddleJSON)) {
-      const testJSFiles = ['assets/test-loader.js', 'testem.js'];
+    if (isTestingEnabled) {
+      const testJSFiles = ['testLoader', 'testem'];
 
       testJSFiles.forEach(jsFile => {
-        depScriptTags += `<script type="text/javascript" src="${config.assetsHost}${jsFile}?${config.APP.version}"></script>`;
+        depScriptTags += `<script type="text/javascript" src="${window.assetMap[jsFile]}"></script>`;
       });
 
       depScriptTags += `<script type="text/javascript" src="${window.assetMap.testSupport}"></script>`;
 
-      depCssLinkTags += `<link rel="stylesheet" type="text/css" href="${config.assetsHost}assets/test-support.css?${config.APP.version}">`;
+      depCssLinkTags += `<link rel="stylesheet" type="text/css" href="${window.assetMap.testSupportCss}">`;
 
       testStuff += `
         <div id="qunit"></div>
@@ -343,8 +347,22 @@ export default Ember.Service.extend({
         </div>
         <div id="test-root"></div>`;
 
-      let moreCode = "requirejs.entries['ember-cli/test-loader'] = requirejs.entries['ember-cli-test-loader/test-support/index'] || requirejs.entries['assets/test-loader'] || requirejs.entries['ember-cli/test-loader'];";
+      let moreCode = "requirejs.entries['ember-cli/test-loader'] = requirejs.entries['ember-cli-test-loader/test-support/index'] || requirejs.entries['assets/test-loader'] || requirejs.entries['ember-cli/test-loader'];\n";
       testStuff += `<script type="text/javascript">${moreCode}require("${twiddleAppName}/tests/test-helper");</script>`;
+    }
+
+    if (testing || isTestingEnabled) {
+      const testJSFiles = ['emberTestHelpers', 'emberQUnit'];
+
+      testJSFiles.forEach(jsFile => {
+        depScriptTags += `<script type="text/javascript" src="${window.assetMap[jsFile]}"></script>`;
+      });
+
+      // Temporary fix; real fix waiting for https://github.com/qunitjs/qunit/issues/1119
+      // Real fix should use copy of QUnitAdapter from ember-qunit.
+      testStuff += `<script type="text/javascript">
+        Ember.Test.adapter = require('ember-qunit').QUnitAdapter.create();
+      </script>`;
     }
 
     return { depScriptTags, depCssLinkTags, testStuff };
@@ -405,8 +423,6 @@ export default Ember.Service.extend({
    * @return {String}            AMD module code
    */
   compileHbs(code, filePath) {
-    // TODO: Is there a way to precompile using the template compiler brought in via twiddle.json?
-    // let templateCode = Ember.HTMLBars.precompile(code || '');
 
     // Compiles all templates at runtime.
     let moduleName = this.nameWithModule(filePath);
