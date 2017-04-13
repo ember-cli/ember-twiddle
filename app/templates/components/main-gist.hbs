@@ -20,7 +20,7 @@
   openFile=(action 'openFile')
   hideFileTree=(action 'hideFileTree')
 ) as |twiddleSidebar|}}
-  {{#sidebar-container sidebarContentComponent=twiddleSidebar}}
+  {{#sidebar-container sidenavLockedOpen=sidenavLockedOpen leftSideBarOpen=leftSideBarOpen sidebarContentComponent=twiddleSidebar}}
     {{gist-body model=model
       leftSideBarOpen=leftSideBarOpen
       sidenavLockedOpen=sidenavLockedOpen
