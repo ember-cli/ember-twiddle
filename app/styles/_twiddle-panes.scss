@@ -1,17 +1,23 @@
 .main-content {
   overflow-y: auto;
+
+  md-toolbar {
+    border-bottom: 1px solid $grey-3;
+    background-color: #f6f6f6 !important;
+    color: #333 !important;
+
+    md-icon {
+      color: #666 !important;
+    }
+
+    md-menu button {
+      color: #333 !important;
+      text-transform: none;
+    }
+  }
 }
 
 .twiddle-panes {
-/*
-  margin: 0;
-  margin-left: 0;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 250px;
-  right: 0;
-*/
   @media (min-width: $screen-md-min) {
     display: -webkit-flex;
     display: flex;
@@ -24,21 +30,6 @@
     border-right: 1px solid #e4e2e2;
     cursor: normal;
     position: relative;
-
-    md-toolbar {
-      border-bottom: 1px solid $grey-3;
-      background-color: #f6f6f6;
-      color: #333;
-
-      md-icon {
-        color: #666;
-      }
-
-      md-menu button {
-        color: #333 !important;
-        text-transform: none;
-      }
-    }
 
     @media (max-width: $screen-md-min) {
       margin-bottom: 60px;
