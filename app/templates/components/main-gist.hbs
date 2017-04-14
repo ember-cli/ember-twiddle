@@ -20,10 +20,9 @@
   openFile=(action 'openFile')
   hideFileTree=(action 'hideFileTree')
 ) as |twiddleSidebar|}}
-  {{#sidebar-container sidenavLockedOpen=sidenavLockedOpen leftSideBarOpen=leftSideBarOpen sidebarContentComponent=twiddleSidebar}}
+  {{#sidebar-container sidenavLockedOpen=sidenavLockedOpen leftSideBarOpen=leftSideBarOpen sidebarContentComponent=twiddleSidebar as |sidebar|}}
     {{gist-body model=model
-      leftSideBarOpen=leftSideBarOpen
-      sidenavLockedOpen=sidenavLockedOpen
+      sidebarToggle=sidebar.sidebarToggle
       columns=columns
       settings=settings
       numColumns=realNumColumns

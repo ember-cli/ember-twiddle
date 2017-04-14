@@ -32,7 +32,9 @@
 
   {{#paper-card-content class='flex'}}
     <div class='layout-fill layout-column main-content'>
-      {{yield}}
+      {{yield (hash
+        sidebarToggle=(component 'sidebar-toggle' sidenavLockedOpen=sidenavLockedOpen)
+      )}}
     </div>
   {{/paper-card-content}}
 {{/paper-sidenav-container}}

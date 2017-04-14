@@ -4,9 +4,8 @@
       {{#if column.show}}
         <div class="twiddle-pane code {{if column.active 'active'}}">
           {{file-editor-column col=column.col
+            sidebarToggle=sidebarToggle
             isFirstColumn=(eq index 0)
-            leftSideBarOpen=leftSideBarOpen
-            sidenavLockedOpen=sidenavLockedOpen
             file=column.file
             allFiles=model.files
             keyMap=settings.keyMap

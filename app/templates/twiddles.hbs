@@ -1,15 +1,7 @@
-{{#sidebar-container}}
+{{#sidebar-container as |sidebar|}}
   {{#paper-toolbar}}
     {{#paper-toolbar-tools class='main-toolbar-tools'}}
-      {{#paper-button class='hide show-gt-sm' iconButton=true onClick=(action (mut sidenavLockedOpen) (if sidenavLockedOpen false 'gt-md'))}}
-        {{paper-icon (if sidenavLockedOpen 'chevron left' 'menu')}}
-      {{/paper-button}}
-
-      {{#paper-sidenav-toggle name='left' as |toggleAction|}}
-        {{#paper-button class='hide-gt-sm' iconButton=true onClick=(action toggleAction)}}
-          {{paper-icon 'menu'}}
-        {{/paper-button}}
-      {{/paper-sidenav-toggle}}
+      {{component sidebar.sidebarToggle}}
     {{/paper-toolbar-tools}}
   {{/paper-toolbar}}
   {{saved-twiddles-table model=model}}
