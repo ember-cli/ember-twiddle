@@ -10,5 +10,9 @@ export default DS.Model.extend({
 
   avatarUrl38: computed('avatarUrl', function() {
     return this.get('avatarUrl') + '&s=38';
+  }),
+
+  avatarUrl64: computed('avatarUrl', function() {
+    return this.get('avatarUrl') + '&s=64';
   })
 });
