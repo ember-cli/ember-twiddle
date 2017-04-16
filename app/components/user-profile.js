@@ -4,5 +4,5 @@ const { inject } = Ember;
 
 export default Ember.Component.extend({
   session: inject.service(),
-  classNames: ['user-profile']
+  classNames: ['user-profile', 'layout-column']
 });

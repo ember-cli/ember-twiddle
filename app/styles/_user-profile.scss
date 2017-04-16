@@ -1,0 +1,24 @@
+.user-profile {
+
+  .profile-header {
+    padding: 1rem 0;
+    background-color: #E35B44;
+    color: #eee;
+
+    .user-avatar-large {
+      border: 3px solid #eee;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    .user-info {
+      margin-bottom: 0.5rem;
+
+      .name {
+        font-weight: 500;
+      }
+    }
+
+    .user-details {}
+  }
+}

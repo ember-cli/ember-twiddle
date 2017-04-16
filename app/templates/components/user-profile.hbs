@@ -1,4 +1,10 @@
-<span class="user-avatar">
-  <img src="{{session.currentUser.avatarUrl64}}" />
-</span>
-{{session.currentUser.login}}
+<div class='profile-header layout-column layout-align-center-center'>
+  <img class='user-avatar-large' src='{{session.currentUser.profileAvatarUrl}}' />
+  <div class='user-info'>
+    Logged in as <span class='name'>{{session.currentUser.login}}</span>
+  </div>
+
+  <div class='user-details'>
+    You have __ saved Twiddles.
+  </div>
+</div>
