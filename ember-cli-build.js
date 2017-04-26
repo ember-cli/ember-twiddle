@@ -63,7 +63,7 @@ module.exports = function(defaults) {
         }
       }
     },
-    babel: {
+    'ember-cli-babel': {
       includePolyfill: !isFastboot
     },
 
