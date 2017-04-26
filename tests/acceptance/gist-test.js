@@ -330,7 +330,7 @@ test('unsaved indicator', function(assert) {
 test('editing a file updates gist', function(assert) {
   const files = [
     {
-      filename: "application.template.hbs",
+      filename: "templates.application.hbs",
       content: "{{outlet}}"
     }
   ];
