@@ -22,10 +22,10 @@
     {{/paper-toolbar}}
 
     {{#paper-content class='sidebar-content flex'}}
-      {{#if sidebarContentComponent}}
-        {{component sidebarContentComponent}}
+      {{#if (and sidebarContentComponent (not showProfile))}}
+        {{component sidebarContentComponent showProfile=(action (mut showProfile) true)}}
       {{else}}
-        {{user-profile}}
+        {{user-profile hasToolbox=sidebarContentComponent hideProfile=(action (mut showProfile) false)}}
       {{/if}}
     {{/paper-content}}
   {{/paper-sidenav}}

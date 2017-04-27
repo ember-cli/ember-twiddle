@@ -9,6 +9,10 @@ export default Ember.Route.extend({
   },
 
   actions: {
+    showTwiddles() {
+      this.transitionTo('twiddles');
+    },
+
     titleUpdated() {
       this.get('router').updateTitle();
     },

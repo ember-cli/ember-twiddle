@@ -1,27 +1,10 @@
 {{#if session.isAuthenticated}}
-  {{#paper-menu position='target-right target' as |menu|}}
-    {{#menu.trigger class='layout-column'}}
-      {{#paper-button class='signed-in-btn md-menu-origin'}}
-        <span class="user-avatar">
-          <img src="{{session.currentUser.avatarUrl38}}" />
-        </span>
-        {{userName}}
-        {{paper-icon 'arrow drop up'}}
-      {{/paper-button}}
-    {{/menu.trigger}}
-
-    {{#menu.content width=3 as |content|}}
-      {{#content.menu-item class='md-menu-align-target' onClick='showTwiddles'}}
-        My Saved Twiddles
-      {{/content.menu-item}}
-
-      {{paper-divider}}
-
-      {{#content.menu-item class='md-menu-align-target' onClick='signOut'}}
-        Sign Out
-      {{/content.menu-item}}
-    {{/menu.content}}
-  {{/paper-menu}}
+  {{#paper-button class='signed-in-btn' onClick=showProfile}}
+    <span class="user-avatar">
+      <img src="{{session.currentUser.avatarUrl38}}" />
+    </span>
+    {{userName}}
+  {{/paper-button}}
 {{else}}
   {{#paper-button class='signin-btn' disabled=session.isOpening onClick=(action 'signInViaGithub')}}
     {{paper-icon 'power settings new' size=21}}

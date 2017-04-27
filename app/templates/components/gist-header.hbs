@@ -82,6 +82,7 @@
       {{paper-divider}}
 
       {{user-menu session=session
+        showProfile=(action showProfile)
         signInViaGithub=(route-action 'signInViaGithub')
         signOut=(route-action 'signOut')
         showTwiddles=(route-action 'showTwiddles')

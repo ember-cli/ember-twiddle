@@ -1,4 +1,5 @@
 .user-profile {
+  height: 100%;
 
   .profile-header {
     padding: 1rem 0;
@@ -20,5 +21,9 @@
     }
 
     .user-details {}
+  }
+
+  .profile-menu .md-button {
+    text-align: left;
   }
 }

@@ -99,10 +99,6 @@ export default Ember.Route.extend({
       });
     },
 
-    showTwiddles() {
-      this.transitionTo('twiddles');
-    },
-
     urlChanged(newUrl) {
       this.get('app').postMessage({ newUrl });
     },
