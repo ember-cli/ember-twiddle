@@ -19,13 +19,8 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
   fullScreen: false,
   openFiles: "",
 
-  sidenavLockedOpen: 'gt-sm',
-
   init() {
     this._super(...arguments);
-    this.set('settings', Settings.create({
-      isFastBoot: this.get('fastboot.isFastBoot')
-    }));
     this.createColumns();
     this.set('activeEditorCol', '1');
   },
@@ -59,8 +54,6 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
    * @type {Number}
    */
   activeEditorCol: null,
-
-  settings: null,
 
   /**
    * Errors during build
@@ -232,12 +225,6 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
         this.initializeColumns();
         this.updateOpenFiles();
       });
-    },
-
-    setEditorKeyMap (keyMap) {
-      const settings = this.get('settings');
-      settings.set('keyMap', keyMap);
-      settings.save();
     },
 
     switchTests(testsEnabled) {

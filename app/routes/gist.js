@@ -19,6 +19,15 @@ export default Ember.Route.extend({
     });
   },
 
+  model() {
+    let applicationModel = this.modelFor('application');
+    return applicationModel;
+  },
+
+  setupController(controller, resolved) {
+    controller.setProperties(resolved);
+  },
+
   activate() {
     if (this.get('fastboot.isFastBoot')) {
       return;

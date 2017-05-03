@@ -10,6 +10,8 @@
 </div>
 
 {{#paper-list class='layout-column flex'}}
+  {{editor-mode-menu setKeyMap=(route-action 'setEditorKeyMap')}}
+  {{paper-divider}}
   {{#if hasToolbox}}
     {{#paper-button onClick=hideProfile}}
       {{paper-icon 'chevron left'}} Back to Twiddle Toolbox

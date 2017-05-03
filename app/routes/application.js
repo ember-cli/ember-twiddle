@@ -1,8 +1,26 @@
 import Ember from 'ember';
 import config from '../config/environment';
+import Settings from '../models/settings';
+
+const { inject } = Ember;
 
 export default Ember.Route.extend({
+  fastboot: inject.service(),
   toriiProvider: config.toriiProvider,
+
+  model() {
+    let settings = Settings.create({
+      isFastBoot: this.get('fastboot.isFastBoot')
+    });
+
+    return {
+      settings
+    };
+  },
+
+  setupController(controller, resolved) {
+    controller.setProperties(resolved);
+  },
 
   title(tokens) {
     return 'Ember Twiddle - ' + tokens.join(' - ');
@@ -15,6 +33,12 @@ export default Ember.Route.extend({
 
     titleUpdated() {
       this.get('router').updateTitle();
+    },
+
+    setEditorKeyMap(keyMap) {
+      const settings = this.get('controller.settings');
+      settings.set('keyMap', keyMap);
+      settings.save();
     },
 
     signInViaGithub () {
