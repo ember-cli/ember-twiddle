@@ -5,15 +5,18 @@
       {{saved-state-indicator model=gist unsaved=unsaved}}
     </div>
     {{#if session.isAuthenticated}}
-      {{#paper-button iconButton=true onClick=(action saveGist gist)}}
+      {{#paper-button iconButton=true title='Create New Twiddle' onClick=(route-action 'transitionTo' 'gist.new')}}
+        {{paper-icon 'add'}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true title='Save Twiddle' onClick=(action saveGist gist)}}
         {{paper-icon 'save'}}
       {{/paper-button}}
       {{#if showFork}}
-        {{#paper-button iconButton=true onClick=(action fork gist)}}
+        {{#paper-button iconButton=true title='Fork Twiddle'  onClick=(action fork gist)}}
           {{paper-icon 'call split'}}
         {{/paper-button}}
       {{else}}
-        {{#paper-button iconButton=true onClick=(action copy gist)}}
+        {{#paper-button iconButton=true title='Duplicate Twiddle' onClick=(action copy gist)}}
           {{paper-icon 'content copy' size=20}}
         {{/paper-button}}
       {{/if}}
