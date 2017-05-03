@@ -4,10 +4,11 @@
     <div class={{if session.isAuthenticated 'flex-75' 'flex'}}>
       {{saved-state-indicator model=gist unsaved=unsaved}}
     </div>
+    {{#paper-button iconButton=true title='Create New Twiddle' onClick=(route-action 'transitionTo' 'gist.new')}}
+      {{paper-icon 'add'}}
+    {{/paper-button}}
+
     {{#if session.isAuthenticated}}
-      {{#paper-button iconButton=true title='Create New Twiddle' onClick=(route-action 'transitionTo' 'gist.new')}}
-        {{paper-icon 'add'}}
-      {{/paper-button}}
       {{#paper-button iconButton=true title='Save Twiddle' onClick=(action saveGist gist)}}
         {{paper-icon 'save'}}
       {{/paper-button}}
