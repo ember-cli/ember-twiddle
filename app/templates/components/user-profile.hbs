@@ -10,11 +10,9 @@
 </div>
 
 {{#paper-list class='layout-column flex'}}
-  {{editor-mode-menu setKeyMap=(route-action 'setEditorKeyMap')}}
-  {{paper-divider}}
   {{#if hasToolbox}}
     {{#paper-button onClick=hideProfile}}
-      {{paper-icon 'chevron left'}} Back to Twiddle Toolbox
+      {{paper-icon 'chevron left'}} Back to File Tree
     {{/paper-button}}
   {{/if}}
 {{/paper-list}}
@@ -24,6 +22,11 @@
     {{paper-icon 'view list'}} My Saved Twiddles
   {{/paper-button}}
   {{paper-divider}}
+  {{editor-mode-menu setKeyMap=(route-action 'setEditorKeyMap')}}
+  {{paper-divider}}
+  {{#if currentVersionLink}}
+    Ember Twiddle {{v}}{{version}}
+  {{/if}}
   {{#paper-button}}
     {{paper-icon 'code'}} Github
   {{/paper-button}}
