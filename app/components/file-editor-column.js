@@ -43,19 +43,19 @@ export default Ember.Component.extend({
 
     valueUpdated(value, __, changeObj) {
       const isUserChange = changeObj.origin !== 'setValue';
-      this.attrs.contentChanged(isUserChange, value);
+      this.get('contentChanged')(isUserChange, value);
     },
 
     removeColumn(col) {
-      this.attrs.removeColumn(col);
+      this.get('removeColumn')(col);
     },
 
     addColumn() {
-      this.attrs.addColumn();
+      this.get('addColumn')();
     },
 
     showFileTree() {
-      this.attrs.showFileTree();
+      this.get('showFileTree')();
     }
   }
 });

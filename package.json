@@ -74,7 +74,7 @@
     "ember-route-action-helper": "^1.0.0",
     "ember-source": "~2.11.0",
     "ember-test-helpers": "~0.6.3",
-    "ivy-codemirror": "2.0.2",
+    "ivy-codemirror": "~2.0.3",
     "loader.js": "~4.0.10",
     "moment": "~2.15.2",
     "moment-timezone": "~0.5.4",

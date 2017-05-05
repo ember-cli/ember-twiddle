@@ -26,7 +26,7 @@ export default Ember.Mixin.create({
         console.error(errors);
       }
     }
-  }),
+  }).enqueue(),
 
   rebuildApp: task(function *() {
     if (this.get('isLiveReload')) {
