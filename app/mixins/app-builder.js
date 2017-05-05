@@ -14,6 +14,7 @@ export default Ember.Mixin.create({
     try {
       const buildOutput = yield this.get('emberCli').compileGist(this.get('model'));
       this.set('isBuilding', false);
+      this.set('isOutputting', true);
       this.set('buildOutput', buildOutput);
     } catch(errors) {
       this.set('isBuilding', false);
@@ -26,7 +27,7 @@ export default Ember.Mixin.create({
         console.error(errors);
       }
     }
-  }),
+  }).enqueue(),
 
   rebuildApp: task(function *() {
     if (this.get('isLiveReload')) {

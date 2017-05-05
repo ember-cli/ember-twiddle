@@ -22,7 +22,7 @@ export default function(app, url) {
           return;
         }
         iframe_window = outputPane();
-        if (iframe_window.loaded && iframe_window.document.readyState === 'complete') {
+        if (iframe_window.document.readyState === 'complete') {
           onWindowLoad();
         } else {
           iframe_window.addEventListener('load', onWindowLoad);
