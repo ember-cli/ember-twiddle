@@ -55,9 +55,7 @@ export default Ember.Service.extend({
 
   resolveAddons(addons, dependencies, emberVersion) {
     const taskInstance = this.get('resolveAddonsTask').perform(addons, dependencies, emberVersion);
-    return taskInstance.then(() => {
-      return RSVP.resolve(taskInstance.value);
-    });
+    return taskInstance.then(() => taskInstance.value);
   },
 
   resolveAddonsTask: task(function *(addons, dependencies, emberVersion) {
@@ -117,9 +115,9 @@ export default Ember.Service.extend({
   }),
 
   resolveAddon(name, value, emberVersion) {
+    const url = `${config.addonUrl}?ember_version=${emberVersion}&addon=${name}&addon_version=${value}`;
     return new RSVP.Promise(function(resolve) {
-      const url = `${config.addonUrl}?ember_version=${emberVersion}&addon=${name}&addon_version=${value}`;
-      resolve(Ember.$.getJSON(url).then(data => RSVP.resolve(data)));
+      Ember.$.getJSON(url).then(resolve);
     });
   },
 

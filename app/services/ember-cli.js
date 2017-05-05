@@ -228,8 +228,7 @@ export default Ember.Service.extend({
             legacyTesting: legacyTesting(twiddleJSON)
           }
         );
-
-        return RSVP.resolve(this.buildHtml(gist, out.join('\n'), cssOut.join('\n'), twiddleJSON));
+        return this.buildHtml(gist, out.join('\n'), cssOut.join('\n'), twiddleJSON);
       });
   },
 

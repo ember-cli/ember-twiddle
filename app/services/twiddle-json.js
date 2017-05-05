@@ -63,14 +63,11 @@ export default Ember.Service.extend({
       const emberVersion = twiddleJson.dependencies.ember;
       dependencyResolver.resolveDependencies(twiddleJson.dependencies);
       if ('addons' in twiddleJson) {
-        return dependencyResolver.resolveAddons(twiddleJson.addons, twiddleJson.dependencies, emberVersion).then(() => {
-          return RSVP.resolve(twiddleJson);
-        }).catch(() => {
-          return RSVP.reject();
-        });
+        return dependencyResolver.resolveAddons(twiddleJson.addons, twiddleJson.dependencies, emberVersion)
+          .then(() => twiddleJson);
       }
 
-      return RSVP.resolve(twiddleJson);
+      return twiddleJson;
     });
   },
 
