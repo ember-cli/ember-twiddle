@@ -8,7 +8,7 @@ import AppBuilderMixin from "../mixins/app-builder";
 const { inject, computed } = Ember;
 
 export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestFilesMixin, {
-  emberCli: inject.service('ember-cli'),
+  emberCli: inject.service(),
   dependencyResolver: inject.service(),
   notify: inject.service(),
   store: inject.service(),

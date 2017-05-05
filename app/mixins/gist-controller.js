@@ -14,8 +14,8 @@ export default Ember.Mixin.create({
   applicationUrl: undefined,
   unsaved: true,
 
-  init(...args) {
-    this._super(...args);
+  init() {
+    this._super(...arguments);
     if (!this.get('fastboot.isFastBoot')) {
       this.setupWindowUpdate();
     }
@@ -23,8 +23,7 @@ export default Ember.Mixin.create({
 
   actions: {
     transitionQueryParams(queryParams) {
-      return this.transitionToRoute({ queryParams: queryParams })
-        .then(() => queryParams);
+      return this.transitionToRoute({ queryParams }).then(() => queryParams);
     }
   },
 
