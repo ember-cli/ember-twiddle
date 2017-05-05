@@ -110,11 +110,11 @@ test('Able to go from current version to revision and back via the UI', function
 
   andThen(() => {
     assert.equal(outputContents('div'), 'Hello, ...');
-  });
 
-  click(".test-show-current-version");
-  click(".run-now");
-  waitForLoadedIFrame();
+    click(".test-show-current-version");
+    click(".run-now");
+    waitForLoadedIFrame();
+  });
 
   andThen(() => {
     assert.equal(outputContents('div'), 'Hello, World!');

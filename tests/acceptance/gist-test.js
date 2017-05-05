@@ -361,10 +361,10 @@ test('editing a file updates gist', function(assert) {
 
   andThen(function() {
     assert.equal(find(firstColumnTextarea).val(), '<div class="index">some text</div>');
-  });
 
-  click(".run-now");
-  waitForLoadedIFrame();
+    click(".run-now");
+    waitForLoadedIFrame();
+  });
 
   andThen(function() {
     assert.equal(outputContents('.index'), 'some text');
@@ -394,11 +394,11 @@ test('own gist can be copied into a new one', function(assert) {
   keyEvent('.title input', 'keyup', 13);
   andThen(function() {
     assert.equal(find('.title input').val(), "my twiddle");
-  });
 
-  click("#live-reload");
-  click('.test-copy-action');
-  waitForLoadedIFrame();
+    click("#live-reload");
+    click('.test-copy-action');
+    waitForLoadedIFrame();
+  });
 
   andThen(function() {
     assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
@@ -424,12 +424,11 @@ test('accessing /:gist/copy creates a new Twiddle with a copy of the gist', func
   andThen(function() {
     assert.equal(find('.title input').val(), "my twiddle");
     assert.equal(find('.test-unsaved-indicator').length, 1, "Changing title triggers unsaved indicator");
-  });
 
-  click("#live-reload");
-  visit('/35de43cb81fc35ddffb2/copy');
-  click('.run-now');
-  waitForLoadedIFrame();
+    click("#live-reload");
+    visit('/35de43cb81fc35ddffb2/copy');
+    waitForLoadedIFrame();
+  });
 
   andThen(function() {
     assert.equal(currentURL(), '/');

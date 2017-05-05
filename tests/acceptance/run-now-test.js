@@ -24,10 +24,10 @@ test('Able to reload the Twiddle', function(assert) {
 
   andThen(function() {
     assert.equal(outputPane().find('input').val(), 'new value');
-  });
 
-  click(".run-now");
-  waitForLoadedIFrame();
+    click(".run-now");
+    waitForLoadedIFrame();
+  });
 
   andThen(function() {
     assert.equal(outputPane().find('input').val(), 'initial value');
