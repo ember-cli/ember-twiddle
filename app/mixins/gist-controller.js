@@ -1,6 +1,6 @@
 import Ember from "ember";
 
-const { inject, RSVP, run } = Ember;
+const { inject, run } = Ember;
 
 export default Ember.Mixin.create({
   fastboot: inject.service(),
@@ -23,9 +23,8 @@ export default Ember.Mixin.create({
 
   actions: {
     transitionQueryParams(queryParams) {
-      return this.transitionToRoute({ queryParams: queryParams }).then(() => {
-        return RSVP.resolve(queryParams);
-      });
+      return this.transitionToRoute({ queryParams: queryParams })
+        .then(() => queryParams);
     }
   },
 
