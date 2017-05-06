@@ -72,15 +72,10 @@ export default Ember.Service.extend({
   },
 
   _updateTwiddleJson(gist, updateFn) {
-    return new RSVP.Promise(function(resolve, reject) {
+    return new RSVP.Promise(function(resolve) {
       const twiddle = gist.get('files').findBy('filePath', 'twiddle.json');
 
-      let json;
-      try {
-        json = JSON.parse(twiddle.get('content'));
-      } catch (e) {
-        return reject(e);
-      }
+      let json = JSON.parse(twiddle.get('content'));
 
       json = updateFn(json);
 
