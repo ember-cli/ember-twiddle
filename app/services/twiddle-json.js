@@ -75,23 +75,21 @@ export default Ember.Service.extend({
   },
 
   _updateTwiddleJson(gist, updateFn) {
-    return new RSVP.Promise(function(resolve, reject) {
-      const twiddle = gist.get('files').findBy('filePath', 'twiddle.json');
+    const twiddle = gist.get('files').findBy('filePath', 'twiddle.json');
 
-      let json;
-      try {
-        json = JSON.parse(twiddle.get('content'));
-      } catch (e) {
-        return reject(e);
-      }
+    let json;
+    try {
+      json = JSON.parse(twiddle.get('content'));
+    } catch (e) {
+      return RSVP.reject(e);
+    }
 
-      json = updateFn(json);
+    json = updateFn(json);
 
-      json = JSON.stringify(json, null, '  ');
-      twiddle.set('content', json);
+    json = JSON.stringify(json, null, '  ');
+    twiddle.set('content', json);
 
-      resolve();
-    });
+    return RSVP.resolve();
   },
 
   updateDependencyVersion(gist, dependencyName, version) {
