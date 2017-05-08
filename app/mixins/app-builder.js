@@ -26,6 +26,7 @@ export default Ember.Mixin.create({
         console.error(errors);
       }
     }
+    yield timeout(100);
   }).enqueue(),
 
   rebuildApp: task(function *() {
