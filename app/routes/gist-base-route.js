@@ -5,7 +5,7 @@ const CONFIRM_MSG = "Unsaved changes will be lost. Are you sure?";
 const { inject } = Ember;
 
 export default Ember.Route.extend({
-  emberCli: inject.service('ember-cli'),
+  emberCli: inject.service(),
 
   afterModel(context) {
     return this.get('emberCli').setup(context);
