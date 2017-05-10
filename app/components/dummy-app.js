@@ -74,5 +74,7 @@ export default Ember.Component.extend(ResizeMixin, {
     if (oldIframe) {
       oldIframe.parentNode.removeChild(oldIframe);
     }
+
+    this.get('app').setCurrentIFrame(null);
   }
 });

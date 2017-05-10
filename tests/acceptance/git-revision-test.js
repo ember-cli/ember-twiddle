@@ -58,6 +58,7 @@ test('Able to copy a revision into new gist', function(assert) {
   click('.test-copy-action');
 
   andThen(function() {
+    click(".run-now");
     waitForLoadedIFrame();
   });
 
@@ -87,9 +88,9 @@ test('Able to go from current version to revision and back via the UI', function
 
   andThen(() => {
     assert.equal(outputContents('div'), 'Hello, World!');
-  });
 
-  click("#live-reload");
+    click("#live-reload");
+  });
 
   createGist({
     files: [
@@ -104,9 +105,11 @@ test('Able to go from current version to revision and back via the UI', function
     doNotCreateGist: true
   });
 
-  click(".test-version-action");
-  click(".run-now");
-  waitForLoadedIFrame();
+  andThen(() => {
+    click(".test-version-action");
+    click(".run-now");
+    waitForLoadedIFrame();
+  });
 
   andThen(() => {
     assert.equal(outputContents('div'), 'Hello, ...');
