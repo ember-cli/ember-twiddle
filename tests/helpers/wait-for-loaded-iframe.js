@@ -8,7 +8,7 @@ export default function(app, url) {
   andThen(function() {
 
     // Wait until iframe loads
-    return new RSVP.Promise(function (resolve, reject) {
+    return new RSVP.Promise(function (resolve) {
       let times = 0;
 
       run.schedule('afterRender', function waitForRender() {
@@ -19,9 +19,7 @@ export default function(app, url) {
 
         if (times++ >= 10) {
           run.cancelTimers();
-          reject();
-        }
-        if (app.testHelpers.find('iframe').length === 0) {
+        } else if (app.testHelpers.find('iframe').length === 0) {
           run.later(waitForRender, 10);
           return;
         }
