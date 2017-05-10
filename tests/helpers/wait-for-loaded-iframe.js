@@ -8,7 +8,7 @@ export default function(app, url) {
   andThen(function() {
 
     // Wait until iframe loads
-    return new RSVP.Promise(function (resolve) {
+    return new RSVP.Promise(function (resolve, reject) {
       let times = 0;
 
       run.schedule('afterRender', function waitForRender() {
@@ -17,13 +17,17 @@ export default function(app, url) {
           resolve();
         }
 
-        if (app.testHelpers.find('iframe').length === 0 && times++ < 10) {
+        if (times++ >= 10) {
+          run.cancelTimers();
+          reject();
+        }
+        if (app.testHelpers.find('iframe').length === 0) {
           run.later(waitForRender, 10);
           return;
         }
         iframe_window = outputPane();
         if (iframe_window.document.readyState === 'complete') {
-          onWindowLoad();
+          resolve();
         } else {
           iframe_window.addEventListener('load', onWindowLoad);
         }
