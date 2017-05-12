@@ -10,7 +10,7 @@ export default Ember.Mixin.create({
 
   createFile(filePath, fileProperties, fileColumn=1) {
     if (filePath) {
-      if(this.hasPath(filePath)) {
+      if (this.hasPath(filePath)) {
         alert(`A file with the name ${filePath} already exists`);
         return;
       }
@@ -32,8 +32,8 @@ export default Ember.Mixin.create({
    */
   isPathInvalid(type, path){
     let errorMsg = null;
-    if (type.match(/^component/)) {
-      if (!path.match(/[^\/]+-[^\/]+(\/(component\.js|template\.hbs))?$/)) {
+    if (/^component/.test(type)) {
+      if (!/[^\/]+-[^\/]+(\/(component\.js|template\.hbs))?$/.test(path)) {
         errorMsg = ErrorMessages.componentsNeedHyphens;
       }
     }
@@ -77,7 +77,7 @@ export default Ember.Mixin.create({
   renameFile(file) {
     let filePath = prompt('File path', file.get('filePath'));
     if (filePath) {
-      if(this.get('model.files').findBy('filePath', filePath)) {
+      if (this.get('model.files').findBy('filePath', filePath)) {
         alert(`A file with the name ${filePath} already exists`);
         return;
       }
