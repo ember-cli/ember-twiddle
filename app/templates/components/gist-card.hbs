@@ -23,5 +23,59 @@
         {{/paper-button}}
       {{/if}}
     {{/if}}
+
+    {{#paper-menu position='target-left target' as |menu|}}
+      {{#menu.trigger class='layout-column'}}
+        {{#paper-button class='md-menu-origin' iconButton=true}}
+          {{paper-icon 'more vert'}}
+        {{/paper-button}}
+      {{/menu.trigger}}
+      {{#menu.content width=2 as |content|}}
+        {{#content.menu-item title='Create New Twiddle' onClick=(route-action 'transitionTo' 'gist.new')}}
+          {{paper-icon 'add'}} New Twiddle
+        {{/content.menu-item}}
+
+        {{#if session.isAuthenticated}}
+          {{#content.menu-item title='Save Twiddle' onClick=(action saveGist gist)}}
+            {{paper-icon 'save'}} Save Twiddle
+          {{/content.menu-item}}
+
+          {{#if showFork}}
+            {{#content.menu-item title='Fork Twiddle'  onClick=(action fork gist)}}
+              {{paper-icon 'call split'}} Fork Twiddle
+            {{/content.menu-item}}
+          {{else}}
+            {{#content.menu-item title='Duplicate Twiddle' onClick=(action copy gist)}}
+              {{paper-icon 'content copy' size=20}} Duplicate Twiddle
+            {{/content.menu-item}}
+          {{/if}}
+        {{/if}}
+
+        {{paper-divider}}
+
+        {{#if isRevision}}
+          {{#content.menu-item onClick=(route-action 'showCurrentVersion')}}
+            Show Current Version
+          {{/content.menu-item}}
+        {{else if gist.history.length}}
+          {{#content.menu-item}}
+            {{#paper-menu position='target-left target' as |menu|}}
+              {{#menu.trigger class='layout-column'}}
+                {{#paper-button class='md-menu-origin'}}
+                  Previous Revisions
+                {{/paper-button}}
+              {{/menu.trigger}}
+              {{#menu.content width=2 as |content|}}
+                {{#each gist.history as |version|}}
+                  {{#content.menu-item title='Create New Twiddle' onClick=(route-action 'showRevision' version.id)}}
+                    {{version.shortId}}
+                  {{/content.menu-item}}
+                {{/each}}
+              {{/menu.content}}
+            {{/paper-menu}}
+          {{/content.menu-item}}
+        {{/if}}
+      {{/menu.content}}
+    {{/paper-menu}}
   </div>
 </div>
