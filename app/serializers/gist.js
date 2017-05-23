@@ -6,23 +6,21 @@ export default ApplicationSerializer.extend({
     history: { embedded: 'always', deserialize: 'records', serialize: false }
   },
 
-  init(...args) {
-    this._super(...args);
+  init() {
+    this._super(...arguments);
     this.set('seq', 0);
   },
 
-  normalizeSingleResponse(store, primaryModelClass, payload, id, requestType) {
+  normalizeSingleResponse(store, primaryModelClass, payload) {
     this.normalizeGist(payload, false);
 
-    return this._super(store, primaryModelClass, payload, id, requestType);
+    return this._super(...arguments);
   },
 
-  normalizeArrayResponse(store, primaryModelClass, payload, id, requestType) {
-    payload.forEach(function(hash) {
-      this.normalizeGist(hash, true);
-    }.bind(this));
+  normalizeArrayResponse(store, primaryModelClass, payload) {
+    payload.forEach((hash)=> this.normalizeGist(hash, true));
 
-    return this._super(store, primaryModelClass, payload, id, requestType);
+    return this._super(...arguments);
   },
 
   normalizeGist(payload, isArray) {
@@ -59,9 +57,7 @@ export default ApplicationSerializer.extend({
 
     // Deleted files need to be given a null value
     if(deletedFiles) {
-      deletedFiles.forEach((fileId) => {
-        filesJson[fileId] = null;
-      });
+      deletedFiles.forEach((fileId) => filesJson[fileId] = null);
     }
 
     files.forEach((fileSnapshot) => {
@@ -101,7 +97,7 @@ export default ApplicationSerializer.extend({
       this.serializeFiles(snapshot, json, relationship);
     }
     else {
-      this._super.apply(this, arguments);
+      this._super(...arguments);
     }
   }
 });

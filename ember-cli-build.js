@@ -60,7 +60,7 @@ module.exports = function(defaults) {
         }
       }
     },
-    babel: {
+    'ember-cli-babel': {
       includePolyfill: !isFastboot
     },
 
@@ -84,7 +84,7 @@ module.exports = function(defaults) {
     app.import('vendor/polyfill.js', { prepend: true });
   }
 
-  app.import('bower_components/ember/ember-template-compiler.js');
+  app.import('vendor/ember/ember-template-compiler.js');
   app.import('bower_components/babel/browser.js');
   app.import('vendor/flat-to-nested.js');
   app.import('vendor/shims/babel.js');
@@ -121,6 +121,9 @@ module.exports = function(defaults) {
   });
 
   var bowerTree = funnel('bower_components');
+  var shimsTree = funnel('node_modules/ember-cli-shims/vendor/ember-cli-shims' , {
+    destDir: 'ember-cli-shims'
+  });
 
   var baseResolverTree = funnel('node_modules/ember-resolver/addon', {
     destDir: 'ember-resolver'
@@ -145,7 +148,7 @@ module.exports = function(defaults) {
   var finalQUnitTree = buildAddonTree('ember-qunit');
   var finalTestHelpersTree = buildAddonTree('ember-test-helpers');
 
-  var mergedDepsTree = mergeTrees([bowerTree, transpiledInitializersTree, transpiledResolverTree, emberDataShims]);
+  var mergedDepsTree = mergeTrees([bowerTree, shimsTree, transpiledInitializersTree, transpiledResolverTree, emberDataShims]);
 
   var twiddleVendorTree = concat(mergedDepsTree, {
     inputFiles: [

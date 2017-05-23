@@ -1,5 +1,5 @@
-import config from '../config/environment';
 import Ember from 'ember';
+import config from '../config/environment';
 
 const { inject, isBlank, RSVP } = Ember;
 
@@ -13,14 +13,14 @@ export default Ember.Object.extend({  /**
   ajax: inject.service(),
   fastboot: inject.service(),
 
-  resolveUser (token) {
+  resolveUser(token) {
     config.TMP_TORII_TOKEN = token;
-    return this.get('store').find('user', 'current').then((user) => {
+    return this.get('store').find('user', 'current').then((currentUser) => {
       config.TMP_TORII_TOKEN = null;
       if (!this.get('fastboot.isFastBoot')) {
         localStorage.setItem('fiddle_gh_session', token);
       }
-      return { currentUser: user, token: token };
+      return { currentUser, token };
     });
   },
 
@@ -28,12 +28,12 @@ export default Ember.Object.extend({  /**
    * Try loading the user from cookie
    * @return Promise
    */
-  fetch () {
+  fetch() {
     if (this.get('fastboot.isFastBoot')) {
       return RSVP.reject();
     }
 
-    var token = localStorage.getItem('fiddle_gh_session');
+    let token = localStorage.getItem('fiddle_gh_session');
 
     if (isBlank(token)) {
       return RSVP.reject();
@@ -46,8 +46,10 @@ export default Ember.Object.extend({  /**
    * Open a new session, authenticate with Github
    * @return Promise
    */
-  open (authorization) {
-    return this.get('ajax').request(config.githubOauthUrl + authorization.authorizationCode).then(result => this.resolveUser(result.token));
+  open(authorization) {
+    let url = config.githubOauthUrl + authorization.authorizationCode;
+    return this.get('ajax').request(url)
+      .then(result => this.resolveUser(result.token));
   },
 
 
@@ -55,12 +57,12 @@ export default Ember.Object.extend({  /**
    * Close a session
    * @return Promise
    */
-  close () {
+  close() {
     if (this.get('fastboot.isFastBoot')) {
-      return Ember.RSVP.reject();
+      return RSVP.reject();
     } else {
       localStorage.removeItem('fiddle_gh_session');
-      return Ember.RSVP.resolve();
+      return RSVP.resolve();
     }
   }
 });

@@ -54,6 +54,7 @@ test('Able to copy a revision into new gist', function(assert) {
     assert.equal(find('.title input').val(), "my twiddle");
   });
 
+  click("#live-reload");
   click('.test-copy-action');
 
   andThen(function() {
@@ -88,6 +89,8 @@ test('Able to go from current version to revision and back via the UI', function
     assert.equal(outputContents('div'), 'Hello, World!');
   });
 
+  click("#live-reload");
+
   createGist({
     files: [
       {
@@ -102,14 +105,16 @@ test('Able to go from current version to revision and back via the UI', function
   });
 
   click(".test-version-action");
+  click(".run-now");
   waitForLoadedIFrame();
 
   andThen(() => {
     assert.equal(outputContents('div'), 'Hello, ...');
-  });
 
-  click(".test-show-current-version");
-  waitForLoadedIFrame();
+    click(".test-show-current-version");
+    click(".run-now");
+    waitForLoadedIFrame();
+  });
 
   andThen(() => {
     assert.equal(outputContents('div'), 'Hello, World!');

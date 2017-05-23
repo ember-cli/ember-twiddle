@@ -16,8 +16,8 @@ export default GistEditRoute.extend({
     });
   },
 
-  setupController(...args) {
-    this._super(...args);
+  setupController() {
+    this._super(...arguments);
 
     const gistController = this.controllerFor('gist');
     gistController.set('isRevision', true);

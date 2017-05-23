@@ -11,11 +11,11 @@ export default Ember.Component.extend({
 
   actions: {
     runNowClicked() {
-      this.attrs.runNow();
+      this.get('runNow')();
     },
 
     liveReloadClicked(checked) {
-      this.attrs.liveReloadChanged(checked);
+      this.get('liveReloadChanged')(checked);
     }
   }
 });

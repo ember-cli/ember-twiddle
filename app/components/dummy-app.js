@@ -22,6 +22,11 @@ export default Ember.Component.extend(ResizeMixin, {
       this.element.removeChild(this.element.firstElementChild);
     }
 
+    let oldIframe = document.getElementById(this.iframeId);
+    if (oldIframe) {
+      oldIframe.parentNode.removeChild(oldIframe);
+    }
+
     let ifrm = document.createElement('iframe');
     ifrm.id = this.iframeId;
     let supportsSrcDoc = ('srcdoc' in ifrm);
@@ -60,5 +65,14 @@ export default Ember.Component.extend(ResizeMixin, {
       width:  width,
       height: height
     });
-  })
+  }),
+
+  willDestroyElement() {
+    this._super(...arguments);
+
+    let oldIframe = document.getElementById(this.iframeId);
+    if (oldIframe) {
+      oldIframe.parentNode.removeChild(oldIframe);
+    }
+  }
 });

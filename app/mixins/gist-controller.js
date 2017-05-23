@@ -1,6 +1,6 @@
 import Ember from "ember";
 
-const { inject, RSVP, run } = Ember;
+const { inject, run } = Ember;
 
 export default Ember.Mixin.create({
   fastboot: inject.service(),
@@ -14,8 +14,8 @@ export default Ember.Mixin.create({
   applicationUrl: undefined,
   unsaved: true,
 
-  init(...args) {
-    this._super(...args);
+  init() {
+    this._super(...arguments);
     if (!this.get('fastboot.isFastBoot')) {
       this.setupWindowUpdate();
     }
@@ -23,9 +23,7 @@ export default Ember.Mixin.create({
 
   actions: {
     transitionQueryParams(queryParams) {
-      return this.transitionToRoute({ queryParams: queryParams }).then(() => {
-        return RSVP.resolve(queryParams);
-      });
+      return this.transitionToRoute({ queryParams }).then(() => queryParams);
     }
   },
 

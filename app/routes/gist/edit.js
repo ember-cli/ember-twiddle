@@ -10,8 +10,8 @@ export default GistRoute.extend({
     return this.get('store').find('gist', params.gistId);
   },
 
-  setupController(...args) {
-    this._super(...args);
+  setupController() {
+    this._super(...arguments);
 
     const gistController = this.controllerFor('gist');
     Ember.run.schedule('afterRender', function() {
