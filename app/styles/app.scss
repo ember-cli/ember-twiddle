@@ -22,6 +22,32 @@ body,
   height: 100%;
 }
 
+// nested menus shouldn't have extra padding
+md-menu-item > md-menu {
+  padding: 0;
+  margin: 0;
+}
+
+// buttons in a nested menu should be flush
+md-menu-item > md-menu > .md-button {
+  border-radius: 0;
+  margin: auto 0;
+  font-size: 15px;
+  text-transform: none;
+  font-weight: 400;
+  text-align: left;
+  text-align: start;
+  height: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+  display: inline-block;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  width: 100%;
+}
+
 .tree-file[aria-level='2'] {
   margin-left: 1em;
 }

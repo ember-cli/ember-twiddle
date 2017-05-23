@@ -4,6 +4,7 @@
       {{gist-card gist=model unsaved=unsaved
         isRevision=isRevision
         titleChanged=(action this.attrs.titleChanged)
+        deleteGist=(route-action 'deleteGist')
         saveGist=(route-action 'saveGist')
         fork=(route-action 'fork')
         copy=(route-action 'copy')
