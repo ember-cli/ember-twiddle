@@ -1,34 +1,38 @@
 import Ember from 'ember';
 import GistRoute from "ember-twiddle/routes/gist-base-route";
 
+const { inject, run } = Ember;
+
 export default GistRoute.extend({
-  emberCli: Ember.inject.service('ember-cli'),
+  emberCli: inject.service(),
 
   model(params) {
-    var model = this.get('store').createRecord('gist', {description: 'New Twiddle'});
+    let store = this.get('store');
+    let model = store.createRecord('gist', {description: 'New Twiddle'});
 
     if (params.copyCurrentTwiddle) {
-      this.get('store').peekAll('gistFile').setEach('gist', model);
+      store.peekAll('gistFile').setEach('gist', model);
     } else {
-      this.get('store').unloadAll('gistFile');
-
-      model.get('files').pushObject(this.get('emberCli').generate('controllers/application'));
-      model.get('files').pushObject(this.get('emberCli').generate('templates/application'));
-      model.get('files').pushObject(this.get('emberCli').generate('twiddle.json'));
+      store.unloadAll('gistFile');
+      let files = model.get('files');
+      let emberCli = this.get('emberCli');
+      files.pushObject(emberCli.generate('controllers/application'));
+      files.pushObject(emberCli.generate('templates/application'));
+      files.pushObject(emberCli.generate('twiddle.json'));
     }
 
     return model;
   },
 
   setupController(controller) {
-    this._super.apply(this, arguments);
+    this._super(...arguments);
 
     // reset copyCurrentTwiddle, so it is not shown in the URL: this QP is only
     // needed when initializing the model for this route
     controller.set('copyCurrentTwiddle', false);
 
     const gistController = this.controllerFor('gist');
-    Ember.run.schedule('afterRender', function() {
+    run.schedule('afterRender', function() {
       gistController.set('unsaved', false);
     });
   }

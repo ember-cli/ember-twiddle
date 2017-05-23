@@ -14,10 +14,7 @@ test('Able to reload the Twiddle', function(assert) {
 
   runGist(files);
 
-  // turn off live reloading
-  andThen(function() {
-    find("#live-reload").click();
-  });
+  click("#live-reload");
 
   andThen(function() {
     assert.equal(outputPane().find('input').val(), 'initial value');
@@ -27,11 +24,8 @@ test('Able to reload the Twiddle', function(assert) {
 
   andThen(function() {
     assert.equal(outputPane().find('input').val(), 'new value');
-    
-    find(".run-now").click();
-  });
 
-  andThen(function() {
+    click(".run-now");
     waitForLoadedIFrame();
   });
 

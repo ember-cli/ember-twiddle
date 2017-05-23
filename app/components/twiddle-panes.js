@@ -3,7 +3,7 @@ import Ember from 'ember';
 const { inject } = Ember;
 
 export default Ember.Component.extend({
-  resizeableColumns: inject.service('resizeable-columns'),
+  resizeableColumns: inject.service(),
   classNames: ['twiddle-panes'],
 
   init() {

@@ -198,24 +198,24 @@ export default Ember.Service.extend({
    * @return {Ember Object}       Source code for built Ember app
    */
   compileGist(gist) {
-    let promise = new RSVP.Promise((resolve, reject) => {
-      let errors = [];
-      let out = [];
-      let cssOut = [];
+    let errors = [];
+    let out = [];
+    let cssOut = [];
 
-      this.checkRequiredFiles(out, gist);
+    this.checkRequiredFiles(out, gist);
 
-      gist.get('files').forEach(file => {
-        this.compileFile(file, errors, out, cssOut);
-      });
+    gist.get('files').forEach(file => {
+      this.compileFile(file, errors, out, cssOut);
+    });
 
-      if (errors.length) {
-        return reject(errors);
-      }
+    if (errors.length) {
+      return RSVP.reject(errors);
+    }
 
-      this.addBoilerPlateFiles(out, gist);
+    this.addBoilerPlateFiles(out, gist);
 
-      resolve(this.get('twiddleJson').getTwiddleJson(gist).then(twiddleJSON => {
+    return this.get('twiddleJson').getTwiddleJson(gist)
+      .then(twiddleJSON => {
         this.addConfig(out, gist, twiddleJSON);
         this.set('enableTesting', testingEnabled(twiddleJSON));
 
@@ -229,12 +229,8 @@ export default Ember.Service.extend({
             legacyTesting: legacyTesting(twiddleJSON)
           }
         );
-
-        return RSVP.resolve(this.buildHtml(gist, out.join('\n'), cssOut.join('\n'), twiddleJSON));
-      }));
-    });
-
-    return promise;
+        return this.buildHtml(gist, out.join('\n'), cssOut.join('\n'), twiddleJSON);
+      });
   },
 
   compileFile(file, errors, out, cssOut) {
@@ -270,8 +266,10 @@ export default Ember.Service.extend({
     // avoids security error
     appJS += "window.history.pushState = function() {}; window.history.replaceState = function() {}; window.sessionStorage = undefined;";
 
-    // qunit
-    appJS += "window.QUnit = window.parent.QUnit;";
+    // Use parent's version of QUnit in Ember.testing mode
+    if (testing) {
+      appJS += "window.QUnit = window.parent.QUnit;";
+    }
 
     // Hide toolbar since it is not working
     appCSS += `\n#qunit-testrunner-toolbar, #qunit-tests a[href] { display: none; }\n`;
@@ -428,9 +426,9 @@ export default Ember.Service.extend({
     let moduleName = this.nameWithModule(filePath);
 
     const mungedCode = (code || '')
-            .replace(/\\/g, "\\\\") // Prevent backslashes from being escaped
-            .replace(/`/g, "\\`") // Prevent backticks from causing syntax errors
-            .replace(/\$/g, "\\$"); // Allow ${} expressions in the code
+      .replace(/\\/g, "\\\\") // Prevent backslashes from being escaped
+      .replace(/`/g, "\\`") // Prevent backticks from causing syntax errors
+      .replace(/\$/g, "\\$"); // Allow ${} expressions in the code
 
     return this.compileJs('export default Ember.HTMLBars.compile(`' + mungedCode + '`, { moduleName: `' + moduleName + '`});', filePath);
   },
@@ -438,7 +436,7 @@ export default Ember.Service.extend({
   compileCss(code, moduleName) {
     var prefix = "styles/";
     if (moduleName.substring(0, prefix.length) === prefix) {
-        return code;
+      return code;
     }
     return '';
   },
@@ -473,8 +471,8 @@ export default Ember.Service.extend({
  */
 function babelOpts(moduleName) {
   return {
-    modules:'amdStrict',
-    moduleIds:true,
+    modules: 'amdStrict',
+    moduleIds: true,
     moduleId: moduleName,
     plugins: [ hbsPlugin ]
   };

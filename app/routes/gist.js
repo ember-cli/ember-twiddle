@@ -7,7 +7,7 @@ const CONFIRM_MSG = "Unsaved changes will be lost.";
 
 export default Ember.Route.extend({
   toriiProvider: config.toriiProvider,
-  notify: inject.service('notify'),
+  notify: inject.service(),
   app: inject.service(),
   fastboot: inject.service(),
 

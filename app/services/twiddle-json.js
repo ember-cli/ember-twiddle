@@ -70,27 +70,19 @@ export default Ember.Service.extend({
 
       dependencyResolver.resolveDependencies(twiddleJson.dependencies);
       if ('addons' in twiddleJson) {
-        return dependencyResolver.resolveAddons(twiddleJson.addons, twiddleJson.dependencies, emberVersion).then(() => {
-          return RSVP.resolve(twiddleJson);
-        }).catch(() => {
-          return RSVP.reject();
-        });
+        return dependencyResolver.resolveAddons(twiddleJson.addons, twiddleJson.dependencies, emberVersion)
+          .then(() => twiddleJson);
       }
 
-      return RSVP.resolve(twiddleJson);
+      return twiddleJson;
     });
   },
 
   _updateTwiddleJson(gist, updateFn) {
-    return new RSVP.Promise(function(resolve, reject) {
+    return new RSVP.Promise(function(resolve) {
       const twiddle = gist.get('files').findBy('filePath', 'twiddle.json');
 
-      let json;
-      try {
-        json = JSON.parse(twiddle.get('content'));
-      } catch (e) {
-        return reject(e);
-      }
+      let json = JSON.parse(twiddle.get('content'));
 
       json = updateFn(json);
 
