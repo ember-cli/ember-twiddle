@@ -13,14 +13,12 @@
     <div class='twiddle-pane file-tree flex'>
       {{file-tree model=model
         openFile=(action this.openFile)
-        removeFile=(action this.attrs.removeFile)
       }}
     </div>
 
     {{#paper-list class='layout-column main-menu flex-nogrow'}}
       {{file-menu model=model
         session=session
-        activeEditorCol=activeEditorCol
         activeFile=activeFile
         isRevision=isRevision
         addFile=(action this.attrs.addFile)
@@ -29,8 +27,6 @@
         addUnitTestFile=(action this.attrs.addUnitTestFile)
         addIntegrationTestFile=(action this.attrs.addIntegrationTestFile)
         addAcceptanceTestFile=(action this.attrs.addAcceptanceTestFile)
-        renameFile=(action this.attrs.renameFile)
-        removeFile=(action this.attrs.removeFile)
         deleteGist=(route-action 'deleteGist')
         saveGist=(route-action 'saveGist')
         fork=(route-action 'fork')

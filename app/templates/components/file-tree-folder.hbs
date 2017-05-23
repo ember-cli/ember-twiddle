@@ -6,11 +6,6 @@
     {{#paper-button class='tree-node'}}
       {{paper-icon (if datum.state.opened 'folder open' 'folder') size=17}} {{datum.text}}
     {{/paper-button}}
-    {{#if (eq selected datum.id)}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon 'delete' size=17}}
-      {{/paper-button}}
-    {{/if}}
     {{#treeitem.group as |newtree|}}
       {{#each datum.children as |child|}}
         {{file-tree-folder datum=child tree=newtree

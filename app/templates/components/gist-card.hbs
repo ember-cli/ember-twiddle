@@ -12,6 +12,7 @@
       {{#paper-button iconButton=true title='Save Twiddle' onClick=(action saveGist gist)}}
         {{paper-icon 'save'}}
       {{/paper-button}}
+
       {{#if showFork}}
         {{#paper-button iconButton=true title='Fork Twiddle'  onClick=(action fork gist)}}
           {{paper-icon 'call split'}}

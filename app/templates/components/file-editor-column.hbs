@@ -29,14 +29,34 @@
     {{/paper-menu}}
     <span class="flex"></span>
 
-    {{#paper-button data-test-remove-panel iconButton=true title='Hide this panel' onClick=(action 'removeColumn' col)}}
-      {{paper-icon 'remove'}}
-    {{/paper-button}}
-    {{#if isLastColumn}}
-      {{#paper-button data-test-add-panel iconButton=true title='Add another panel' onClick=(action 'addColumn')}}
-        {{paper-icon 'add circle outline'}}
-      {{/paper-button}}
-    {{/if}}
+    {{#paper-menu position='target-left target' as |menu|}}
+      {{#menu.trigger class='layout-column'}}
+        {{#paper-button class='md-menu-origin' iconButton=true}}
+          {{paper-icon 'more vert'}}
+        {{/paper-button}}
+      {{/menu.trigger}}
+      {{#menu.content width=2 as |content|}}
+        {{#content.menu-item data-test-remove-panel title='Hide this panel' onClick=(action 'removeColumn' col)}}
+          {{paper-icon 'close'}} Hide Panel
+        {{/content.menu-item}}
+
+        {{#if isLastColumn}}
+          {{#content.menu-item data-test-add-panel title='Add another panel' onClick=(action 'addColumn')}}
+            {{paper-icon 'add circle outline'}} Add Another Panel
+          {{/content.menu-item}}
+        {{/if}}
+
+        {{paper-divider}}
+
+        {{#content.menu-item class='md-menu-align-target' onClick=(action renameFile file)}}
+          {{paper-icon 'import export'}} Move {{file.filePath}}
+        {{/content.menu-item}}
+
+        {{#content.menu-item class='md-menu-align-target' onClick=(action removeFile file)}}
+          {{paper-icon 'delete'}} Delete {{file.filePath}}
+        {{/content.menu-item}}
+      {{/menu.content}}
+    {{/paper-menu}}
   {{/paper-toolbar-tools}}
 {{/paper-toolbar}}
 

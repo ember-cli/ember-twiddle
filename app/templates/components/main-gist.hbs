@@ -3,7 +3,6 @@
   model=model
   session=session
   unsaved=unsaved
-  activeEditorCol=activeEditorCol
   activeFile=activeFile
   isRevision=isRevision
   titleChanged=(action 'titleChanged')
@@ -13,8 +12,6 @@
   addUnitTestFile=(action 'addUnitTestFile')
   addIntegrationTestFile=(action 'addIntegrationTestFile')
   addAcceptanceTestFile=(action 'addAcceptanceTestFile')
-  renameFile=(action 'renameFile')
-  removeFile=(action 'removeFile')
   versionChanged=(action 'rebuildApp')
   openFile=(action 'openFile')
   hideFileTree=(action 'hideFileTree')
@@ -33,8 +30,11 @@
       applicationUrl=applicationUrl
       buildOutput=buildOutput
       testsEnabled=testsEnabled
-      focusEditor=(action 'focusEditor')
+      activeEditorCol=activeEditorCol
+      renameFile=(action 'renameFile')
+      removeFile=(action 'removeFile')
       selectFile=(action 'selectFile')
+      focusEditor=(action 'focusEditor')
       updateColumn=(action 'updateColumn')
       removeColumn=(action 'removeColumn')
       addColumn=(action 'addColumn')

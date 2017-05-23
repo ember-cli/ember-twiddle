@@ -19,7 +19,6 @@
     {{file-tree-folder datum=datum tree=tree
       selected=treeService.selected
       onSelected=(action (mut treeService.selected))
-      handleSelectTreeNode=(action 'handleSelectTreeNode')
-      removeFile=removeFile}}
+      handleSelectTreeNode=(action 'handleSelectTreeNode')}}
   {{/each}}
 {{/ivy-tree}}
