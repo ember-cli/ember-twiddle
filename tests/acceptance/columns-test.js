@@ -3,7 +3,7 @@ import wait from 'ember-test-helpers/wait';
 import testSelector from 'ember-test-selectors';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 import { clickTrigger, selectOption, nativeClick } from 'ember-twiddle/tests/helpers/paper-helpers';
-import { find, findAll, click /*visit, click, find, fillIn, waitUntil, currentURL*/ } from 'ember-native-dom-helpers';
+import { find, findAll, click, visit/*, click, find, fillIn, waitUntil, currentURL*/ } from 'ember-native-dom-helpers';
 
 moduleForAcceptance('Acceptance | columns', {
   beforeEach: function() {
@@ -20,9 +20,7 @@ const firstRemoveColumnButton = firstColumn + ' ' + removeColumnButton;
 const outputAddColumnButton = '.output ' + addColumnButton;
 
 test('you can add columns', function(assert) {
-  visit('/');
-
-  andThen(function() {
+  return visit('/').then(() => {
     assert.equal(currentURL(), '/', 'We are on the correct initial route');
     assert.equal(findAll(columns).length, 1, 'There is one column to start');
     assert.ok(find(firstColumn).classList.contains('active'), 'The first column starts out active');
@@ -40,9 +38,7 @@ test('you can add columns', function(assert) {
 });
 
 test('you can remove columns', function(assert) {  
-  visit('/');
-
-  andThen(function() {
+  return visit('/').then(() => {
     assert.equal(currentURL(), '/', 'We are on the correct initial route');
     assert.equal(findAll(columns).length, 1, 'There is one column to start');
     assert.ok(find(firstColumn).classList.contains('active'), 'The first column starts out active');
@@ -58,5 +54,5 @@ test('you can remove columns', function(assert) {
 });
 
 function urlHas(url, text) {
-  return url.indexOf(text) > 0;
+  return decodeURIComponent(url).indexOf(text) > 0;
 }
