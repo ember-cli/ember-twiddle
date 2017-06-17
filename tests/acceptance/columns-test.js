@@ -3,6 +3,7 @@ import wait from 'ember-test-helpers/wait';
 import testSelector from 'ember-test-selectors';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 import { clickTrigger, selectOption, nativeClick } from 'ember-twiddle/tests/helpers/paper-helpers';
+import { find, findAll, click /*visit, click, find, fillIn, waitUntil, currentURL*/ } from 'ember-native-dom-helpers';
 
 moduleForAcceptance('Acceptance | columns', {
   beforeEach: function() {
@@ -23,15 +24,15 @@ test('you can add columns', function(assert) {
 
   andThen(function() {
     assert.equal(currentURL(), '/', 'We are on the correct initial route');
-    assert.equal(find(columns).length, 1, 'There is one column to start');
-    assert.ok(find(firstColumn).hasClass('active'), 'The first column starts out active');
+    assert.equal(findAll(columns).length, 1, 'There is one column to start');
+    assert.ok(find(firstColumn).classList.contains('active'), 'The first column starts out active');
 
     return wait()
-      .then(() => clickTrigger(find(firstColumnActionsMenu).get(0)))
-      .then(() => nativeClick(find(addColumnButton).get(0)))
+      .then(() => clickTrigger(firstColumnActionsMenu))
+      .then(() => click(addColumnButton))
       .then(() => {
         assert.ok(urlHas(currentURL(), 'numColumns=2'), 'We are on the correct route for 2 columns');
-        assert.equal(find(columns).length, 2, 'There are now 2 columns');
+        assert.equal(findAll(columns).length, 2, 'There are now 2 columns');
         assert.ok(urlHas(currentURL(), 'openFiles=controllers.application.js,templates.application.hbs'),
           'URL contains correct openFiles query parameter 1');
       });
@@ -43,15 +44,15 @@ test('you can remove columns', function(assert) {
 
   andThen(function() {
     assert.equal(currentURL(), '/', 'We are on the correct initial route');
-    assert.equal(find(columns).length, 1, 'There is one column to start');
-    assert.ok(find(firstColumn).hasClass('active'), 'The first column starts out active');
+    assert.equal(findAll(columns).length, 1, 'There is one column to start');
+    assert.ok(find(firstColumn).classList.contains('active'), 'The first column starts out active');
 
     return wait()
-      .then(() => clickTrigger(find(firstColumnActionsMenu).get(0)))
-      .then(() => nativeClick(find(removeColumnButton).get(0)))
+      .then(() => clickTrigger(find(firstColumnActionsMenu)))
+      .then(() => nativeClick(find(removeColumnButton)))
       .then(() => {
         assert.ok(urlHas(currentURL(), 'numColumns=0'), 'We are on the correct route for 0 columns');
-        assert.equal(find(columns).length, 0, 'There are now 0 columns');
+        assert.equal(findAll(columns).length, 0, 'There are now 0 columns');
       });
   });
 });

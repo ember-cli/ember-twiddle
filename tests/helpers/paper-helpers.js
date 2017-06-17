@@ -1,6 +1,8 @@
 import run from 'ember-runloop';
 import $ from 'jquery';
 import wait from 'ember-test-helpers/wait';
+import { find } from 'ember-native-dom-helpers';
+
 
 function focus(el) {
   if (!el) {
@@ -62,7 +64,8 @@ export function clickOption(scope, index, options = {}) {
   return wait();
 }
 
-export function clickTrigger(scope, options = {}) {
+export function clickTrigger(selector, options = {}) {
+  let scope = find(selector);
   if (scope && scope.classList.contains('ember-basic-dropdown-trigger')) {
     nativeClick(scope, options);
   } else {
