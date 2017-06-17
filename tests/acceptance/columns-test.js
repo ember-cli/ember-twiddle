@@ -8,10 +8,11 @@ moduleForAcceptance('Acceptance | columns', {
   }
 });
 
-const columns = '.code';
-const firstColumn = '.code:eq(0)';
-const addColumnButton = testSelector('add-panel');
-const removeColumnButton = testSelector('remove-panel');
+const columns = testSelector('columns');
+const firstColumn = testSelector('columns', '1');
+const firstColumnActionsMenu = testSelector('column-actions-menu', '1');
+const addColumnButton = testSelector('column-add-panel');
+const removeColumnButton = testSelector('column-remove-panel');
 const firstRemoveColumnButton = firstColumn + ' ' + removeColumnButton;
 const outputAddColumnButton = '.output ' + addColumnButton;
 
@@ -23,6 +24,7 @@ test('you can add and remove columns', function(assert) {
     assert.equal(find(columns).length, 1, 'There is one column to start');
     assert.ok(find(firstColumn).hasClass('active'), 'The first column starts out active');
 
+    find(firstColumnActionsMenu).click();
     find(addColumnButton).click();
   });
 

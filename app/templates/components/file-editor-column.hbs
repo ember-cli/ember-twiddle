@@ -5,7 +5,7 @@
     {{/if}}
 
     {{#paper-menu disabled=(not allFiles.length) position='target-right target' as |menu|}}
-      {{#menu.trigger class='layout-column'}}
+      {{#menu.trigger class='layout-column' data-test-column-files-menu=col}}
         {{#if allFiles.length}}
           {{#paper-button class='md-menu-origin'}}
             {{#if file}}
@@ -31,17 +31,17 @@
 
     {{#paper-menu position='target-left target' as |menu|}}
       {{#menu.trigger class='layout-column'}}
-        {{#paper-button class='md-menu-origin' iconButton=true}}
+        {{#paper-button class='md-menu-origin' iconButton=true data-test-column-actions-menu=col}}
           {{paper-icon 'more vert'}}
         {{/paper-button}}
       {{/menu.trigger}}
       {{#menu.content width=2 as |content|}}
-        {{#content.menu-item data-test-remove-panel title='Hide this panel' onClick=(action 'removeColumn' col)}}
+        {{#content.menu-item title='Hide this panel' onClick=(action 'removeColumn' col) data-test-column-remove-panel=col}}
           {{paper-icon 'close'}} Hide Panel
         {{/content.menu-item}}
 
         {{#if isLastColumn}}
-          {{#content.menu-item data-test-add-panel title='Add another panel' onClick=(action 'addColumn')}}
+          {{#content.menu-item title='Add another panel' onClick=(action 'addColumn') data-test-column-add-panel=col}}
             {{paper-icon 'add circle outline'}} Add Another Panel
           {{/content.menu-item}}
         {{/if}}
