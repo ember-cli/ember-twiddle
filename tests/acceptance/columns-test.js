@@ -1,6 +1,8 @@
 import { test } from 'qunit';
+import wait from 'ember-test-helpers/wait';
 import testSelector from 'ember-test-selectors';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
+import { clickTrigger, selectOption, nativeClick } from 'ember-twiddle/tests/helpers/paper-helpers';
 
 moduleForAcceptance('Acceptance | columns', {
   beforeEach: function() {
@@ -11,12 +13,12 @@ moduleForAcceptance('Acceptance | columns', {
 const columns = testSelector('columns');
 const firstColumn = testSelector('columns', '1');
 const firstColumnActionsMenu = testSelector('column-actions-menu', '1');
-const addColumnButton = testSelector('column-add-panel');
-const removeColumnButton = testSelector('column-remove-panel');
+const addColumnButton = testSelector('column-add-panel') + ' button';
+const removeColumnButton = testSelector('column-remove-panel') + ' button';
 const firstRemoveColumnButton = firstColumn + ' ' + removeColumnButton;
 const outputAddColumnButton = '.output ' + addColumnButton;
 
-test('you can add and remove columns', function(assert) {
+test('you can add columns', function(assert) {
   visit('/');
 
   andThen(function() {
@@ -24,54 +26,36 @@ test('you can add and remove columns', function(assert) {
     assert.equal(find(columns).length, 1, 'There is one column to start');
     assert.ok(find(firstColumn).hasClass('active'), 'The first column starts out active');
 
-    find(firstColumnActionsMenu).click();
-    find(addColumnButton).click();
-  });
-
-  andThen(function() {
-    assert.ok(urlHas('numColumns=2'), 'We are on the correct route for 2 columns');
-    assert.equal(find(columns).length, 2, 'There are now 2 columns');
-    assert.ok(urlHas('openFiles=controllers.application.js,templates.application.hbs'),
-      'URL contains correct openFiles query parameter 1');
-
-    find(addColumnButton).click();
-  });
-
-  andThen(function() {
-    assert.ok(urlHas('numColumns=3'), 'We are on the correct route for 3 columns');
-    assert.equal(find(columns).length, 3, 'There are now 3 columns');
-    assert.ok(urlHas('openFiles=controllers.application.js,templates.application.hbs,twiddle.json'),
-      'URL contains correct openFiles query parameter 1');
-
-    find(firstRemoveColumnButton).click();
-  });
-
-  andThen(function() {
-    assert.ok(urlHas('numColumns=2'), 'We are on the correct route for 2 columns');
-    assert.equal(find(columns).length, 2, 'There are now 2 columns');
-    assert.ok(urlHas('openFiles=templates.application.hbs,twiddle.json'),
-      'URL contains correct openFiles query parameter 2');
-
-    find(firstRemoveColumnButton).click();
-  });
-
-  andThen(function() {
-    assert.ok(!urlHas('numColumns'), 'We are on the correct route for 1 columns');
-    assert.equal(find(columns).length, 1, 'There are now 1 columns');
-    assert.ok(urlHas('openFiles=twiddle.json'), 'URL contains correct openFiles query parameter 3');
-
-    find(firstRemoveColumnButton).click();
-  });
-
-  andThen(function() {
-    assert.ok(urlHas('numColumns=0'), 'We are on the correct route for 0 columns');
-    assert.equal(find(columns).length, 0, 'There are now 0 columns');
-    assert.ok(!urlHas('openFiles'), 'URL does not contain openFiles query parameter');
-
-    find(outputAddColumnButton).click();
+    return wait()
+      .then(() => clickTrigger(find(firstColumnActionsMenu).get(0)))
+      .then(() => nativeClick(find(addColumnButton).get(0)))
+      .then(() => {
+        assert.ok(urlHas(currentURL(), 'numColumns=2'), 'We are on the correct route for 2 columns');
+        assert.equal(find(columns).length, 2, 'There are now 2 columns');
+        assert.ok(urlHas(currentURL(), 'openFiles=controllers.application.js,templates.application.hbs'),
+          'URL contains correct openFiles query parameter 1');
+      });
   });
 });
 
-function urlHas(text) {
-  return decodeURIComponent(window.location.search).indexOf(text) > 0;
+test('you can remove columns', function(assert) {  
+  visit('/');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/', 'We are on the correct initial route');
+    assert.equal(find(columns).length, 1, 'There is one column to start');
+    assert.ok(find(firstColumn).hasClass('active'), 'The first column starts out active');
+
+    return wait()
+      .then(() => clickTrigger(find(firstColumnActionsMenu).get(0)))
+      .then(() => nativeClick(find(removeColumnButton).get(0)))
+      .then(() => {
+        assert.ok(urlHas(currentURL(), 'numColumns=0'), 'We are on the correct route for 0 columns');
+        assert.equal(find(columns).length, 0, 'There are now 0 columns');
+      });
+  });
+});
+
+function urlHas(url, text) {
+  return url.indexOf(text) > 0;
 }
