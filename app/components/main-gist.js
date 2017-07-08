@@ -179,21 +179,38 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
      * Add a new file to the model
      * @param {String|null} type Blueprint name or null for empty file
      */
-    addFile (type) {
+    addFile(type) {
       this.addFile(type);
     },
 
-    renameFile (file) {
+    renameFile(file) {
       this.renameFile(file);
     },
 
-    removeFile (file) {
-      if(confirm(`Are you sure you want to remove this file?\n\n${file.get('filePath')}`)) {
-        this.removeFile(file);
-      }
+    showRemoveFileConfirmation(file) {
+      this.setProperties({
+        showRemoveFileModal: true,
+        fileToRemove: file
+      });
     },
 
-    removeColumn (col) {
+    hideRemoveFileConfirmation() {
+      this.setProperties({
+        showRemoveFileModal: false,
+        fileToRemove: undefined
+      });
+    },
+
+    removeFile() {
+      let file = this.get('fileToRemove');
+
+      if (file) {
+        this.removeFile(file);
+      }
+      this.send('hideRemoveFileConfirmation');
+    },
+
+    removeColumn(col) {
       this.removeColumn(col);
       this.updateOpenFiles();
       this.get('transitionQueryParams')({numColumns: this.get('realNumColumns') - 1});

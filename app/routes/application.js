@@ -5,6 +5,7 @@ import Settings from '../models/settings';
 const { inject } = Ember;
 
 export default Ember.Route.extend({
+  notify: inject.service(),
   fastboot: inject.service(),
   toriiProvider: config.toriiProvider,
 
@@ -42,10 +43,10 @@ export default Ember.Route.extend({
     },
 
     signInViaGithub () {
-      this.session.open(this.get('toriiProvider')).catch(function(error) {
-        if (alert) {
-          alert('Could not sign you in: ' + error.message);
-        }
+      let notify = this.get('notify');
+
+      this.session.open(this.get('toriiProvider')).catch((error) => {
+        notify.warning('Could not sign you in: ' + error.message);
         throw error;
       });
     },
@@ -61,7 +62,7 @@ export default Ember.Route.extend({
         args = args.slice(0, -1);
       }
 
-      this.transitionTo(...args);
+      return this.transitionTo(...args);
     }
   }
 });

@@ -1,7 +1,11 @@
-import Ember from "ember";
-import ErrorMessages from "../utils/error-messages";
+import Ember from 'ember';
+import ErrorMessages from '../utils/error-messages';
+
+const { inject } = Ember;
 
 export default Ember.Mixin.create({
+  notify: inject.service(),
+
   hasPath(filePath) {
     const files = this.get('model.files');
     const file = files.findBy('filePath', filePath);
@@ -9,9 +13,11 @@ export default Ember.Mixin.create({
   },
 
   createFile(filePath, fileProperties, fileColumn=1) {
+    let notify = this.get('notify');
+
     if (filePath) {
-      if(this.hasPath(filePath)) {
-        alert(`A file with the name ${filePath} already exists`);
+      if (this.hasPath(filePath)) {
+        notify.info(`A file with the name '${filePath}' already exists`);
         return;
       }
 
@@ -19,7 +25,7 @@ export default Ember.Mixin.create({
       let file = this.get('store').createRecord('gistFile', fileProperties);
 
       this.get('model.files').pushObject(file);
-      this.get('notify').info(`File ${file.get('filePath')} was added`);
+      notify.info(`File '${file.get('filePath')}' was added`);
       this.setColumnFile(fileColumn, file);
       this.set('activeEditorCol', '1');
       this.send('contentsChanged');
@@ -31,16 +37,20 @@ export default Ember.Mixin.create({
    *  Test whether path is valid.  Presently only tests whether components are hyphenated.
    */
   isPathInvalid(type, path){
+    let notify = this.get('notify');
     let errorMsg = null;
+
     if (type.match(/^component/)) {
       if (!path.match(/[^\/]+-[^\/]+(\/(component\.js|template\.hbs))?$/)) {
         errorMsg = ErrorMessages.componentsNeedHyphens;
       }
     }
+
     if (errorMsg) {
-      window.alert(errorMsg);
+      notify.warning(errorMsg);
       return true;
     }
+
     return false;
   },
 
@@ -61,8 +71,10 @@ export default Ember.Mixin.create({
   },
 
   addFile(type) {
-    let fileProperties = type ? this.get('emberCli').buildProperties(type) : {filePath:'file.js'};
-    let filePath = fileProperties.filePath;
+    let filePath = 'file.js';
+    let fileProperties = type ? this.get('emberCli').buildProperties(type) : { filePath };
+
+    filePath = fileProperties.filePath;
 
     if (['twiddle.json','router', 'css'].indexOf(type)===-1) {
       filePath = prompt('File path', filePath);
@@ -75,23 +87,28 @@ export default Ember.Mixin.create({
   },
 
   renameFile(file) {
+    let notify = this.get('notify');
     let filePath = prompt('File path', file.get('filePath'));
+
     if (filePath) {
-      if(this.get('model.files').findBy('filePath', filePath)) {
-        alert(`A file with the name ${filePath} already exists`);
+      if (this.get('model.files').findBy('filePath', filePath)) {
+        notify.info(`A file with the name '${filePath}' already exists`);
         return;
       }
 
       file.set('filePath', filePath);
-      this.get('notify').info(`File ${file.get('filePath')} was added`);
+      notify.info(`File ${file.get('filePath')} was added`);
       this.updateOpenFiles();
     }
   },
 
   removeFile(file) {
+    let notify = this.get('notify');
+
     file.deleteRecord();
-    this.get('notify').info(`File ${file.get('filePath')} was deleted`);
+    notify.info(`File '${file.get('filePath')}' was deleted`);
     this.removeFileFromColumns(file);
+
     if (this.get('activeFile') === file) {
       this.setProperties({
         activeFile: null,
@@ -110,10 +127,12 @@ export default Ember.Mixin.create({
     if (this.isPathInvalid('component', path)) {
       return;
     }
-    ['js', 'hbs'].forEach((fileExt, i)=>{
+
+    ['js', 'hbs'].forEach((fileExt, i) => {
       let fileProperties = this.get('emberCli').buildProperties(`component-${fileExt}`);
       let notPodPrefix = "components/";
       let filePath;
+
       if (path.substr(0, notPodPrefix.length) === notPodPrefix) {
         filePath =  `${fileExt === 'hbs' ? 'templates/' : ''}${path}.${fileExt}`;
       } else {

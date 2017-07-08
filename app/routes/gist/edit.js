@@ -1,9 +1,11 @@
-import Ember from "ember";
-import GistRoute from "ember-twiddle/routes/gist-base-route";
+import Ember from 'ember';
+import GistRoute from 'ember-twiddle/routes/gist-base-route';
 
-const { get } = Ember;
+const { get, inject } = Ember;
 
 export default GistRoute.extend({
+  notify: inject.service(),
+
   model(params) {
     this.get('store').unloadAll('gistFile');
 
@@ -25,12 +27,13 @@ export default GistRoute.extend({
 
   actions: {
     error(error) {
+      let notify = this.get('notify');
+
       if (error && error.errors && error.errors.length > 0) {
         let error1 = error.errors[0];
-        if (error1.status === "404") {
-          if (alert) {
-            alert('The gist is missing or secret.');
-          }
+
+        if (error1.status === '404') {
+          notify.info('The gist is missing or secret.');
           return this.transitionTo('gist.new');
         }
       }

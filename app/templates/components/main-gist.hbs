@@ -32,7 +32,7 @@
       testsEnabled=testsEnabled
       activeEditorCol=activeEditorCol
       renameFile=(action 'renameFile')
-      removeFile=(action 'removeFile')
+      removeFile=(action 'showRemoveFileConfirmation')
       selectFile=(action 'selectFile')
       focusEditor=(action 'focusEditor')
       updateColumn=(action 'updateColumn')
@@ -46,3 +46,29 @@
     }}
   {{/sidebar-container}}
 {{/with}}
+
+{{#if showRemoveFileModal}}
+  {{#paper-dialog class='flex-77' onClose=(action 'hideRemoveFileConfirmation') clickOutsideToClose=true}}
+    {{#paper-toolbar}}
+      {{#paper-toolbar-tools}}
+        <h2>Delete File?</h2>
+        <span class='flex'></span>
+        {{#paper-button iconButton=true onClick=(action 'hideRemoveFileConfirmation')}}
+          {{paper-icon icon='close'}}
+        {{/paper-button}}
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+
+    {{#paper-dialog-content}}
+      Are you sure you want to remove this file?<br><br>
+      
+      <code>{{fileToRemove.filePath}}</code>
+    {{/paper-dialog-content}}
+
+    {{#paper-dialog-actions class='layout-row'}}
+      {{#paper-button onClick=(action 'hideRemoveFileConfirmation')}}Cancel{{/paper-button}}
+      <span class='flex'></span>
+      {{#paper-button primary=true raised=true onClick=(action 'removeFile')}}Remove{{/paper-button}}
+    {{/paper-dialog-actions}}
+  {{/paper-dialog}}
+{{/if}}
