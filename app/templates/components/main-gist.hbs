@@ -60,7 +60,7 @@
     {{/paper-toolbar}}
 
     {{#paper-dialog-content}}
-      Are you sure you want to remove this file?<br><br>
+      Are you sure you want to delete this file?<br><br>
       
       <code>{{fileToRemove.filePath}}</code>
     {{/paper-dialog-content}}
@@ -68,7 +68,7 @@
     {{#paper-dialog-actions class='layout-row'}}
       {{#paper-button onClick=(action 'hideRemoveFileConfirmation')}}Cancel{{/paper-button}}
       <span class='flex'></span>
-      {{#paper-button warn=true raised=true onClick=(action 'removeFile')}}Remove{{/paper-button}}
+      {{#paper-button warn=true raised=true onClick=(action 'removeFile')}}Delete{{/paper-button}}
     {{/paper-dialog-actions}}
   {{/paper-dialog}}
 {{/if}}
