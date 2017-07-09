@@ -68,7 +68,7 @@
     {{#paper-dialog-actions class='layout-row'}}
       {{#paper-button onClick=(action 'hideRemoveFileConfirmation')}}Cancel{{/paper-button}}
       <span class='flex'></span>
-      {{#paper-button primary=true raised=true onClick=(action 'removeFile')}}Remove{{/paper-button}}
+      {{#paper-button warn=true raised=true onClick=(action 'removeFile')}}Remove{{/paper-button}}
     {{/paper-dialog-actions}}
   {{/paper-dialog}}
 {{/if}}
