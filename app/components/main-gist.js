@@ -187,17 +187,19 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
       this.renameFile(file);
     },
 
-    showRemoveFileConfirmation(file) {
+    showRemoveFileConfirmation(file, panelId) {
       this.setProperties({
         showRemoveFileModal: true,
-        fileToRemove: file
+        fileToRemove: file,
+        filePanelId: `#${panelId}`
       });
     },
 
     hideRemoveFileConfirmation() {
       this.setProperties({
         showRemoveFileModal: false,
-        fileToRemove: undefined
+        fileToRemove: undefined,
+        filePanelId: ''
       });
     },
 

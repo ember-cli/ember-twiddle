@@ -52,7 +52,7 @@
           {{paper-icon 'import export'}} Move {{file.filePath}}
         {{/content.menu-item}}
 
-        {{#content.menu-item class='md-menu-align-target' onClick=(action removeFile file)}}
+        {{#content.menu-item class='md-menu-align-target' onClick=(action removeFile file elementId)}}
           {{paper-icon 'delete'}} Delete {{file.filePath}}
         {{/content.menu-item}}
       {{/menu.content}}

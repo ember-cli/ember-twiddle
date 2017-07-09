@@ -48,7 +48,7 @@
 {{/with}}
 
 {{#if showRemoveFileModal}}
-  {{#paper-dialog class='flex-77' onClose=(action 'hideRemoveFileConfirmation') clickOutsideToClose=true}}
+  {{#paper-dialog class='flex-77' onClose=(action 'hideRemoveFileConfirmation') clickOutsideToClose=true parent=filePanelId}}
     {{#paper-toolbar}}
       {{#paper-toolbar-tools}}
         <h2>Delete File?</h2>
