@@ -1,0 +1,17 @@
+{{#paper-dialog class='flex-77' onClose=onClose clickOutsideToClose=true parent=parentId}}
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools}}
+      <h2>{{title}}</h2>
+      <span class='flex'></span>
+      {{#paper-button iconButton=true onClick=(action onClose)}}
+        {{paper-icon icon='close'}}
+      {{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+
+  {{yield (hash
+    content=(component 'paper-dialog-content')
+    actions=(component 'paper-dialog-actions' class='layout-row')
+    close=onClose
+  )}}
+{{/paper-dialog}}
