@@ -12,8 +12,8 @@ export default Ember.Component.extend({
 
   actions: {
     versionSelected(dependency, version) {
-      var gist = this.get('model');
-      var emberCli = this.get('emberCli');
+      let gist = this.get('model');
+      let emberCli = this.get('emberCli');
 
       emberCli.updateDependencyVersion(gist, dependency, version).then(() => {
         this.sendAction('onVersionChanged');
