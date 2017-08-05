@@ -62,7 +62,7 @@
     {{/ui.actions}}
   {{/basic-dialog}}
 {{else if showRenameFileDialog}}
-  {{#basic-dialog title='Move/Rename File' parentId=filePanelId onClose=(action 'hideRemoveFileDialog') as |ui|}}
+  {{#basic-dialog title='Move/Rename File' parentId=filePanelId onClose=(action 'hideRenameFileDialog') as |ui|}}
     {{#ui.content}}
       What would you like to call this file/where would you like to move it?<br><br>
       
