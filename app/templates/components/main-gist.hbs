@@ -31,7 +31,7 @@
       buildOutput=buildOutput
       testsEnabled=testsEnabled
       activeEditorCol=activeEditorCol
-      renameFile=(action 'renameFile')
+      renameFile=(action 'showRenameFileDialog')
       removeFile=(action 'showRemoveFileDialog')
       selectFile=(action 'selectFile')
       focusEditor=(action 'focusEditor')
@@ -72,7 +72,7 @@
     {{#ui.actions}}
       {{#paper-button onClick=ui.close}}Cancel{{/paper-button}}
       <span class='flex'></span>
-      {{#paper-button warn=true raised=true onClick=(action 'removeFile')}}Delete{{/paper-button}}
+      {{#paper-button warn=true raised=true onClick=(action 'renameFile')}}Delete{{/paper-button}}
     {{/ui.actions}}
   {{/basic-dialog}}
 {{/if}}

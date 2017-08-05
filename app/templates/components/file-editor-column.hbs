@@ -48,7 +48,7 @@
 
         {{paper-divider}}
 
-        {{#content.menu-item class='md-menu-align-target' onClick=(action renameFile file)}}
+        {{#content.menu-item class='md-menu-align-target' onClick=(action renameFile file elementId)}}
           {{paper-icon 'import export'}} Move {{file.filePath}}
         {{/content.menu-item}}
 
