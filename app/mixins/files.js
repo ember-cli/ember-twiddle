@@ -86,9 +86,8 @@ export default Ember.Mixin.create({
     this.updateOpenFiles();
   },
 
-  renameFile(file) {
+  renameFile(file, filePath) {
     let notify = this.get('notify');
-    let filePath = prompt('File path', file.get('filePath'));
 
     if (filePath) {
       if (this.get('model.files').findBy('filePath', filePath)) {

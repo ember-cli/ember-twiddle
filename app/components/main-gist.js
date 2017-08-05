@@ -183,16 +183,29 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
       this.addFile(type);
     },
 
-    showRenameFileDialog(file) {
+    showRenameFileDialog(file, panelId) {
       this.setProperties({
         showRenameFileDialog: true,
         fileToRename: file,
+        newFilePath: file.get('filePath'),
         filePanelId: `#${panelId}`
       });
     },
 
-    renameFile(file) {
-      this.renameFile(file);
+    hideRenameFileDialog() {
+      this.setProperties({
+        showRenameFileDialog: false,
+        fileToRename: undefined,
+        filePanelId: ''
+      });
+    },
+
+    renameFile() {
+      let file = this.get('fileToRename');
+      let filePath = this.get('newFilePath');
+
+      this.renameFile(file, filePath);
+      this.send('hideRenameFileDialog');
     },
 
     showRemoveFileDialog(file, panelId) {
@@ -217,7 +230,8 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
       if (file) {
         this.removeFile(file);
       }
-      this.send('hideRemoveFileConfirmation');
+
+      this.send('hideRemoveFileDialog');
     },
 
     removeColumn(col) {
