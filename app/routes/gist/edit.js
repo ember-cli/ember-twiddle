@@ -5,9 +5,11 @@ const { get, inject } = Ember;
 
 export default GistRoute.extend({
   notify: inject.service(),
+  state: inject.service(),
 
   model(params) {
     this.get('store').unloadAll('gistFile');
+    this.set('state.lastGistId', params.gistId);
 
     return this.get('store').find('gist', params.gistId);
   },

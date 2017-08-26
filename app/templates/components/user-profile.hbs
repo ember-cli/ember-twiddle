@@ -3,18 +3,17 @@
   <div class='user-info'>
     Logged in as <span class='name'>{{session.currentUser.login}}</span>
   </div>
-
+{{!--
   <div class='user-details'>
     You have __ saved Twiddles.
   </div>
+--}}
 </div>
 
 {{#paper-list class='layout-column flex'}}
-  {{#if hasToolbox}}
-    {{#paper-button onClick=hideProfile}}
-      {{paper-icon 'chevron left'}} Back to File Tree
-    {{/paper-button}}
-  {{/if}}
+  {{#paper-button onClick=hideProfile}}
+    {{paper-icon 'chevron left'}} Back to Twiddle
+  {{/paper-button}}
 {{/paper-list}}
 
 {{#paper-list class='profile-menu layout-column'}}
