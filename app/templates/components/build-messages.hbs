@@ -1,7 +1,7 @@
-<div class='layout-row layout-align-start-center'>
-  {{#if isBuilding}}
-    {{paper-progress-circular}}
-    Building...
+<div class='building-state layout-row layout-align-start-center'>
+  {{#if true}}
+    {{paper-progress-circular diameter=25}}
+    <span class='building-text'>Building...</span>
   {{else}}
     Output
     ({{#if buildErrors~}}
