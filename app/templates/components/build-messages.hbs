@@ -5,9 +5,9 @@
   {{else}}
     Output
     ({{#if buildErrors~}}
-      <a {{action 'showErrors'}}>{{buildErrors.length}} build errors</a>
+      <a {{action 'showErrors'}} role='button'>{{buildErrors.length}} build errors</a>
     {{~else~}}
-      build ok.
+      build ok
     {{~/if}})
   {{/if}}
 </div>
