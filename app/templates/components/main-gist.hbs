@@ -58,7 +58,9 @@
     {{#ui.actions}}
       {{#paper-button onClick=ui.close}}Cancel{{/paper-button}}
       <span class='flex'></span>
-      {{#paper-button warn=true raised=true onClick=(action 'removeFile')}}Delete{{/paper-button}}
+      {{#paper-button data-test-delete-file-confirm warn=true raised=true onClick=(action 'removeFile')}}
+        Delete
+      {{/paper-button}}
     {{/ui.actions}}
   {{/basic-dialog}}
 {{else if showRenameFileDialog}}

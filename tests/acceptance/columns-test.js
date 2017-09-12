@@ -2,7 +2,7 @@ import { test } from 'qunit';
 import wait from 'ember-test-helpers/wait';
 import testSelector from 'ember-test-selectors';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
-import { clickTrigger, selectOption, nativeClick } from 'ember-twiddle/tests/helpers/paper-helpers';
+import { clickTrigger, nativeClick } from 'ember-twiddle/tests/helpers/paper-helpers';
 import { find, findAll, click, visit/*, click, find, fillIn, waitUntil, currentURL*/ } from 'ember-native-dom-helpers';
 
 moduleForAcceptance('Acceptance | columns', {
@@ -16,8 +16,6 @@ const firstColumn = testSelector('columns', '1');
 const firstColumnActionsMenu = testSelector('column-actions-menu', '1');
 const addColumnButton = testSelector('column-add-panel') + ' button';
 const removeColumnButton = testSelector('column-remove-panel') + ' button';
-const firstRemoveColumnButton = firstColumn + ' ' + removeColumnButton;
-const outputAddColumnButton = '.output ' + addColumnButton;
 
 test('you can add columns', function(assert) {
   return visit('/').then(() => {

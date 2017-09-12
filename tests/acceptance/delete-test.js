@@ -1,17 +1,18 @@
 import { test } from 'qunit';
+import wait from 'ember-test-helpers/wait';
+import testSelector from 'ember-test-selectors';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
+import { find, click, visit } from 'ember-native-dom-helpers';
+
+const filesMenuSelector = testSelector('column-files-menu');
+const actionsMenuSelector = testSelector('column-actions-menu', '1');
+const deleteFileSelector = testSelector('delete-file') + ' button';
+const deleteFileConfirmSelector = testSelector('delete-file-confirm');
 
 moduleForAcceptance('Acceptance | delete gist', {
-  beforeEach: function() {
-    this.cacheConfirm = window.confirm;
-    window.confirm = () => true;
-
+  beforeEach() {
     server.create('user', { login: 'octocat' });
-  },
-
-  afterEach: function() {
-    window.confirm = this.cacheConfirm;
   }
 });
 
@@ -29,11 +30,16 @@ test('can delete a gist', function(assert) {
     }
   ]);
 
-  visit('/35de43cb81fc35ddffb2');
-
-  click('.test-delete-action');
-
-  andThen(function() {
-    assert.equal(currentRouteName(), 'gist.new', 'New twiddle created');
-  });
+  return visit('/35de43cb81fc35ddffb2')
+    .then(() => click(actionsMenuSelector))
+    .then(() => {
+      let el = find(deleteFileSelector, document.body);
+      return click(el, document.body);
+    })
+    .then(() => click(deleteFileConfirmSelector))
+    .then(() => {
+      let menuButton = find(filesMenuSelector);
+      let menuText = menuButton.textContent.trim();
+      assert.ok(menuText.includes('No file selected'), 'File deleted');
+    });
 });
