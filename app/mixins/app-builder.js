@@ -34,5 +34,11 @@ export default Ember.Mixin.create({
       yield timeout(500);
       yield this.get('buildApp').perform();
     }
-  }).restartable()
+  }).restartable(),
+
+  willDestroyElement() {
+    this._super(...arguments);
+
+    this.get('dependencyResolver.resolveAddonsTask').cancelAll();
+  }
 });

@@ -17,13 +17,15 @@ export default function(app, url) {
           resolve();
         }
 
-        if (app.testHelpers.find('iframe').length === 0 && times++ < 10) {
+        if (times++ >= 10) {
+          run.cancelTimers();
+        } else if (app.testHelpers.find('iframe').length === 0) {
           run.later(waitForRender, 10);
           return;
         }
         iframe_window = outputPane();
         if (iframe_window.document.readyState === 'complete') {
-          onWindowLoad();
+          resolve();
         } else {
           iframe_window.addEventListener('load', onWindowLoad);
         }
