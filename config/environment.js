@@ -1,6 +1,7 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
+  var deployTarget = process.env.DEPLOY_TARGET;
   var rootURL = process.env.TWIDDLE_ROOT_URL || '/';
   var host = process.env.GH_API_HOST || 'https://api.github.com';
   var toriiGHEBaseURL = process.env.TORII_GHE_OAUTH || null;
@@ -71,7 +72,7 @@ module.exports = function(environment) {
     ENV.host = undefined;
   }
 
-  if (environment === 'production') {
+  if (deployTarget === 'production') {
     ENV.githubOauthUrl = process.env.GATEKEEPER_URL || 'https://ember-twiddle.herokuapp.com/authenticate/';
     ENV.assetsHost = process.env.TWIDDLE_ASSET_HOST || '//assets.ember-twiddle.com/';
     ENV.githubApiKey = process.env.GH_API_KEY || '3df37009938c0790d952'
@@ -83,7 +84,7 @@ module.exports = function(environment) {
   }
 
   // staging to GH Enterprise is not currently supported.
-  if (environment === 'staging') {
+  if (deployTarget === 'staging') {
     ENV.githubOauthUrl = 'https://canary-twiddle-gatekeeper.herokuapp.com/authenticate/';
     ENV.assetsHost = '//canary-assets.ember-twiddle.com/';
     ENV.githubApiKey = '085e033505c9d26ec27a';
