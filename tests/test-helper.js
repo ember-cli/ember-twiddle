@@ -7,6 +7,7 @@ import createGist from "./helpers/create-gist";
 import runGist from "./helpers/run-gist";
 import runRevision from "./helpers/run-revision";
 import waitForLoadedIFrame from './helpers/wait-for-loaded-iframe';
+import waitForUnloadedIFrame from './helpers/wait-for-unloaded-iframe';
 
 setResolver(resolver);
 
@@ -25,3 +26,4 @@ Ember.Test.registerHelper('createGist', createGist);
 Ember.Test.registerAsyncHelper('runGist', runGist);
 Ember.Test.registerAsyncHelper('runRevision', runRevision);
 Ember.Test.registerAsyncHelper('waitForLoadedIFrame', waitForLoadedIFrame);
+Ember.Test.registerAsyncHelper('waitForUnloadedIFrame', waitForUnloadedIFrame);

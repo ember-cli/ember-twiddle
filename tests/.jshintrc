@@ -27,6 +27,7 @@
     "runGist",
     "runRevision",
     "waitForLoadedIFrame",
+    "waitForUnloadedIFrame",
     "outputPane",
     "outputContents"
   ],
