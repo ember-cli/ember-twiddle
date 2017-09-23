@@ -1,5 +1,5 @@
 {{#paper-menu position='target-right target' as |menu|}}
-  {{#menu.trigger class='layout-column'}}
+  {{#menu.trigger data-test-ember-version class='layout-column'}}
     {{#paper-button class='md-menu-origin'}}
       Ember <b>{{emberCli.versions.ember}}</b>
       {{paper-icon 'arrow drop up'}}
@@ -7,7 +7,7 @@
   {{/menu.trigger}}
   {{#menu.content width=2 as |content|}}
     {{#each versions as |version| }}
-      {{#content.menu-item class='md-menu-align-target' onClick=(action 'versionSelected' 'ember' version)}}
+      {{#content.menu-item data-test-ember-version-value=version class='md-menu-align-target' onClick=(action 'versionSelected' 'ember' version)}}
         {{version}}
       {{/content.menu-item}}
     {{/each}}
@@ -15,7 +15,7 @@
 {{/paper-menu}}
 
 {{#paper-menu position='target-right target' as |menu|}}
-  {{#menu.trigger class='layout-column'}}
+  {{#menu.trigger data-test-ember-data-version class='layout-column'}}
     {{#paper-button class='md-menu-origin'}}
       Ember Data <b>{{emberCli.versions.emberData}}</b>
       {{paper-icon 'arrow drop up'}}
@@ -23,7 +23,7 @@
   {{/menu.trigger}}
   {{#menu.content width=2 as |content|}}
     {{#each dataVersions as |version| }}
-      {{#content.menu-item class='md-menu-align-target' onClick=(action 'versionSelected' 'ember-data' version)}}
+      {{#content.menu-item data-test-ember-data-version-value=version class='md-menu-align-target' onClick=(action 'versionSelected' 'ember-data' version)}}
         {{version}}
       {{/content.menu-item}}
     {{/each}}

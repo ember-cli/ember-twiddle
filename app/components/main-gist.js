@@ -1,5 +1,4 @@
 import Ember from "ember";
-import Settings from '../models/settings';
 import ColumnsMixin from "../mixins/columns";
 import FilesMixin from "../mixins/files";
 import TestFilesMixin from "../mixins/test-files";
