@@ -17,7 +17,7 @@ export default function(app, url) {
           resolve();
         }
 
-        if (app.testHelpers.find('iframe').length === 0 && times++ < 10) {
+        if (app.testHelpers.find('iframe').length === 0 && times++ < 20) {
           run.later(waitForRender, 10);
           return;
         }
