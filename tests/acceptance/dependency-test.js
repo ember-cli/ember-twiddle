@@ -93,9 +93,7 @@ test('Dependencies can be changed via the UI', function(assert) {
   andThen(function() {
     assert.equal(find(emberVersionSelector + ' b').textContent, '1.13.10');
     assert.equal(find(emberDataVersionSelector + ' b').textContent, '1.13.15');
-  });
 
-  andThen(function() {
     let emberVersionValueSelector = testSelector('ember-version-value', '2.1.2') + ' button';
     let emberDataVersionValueSelector = testSelector('ember-data-version-value', '2.1.0');
 
@@ -104,11 +102,10 @@ test('Dependencies can be changed via the UI', function(assert) {
     return wait()
       .then(() => click(emberVersionValueSelector))
       .then(() => click(emberDataVersionSelector))
-      .then(() => click(emberDataVersionValueSelector));
-  });
-
-  andThen(function() {
-    assert.equal(find(emberVersionSelector + ' b').textContent, '2.1.2');
-    assert.equal(find(emberDataVersionSelector + ' b').textContent, '2.1.0');
+      .then(() => click(emberDataVersionValueSelector))
+      .then(() => {
+        assert.equal(find(emberVersionSelector + ' b').textContent, '2.1.2');
+        assert.equal(find(emberDataVersionSelector + ' b').textContent, '2.1.0');
+      });
   });
 });
