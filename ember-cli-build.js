@@ -10,7 +10,7 @@ module.exports = function(defaults) {
   var fs = require('fs');
 
   var env = EmberApp.env();
-  var deployTarget = process.env.DEPLOY_TARGET;
+  var deployTarget = process.env.DEPLOY_TARGET || env;
   var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
   var isFastboot = process.env.EMBER_CLI_FASTBOOT;
   var prepend = null;
