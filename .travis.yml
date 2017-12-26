@@ -4,14 +4,15 @@ node_js:
 notifications:
   email: false
 dist: trusty
-sudo: required
+sudo: false
 
 addons:
-  apt:
-    sources:
-    - google-chrome
-    packages:
-    - google-chrome-stable
+  chrome: stable
+
+env:
+  global:
+    # See https://git.io/vdao3 for details.
+    - JOBS=1
 
 cache:
   yarn: true
@@ -20,11 +21,11 @@ cache:
   - $HOME/.cache
 
 before_install:
-- npm config set spin false
-- npm install -g bower phantomjs-prebuilt yarn@~0.21.3
-- bower --version
-- phantomjs --version
-- yarn --version
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
+  - yarn global add bower
+  - bower --version
+  - yarn --version
 
 install:
 - yarn
