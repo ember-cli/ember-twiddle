@@ -1,5 +1,5 @@
 {
-  "version": "0.12.2",
+  "version": "0.13.0",
   "EmberENV": {
     "FEATURES": {}
   },
@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
-    "ember": "2.12.2",
-    "ember-template-compiler": "2.12.2",
-    "ember-testing": "2.12.2"
+    "ember": "2.16.2",
+    "ember-template-compiler": "2.16.2",
+    "ember-testing": "2.16.2"
   },
   "addons": {
-    "ember-data": "2.12.1"
+    "ember-data": "2.16.3"
   }
 }
