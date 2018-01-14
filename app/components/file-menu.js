@@ -74,6 +74,9 @@ export default Ember.Component.extend(DropdownSubmenuFixMixin, {
     },
     showCurrentVersion() {
       this.attrs.showCurrentVersion();
+    },
+    downloadProject() {
+      this.attrs.downloadProject();
     }
   }
 });

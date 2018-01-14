@@ -14,6 +14,7 @@ moduleForComponent('file-menu', 'Integration | Component | file menu', {
     this.copyCalled = false;
     this.deleteGistCalled = false;
     this.signInViaGithubCalled = false;
+    this.downloadProjectCalled = false;
 
     this.fileType = null;
     this.renamedFile = null;
@@ -57,6 +58,7 @@ moduleForComponent('file-menu', 'Integration | Component | file menu', {
     this.on('copy', () => { this.copyCalled = true; });
     this.on('deleteGist', (gist) => { this.deleteGistCalled = true; this.gistToDelete = gist; });
     this.on('signInViaGithub', () => { this.signInViaGithubCalled = true; });
+    this.on('downloadProject', () => { this.downloadProjectCalled = true; });
 
     this.render(hbs`{{file-menu model=model
                               session=session
@@ -69,7 +71,8 @@ moduleForComponent('file-menu', 'Integration | Component | file menu', {
                               fork=(action "fork")
                               copy=(action "copy")
                               deleteGist=(action "deleteGist")
-                              signInViaGithub=(action "signInViaGithub")}}`);
+                              signInViaGithub=(action "signInViaGithub")
+                              downloadProject=(action "downloadProject")}}`);
   }
 });
 
@@ -144,6 +147,14 @@ test("it calls signInViaGithub when clicking on 'Sign In To Github To Save'", fu
   this.$('.test-sign-in-action').click();
 
   assert.ok(this.signInViaGithubCalled, 'signInViaGithub was called');
+});
+
+test("it calls downloadProject when clicking on 'Download Project'", function(assert) {
+  assert.expect(1);
+
+  this.$('.test-download-project-action').click();
+
+  assert.ok(this.downloadProjectCalled, 'downloadProject was called');
 });
 
 test("it only renders 'New Twiddle' menu item, when no model is specified", function(assert) {
