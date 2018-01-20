@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import config from '../config/environment';
 
-const { inject, $ } = Ember;
+const { inject, $, RSVP } = Ember;
 
 const CONFIRM_MSG = "Unsaved changes will be lost.";
 
@@ -121,6 +121,25 @@ export default Ember.Route.extend({
 
     showRevision(id) {
       this.transitionTo('gist.edit.revision', this.paramsFor('gist.edit', 'gistId'), id);
+    },
+
+    downloadProject() {
+      this.downloadJSZip().then(() => {
+        const zip = new window.JSZip();
+
+        this.controller.get('model.files')
+        .toArray()
+        .forEach(function(f) {
+          zip.file(
+            'ember-twiddle/' + f.get('filePath'),
+            f.get('content')
+          );
+        });
+
+        zip.generateAsync({type:'blob'}).then(function(content) {
+          window.saveAs(content, 'ember-twiddle.zip');
+        });
+      });
     }
   },
 
@@ -150,5 +169,16 @@ export default Ember.Route.extend({
     }
     this.get('notify').error("Something went wrong. The gist was not saved.");
     throw error;
+  },
+
+  downloadJSZip() {
+    return new RSVP.Promise(function(resolve) {
+      if(window.JSZip) { resolve(); }
+
+      $.getScript(
+        'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js',
+        resolve
+      );
+    });
   }
 });

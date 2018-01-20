@@ -3,7 +3,7 @@
 module.exports = function(deployTarget) {
   var ENV = {
     build: {
-      environment: deployTarget
+      environment: 'production'
     },
     'revision-data': {
       type: 'version-commit'

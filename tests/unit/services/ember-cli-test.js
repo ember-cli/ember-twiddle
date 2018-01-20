@@ -30,6 +30,25 @@ test('compiling a gist works', function(assert) {
         filePath: 'controllers/application.js',
         extension: '.js',
         content: 'import Ember from "ember";\n\nexport default Ember.Controller.extend({appName:"foo"});'
+      }),
+      Ember.Object.create({
+        filePath: 'twiddle.json',
+        extension: '.json',
+        content: `{
+                  "version": "0.7.0",
+                  "EmberENV": {
+                    "FEATURES": {}
+                  },
+                  "options": {
+                    "use_pods": false,
+                    "enable-testing": false
+                  },
+                  "dependencies": {
+                    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
+                    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/2.4.3/ember.debug.js",
+                    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/2.4.0/ember-data.js"
+                  }
+                }`
       })
     ])
   });

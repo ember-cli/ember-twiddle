@@ -9,5 +9,11 @@ module.exports = {
   "launch_in_dev": [
     "PhantomJS",
     "Chrome"
-  ]
+  ],
+  "browser_args": {
+    "Chrome": [
+        "--disable-gpu",
+        "--no-sandbox"
+    ]
+  }  
 };

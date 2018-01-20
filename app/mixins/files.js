@@ -40,8 +40,8 @@ export default Ember.Mixin.create({
     let notify = this.get('notify');
     let errorMsg = null;
 
-    if (type.match(/^component/)) {
-      if (!path.match(/[^\/]+-[^\/]+(\/(component\.js|template\.hbs))?$/)) {
+    if (/^component/.test(type)) {
+      if (!/[^\/]+-[^\/]+(\/(component\.js|template\.hbs))?$/.test(path)) {
         errorMsg = ErrorMessages.componentsNeedHyphens;
       }
     }

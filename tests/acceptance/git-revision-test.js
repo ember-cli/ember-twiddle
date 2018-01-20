@@ -56,10 +56,8 @@ test('Able to copy a revision into new gist', function(assert) {
 
   click("#live-reload");
   click('.test-copy-action');
-
-  andThen(function() {
-    waitForLoadedIFrame();
-  });
+  waitForUnloadedIFrame();
+  waitForLoadedIFrame();
 
   andThen(function() {
     assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
@@ -89,8 +87,6 @@ test('Able to go from current version to revision and back via the UI', function
     assert.equal(outputContents('div'), 'Hello, World!');
   });
 
-  click("#live-reload");
-
   createGist({
     files: [
       {
@@ -104,15 +100,17 @@ test('Able to go from current version to revision and back via the UI', function
     doNotCreateGist: true
   });
 
-  click(".test-version-action");
-  click(".run-now");
-  waitForLoadedIFrame();
+  andThen(() => {
+    click(".test-version-action");
+    waitForUnloadedIFrame();
+    waitForLoadedIFrame();
+  });
 
   andThen(() => {
     assert.equal(outputContents('div'), 'Hello, ...');
 
     click(".test-show-current-version");
-    click(".run-now");
+    waitForUnloadedIFrame();
     waitForLoadedIFrame();
   });
 

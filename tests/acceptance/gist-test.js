@@ -363,6 +363,7 @@ test('editing a file updates gist', function(assert) {
     assert.equal(find(firstColumnTextarea).val(), '<div class="index">some text</div>');
 
     click(".run-now");
+    waitForUnloadedIFrame();
     waitForLoadedIFrame();
   });
 
@@ -427,6 +428,8 @@ test('accessing /:gist/copy creates a new Twiddle with a copy of the gist', func
 
     click("#live-reload");
     visit('/35de43cb81fc35ddffb2/copy');
+    click(".run-now");
+    waitForUnloadedIFrame();
     waitForLoadedIFrame();
   });
 

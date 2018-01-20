@@ -10,12 +10,13 @@ module.exports = function(defaults) {
   var fs = require('fs');
 
   var env = EmberApp.env();
+  var deployTarget = process.env.DEPLOY_TARGET;
   var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
   var isFastboot = process.env.EMBER_CLI_FASTBOOT;
   var prepend = null;
 
   if(isProductionLikeBuild) {
-     prepend = env === 'production' ? (process.env.TWIDDLE_ASSET_HOST || '//assets.ember-twiddle.com/') : '//canary-assets.ember-twiddle.com/';
+     prepend = deployTarget === 'production' ? (process.env.TWIDDLE_ASSET_HOST || '//assets.ember-twiddle.com/') : '//canary-assets.ember-twiddle.com/';
   }
 
   var blueprintsCode = getEmberCLIBlueprints();
@@ -89,6 +90,7 @@ module.exports = function(defaults) {
   app.import('vendor/flat-to-nested.js');
   app.import('vendor/shims/babel.js');
   app.import('vendor/shims/path.js');
+  app.import('bower_components/file-saver/FileSaver.js');
 
   if (env === "test") {
     app.import('bower_components/ember/ember-testing.js', { type: 'test' });

@@ -355,9 +355,7 @@ export default Ember.Service.extend({
       testJSFiles.forEach(jsFile => {
         depScriptTags += `<script type="text/javascript" src="${window.assetMap[jsFile]}"></script>`;
       });
-
-      // Temporary fix; real fix waiting for https://github.com/qunitjs/qunit/issues/1119
-      // Real fix should use copy of QUnitAdapter from ember-qunit.
+      
       testStuff += `<script type="text/javascript">
         Ember.Test.adapter = require('ember-qunit').QUnitAdapter.create();
       </script>`;
