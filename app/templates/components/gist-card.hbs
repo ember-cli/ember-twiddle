@@ -51,6 +51,10 @@
           {{/content.menu-item}}
         {{/if}}
 
+        {{#content.menu-item title='Download Twiddle' onClick=(action download)}}
+          {{paper-icon 'file download' size=20}} Download Twiddle
+        {{/content.menu-item}}
+
         {{#if (and (not gist.isNew) session.isAuthenticated)}}
           {{paper-divider}}
 
