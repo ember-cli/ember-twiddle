@@ -5,7 +5,7 @@
 An ember cli like web based javascript sharing tool. http://ember-twiddle.com
 
 * Ember Twiddle uses [Github Gists](https://gist.github.com) as persistence layer. Once you hit `Save` on a newly created Twiddle, it will create a public Gist under your Github account.
-* If you'd like to help out, check out [CONTRIBUTING.md](CONTRIBUTING.md)
+* If you'd like to help out, check out [CONTRIBUTING.md](CONTRIBUTING.md) We are looking for help maintaining the project. If you have contributed and would like to be made a maintainer, please make a request on the Slack channel or via email.
 
 ### Browser support
 
