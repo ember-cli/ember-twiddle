@@ -9,8 +9,10 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('gist', {path: '/'}, function() {
     this.route('new', {path: '/'});
+    // eslint-disable-next-line
     this.route('edit', {path: '/:gistId'}, function() {
       this.route('copy');
+      // eslint-disable-next-line
       this.route('revision', {path: '/:revId'});
     });
   });

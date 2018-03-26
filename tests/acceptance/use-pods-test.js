@@ -1,5 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
+import $ from 'jquery';
 
 const firstColumn = '.code:eq(0)';
 const firstFilePicker = firstColumn + ' .dropdown-toggle';

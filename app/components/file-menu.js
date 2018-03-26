@@ -16,31 +16,31 @@ export default Ember.Component.extend(DropdownSubmenuFixMixin, {
 
   actions: {
     addComponent() {
-      this.attrs.addComponent();
+      this.addComponent();
     },
     addHelper() {
-      this.attrs.addHelper();
+      this.addHelper();
     },
     addFile(type) {
-      this.attrs.addFile(type);
+      this.addFile(type);
     },
     addUnitTestFile(type) {
-      this.attrs.addUnitTestFile(type);
+      this.addUnitTestFile(type);
     },
     addIntegrationTestFile(type) {
-      this.attrs.addIntegrationTestFile(type);
+      this.addIntegrationTestFile(type);
     },
     addAcceptanceTestFile() {
-      this.attrs.addAcceptanceTestFile();
+      this.addAcceptanceTestFile();
     },
     renameFile(file) {
-      this.attrs.renameFile(file);
+      this.renameFile(file);
     },
     removeFile(file) {
-      this.attrs.removeFile(file);
+      this.removeFile(file);
     },
     saveGist(model) {
-      this.attrs.saveGist(model);
+      this.saveGist(model);
     },
     share() {
       prompt('Ctrl + C ;-)', window.location.href);
@@ -58,25 +58,25 @@ export default Ember.Component.extend(DropdownSubmenuFixMixin, {
       prompt('Ctrl + C ;-)', embedCode);
     },
     fork(model) {
-      this.attrs.fork(model);
+      this.fork(model);
     },
     copy() {
-      this.attrs.copy();
+      this.copy();
     },
     deleteGist(model) {
-      this.attrs.deleteGist(model);
+      this.deleteGist(model);
     },
     signInViaGithub() {
-      this.attrs.signInViaGithub();
+      this.signInViaGithub();
     },
     showRevision(id) {
-      this.attrs.showRevision(id);
+      this.showRevision(id);
     },
     showCurrentVersion() {
-      this.attrs.showCurrentVersion();
+      this.showCurrentVersion();
     },
     downloadProject() {
-      this.attrs.downloadProject();
+      this.downloadProject();
     }
   }
 });

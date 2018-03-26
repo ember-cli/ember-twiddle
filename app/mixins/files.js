@@ -33,7 +33,7 @@ export default Ember.Mixin.create({
   isPathInvalid(type, path){
     let errorMsg = null;
     if (/^component/.test(type)) {
-      if (!/[^\/]+-[^\/]+(\/(component\.js|template\.hbs))?$/.test(path)) {
+      if (!/[^/]+-[^/]+(\/(component\.js|template\.hbs))?$/.test(path)) {
         errorMsg = ErrorMessages.componentsNeedHyphens;
       }
     }

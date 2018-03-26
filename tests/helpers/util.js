@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 export function findMapText(selector, context) {
   var match = find(selector, context);
   var map = new Array(match.length);

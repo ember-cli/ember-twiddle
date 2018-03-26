@@ -6,7 +6,7 @@ export default Ember.Component.extend({
 
   actions: {
     setKeyMap(keyMap) {
-      this.attrs.setKeyMap(keyMap);
+      this.setKeyMap(keyMap);
     }
   }
 });

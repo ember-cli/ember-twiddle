@@ -9,6 +9,7 @@ const {
 export default ObjectProxy.extend({
   storageKey: 'ember_twiddle_settings',
 
+  // eslint-disable-next-line
   defaultSettings: {
     keyMap: 'default'
   },

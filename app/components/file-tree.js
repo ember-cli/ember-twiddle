@@ -90,26 +90,26 @@ export default Ember.Component.extend({
   actions: {
     handleSelectTreeNode(node) {
       if (node.original.leaf) {
-        this.attrs.openFile(node.original.path);
+        this.openFile(node.original.path);
         return;
       }
       this.get('jsTreeActionReceiver').send('toggleNode', node.id);
     },
 
     didBecomeReady() {
-      if(this.attrs.didBecomeReady) {
-        this.attrs.didBecomeReady();
+      if(this.didBecomeReady) {
+        this.didBecomeReady();
       }
     },
 
     didChange() {
-      if (this.attrs.didChange) {
-        this.attrs.didChange();
+      if (this.didChange) {
+        this.didChange();
       }
     },
 
     hideFileTree() {
-      this.attrs.hideFileTree();
+      this.hideFileTree();
     },
 
     expandAll() {

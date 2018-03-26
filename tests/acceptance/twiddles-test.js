@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { test } from 'qunit';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
+import $ from 'jquery';
 
 const { K } = Ember;
 

@@ -8,8 +8,8 @@ moduleForComponent('better-checkbox', 'Integration | Component | better checkbox
 test('it functions', function(assert) {
   assert.expect(3);
 
-  let checkboxChangedCalledTimes = 0;
-  this.on('checkboxChanged', () => { checkboxChangedCalledTimes++; });
+  // let checkboxChangedCalledTimes = 0;
+  this.on('checkboxChanged', () => { /* checkboxChangedCalledTimes++; */ });
 
   this.render(hbs`{{better-checkbox action=(action "checkboxChanged")}}`);
 
