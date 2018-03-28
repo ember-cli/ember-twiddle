@@ -15,8 +15,13 @@ module.exports = function(defaults) {
   var isFastboot = process.env.EMBER_CLI_FASTBOOT;
   var prepend = null;
 
-  if(isProductionLikeBuild) {
-     prepend = deployTarget === 'production' ? (process.env.TWIDDLE_ASSET_HOST || '//assets.ember-twiddle.com/') : '//canary-assets.ember-twiddle.com/';
+  if (isProductionLikeBuild) {
+    if (deployTarget === 'production') {
+      prepend = process.env.TWIDDLE_ASSET_HOST || '//assets.ember-twiddle.com/';
+    }
+    if (deployTarget === 'staging') {
+      prepend = '//canary-assets.ember-twiddle.com/'
+    }
   }
 
   var blueprintsCode = getEmberCLIBlueprints();
