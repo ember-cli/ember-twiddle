@@ -76,7 +76,7 @@
     "ember-test-helpers": "~0.6.3",
     "ivy-codemirror": "~2.0.3",
     "loader.js": "~4.0.10",
-    "moment": "~2.15.2",
+    "moment": "~2.19.3",
     "moment-timezone": "~0.5.4",
     "path-browser": "^2.2.1",
     "torii": "0.8.0"

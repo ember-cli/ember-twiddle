@@ -5551,9 +5551,13 @@ moment@2.10.6:
   version "2.10.6"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.10.6.tgz#6cb21967c79cba7b0ca5e66644f173662b3efa77"
 
-"moment@>= 2.6.0", "moment@>= 2.9.0", moment@^2.10.3, moment@^2.13.0, moment@~2.15.2:
+"moment@>= 2.6.0", "moment@>= 2.9.0", moment@^2.10.3, moment@^2.13.0:
   version "2.15.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.15.2.tgz#1bfdedf6a6e345f322fe956d5df5bd08a8ce84dc"
+
+moment@~2.19.3:
+  version "2.19.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.4.tgz#17e5e2c6ead8819c8ecfad83a0acccb312e94682"
 
 morgan@^1.5.2:
   version "1.8.1"
