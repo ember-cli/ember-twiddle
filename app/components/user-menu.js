@@ -33,14 +33,14 @@ export default Ember.Component.extend({
 
   actions: {
     signInViaGithub() {
-      this.attrs.signInViaGithub();
+      this.signInViaGithub();
     },
     signOut() {
-      this.attrs.signOut();
+      this.signOut();
     },
 
     showTwiddles() {
-      this.attrs.showTwiddles();
+      this.showTwiddles();
     }
   }
 });

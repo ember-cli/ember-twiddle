@@ -176,7 +176,7 @@ export default Ember.Service.extend({
 
       return {
         filePath: this.get('usePods') ? blueprint.podFilePath || blueprint.filePath : blueprint.filePath,
-        content: content.replace(/<\%\=(.*)\%\>/gi,'')
+        content: content.replace(/<%=(.*)%>/gi,'')
       };
     }
   },
@@ -319,6 +319,7 @@ export default Ember.Service.extend({
       } else if (extension === '.js') {
         depScriptTags += `<script type="text/javascript" src="${dep}"></script>`;
       } else {
+        // eslint-disable-next-line no-console
         console.warn("Could not determine extension of " + dep);
       }
     });

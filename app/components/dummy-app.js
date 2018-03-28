@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import ResizeMixin from 'ember-twiddle/mixins/resize';
+import $ from 'jquery';
 
-const { $, on, inject } = Ember;
+const { inject } = Ember;
 
 export default Ember.Component.extend(ResizeMixin, {
   app: inject.service(),
@@ -55,7 +56,8 @@ export default Ember.Component.extend(ResizeMixin, {
     }
   },
 
-  didResize: on('didInsertElement', function () {
+  didInsertElement() {
+    this._super();
     let offset = this.$().offset(), width = this.$().width(),
         height = this.$().height();
 
@@ -65,10 +67,10 @@ export default Ember.Component.extend(ResizeMixin, {
       width:  width,
       height: height
     });
-  }),
+  },
 
   willDestroyElement() {
-    this._super(...arguments);
+    this._super();
 
     let oldIframe = document.getElementById(this.iframeId);
     if (oldIframe) {
