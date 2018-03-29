@@ -331,14 +331,22 @@ export default Ember.Service.extend({
             url: 'https://cdnjs.cloudflare.com/ajax/libs/qunit/2.3.2/qunit.js',
             dataType: 'text'
           }).then(function(script) {
-            var oldQUnit = window.QUnit;
+            var oldQUnit;
+            if (window.QUnit) {
+              oldQUnit = window.QUnit;
+            }
             window.QUnit = {
               config: {
                 autostart: false
               }
             }
             eval(script);
-            window.require(window.testModule);
+            if (!oldQUnit) {
+              oldQUnit = window.QUnit;
+            }
+            if (window.testModule) {
+              window.require(window.testModule);
+            }
             window.QUnit.start = function() {};
             window.QUnit.done(function() {
               window.QUnit = oldQUnit;

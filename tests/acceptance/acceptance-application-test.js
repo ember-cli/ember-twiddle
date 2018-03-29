@@ -39,10 +39,7 @@ test('An acceptance test for an application works', function(assert) {
                     "enable-testing": true
                   },
                   "dependencies": {
-                    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
-                    "ember": "2.12.0",
-                    "ember-template-compiler": "2.12.0",
-                    "ember-testing": "2.12.0"
+                    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
                   }
                 }`
     },
