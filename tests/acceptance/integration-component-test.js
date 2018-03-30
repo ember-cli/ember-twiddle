@@ -30,7 +30,7 @@ test('An integration test for a component works', function(assert) {
     {
       filename: "twiddle.json",
       content: `{
-                  "version": "0.13.0",
+                  "version": "0.13.1",
                   "EmberENV": {
                     "FEATURES": {}
                   },

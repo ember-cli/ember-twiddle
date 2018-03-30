@@ -1,6 +1,6 @@
 {
   "name": "ember-twiddle",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "dependencies": {
     "jquery": "1.11.3",
     "codemirror": "~5.19.0",
