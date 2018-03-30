@@ -160,7 +160,7 @@ test('An acceptance test for an application works', function(assert) {
   runGist(files);
 
   andThen(function() {
-    return timeout(250); // TODO: fix and remove this timing hack
+    return timeout(500); // TODO: fix and remove this timing hack
   });
 
   andThen(function() {

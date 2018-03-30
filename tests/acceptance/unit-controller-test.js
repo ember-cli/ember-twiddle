@@ -1,5 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
+import { timeout } from 'ember-concurrency';
 
 moduleForAcceptance('Acceptance | unit-controller-test', {
   beforeEach: function() {
@@ -85,6 +86,10 @@ test('A unit test for controllers works', function(assert) {
   ];
 
   runGist(files);
+
+  andThen(function() {
+    return timeout(250); // TODO: fix and remove this timing hack
+  });
 
   andThen(function() {
     const outputSpan = 'div#qunit-testresult-display > span.passed';

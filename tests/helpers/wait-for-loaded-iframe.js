@@ -1,6 +1,6 @@
 import Ember from "ember";
 
-const { RSVP, run, warn } = Ember;
+const { RSVP, run } = Ember;
 
 export default function(app, url) {
   let iframeWindow;
@@ -18,7 +18,8 @@ export default function(app, url) {
         }
 
         if (times++ >= 10) {
-          warn('Timeout: Twiddle has failed to load');
+          // eslint-disable-next-line no-console
+          console.warn('Timeout: Twiddle has failed to load');
           run.cancelTimers();
         } else if (app.testHelpers.find('iframe#dummy-content-iframe').length === 0) {
           run.later(waitForRender, 10);
@@ -41,7 +42,6 @@ export default function(app, url) {
     url = url || "/";
 
     if (times++ >= 10) {
-      warn('Timeout: Twiddle has failed to load');
       run.cancelTimers();
     } else if (iframeWindow.visit) {
       return iframeWindow.visit(url);

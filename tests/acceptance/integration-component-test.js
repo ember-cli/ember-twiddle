@@ -1,5 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
+import { timeout } from 'ember-concurrency';
 
 moduleForAcceptance('Acceptance | integration-component-test', {
   beforeEach: function() {
@@ -111,6 +112,10 @@ test('An integration test for a component works', function(assert) {
   ];
 
   runGist(files);
+
+  andThen(function() {
+    return timeout(500); // TODO: fix and remove this timing hack
+  });
 
   andThen(function() {
     const outputSpan = 'div#qunit-testresult-display > span.passed';
