@@ -11,7 +11,7 @@ import waitForUnloadedIFrame from './helpers/wait-for-unloaded-iframe';
 
 setResolver(resolver);
 
-const iframe = "#dummy-content-iframe";
+const iframe = "iframe#dummy-content-iframe";
 
 Ember.Test.registerHelper('outputPane', function(app) {
   return app.testHelpers.find(iframe)[0].contentWindow;

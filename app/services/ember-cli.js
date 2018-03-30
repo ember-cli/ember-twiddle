@@ -265,11 +265,6 @@ export default Ember.Service.extend({
     // avoids security error
     appJS += "window.history.pushState = function() {}; window.history.replaceState = function() {}; window.sessionStorage = undefined;";
 
-    // Use parent's version of QUnit in Ember.testing mode
-    if (testing) {
-      appJS += "window.QUnit = window.parent.QUnit;";
-    }
-
     // Hide toolbar since it is not working
     appCSS += `\n#qunit-testrunner-toolbar, #qunit-tests a[href] { display: none; }\n`;
 
@@ -307,6 +302,10 @@ export default Ember.Service.extend({
     let EmberENV = twiddleJSON.EmberENV || {};
     const isTestingEnabled = testingEnabled(twiddleJSON);
 
+    if (testing && !isTestingEnabled) {
+      depScriptTags += `<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/qunit/2.3.2/qunit.js"></script>`;
+    }
+
     depScriptTags += `<script type="text/javascript">EmberENV = ${JSON.stringify(EmberENV)};</script>`;
     depScriptTags += `<script type="text/javascript" src="${window.assetMap.loader}"></script>`;
 
@@ -323,6 +322,41 @@ export default Ember.Service.extend({
         console.warn("Could not determine extension of " + dep);
       }
     });
+
+    if (isTestingEnabled) {
+      testStuff += `
+        <script type="text/javascript">
+          // Hack around dealing with multiple global QUnits!
+          jQuery.ajax({
+            url: 'https://cdnjs.cloudflare.com/ajax/libs/qunit/2.3.2/qunit.js',
+            dataType: 'text'
+          }).then(function(script) {
+            var oldQUnit;
+            if (window.QUnit) {
+              oldQUnit = window.QUnit;
+            }
+            window.QUnit = {
+              config: {
+                autostart: false
+              }
+            }
+            eval(script);
+            if (!oldQUnit) {
+              oldQUnit = window.QUnit;
+            }
+            if (window.testModule) {
+              window.require(window.testModule);
+            }
+            window.QUnit.start = function() {};
+            window.QUnit.done(function() {
+              window.QUnit = oldQUnit;
+            });
+            Ember.run(function() {
+              oldQUnit.start();
+            });
+          });
+        </script>`;
+    }
 
     depScriptTags += `<script type="text/javascript" src="${window.assetMap.twiddleDeps}"></script>`;
 
@@ -355,7 +389,7 @@ export default Ember.Service.extend({
       testJSFiles.forEach(jsFile => {
         depScriptTags += `<script type="text/javascript" src="${window.assetMap[jsFile]}"></script>`;
       });
-      
+
       testStuff += `<script type="text/javascript">
         Ember.Test.adapter = require('ember-qunit').QUnitAdapter.create();
       </script>`;
