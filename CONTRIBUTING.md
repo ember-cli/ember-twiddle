@@ -15,13 +15,13 @@ You will need the following things properly installed on your computer.
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS 2](http://phantomjs.org/)
 * [Gatekeeper](https://github.com/prose/gatekeeper)
+* [Docker](https://docs.docker.com/install/)
+* [Docker Compose](https://docs.docker.com/compose/install/)
 
 ### Installation
 
 * `git clone <repository-url>` this repository
 * change into the new directory
-* `yarn`
-* `bower install`
 * Create a new github application
   - Go to github.com
   - click top right portrait
@@ -37,11 +37,21 @@ You will need the following things properly installed on your computer.
 * [Install gatekeeper](https://github.com/prose/gatekeeper)
 * Edit the gatekeeper config.json to have the client_id and client_secret from your new github application
 * Edit the config/environment.js in ember twiddle (find the apiKey and set it to the client_id of your github application)
+  * **Note:** If you are going to use Docker setup, instead of editing config/environment.js, open the docker-compose.yml
+  and under environment change `CHANGEME` with your key
 
-### Running / Development
+### Running / Development Without Docker
 
 * `node server.js` from your gatekeeper folder
+* `yarn` from ember twiddle folder
+* `bower install` from ember twiddle folder
 * `ember server` from ember twiddle folder
+* Visit your app at [http://localhost:4200](http://localhost:4200).
+
+### Running / Development With Docker
+
+* `node server.js` from your gatekeeper folder
+* `docker-compose up` from ember twiddle folder
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
 ### Code Generators
