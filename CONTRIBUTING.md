@@ -15,8 +15,8 @@ You will need the following things properly installed on your computer.
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS 2](http://phantomjs.org/)
 * [Gatekeeper](https://github.com/prose/gatekeeper)
-* [Docker](https://docs.docker.com/install/)
-* [Docker Compose](https://docs.docker.com/compose/install/)
+* [Docker](https://docs.docker.com/install/) (Optional)
+* [Docker Compose](https://docs.docker.com/compose/install/) (Optional)
 
 ### Installation
 
