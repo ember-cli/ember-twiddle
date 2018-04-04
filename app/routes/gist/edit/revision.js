@@ -8,11 +8,9 @@ export default GistEditRoute.extend({
     this.get('store').unloadAll('gistFile');
     const gistParams = this.paramsFor('gist.edit');
 
-    return this.get('store').query('gist-revision', {
+    return this.get('store').queryRecord('gist-revision', {
       gistId: gistParams.gistId,
       revId: params.revId
-    }).then((response) => {
-      return response.get('firstObject');
     });
   },
 
