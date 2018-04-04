@@ -15,8 +15,6 @@ You will need the following things properly installed on your computer.
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS 2](http://phantomjs.org/)
 * [Gatekeeper](https://github.com/prose/gatekeeper)
-* [Docker](https://docs.docker.com/install/) (Optional)
-* [Docker Compose](https://docs.docker.com/compose/install/) (Optional)
 
 ### Installation
 
@@ -40,7 +38,7 @@ You will need the following things properly installed on your computer.
   * **Note:** If you are going to use Docker setup, instead of editing config/environment.js, open the docker-compose.yml
   and under environment change `CHANGEME` with your key
 
-### Running / Development Without Docker
+### Running / Development Without Docker (Recommended)
 
 * `node server.js` from your gatekeeper folder
 * `yarn` from ember twiddle folder
@@ -48,7 +46,14 @@ You will need the following things properly installed on your computer.
 * `ember server` from ember twiddle folder
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
-### Running / Development With Docker
+### Running / Development With Docker (OPTIONAL)
+
+#### Additional Dependencies
+
+* [Docker](https://docs.docker.com/install/) (Optional)
+* [Docker Compose](https://docs.docker.com/compose/install/) (Optional)
+
+#### Instructions
 
 * `node server.js` from your gatekeeper folder
 * `docker-compose up` from ember twiddle folder
