@@ -21,6 +21,10 @@ The latest working version of Ember in Ember Twiddle is 2.16. Feel free to open 
 
 You can use the [issue tracker](https://github.com/ember-cli/ember-twiddle/issues) to provide feedback, suggest features or report bugs.  Before you open an issue though, make sure you check [canary.ember-twiddle.com](http://canary.ember-twiddle.com) to see whether it's not already fixed on `master`. Of course, you should also check whether an issue doesn't exist already (if it does, use the comments to provide additional input).
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
 #### Security-related issues
 
 If you run into a security-related issue, please **do not** open an issue for it but instead email security@emberjs.com (preferably with a twiddle demonstrating the issue).
