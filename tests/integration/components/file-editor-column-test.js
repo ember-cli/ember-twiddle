@@ -1,4 +1,3 @@
-import Ember from "ember";
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -56,7 +55,7 @@ test('it calls contentChanged with true when changing the content via the code e
     assert.ok(isUserChange, 'contentChanged was called with isUserChange = true');
   });
 
-  this.set('ignoreAction', Ember.K);
+  this.set('ignoreAction', function() {});
 
   this.set('file', { content: '' });
 
