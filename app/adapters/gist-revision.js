@@ -1,7 +1,7 @@
 import ApplicationAdapter from './application';
 
 export default ApplicationAdapter.extend({
-  urlForQuery(query) {
+  urlForQueryRecord(query) {
     const host = this.host || "";
     return `${host}/gists/${query.gistId}/${query.revId}`;
   }

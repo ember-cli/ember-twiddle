@@ -2,7 +2,12 @@ import { moduleForComponent, test } from 'ember-qunit';
 
 moduleForComponent('main-gist', 'Unit | Component | main gist', {
   unit: true,
-  needs: ['service:ember-cli']
+  needs: [
+    'service:ember-cli',
+    'service:dependency-resolver',
+    'service:notify',
+    'service:fastboot'
+  ]
 });
 
 test('isPathInvalid method', function(assert) {

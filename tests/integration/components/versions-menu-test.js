@@ -7,7 +7,10 @@ moduleForComponent('versions-menu', 'Integration | Component | versions menu', {
 
   beforeEach() {
     this.depResolverStub = Ember.Service.extend({
-      emberVersions: ['1.2.3']
+      init() {
+        this._super(...arguments);
+        this.emberVersions = ['1.2.3'];
+      }
     });
     this.register('service:dependency-resolver', this.depResolverStub);
     this.inject.service('dependency-resolver', { as: 'dependencyResolver' });

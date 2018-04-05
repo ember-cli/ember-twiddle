@@ -32,30 +32,30 @@ export default Ember.Component.extend({
   }),
 
   focusIn () {
-    this.sendAction('focusEditor', this);
+    this.focusEditor(this);
   },
 
   actions: {
     selectFile(file) {
       this.set('file', file);
-      this.sendAction('selectFile', file);
+      this.selectFile(file);
     },
 
     valueUpdated(value, __, changeObj) {
       const isUserChange = changeObj.origin !== 'setValue';
-      this.get('contentChanged')(isUserChange, value);
+      this.contentChanged(isUserChange, value);
     },
 
     removeColumn(col) {
-      this.get('removeColumn')(col);
+      this.removeColumn(col);
     },
 
     addColumn() {
-      this.get('addColumn')();
+      this.addColumn();
     },
 
     showFileTree() {
-      this.get('showFileTree')();
+      this.showFileTree();
     }
   }
 });

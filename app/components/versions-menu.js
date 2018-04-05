@@ -16,7 +16,7 @@ export default Ember.Component.extend({
       let emberCli = this.get('emberCli');
 
       emberCli.updateDependencyVersion(gist, dependency, version).then(() => {
-        this.sendAction('onVersionChanged');
+        this.get('onVersionChanged')();
       });
     }
   }

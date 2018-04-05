@@ -1,5 +1,3 @@
-/* jshint node: true */
-
 module.exports = function(environment) {
   var deployTarget = process.env.DEPLOY_TARGET;
   var rootURL = process.env.TWIDDLE_ROOT_URL || '/';

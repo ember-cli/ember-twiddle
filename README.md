@@ -5,7 +5,8 @@
 An ember cli like web based javascript sharing tool. http://ember-twiddle.com
 
 * Ember Twiddle uses [Github Gists](https://gist.github.com) as persistence layer. Once you hit `Save` on a newly created Twiddle, it will create a public Gist under your Github account.
-* If you'd like to help out, check out [CONTRIBUTING.md](CONTRIBUTING.md)
+* If you'd like to help out, check out [CONTRIBUTING.md](CONTRIBUTING.md) We are looking for help maintaining the project. If you have contributed and would like to be made a maintainer, please make a request on the Slack channel or via email.
+* Ember Twiddle uses a backend for compiling addons. It is currently located at https://github.com/joostdevries/twiddle-backend
 
 ### Browser support
 
@@ -13,9 +14,16 @@ To make using Ember Twiddle secure, we use the [sandbox](http://caniuse.com/#fea
 
 We are planning to move to a secure solution with better compatibility soon (most likely one where the twiddle is run on a different domain).
 
+### Ember support
+The latest working version of Ember in Ember Twiddle is 2.16. Feel free to open a PR to extend the supported versions.
+
 ## Feedback
 
 You can use the [issue tracker](https://github.com/ember-cli/ember-twiddle/issues) to provide feedback, suggest features or report bugs.  Before you open an issue though, make sure you check [canary.ember-twiddle.com](http://canary.ember-twiddle.com) to see whether it's not already fixed on `master`. Of course, you should also check whether an issue doesn't exist already (if it does, use the comments to provide additional input).
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 #### Security-related issues
 

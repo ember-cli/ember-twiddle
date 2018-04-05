@@ -41,7 +41,7 @@ export default Ember.Component.extend({
     },
 
     valueChanged() {
-      this.attrs.titleChanged();
+      this.titleChanged();
     }
   }
 

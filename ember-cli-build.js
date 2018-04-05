@@ -1,4 +1,5 @@
 /* global require, module, process */
+'use strict';
 module.exports = function(defaults) {
   var EmberApp = require('ember-cli/lib/broccoli/ember-app');
   var funnel = require('broccoli-funnel');
@@ -15,8 +16,13 @@ module.exports = function(defaults) {
   var isFastboot = process.env.EMBER_CLI_FASTBOOT;
   var prepend = null;
 
-  if(isProductionLikeBuild) {
-     prepend = deployTarget === 'production' ? (process.env.TWIDDLE_ASSET_HOST || '//assets.ember-twiddle.com/') : '//canary-assets.ember-twiddle.com/';
+  if (isProductionLikeBuild) {
+    if (deployTarget === 'production') {
+      prepend = process.env.TWIDDLE_ASSET_HOST || '//assets.ember-twiddle.com/';
+    }
+    if (deployTarget === 'staging') {
+      prepend = '//canary-assets.ember-twiddle.com/'
+    }
   }
 
   var blueprintsCode = getEmberCLIBlueprints();
@@ -66,14 +72,7 @@ module.exports = function(defaults) {
     },
 
     tests: true,
-    hinting: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
-
-    vendorFiles: {
-      'ember.js': {
-        staging: 'bower_components/ember/ember.prod.js'
-      },
-      'ember-testing.js': []
-    }
+    hinting: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild
   });
 
   if (isFastboot) {
@@ -91,10 +90,6 @@ module.exports = function(defaults) {
   app.import('vendor/shims/babel.js');
   app.import('vendor/shims/path.js');
   app.import('bower_components/file-saver/FileSaver.js');
-
-  if (env === "test") {
-    app.import('bower_components/ember/ember-testing.js', { type: 'test' });
-  }
 
   if (!isFastboot) {
     app.import('vendor/drags.js');

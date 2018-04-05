@@ -1,9 +1,7 @@
-import Ember from 'ember';
 import { test } from 'qunit';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
-
-const { K } = Ember;
+import $ from 'jquery';
 
 moduleForAcceptance('Acceptance | twiddles', {
   beforeEach: function() {
@@ -32,7 +30,7 @@ moduleForAcceptance('Acceptance | twiddles', {
     });
 
     this.cacheConfirm = window.confirm;
-    window.confirm = K;
+    window.confirm = function() {};
   },
 
   afterEach: function() {

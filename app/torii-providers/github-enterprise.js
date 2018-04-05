@@ -15,6 +15,7 @@ var GithubEnterprse = Oauth2.extend({
     return this._super();
   }),
 
+  // eslint-disable-next-line
   responseParams: ['code', 'state'],
 
   redirectUri: configurable('redirectUri', function(){

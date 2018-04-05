@@ -18,7 +18,7 @@ export default ApplicationSerializer.extend({
   },
 
   normalizeArrayResponse(store, primaryModelClass, payload) {
-    payload.forEach((hash)=> this.normalizeGist(hash, true));
+    payload.forEach(hash => this.normalizeGist(hash, true));
 
     return this._super(...arguments);
   },
