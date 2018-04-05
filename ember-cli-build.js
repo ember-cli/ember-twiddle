@@ -1,4 +1,5 @@
 /* global require, module, process */
+'use strict';
 module.exports = function(defaults) {
   var EmberApp = require('ember-cli/lib/broccoli/ember-app');
   var funnel = require('broccoli-funnel');
