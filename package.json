@@ -1,6 +1,6 @@
 {
   "name": "ember-twiddle",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "description": "https://ember-twiddle.com",
   "private": true,
   "directories": {
@@ -8,14 +8,12 @@
     "test": "tests"
   },
   "scripts": {
-    "start": "ember server",
     "build": "ember build",
+    "lint:js": "eslint ./*.js app config lib server tests",
+    "start": "ember serve",
     "test": "ember test"
   },
   "repository": "https://github.com/ember-cli/ember-twiddle",
-  "engines": {
-    "node": ">= 4"
-  },
   "author": "Ember Twiddle Contributors",
   "license": "MIT",
   "devDependencies": {
@@ -29,22 +27,22 @@
     "ember-ajax": "2.5.3",
     "ember-api-actions": "~0.1.4",
     "ember-autoresize": "~0.5.17",
-    "ember-cli": "2.11.1",
+    "ember-cli": "2.12.2",
     "ember-cli-app-version": "^2.0.0",
     "ember-cli-babel": "^5.1.7",
     "ember-cli-build-notifications": "0.2.0",
     "ember-cli-code-coverage": "~0.3.4",
-    "ember-cli-dependency-checker": "~1.3.0",
+    "ember-cli-dependency-checker": "^2.0.0",
     "ember-cli-deploy": "^1.0.0",
     "ember-cli-deploy-s3-pack": "^1.0.0-beta.1",
-    "ember-cli-deploy-slack": "0.1.0",
+    "ember-cli-deploy-slack": "~0.1.0",
     "ember-cli-document-title": "~0.3.3",
+    "ember-cli-eslint": "^4.2.1",
     "ember-cli-fastboot": "1.0.0-beta.11",
     "ember-cli-file-creator": "~0.4.0",
     "ember-cli-htmlbars": "^1.1.1",
     "ember-cli-htmlbars-inline-precompile": "^0.3.6",
     "ember-cli-inject-live-reload": "^1.4.1",
-    "ember-cli-jshint": "^2.0.1",
     "ember-cli-jstree": "~1.0.7",
     "ember-cli-legacy-blueprints": "^0.1.0",
     "ember-cli-mirage": "0.2.3",
@@ -53,18 +51,19 @@
     "ember-cli-qunit": "^3.1.2",
     "ember-cli-release": "1.0.0-beta.2",
     "ember-cli-sass": "~6.0.0",
-    "ember-cli-shims": "^1.0.2",
+    "ember-cli-shims": "~1.0.2",
     "ember-cli-sri": "~2.1.0",
     "ember-cli-test-loader": "~1.1.0",
     "ember-cli-uglify": "~1.2.0",
     "ember-concurrency": "~0.8.2",
     "ember-data": "~2.12.0",
-    "ember-disable-proxy-controllers": "1.0.1",
+    "ember-disable-proxy-controllers": "~1.0.1",
     "ember-export-application-global": "~1.1.1",
     "ember-git-version": "~0.1.1",
     "ember-load": "0.0.11",
     "ember-load-initializers": "~0.6.0",
     "ember-lodash": "0.0.10",
+    "ember-inflector": "~1.9.4",
     "ember-moment": "7.0.0-beta.5",
     "ember-native-dom-helpers": "0.5.0",
     "ember-notify": "~5.1.6",
@@ -84,7 +83,20 @@
   },
   "dependencies": {
     "babel-core": "^5.8.38",
+    "ember-resolver": "^2.0.3",
+    "ember-responsive": "~1.2.7",
+    "ember-route-action-helper": "^1.0.0",
+    "ember-source": "~2.12.0",
+    "ember-test-helpers": "~0.6.3",
+    "eslint-plugin-ember": "~5.1.0",
+    "ivy-codemirror": "~2.0.3",
+    "loader.js": "~4.2.3",
+    "moment": "~2.19.3",
+    "moment-timezone": "~0.5.4",
     "path-browser": "^2.2.1",
-    "torii": "0.8.0"
+    "torii": "~0.8.0"
+  },
+  "engines": {
+    "node": "^4.5 || 6.* || >= 8"
   }
 }

@@ -40,10 +40,12 @@ export default DS.Model.extend({
     if(gist) {
       gist.registerDeletedFile(this.get('id'));
 
-      // Following should not be necessary. Bug in ember data?
+      // Following try/catch should not be necessary. Bug in ember data?
       try {
         gist.get('files').removeObject(this);
-      } catch(e) {}
+      } catch(e) {
+        /* squash */
+      }
     }
   }
 });

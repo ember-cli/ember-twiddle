@@ -1,6 +1,10 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('service:dependency-resolver', 'Unit | Service | dependency resolver');
+moduleFor('service:dependency-resolver', 'Unit | Service | dependency resolver', {
+  needs: [
+    'service:notify'
+  ]
+});
 
 test('resolveDependencies() leaves URLs untouched', function(assert) {
   var service = this.subject();

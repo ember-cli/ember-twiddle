@@ -12,6 +12,33 @@ export default Ember.Component.extend(DropdownSubmenuFixMixin, {
   }),
 
   actions: {
+    addComponent() {
+      this.addComponent();
+    },
+    addHelper() {
+      this.addHelper();
+    },
+    addFile(type) {
+      this.addFile(type);
+    },
+    addUnitTestFile(type) {
+      this.addUnitTestFile(type);
+    },
+    addIntegrationTestFile(type) {
+      this.addIntegrationTestFile(type);
+    },
+    addAcceptanceTestFile() {
+      this.addAcceptanceTestFile();
+    },
+    renameFile(file) {
+      this.renameFile(file);
+    },
+    removeFile(file) {
+      this.removeFile(file);
+    },
+    saveGist(model) {
+      this.saveGist(model);
+    },
     share() {
       prompt('Ctrl + C ;-)', window.location.href);
     },
@@ -26,6 +53,27 @@ export default Ember.Component.extend(DropdownSubmenuFixMixin, {
       responsive.appendChild(iframe);
       let embedCode = responsive.outerHTML;
       prompt('Ctrl + C ;-)', embedCode);
+    },
+    fork(model) {
+      this.fork(model);
+    },
+    copy() {
+      this.copy();
+    },
+    deleteGist(model) {
+      this.deleteGist(model);
+    },
+    signInViaGithub() {
+      this.signInViaGithub();
+    },
+    showRevision(id) {
+      this.showRevision(id);
+    },
+    showCurrentVersion() {
+      this.showCurrentVersion();
+    },
+    downloadProject() {
+      this.downloadProject();
     }
   }
 });

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import Ember from 'ember';
 import config from '../config/environment';
 import { task, timeout } from 'ember-concurrency';

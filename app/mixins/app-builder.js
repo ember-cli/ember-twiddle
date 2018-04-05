@@ -20,9 +20,11 @@ export default Ember.Mixin.create({
       if (Ember.isArray(errors)) {
         this.set('buildErrors', errors);
         errors.forEach(error => {
+          // eslint-disable-next-line no-console
           console.error(error);
         });
       } else if (errors) {
+        // eslint-disable-next-line no-console
         console.error(errors);
       }
     }

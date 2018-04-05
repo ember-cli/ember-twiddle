@@ -94,6 +94,15 @@ test("it calls renameFile on clicking 'Rename'", function(assert) {
   assert.equal(this.renamedFile, this.file, 'renameFile was called with file to rename');
 });
 
+test("it calls renameFile on clicking 'Move'", function(assert) {
+  assert.expect(2);
+
+  this.$('.test-move-action').click();
+
+  assert.ok(this.renameFileCalled, 'renameFile was called');
+  assert.equal(this.renamedFile, this.file, 'renameFile was called with file to rename');
+});
+
 test("it calls removeFile on clicking 'Remove'", function(assert) {
   assert.expect(2);
 

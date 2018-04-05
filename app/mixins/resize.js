@@ -1,20 +1,21 @@
 import Ember from 'ember';
+import $ from 'jquery';
 
 const {
-  $,
   computed,
-  on,
   run
 } = Ember;
 
 export default Ember.Mixin.create({
-  setupResizeHandler: on('didInsertElement', function() {
+  didInsertElement() {
+    this._super();
     $(window).on('resize', this.get("resizeHandler"));
-  }),
+  },
 
-  teardownResizeHandler: on('willDestroyElement', function() {
+  willDestroyElement() {
+    this._super();
     $(window).off('resize', this.get("resizeHandler"));
-  }),
+  },
 
   resizeHandler: computed(function() {
     return run.bind(this, 'didResize');

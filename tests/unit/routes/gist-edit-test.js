@@ -1,6 +1,12 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('route:gist.edit');
+moduleFor('route:gist.edit', {
+  needs: [
+    'service:ember-cli',
+    'service:dependency-resolver',
+    'service:notify'
+  ]
+});
 
 test('Can load previous revision of a gist', function(assert) {
   let gistId = "a1b2c3d40";

@@ -4,6 +4,12 @@ import { moduleFor, test } from 'ember-qunit';
 const { RSVP } = Ember;
 
 moduleFor('route:gist', {
+  needs: [
+    'service:notify',
+    'service:app',
+    'service:fastboot'
+  ],
+
   beforeEach() {
     this._originalConfirm = window.confirm;
     this._originalAlert = window.alert;
