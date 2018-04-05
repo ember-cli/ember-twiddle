@@ -323,7 +323,7 @@ export default Ember.Service.extend({
       }
     });
 
-    if (isTestingEnabled) {
+    if (testing && isTestingEnabled) {
       testStuff += `
         <script type="text/javascript">
           // Hack around dealing with multiple global QUnits!
