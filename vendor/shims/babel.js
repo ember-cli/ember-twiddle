@@ -2,7 +2,7 @@
   function vendorModule() {
     'use strict';
 
-    return { 'default': self['babel'] };
+    return { 'default': self['Babel'] };
   }
 
   define('babel-core', [], vendorModule);

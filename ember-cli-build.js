@@ -87,7 +87,7 @@ module.exports = function(defaults) {
   }
 
   app.import('vendor/ember/ember-template-compiler.js');
-  app.import('bower_components/babel/browser.js');
+  app.import('bower_components/babel-standalone/babel.js');
   app.import('vendor/shims/babel.js');
   app.import('vendor/shims/path.js');
   app.import('bower_components/file-saver/FileSaver.js');
@@ -110,7 +110,7 @@ module.exports = function(defaults) {
     }
   });
   testLoaderTree = babelTranspiler(testLoaderTree, {
-    modules:'amdStrict',
+    modules: 'amdStrict',
     moduleIds:true
   });
 

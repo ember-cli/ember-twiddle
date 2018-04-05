@@ -503,10 +503,15 @@ export default Ember.Service.extend({
  */
 function babelOpts(moduleName) {
   return {
-    modules: 'amdStrict',
     moduleIds: true,
     moduleId: moduleName,
-    plugins: [ hbsPlugin ]
+    plugins: [
+      ['transform-es2015-modules-amd', {
+        loose: true,
+        noInterop: false
+      }],
+      hbsPlugin
+    ]
   };
 }
 

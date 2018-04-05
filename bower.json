@@ -11,7 +11,7 @@
     "Faker": "~3.1.0",
     "file-saver": "1.3.4",
     "jstree": "~3.3.0",
-    "babel": "^5.8.38"
+    "babel-standalone": "^6.19.0"
   },
   "resolutions": {
     "codemirror": "~5.19.0",
