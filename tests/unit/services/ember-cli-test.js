@@ -97,7 +97,7 @@ test('compileHbs includes moduleName', function(assert) {
   var service = this.subject();
   var result = service.compileHbs('foo', 'somePath/here.hbs');
 
-  assert.ok(result.indexOf('moduleName: "twiddle/somePath/here"') > -1, 'moduleName included');
+  assert.ok(result.indexOf('twiddle/somePath/here') > -1, 'moduleName included');
 });
 
 test('compileHbs can include backticks', function(assert) {
@@ -105,7 +105,7 @@ test('compileHbs can include backticks', function(assert) {
   var service = this.subject();
   var result = service.compileHbs(template, 'some-path');
 
-  assert.ok(result.indexOf(template) > -1, 'original template included');
+  assert.ok(result.indexOf(template) > -1, 'munged template included');
 });
 
 test("buildHtml works when testing not enabled", function(assert) {

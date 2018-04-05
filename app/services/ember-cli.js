@@ -503,6 +503,7 @@ export default Ember.Service.extend({
  */
 function babelOpts(moduleName) {
   return {
+    presets: ['es2015'],
     moduleIds: true,
     moduleId: moduleName,
     plugins: [

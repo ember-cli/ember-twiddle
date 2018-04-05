@@ -82,8 +82,6 @@ test('Ember Data works as an addon', function (assert) {
       filename: "models.app.js",
       content: `import Ember from "ember";
                 import DS from "ember-data";
-                console.log(DS);
-                debugger;
                 export default DS.Model.extend({
                   appName: DS.attr('string')
                 });`
@@ -116,8 +114,6 @@ test('Ember Data works as an addon', function (assert) {
 
   andThen(function() {
     const outputDiv = 'div';
-
-    debugger;
 
     assert.equal(outputContents(outputDiv), 'Welcome to Ember Twiddle');
   });
