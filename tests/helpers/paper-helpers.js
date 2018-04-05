@@ -1,4 +1,4 @@
-import run from 'ember-runloop';
+import { run } from '@ember/runloop';
 import $ from 'jquery';
 import wait from 'ember-test-helpers/wait';
 import { find } from 'ember-native-dom-helpers';

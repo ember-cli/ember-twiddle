@@ -2,7 +2,7 @@ import Ember from "ember";
 
 const { RSVP, run } = Ember;
 
-export default function(app, url) {
+export default function(app) {
   let iframeWindow;
 
   // Wait until iframe loads
@@ -10,11 +10,6 @@ export default function(app, url) {
     let times = 0;
 
     run.schedule('afterRender', function waitForRender() {
-      function onWindowLoad() {
-        iframe_window.document.removeEventListener('DOMContentLoaded', onWindowLoad);
-        resolve();
-      }
-
       run.schedule('afterRender', function waitForRender() {
         function onWindowLoad() {
           iframeWindow.document.removeEventListener('DOMContentLoaded', onWindowLoad);
@@ -38,19 +33,5 @@ export default function(app, url) {
         }
       });
     });
-  });
-
-  let times = 0;
-
-  return andThen(function tryVisit() {
-    url = url || "/";
-
-    if (times++ >= 10) {
-      run.cancelTimers();
-    } else if (iframeWindow.visit) {
-      return iframeWindow.visit(url);
-    } else {
-      run.later(tryVisit, 10)
-    }
   });
 }

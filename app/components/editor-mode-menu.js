@@ -2,13 +2,18 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   keyMap: 'Default',
-  modes: [
-    { id: 'default', label: 'Default' },
-    { id: 'basic', label: 'Basic' },
-    { id: 'vim', label: 'Vim' },
-    { id: 'emacs', label: 'Emacs' },
-    { id: 'sublime', label: 'Sublime' }
-  ],
+
+  init() {
+    this._super(...arguments);
+
+    this.modes = [
+      { id: 'default', label: 'Default' },
+      { id: 'basic', label: 'Basic' },
+      { id: 'vim', label: 'Vim' },
+      { id: 'emacs', label: 'Emacs' },
+      { id: 'sublime', label: 'Sublime' }
+    ];
+  },
 
   actions: {
     setKeyMap(keyMap) {
@@ -19,7 +24,7 @@ export default Ember.Component.extend({
         this.set('keyMap', mode.label);
       }
 
-      this.attrs.setKeyMap(keyMap);
+      this.get('setKeyMap')(keyMap);
     }
   }
 });
