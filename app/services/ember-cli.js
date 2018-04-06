@@ -395,6 +395,7 @@ export default Ember.Service.extend({
       </script>`;
     }
 
+    // Make any modules compiled with Babel 5 and modules: 'amdStrict' option forward compatible
     depScriptTags += `
       <script type="text/javascript">
         Object.keys(requirejs.entries).forEach(function (moduleName) {
@@ -516,7 +517,7 @@ function babelOpts(moduleName) {
     plugins: [
       ['transform-es2015-modules-amd', {
         loose: true,
-        noInterop: false
+        noInterop: false // needed for compat with addons compiled with Babel 5 and modules: 'amdStrict'
       }],
       hbsPlugin
     ]

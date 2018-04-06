@@ -17,8 +17,9 @@
   "author": "Ember Twiddle Contributors",
   "license": "MIT",
   "devDependencies": {
+    "babel-preset-es2017": "^6.24.1",
     "broccoli-asset-rev": "^2.4.5",
-    "broccoli-babel-transpiler": "~5.6.2",
+    "broccoli-babel-transpiler": "~6.1.4",
     "broccoli-concat": "^2.3.2",
     "broccoli-funnel": "^1.0.1",
     "broccoli-merge-trees": "^1.1.1",
