@@ -323,7 +323,7 @@ export default Ember.Service.extend({
       }
     });
 
-    if (isTestingEnabled) {
+    if (testing && isTestingEnabled) {
       testStuff += `
         <script type="text/javascript">
           // Hack around dealing with multiple global QUnits!
@@ -503,10 +503,16 @@ export default Ember.Service.extend({
  */
 function babelOpts(moduleName) {
   return {
-    modules: 'amdStrict',
+    presets: ['es2017'],
     moduleIds: true,
     moduleId: moduleName,
-    plugins: [ hbsPlugin ]
+    plugins: [
+      ['transform-es2015-modules-amd', {
+        loose: true,
+        noInterop: true
+      }],
+      hbsPlugin
+    ]
   };
 }
 

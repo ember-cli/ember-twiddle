@@ -34,14 +34,16 @@ export default Mirage.Factory.extend({
   },
   //owner,
   forks: [],
-  history: [
-    {
-      "user": null,
-      "version": "921e8958fe32b5a1b724fa6754d0dd904cfa9e62",
-      "committed_at": "2015-07-23T22:49:45Z",
-      "url": `https://api.github.com/gists/${this.id}/921e8958fe32b5a1b724fa6754d0dd904cfa9e62`
-    }
-  ]
+  history() {
+    return [
+      {
+        "user": null,
+        "version": "921e8958fe32b5a1b724fa6754d0dd904cfa9e62",
+        "committed_at": "2015-07-23T22:49:45Z",
+        "url": `https://api.github.com/gists/${this.id}/921e8958fe32b5a1b724fa6754d0dd904cfa9e62`
+      }
+    ];
+  }
 });
 
 /* Sample
