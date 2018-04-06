@@ -104,8 +104,9 @@ test('compileHbs can include backticks', function(assert) {
   var template = "`stuff`";
   var service = this.subject();
   var result = service.compileHbs(template, 'some-path');
+  var mungedCode = "\\`stuff\\`";
 
-  assert.ok(result.indexOf(template) > -1, 'munged template included');
+  assert.ok(result.indexOf(mungedCode) > -1, 'munged template included');
 });
 
 test("buildHtml works when testing not enabled", function(assert) {
