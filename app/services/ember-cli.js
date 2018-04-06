@@ -395,6 +395,13 @@ export default Ember.Service.extend({
       </script>`;
     }
 
+    depScriptTags += `
+      <script type="text/javascript">
+        Object.keys(requirejs.entries).forEach(function (moduleName) {
+          require(moduleName).__esModule = true;
+        });
+      </script>`;
+
     return { depScriptTags, depCssLinkTags, testStuff };
   },
 
@@ -503,7 +510,7 @@ export default Ember.Service.extend({
  */
 function babelOpts(moduleName) {
   return {
-    presets: ['es2015'],
+    presets: ['es2017'],
     moduleIds: true,
     moduleId: moduleName,
     plugins: [
