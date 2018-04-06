@@ -52,6 +52,9 @@ module.exports = function(defaults) {
     nodeAssets: {
       'path-browser': {
         import: ['path.js']
+      },
+      'babel-standalone': {
+        import: ['babel.js']
       }
     },
     sourcemaps: {
@@ -87,7 +90,6 @@ module.exports = function(defaults) {
   }
 
   app.import('vendor/ember/ember-template-compiler.js');
-  app.import('bower_components/babel-standalone/babel.js');
   app.import('vendor/shims/babel.js');
   app.import('vendor/shims/path.js');
   app.import('bower_components/file-saver/FileSaver.js');
@@ -175,7 +177,7 @@ function babelOpts() {
     plugins: [
       ['transform-es2015-modules-amd', {
         loose: true,
-        noInterop: false // needed for compat with addons compiled with Babel 5 and modules: 'amdStrict'
+        noInterop: true
       }]
     ]
   };
