@@ -50,6 +50,9 @@ module.exports = function(defaults) {
     nodeAssets: {
       'path-browser': {
         import: ['path.js']
+      },
+      'babel-standalone': {
+        import: ['babel.js']
       }
     },
     sourcemaps: {
@@ -85,7 +88,6 @@ module.exports = function(defaults) {
   }
 
   app.import('vendor/ember/ember-template-compiler.js');
-  app.import('bower_components/babel/browser.js');
   app.import('vendor/flat-to-nested.js');
   app.import('vendor/shims/babel.js');
   app.import('vendor/shims/path.js');
@@ -108,10 +110,7 @@ module.exports = function(defaults) {
       return "assets/test-loader.js";
     }
   });
-  testLoaderTree = babelTranspiler(testLoaderTree, {
-    modules:'amdStrict',
-    moduleIds:true
-  });
+  testLoaderTree = babelTranspiler(testLoaderTree, babelOpts());
 
   var emberDataShims = funnel('vendor', {
     files: ['ember-data-shims.js']
@@ -126,21 +125,13 @@ module.exports = function(defaults) {
     destDir: 'ember-resolver'
   });
 
-  var transpiledResolverTree = babelTranspiler(baseResolverTree, {
-    loose: true,
-    moduleIds: true,
-    modules: 'amdStrict'
-  });
+  var transpiledResolverTree = babelTranspiler(baseResolverTree, babelOpts());
 
   var baseInitializersTree = funnel('node_modules/ember-load-initializers/addon', {
     destDir: 'ember-load-initializers'
   });
 
-  var transpiledInitializersTree = babelTranspiler(baseInitializersTree, {
-    loose: true,
-    moduleIds: true,
-    modules: 'amdStrict'
-  });
+  var transpiledInitializersTree = babelTranspiler(baseInitializersTree, babelOpts());
 
   var finalQUnitTree = buildAddonTree('ember-qunit');
   var finalTestHelpersTree = buildAddonTree('ember-test-helpers');
@@ -170,16 +161,25 @@ function buildAddonTree(addonName) {
     include: ['**/*.js']
   });
 
-  var transpiledTree = babelTranspiler(baseTree, {
-    loose: true,
-    moduleIds: true,
-    modules: 'amdStrict'
-  });
+  var transpiledTree = babelTranspiler(baseTree, babelOpts());
 
   return concat(transpiledTree, {
     inputFiles: ['**/*.js'],
     outputFile: '/assets/' + addonName + '.js'
   });
+}
+
+function babelOpts() {
+  return {
+    presets: ['babel-preset-es2017'].map(require.resolve),
+    moduleIds: true,
+    plugins: [
+      ['transform-es2015-modules-amd', {
+        loose: true,
+        noInterop: true
+      }]
+    ]
+  };
 }
 
 // This copies code out of ember-cli's blueprints into

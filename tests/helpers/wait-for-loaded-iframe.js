@@ -2,14 +2,15 @@ import Ember from "ember";
 
 const { RSVP, run } = Ember;
 
-export default function(app) {
+export default function(app, url) {
   let iframeWindow;
 
-  // Wait until iframe loads
-  return new RSVP.Promise(function (resolve) {
-    let times = 0;
+  andThen(function() {
 
-    run.schedule('afterRender', function waitForRender() {
+    // Wait until iframe loads
+    return new RSVP.Promise(function (resolve) {
+      let times = 0;
+
       run.schedule('afterRender', function waitForRender() {
         function onWindowLoad() {
           iframeWindow.document.removeEventListener('DOMContentLoaded', onWindowLoad);
@@ -33,5 +34,19 @@ export default function(app) {
         }
       });
     });
+  });
+
+  let times = 0;
+
+  return andThen(function tryVisit() {
+    url = url || "/";
+
+    if (times++ >= 10) {
+      run.cancelTimers();
+    } else if (iframeWindow.visit) {
+      return iframeWindow.visit(url);
+    } else {
+      run.later(tryVisit, 10)
+    }
   });
 }
