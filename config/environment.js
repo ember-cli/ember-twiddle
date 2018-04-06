@@ -6,7 +6,7 @@ module.exports = function(environment) {
   var toriiProvider = process.env.TORII_PROVIDER || 'github-oauth2';
   var githubOauthURL = process.env.GATEKEEPER_URL || 'http://localhost:9999/authenticate/';
   var assetsHost = process.env.TWIDDLE_ASSET_HOST || '/';
-  var githubApiKey = process.env.GH_API_KEY || '2b84ab967ef8266ca0dc'
+  var githubApiKey = process.env.GH_API_KEY || 'f864eae7e7abe78fe869'
 
   var ENV = {
     modulePrefix: 'ember-twiddle',
@@ -35,7 +35,6 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-      rootElement: '#main-app'
     },
 
     torii: {
@@ -59,7 +58,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'test') {
-    ENV.locationType = 'auto';
+    ENV.locationType = 'none';
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;

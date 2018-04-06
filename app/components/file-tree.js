@@ -1,9 +1,12 @@
-import Ember from "ember";
+import Ember from 'ember';
 import config from '../config/environment';
+import FlatToNested from 'flat-to-nested';
 
-const { computed } = Ember;
+const { inject, computed } = Ember;
+const flatToNested = new FlatToNested();
 
 export default Ember.Component.extend({
+  treeService: inject.service('tree'),
   jsTreeActionReceiver: null,
 
   fileTreeHash: computed('model.files.@each.filePath', function() {
@@ -23,7 +26,7 @@ export default Ember.Component.extend({
 
         if(previousPathIsRoot) {
           pathObj.path = pathPart;
-          pathObj.parent = '#';
+          //pathObj.parent = '#';
         } else {
           const previousPath = paths.slice(0, index).join('/');
           pathObj.path = `${previousPath}/${pathPart}`;
@@ -61,8 +64,7 @@ export default Ember.Component.extend({
       return fileTreeObject.isFile;
     });
     let shouldStartOpened = fileObjects.length <= config.maxNumFilesInitiallyExpanded;
-
-    return fileTreeObjects.map(treeObject => {
+    let flatTree = fileTreeObjects.map(treeObject => {
       const treeDataObject = {
         id: treeObject.path,
         text: treeObject.nodeName,
@@ -85,6 +87,8 @@ export default Ember.Component.extend({
 
       return treeDataObject;
     });
+
+    return flatToNested.convert(flatTree);
   }),
 
   actions: {

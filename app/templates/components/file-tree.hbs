@@ -1,3 +1,5 @@
+{{!--
+  not supported by ivy-tree yet, you can expand all with '*' key though
 <div class="header">
   <div class="nav-left">
     &nbsp;
@@ -9,15 +11,14 @@
       <span class="twiddlicon twiddlicon-collapse-all" {{action 'collapseAll'}}></span>
     </span>
   </div>
-  <div class="nav-right">
-    <span class="hint--bottom hint--rounded" data-hint="Hide project files">
-        <span class="glyphicon glyphicon-chevron-left" {{action 'hideFileTree'}}></span>
-    </span>
-  </div>
 </div>
-{{ember-jstree data=fileTreeData
-               actionReceiver=jsTreeActionReceiver
-               eventDidSelectNode=(action "handleSelectTreeNode")
-               eventDidBecomeReady=(action "didBecomeReady")
-               eventDidChange=(action "didChange")
-}}
+--}}
+
+{{#ivy-tree as |tree|}}
+  {{#each fileTreeData.children as |datum|}}
+    {{file-tree-folder datum=datum tree=tree
+      selected=treeService.selected
+      onSelected=(action (mut treeService.selected))
+      handleSelectTreeNode=(action 'handleSelectTreeNode')}}
+  {{/each}}
+{{/ivy-tree}}

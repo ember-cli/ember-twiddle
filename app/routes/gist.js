@@ -19,6 +19,15 @@ export default Ember.Route.extend({
     });
   },
 
+  model() {
+    let applicationModel = this.modelFor('application');
+    return applicationModel;
+  },
+
+  setupController(controller, resolved) {
+    controller.setProperties(resolved);
+  },
+
   activate() {
     if (this.get('fastboot.isFastBoot')) {
       return;
@@ -99,25 +108,19 @@ export default Ember.Route.extend({
       });
     },
 
-    signInViaGithub() {
-      this.session.open(this.get('toriiProvider')).catch(function(error) {
-        if (alert) {
-          alert('Could not sign you in: ' + error.message);
-        }
-        throw error;
+    urlChanged(newUrl) {
+      this.get('app').postMessage({ newUrl });
+    },
+
+    showCurrentVersion() {
+      this.get('store').unloadAll('gistFile');
+      this.store.find('gist', this.paramsFor('gist.edit').gistId).then((model) => {
+        this.transitionTo('gist.edit', model);
       });
     },
 
-    signOut() {
-      this.session.close();
-    },
-
-    showTwiddles() {
-      this.transitionTo('twiddles');
-    },
-
-    urlChanged(newUrl) {
-      this.get('app').postMessage({ newUrl });
+    showRevision(id) {
+      this.transitionTo('gist.edit.revision', this.paramsFor('gist.edit', 'gistId'), id);
     },
 
     downloadProject() {

@@ -1,11 +1,16 @@
-<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-  Keystroke Mode <b class="caret"></b>
-</a>
-
-<ul class="dropdown-menu dropdown-menu-right">
-  <li><a {{action 'setKeyMap' 'default'}} class="key-map-option default">Default</a></li>
-  <li><a {{action 'setKeyMap' 'basic'}} class="key-map-option basic">Basic</a></li>
-  <li><a {{action 'setKeyMap' 'vim'}} class="key-map-option vim">Vim</a></li>
-  <li><a {{action 'setKeyMap' 'emacs'}} class="key-map-option emacs">Emacs</a></li>
-  <li><a {{action 'setKeyMap' 'sublime'}} class="key-map-option sublime">Sublime</a></li>
-</ul>
+{{#paper-menu position='target-right target' as |menu|}}
+  {{#menu.trigger class='layout-column'}}
+    {{#paper-button class='md-menu-origin'}}
+      {{paper-icon 'keyboard' size=21}}
+      Keystroke Mode <b>{{keyMap}}</b>
+      {{paper-icon 'arrow drop up'}}
+    {{/paper-button}}
+  {{/menu.trigger}}
+  {{#menu.content width=2 as |content|}}
+    {{#each modes as |mode|}}
+      {{#content.menu-item class='md-menu-align-target' onClick=(action 'setKeyMap' mode.id)}}
+        {{mode.label}}
+      {{/content.menu-item}}
+    {{/each}}
+  {{/menu.content}}
+{{/paper-menu}}

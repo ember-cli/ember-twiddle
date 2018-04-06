@@ -1,9 +1,12 @@
+md-toolbar.md-default-theme.sidebar-toolbar {
+  background-color: $header-bg;
+  background-image: url(/images/header.svg);
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .toolbar {
-
-  hr {
-    display: none;
-  }
-
   .nav-pills > li > a {
     display: block;
     text-decoration: none;
@@ -14,70 +17,29 @@
     height: $topbar-height;
   }
 
-  @media (max-width: $screen-md-min) {
-    position: relative;
-    z-index: 100;
-    opacity: 1;
+  .dropdown .caret {
+    position: absolute;
+    right: 10px;
+    top: 13px;
+  }
 
-    >div, >ul {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
 
-    .nav-pills > li {
-      float: none;
-    }
-
-    .nav-pills > li + li {
-      margin-left: 0;
-    }
-
-    .dropdown-toggle {
-      display: block;
-      border-radius: 0;
-      box-shadow: none;
-    }
-
-    .dropdown-menu {
-      position: static;
-      float: none;
-      border: 0;
-      border-radius: 0;
-      box-shadow: none;
-      background: inherit;
-
-      .dropdown-submenu > .dropdown-menu {
-        margin-left: 1em;
-        margin-top: 0;
-      }
-
-      .divider {
-        background-color: lighten($burnt-orange, 10%);
-      }
-
-      a {
-        color: #fff;
-
-        &:hover {
-          background-color: lighten($burnt-orange, 10%);
-        }
-      }
-    }
-
-    hr {
-      display: block;
-      border-color: $burnt-orange;
-      margin: 1em 0;
+  .dropdown-menu {
+    .dropdown-submenu > .dropdown-menu {
+      top: auto;
+      margin-bottom: -31px;
     }
   }
-  color: #fff;
+
+  color: #333;
   font-size: $font-size;
-  background: $header-bg;
-  background-image: url(/images/header.svg);
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding: 1rem 0;
+  background-color: #f9f9f9;
+
+  hr {
+    display: block;
+    border-color: $burnt-orange;
+    margin: 1em 0;
+  }
 
   @media (max-width: $screen-md-min) {
     padding: 0;
@@ -109,97 +71,88 @@
     padding-left: 0;
   }
 
-  .user-menu {
-    text-align: right;
+  .file-tree {
+    overflow: auto;
 
-    @media (min-width: $screen-md-min) {
-      position: absolute;
-      right: 0;
-      top: ($topbar-height - $topbar-control-height) / 2;
-    }
+    .tree-folder button,
+    .tree-file button {
+      font-size: 13px;
+      line-height: 20px;
+      min-height: 20px;
+      margin: 4px 6px;
+      text-transform: none;
 
-    @media (max-width: $screen-md-min) {
-      float: none;
-      text-align: left;
-
-      .user-dropdown > .dropdown-toggle {
-        padding-left: 1em;
+      & > md-icon {
+        line-height: 14px;
       }
+    }
+  }
+
+  .user-menu {
+    .signed-in-btn {
+      margin: 0;
+      line-height: 43px;
+      text-align: left;
     }
 
     .user-avatar {
       display: inline-block;
-      width: $topbar-control-height;
+      width: 38px;
       height: 100%;
       overflow: hidden;
       float: left;
-      margin-right: 10px;
       line-height: normal;
-      border-radius: 3px;
+      border-radius: 30px;
+      background-color: #ccc;
+      margin: 5px;
 
       img {
-        width: $topbar-control-height;
-        height: $topbar-control-height;
-      }
-
-      &.unauthenticated {
-        background: url("../images/github32-inverse-faf2ee.svg");
+        width: 38px;
+        height: 38px;
       }
     }
   }
 
   .main-menu {
     text-align: left;
-    height: 60px;
 
-    @media (min-width: $screen-md-min) {
-      position: absolute;
-      left: 0;
-      top: ($topbar-height - $topbar-control-height) / 2;
+    md-menu > button {
+      text-align: left;
     }
 
-    @media (max-width: $screen-md-min) {
-      height: auto;
+    a {
+      display: block;
     }
   }
 
-  .title {
-    padding: 13px 0;
-    text-align: center;
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-
-    @media (min-width: $screen-md-min) {
-      position: absolute;
-      top: 6px;
-      left: 50%;
-      margin-left: -400px;
-      width: 800px;
-    }
-
-    @media (max-width: $screen-md-min) {
-      margin-left: 15px;
-    }
+  .gist-card {
+    //color: #333;
+    background-color: #fdfdfd;
 
     h1 {
       margin: 10px;
     }
 
+    .details {
+      padding: 10px;
+    }
+
     .saved-twiddles-header {
-      color: $bleached-orange;
+      color: #333;
       font-size: $font-size-larger;
     }
 
     .indicator {
-      display: inline;
       text-transform: uppercase;
-      font-weight: bold;
-      color: #faf2ee;
+      color: #666;
+      padding: 5px 0;
+      line-height: 1.2;
 
       a {
-        color: #ffffff;
+        color: #666;
         text-decoration: none;
+        border-bottom: 1px solid transparent;
+
         &:hover {
           border-bottom: dotted 1px;
         }
@@ -207,26 +160,27 @@
     }
 
     .input-edit {
-      display: inline;
       transition: background .3s;
-      font-size: $font-size-larger;
-      border-radius: 3px;
+      font-size: $font-size-largest;
+      border-radius: 2px;
       border: 0;
-      color: $bleached-orange;
+      color: #333;
       cursor: pointer;
+      padding: 2px;
 
       input {
+        font-weight: 500;
         background-color: transparent;
         border: 0;
         outline: 0;
         box-sizing: content-box;
       }
 
-      .glyphicon {
-        color: $bleached-orange;
+      md-icon {
+        line-height: 14px;
       }
 
-      &.active .glyphicon {
+      &.active md-icon {
         display: none;
       }
 
@@ -257,26 +211,12 @@
     padding: 0 1em 0 0;
   }
 
-  .dropdown-toggle, .sign-in {
-    height: $topbar-control-height;
-    line-height: $topbar-control-height - 2;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: $bleached-orange;
-    border: 1px solid transparent;
-
-    &:hover, &:focus {
-      background-color: $menu-hover-bg;
-    }
+  .signin-btn {
+    text-align: left;
   }
 
   .dropdown-toggle {
     padding: 0 1em;
-  }
-
-  .sign-in {
-    cursor: pointer;
-    padding: 0 .5em 0 0;
   }
 
   .signing-in {
@@ -285,7 +225,7 @@
     line-height: $topbar-control-height - 2;
     text-transform: uppercase;
     font-weight: bold;
-    color: $bleached-orange;
+    color: #333;
     border: 1px solid transparent;
   }
 
@@ -300,5 +240,15 @@
       border: 0;
       box-shadow: none;
     }
+  }
+}
+
+.nested-menu-trigger {
+  padding: 0;
+
+  button {
+    text-transform: none;
+    font-weight: 400;
+    text-align: left;
   }
 }

@@ -1,8 +1,13 @@
 import { test } from 'qunit';
+import testSelector from 'ember-test-selectors';
+import wait from 'ember-test-helpers/wait';
+import { find, click } from 'ember-native-dom-helpers';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 
 moduleForAcceptance('Acceptance | dependencies');
 
+const emberVersionSelector = testSelector('ember-version');
+const emberDataVersionSelector = testSelector('ember-data-version');
 const TWIDDLE_SHOWING_VERSIONS = [
   {
     filename: "application.template.hbs",
@@ -77,8 +82,8 @@ test('Able to resolve ember / ember-data dependencies via version only', functio
   runGist(TWIDDLE_SHOWING_VERSIONS);
 
   andThen(function() {
-    assert.equal(outputContents('.ember-version'), '1.13.10');
-    assert.equal(outputContents('.ember-data-version'), '1.13.15');
+    assert.equal(find(emberVersionSelector + ' b').textContent, '1.13.10');
+    assert.equal(find(emberDataVersionSelector + ' b').textContent, '1.13.15');
   });
 });
 
@@ -86,22 +91,21 @@ test('Dependencies can be changed via the UI', function(assert) {
   runGist(TWIDDLE_SHOWING_VERSIONS);
 
   andThen(function() {
-    assert.equal(outputContents('.ember-version'), '1.13.10');
-    assert.equal(outputContents('.ember-data-version'), '1.13.15');
-  });
+    assert.equal(find(emberVersionSelector + ' b').textContent, '1.13.10');
+    assert.equal(find(emberDataVersionSelector + ' b').textContent, '1.13.15');
 
-  andThen(function() {
-    click('.versions-menu .dropdown-toggle');
-    click('.test-set-ember-data-version:contains("2.1.0")');
+    let emberVersionValueSelector = testSelector('ember-version-value', '2.1.2') + ' button';
+    let emberDataVersionValueSelector = testSelector('ember-data-version-value', '2.1.0');
 
-    click('.versions-menu .dropdown-toggle');
-    click('.test-set-ember-version:contains("2.1.2")');
+    click(emberVersionSelector);
 
-    waitForLoadedIFrame();
-  });
-
-  andThen(function() {
-    assert.equal(outputContents('.ember-version'), '2.1.2');
-    assert.equal(outputContents('.ember-data-version'), '2.1.0');
+    return wait()
+      .then(() => click(emberVersionValueSelector))
+      .then(() => click(emberDataVersionSelector))
+      .then(() => click(emberDataVersionValueSelector))
+      .then(() => {
+        assert.equal(find(emberVersionSelector + ' b').textContent, '2.1.2');
+        assert.equal(find(emberDataVersionSelector + ' b').textContent, '2.1.0');
+      });
   });
 });

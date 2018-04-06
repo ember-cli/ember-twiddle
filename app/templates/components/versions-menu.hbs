@@ -1,25 +1,31 @@
-<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-  Dependencies <b class="caret"></b>
-</a>
+{{#paper-menu position='target-right target' as |menu|}}
+  {{#menu.trigger data-test-ember-version class='layout-column'}}
+    {{#paper-button class='md-menu-origin'}}
+      Ember <b>{{emberCli.versions.ember}}</b>
+      {{paper-icon 'arrow drop up'}}
+    {{/paper-button}}
+  {{/menu.trigger}}
+  {{#menu.content width=2 as |content|}}
+    {{#each versions as |version| }}
+      {{#content.menu-item data-test-ember-version-value=version class='md-menu-align-target' onClick=(action 'versionSelected' 'ember' version)}}
+        {{version}}
+      {{/content.menu-item}}
+    {{/each}}
+  {{/menu.content}}
+{{/paper-menu}}
 
-<ul class="dropdown dropdown-menu">
-  <li class="dropdown-submenu">
-    <a tabindex="-1" data-toggle="dropdown">Ember.js</a>
-
-    <ul class="dropdown dropdown-menu" >
-      {{#each versions as |version| }}
-        <li><a class="test-set-ember-version" {{action versionSelected "ember" version }}>{{version}}</a></li>
-      {{/each}}
-    </ul>
-  </li>
-
-  <li class="dropdown-submenu">
-    <a tabindex="-1" data-toggle="dropdown">Ember-Data</a>
-
-    <ul class="dropdown dropdown-menu" >
-      {{#each dataVersions as |version| }}
-        <li><a class="test-set-ember-data-version" {{action versionSelected "ember-data" version }}>{{version}}</a></li>
-      {{/each}}
-    </ul>
-  </li>
-</ul>
+{{#paper-menu position='target-right target' as |menu|}}
+  {{#menu.trigger data-test-ember-data-version class='layout-column'}}
+    {{#paper-button class='md-menu-origin'}}
+      Ember Data <b>{{emberCli.versions.emberData}}</b>
+      {{paper-icon 'arrow drop up'}}
+    {{/paper-button}}
+  {{/menu.trigger}}
+  {{#menu.content width=2 as |content|}}
+    {{#each dataVersions as |version| }}
+      {{#content.menu-item data-test-ember-data-version-value=version class='md-menu-align-target' onClick=(action 'versionSelected' 'ember-data' version)}}
+        {{version}}
+      {{/content.menu-item}}
+    {{/each}}
+  {{/menu.content}}
+{{/paper-menu}}

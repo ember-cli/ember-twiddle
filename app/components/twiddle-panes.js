@@ -4,7 +4,7 @@ const { inject } = Ember;
 
 export default Ember.Component.extend({
   resizeableColumns: inject.service(),
-  classNames: ['row', 'twiddle-panes'],
+  classNames: ['twiddle-panes'],
 
   init() {
     this._super(...arguments);

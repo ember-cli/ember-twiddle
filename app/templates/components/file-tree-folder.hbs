@@ -1,0 +1,25 @@
+{{#if datum.children}}
+  {{#tree.treeitem isExpanded=datum.state.opened
+    class='tree-folder'
+    onSelect=(action onSelected datum.id)
+    onToggle=(action (mut datum.state.opened)) as |treeitem|}}
+    {{#paper-button class='tree-node'}}
+      {{paper-icon (if datum.state.opened 'folder open' 'folder') size=17}} {{datum.text}}
+    {{/paper-button}}
+    {{#treeitem.group as |newtree|}}
+      {{#each datum.children as |child|}}
+        {{file-tree-folder datum=child tree=newtree
+          selected=selected
+          removeFile=removeFile
+          onSelected=onSelected
+          handleSelectTreeNode=handleSelectTreeNode}}
+      {{/each}}
+    {{/treeitem.group}}
+  {{/tree.treeitem}}
+{{else}}
+  {{#tree.treeitem class='tree-file'}}
+    {{#paper-button class='tree-node' onClick=(action handleSelectTreeNode datum)}}
+      {{paper-icon 'insert drive file' size=17}} {{datum.text}}
+    {{/paper-button}}
+  {{/tree.treeitem}}
+{{/if}}

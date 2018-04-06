@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const CONFIRM_MSG = "Unsaved changes will be lost. Are you sure?";
+const CONFIRM_MSG = 'Unsaved changes will be lost. Are you sure?';
 
 const { inject } = Ember;
 
@@ -21,6 +21,7 @@ export default Ember.Route.extend({
   actions: {
     willTransition(transition) {
       const gistController = this.controllerFor('gist');
+
       if (gistController.get('unsaved') === true) {
         if (!window.confirm(CONFIRM_MSG)) {
           transition.abort();

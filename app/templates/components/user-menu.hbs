@@ -1,39 +1,17 @@
-{{#if session.isOpening}}
-  <li class="dropdown disabled signing-in">Signing in...</li>
+{{#if session.isAuthenticated}}
+  {{#paper-button class='signed-in-btn' onClick=showProfile}}
+    <span class="user-avatar">
+      <img src="{{session.currentUser.avatarUrl38}}" />
+    </span>
+    {{userName}}
+  {{/paper-button}}
 {{else}}
-  {{#if session.isAuthenticated}}
-
-    <li class="dropdown user-dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        <span class="user-avatar">
-          <img src="{{session.currentUser.avatarUrl32}}" />
-        </span>
-        {{userName}} <b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-right">
-        <li><a {{action 'showTwiddles'}} class="test-show-twiddles">My Saved Twiddles</a></li>
-        <li role="presentation" class="divider"></li>
-        <li><a {{action 'signOut'}} class="test-sign-out">Sign out</a></li>
-      </ul>
-    </li>
-  {{else}}
-    <li>
-      <a {{action 'signInViaGithub'}} class="test-sign-in sign-in">
-        <span class="user-avatar unauthenticated"></span>
-        Sign in
-      </a>
-    </li>
-  {{/if}}
-{{/if}}
-<li class="dropdown">
-  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-    Help <b class="caret"></b>
-  </a>
-  <ul class="dropdown-menu dropdown-menu-right">
-    {{#if currentVersionLink}}
-      <li><a href="{{currentVersionLink}}" target="_blank" class="test-current-version-link">Ember Twiddle {{v}}{{version}}</a></li>
+  {{#paper-button class='signin-btn' disabled=session.isOpening onClick=(action 'signInViaGithub')}}
+    {{paper-icon 'power settings new' size=21}}
+    {{#if session.isOpening}}
+      Signing In..
+    {{else}}
+      Sign In
     {{/if}}
-    <li><a href="https://github.com/ember-cli/ember-twiddle" target="_blank">GitHub</a></li>
-    <li><a href="https://github.com/ember-cli/ember-twiddle/issues" target="_blank">Issue tracker</a></li>
-  </ul>
-</li>
+  {{/paper-button}}
+{{/if}}
