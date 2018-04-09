@@ -231,7 +231,7 @@ function getEmberCLIBlueprints() {
   }
 
   // Location should be 'none' in router.js
-  fileMap['router'] = fileMap['router'].replace(/config\.locationType/, "'none'");
+  fileMap['router'] = fileMap['router'].replace(/config\.locationType/, "'hash'");
 
   fileMap['resolver'] = fs.readFileSync('app/resolver.js').toString();
   fileMap['twiddle.json'] = fs.readFileSync('blueprints/twiddle.json').toString();

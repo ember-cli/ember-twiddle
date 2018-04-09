@@ -1,6 +1,6 @@
 import Ember from "ember";
 
-const { inject, run } = Ember;
+const { inject } = Ember;
 
 export default Ember.Mixin.create({
   fastboot: inject.service(),
@@ -13,6 +13,11 @@ export default Ember.Mixin.create({
   route: undefined,
   applicationUrl: undefined,
   unsaved: true,
+
+  init() {
+    this._super(...arguments);
+    this.set('applicationUrl', this.get('route'));
+  },
 
   actions: {
     transitionQueryParams(queryParams) {
