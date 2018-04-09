@@ -2,12 +2,18 @@ import Ember from 'ember';
 import config from '../config/environment';
 import Settings from '../models/settings';
 
-const { inject } = Ember;
+const { inject, run } = Ember;
 
 export default Ember.Route.extend({
   notify: inject.service(),
   fastboot: inject.service(),
   toriiProvider: config.toriiProvider,
+
+  beforeModel() {
+    if (!this.get('fastboot.isFastBoot')) {
+      run.schedule('afterRender', this, this.setupWindowUpdate);
+    }
+  },
 
   model() {
     let settings = Settings.create({
@@ -64,5 +70,28 @@ export default Ember.Route.extend({
 
       return this.transitionTo(...args);
     }
+  },
+
+  setupWindowUpdate() {
+    // TODO: this in a controller seems suspect, rather this should likely be
+    // part of some handshake, to ensure no races exist. This should likley not
+    // be something a controller would handle - (SP)
+
+    window.addEventListener('message', (m) => {
+      run(() => {
+        if(typeof m.data==='object' && 'setAppUrl' in m.data) {
+          if (!this.get('isDestroyed')) {
+            if (window.messagesWaiting > 0) {
+              window.messagesWaiting = 0;
+            }
+            const newRoute = m.data.setAppUrl || '/';
+            this.setProperties({
+              applicationUrl: newRoute,
+              route: newRoute === "/" ? undefined : newRoute
+            });
+          }
+        }
+      });
+    });
   }
 });
