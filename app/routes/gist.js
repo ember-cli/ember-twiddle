@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import config from '../config/environment';
 
-const { inject, $, RSVP } = Ember;
+const { inject, $, RSVP, run } = Ember;
 
 const CONFIRM_MSG = "Unsaved changes will be lost.";
 
@@ -14,6 +14,10 @@ export default Ember.Route.extend({
   titleToken: Ember.computed.readOnly('controller.model.description'),
 
   beforeModel() {
+    if (!this.get('fastboot.isFastBoot')) {
+      run.schedule('afterRender', this, this.setupWindowUpdate);
+    }
+
     return this.session.fetch(this.get('toriiProvider')).catch(function() {
       // Swallow error for now
     });
@@ -179,6 +183,25 @@ export default Ember.Route.extend({
         'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js',
         resolve
       );
+    });
+  },
+
+  setupWindowUpdate() {
+    window.addEventListener('message', (m) => {
+      run(() => {
+        if(typeof m.data==='object' && 'setAppUrl' in m.data) {
+          if (!this.get('isDestroyed')) {
+            if (window.messagesWaiting > 0) {
+              window.messagesWaiting = 0;
+            }
+            const newRoute = m.data.setAppUrl || '/';
+            this.controller.setProperties({
+              applicationUrl: newRoute,
+              route: newRoute === "/" ? undefined : newRoute
+            });
+          }
+        }
+      });
     });
   }
 });

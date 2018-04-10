@@ -1,4 +1,4 @@
-import { test } from 'qunit';
+import { skip } from 'qunit';
 import testSelector from 'ember-test-selectors';
 import wait from 'ember-test-helpers/wait';
 import { find, click } from 'ember-native-dom-helpers';
@@ -42,7 +42,7 @@ const TWIDDLE_SHOWING_VERSIONS = [
   }
 ];
 
-test('Able to run a gist using an external dependency', function(assert) {
+skip('Able to run a gist using an external dependency', function(assert) {
 
   const files = [
     {
@@ -78,7 +78,7 @@ test('Able to run a gist using an external dependency', function(assert) {
   });
 });
 
-test('Able to resolve ember / ember-data dependencies via version only', function(assert) {
+skip('Able to resolve ember / ember-data dependencies via version only', function(assert) {
   runGist(TWIDDLE_SHOWING_VERSIONS);
 
   andThen(function() {
@@ -87,7 +87,7 @@ test('Able to resolve ember / ember-data dependencies via version only', functio
   });
 });
 
-test('Dependencies can be changed via the UI', function(assert) {
+skip('Dependencies can be changed via the UI', function(assert) {
   runGist(TWIDDLE_SHOWING_VERSIONS);
 
   andThen(function() {
