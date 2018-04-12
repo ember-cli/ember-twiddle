@@ -4,7 +4,7 @@ import HbsPlugin from '../plugins/hbs-plugin';
 import blueprints from '../lib/blueprints';
 import Ember from 'ember';
 import moment from 'moment';
-import _template from "lodash/string/template";
+import _template from "lodash/template";
 
 const { computed, inject, RSVP, $, testing } = Ember;
 const twiddleAppName = 'twiddle';
