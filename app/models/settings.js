@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import _merge from 'lodash/object/merge';
+import _merge from 'lodash/merge';
 
 const {
   ObjectProxy,
