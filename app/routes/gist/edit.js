@@ -1,11 +1,12 @@
 import Ember from "ember";
 import GistRoute from "ember-twiddle/routes/gist-base-route";
+import { pushDeleteAll } from "ember-twiddle/utils/push-deletion";
 
-const { get } = Ember;
+const { get, run } = Ember;
 
 export default GistRoute.extend({
   model(params) {
-    this.get('store').unloadAll('gistFile');
+    run(() => pushDeleteAll(this.get('store'), 'gist-file'));
 
     return this.get('store').find('gist', params.gistId);
   },

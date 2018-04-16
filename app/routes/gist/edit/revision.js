@@ -1,14 +1,19 @@
+import Ember from 'ember';
 import GistEditRoute from "../edit";
+import { pushDeleteAll } from "ember-twiddle/utils/push-deletion";
+
+const { run } = Ember;
 
 export default GistEditRoute.extend({
 
   templateName: 'gist',
 
   model(params) {
-    this.get('store').unloadAll('gistFile');
+    let store = this.get('store');
+    run(() => pushDeleteAll(store, 'gist-file'));
     const gistParams = this.paramsFor('gist.edit');
 
-    return this.get('store').queryRecord('gist-revision', {
+    return store.queryRecord('gist-revision', {
       gistId: gistParams.gistId,
       revId: params.revId
     });
@@ -23,8 +28,9 @@ export default GistEditRoute.extend({
 
   actions: {
     showCurrentVersion() {
-      this.get('store').unloadAll('gistFile');
-      this.store.find('gist', this.paramsFor('gist.edit').gistId).then((model) => {
+      const store = this.get('store');
+      run(() => pushDeleteAll(store, 'gist-file'));
+      store.find('gist', this.paramsFor('gist.edit').gistId).then((model) => {
         this.transitionTo('gist.edit', model);
       });
     }
