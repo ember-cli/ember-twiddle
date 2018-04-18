@@ -5,8 +5,9 @@ import blueprints from '../lib/blueprints';
 import Ember from 'ember';
 import moment from 'moment';
 import _template from "lodash/template";
+import { pushDeletion } from 'ember-twiddle/utils/push-deletion';
 
-const { computed, inject, RSVP, $, testing } = Ember;
+const { computed, inject, RSVP, run, $, testing } = Ember;
 const twiddleAppName = 'twiddle';
 const oldTwiddleAppNames = ['demo-app', 'app'];
 const hbsPlugin = new HbsPlugin(Babel);
@@ -162,7 +163,9 @@ export default Ember.Service.extend({
   },
 
   generate(type) {
-    return this.get('store').createRecord('gistFile', this.buildProperties(type));
+    let store = this.get('store');
+    run(() => pushDeletion(store, 'gist-file', type));
+    return store.createRecord('gistFile', this.buildProperties(type));
   },
 
   buildProperties(type, replacements) {
@@ -331,27 +334,27 @@ export default Ember.Service.extend({
             url: 'https://cdnjs.cloudflare.com/ajax/libs/qunit/2.3.2/qunit.js',
             dataType: 'text'
           }).then(function(script) {
-            var oldQUnit;
-            if (window.QUnit) {
-              oldQUnit = window.QUnit;
-            }
-            window.QUnit = {
-              config: {
-                autostart: false
-              }
-            }
-            eval(script);
-            if (!oldQUnit) {
-              oldQUnit = window.QUnit;
-            }
-            if (window.testModule) {
-              window.require(window.testModule);
-            }
-            window.QUnit.start = function() {};
-            window.QUnit.done(function() {
-              window.QUnit = oldQUnit;
-            });
             Ember.run(function() {
+              var oldQUnit;
+              if (window.QUnit) {
+                oldQUnit = window.QUnit;
+              }
+              window.QUnit = {
+                config: {
+                  autostart: false
+                }
+              }
+              eval(script);
+              if (!oldQUnit) {
+                oldQUnit = window.QUnit;
+              }
+              if (window.testModule) {
+                window.require(window.testModule);
+              }
+              window.QUnit.start = function() {};
+              window.QUnit.done(function() {
+                window.QUnit = oldQUnit;
+              });
               oldQUnit.start();
             });
           });
@@ -400,9 +403,11 @@ export default Ember.Service.extend({
 
   checkRequiredFiles(out, gist) {
     requiredFiles.forEach(filePath => {
-      var file = gist.get('files').findBy('filePath', filePath);
-      if(!file) {
-        gist.get('files').pushObject(this.get('store').createRecord('gistFile', {
+      let file = gist.get('files').findBy('filePath', filePath);
+      if (!file) {
+        let store = this.get('store');
+        run(() => pushDeletion(store, 'gist-file', filePath));
+        gist.get('files').pushObject(store.createRecord('gistFile', {
           filePath: filePath,
           content: blueprints[filePath]
         }));
