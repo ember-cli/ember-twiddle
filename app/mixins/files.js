@@ -29,7 +29,7 @@ export default Ember.Mixin.create({
       this.setColumnFile(fileColumn, file);
       this.set('activeEditorCol', '1');
       this.send('contentsChanged');
-      this.updateOpenFiles();
+      run.scheduleOnce('afterRender', this, this.updateOpenFiles);
     }
   },
 
@@ -63,7 +63,7 @@ export default Ember.Mixin.create({
     this.setColumnFile(activeCol, file);
     this.set('activeEditorCol', activeCol);
     this.set('activeFile', file);
-    this.updateOpenFiles();
+    run.scheduleOnce('afterRender', this, this.updateOpenFiles);
   },
 
   addFile(type) {
@@ -77,7 +77,7 @@ export default Ember.Mixin.create({
       return;
     }
     this.createFile(filePath, fileProperties);
-    this.updateOpenFiles();
+    run.scheduleOnce('afterRender', this, this.updateOpenFiles);
   },
 
   renameFile(file) {
@@ -90,7 +90,7 @@ export default Ember.Mixin.create({
 
       file.set('filePath', filePath);
       this.get('notify').info(`File ${file.get('filePath')} was added`);
-      this.updateOpenFiles();
+      run.scheduleOnce('afterRender', this, this.updateOpenFiles);
     }
   },
 
@@ -105,8 +105,8 @@ export default Ember.Mixin.create({
       });
     }
 
-    this.updateOpenFiles();
     this.send('contentsChanged');
+    run.scheduleOnce('afterRender', this, this.updateOpenFiles);
   },
 
   addComponent(path) {

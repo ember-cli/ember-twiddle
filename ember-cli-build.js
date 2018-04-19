@@ -1,5 +1,7 @@
 /* global require, module, process */
 module.exports = function(defaults) {
+  process.env.FASTBOOT_DISABLED = true;
+
   var EmberApp = require('ember-cli/lib/broccoli/ember-app');
   var funnel = require('broccoli-funnel');
   var concat = require('broccoli-concat');
