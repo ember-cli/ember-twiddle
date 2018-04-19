@@ -5,7 +5,7 @@ import FilesMixin from "../mixins/files";
 import TestFilesMixin from "../mixins/test-files";
 import AppBuilderMixin from "../mixins/app-builder";
 
-const { inject, computed } = Ember;
+const { inject, computed, run } = Ember;
 
 export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestFilesMixin, {
   emberCli: inject.service(),
@@ -124,7 +124,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
 
     selectFile (file) {
       this.set('activeFile', file);
-      this.updateOpenFiles();
+      run.scheduleOnce('afterRender', this, this.updateOpenFiles);
     },
 
     openFile(filePath) {
@@ -204,7 +204,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
 
     removeColumn (col) {
       this.removeColumn(col);
-      this.updateOpenFiles();
+      run.scheduleOnce('afterRender', this, this.updateOpenFiles);
       this.get('transitionQueryParams')({numColumns: this.get('realNumColumns') - 1});
     },
 
@@ -216,7 +216,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
       }).then((queryParams) => {
         this.setProperties(queryParams);
         this.initializeColumns();
-        this.updateOpenFiles();
+        run.scheduleOnce('afterRender', this, this.updateOpenFiles);
       });
     },
 
@@ -232,7 +232,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
         fullScreen: false
       }).then(() => {
         this.initializeColumns();
-        this.updateOpenFiles();
+        run.scheduleOnce('afterRender', this, this.updateOpenFiles);
       });
     },
 
