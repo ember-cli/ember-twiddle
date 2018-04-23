@@ -25,6 +25,7 @@ export default Ember.Route.extend({
       this.session.close().then(() => {
         this.transitionTo('/');
       });
-    }
+    },
+    signInViaGithub() {}
   }
 });

@@ -1,7 +1,8 @@
-import Ember from 'ember';
-import ErrorMessages from '../utils/error-messages';
+import Ember from "ember";
+import ErrorMessages from "../utils/error-messages";
+import { pushDeletion } from "../utils/push-deletion";
 
-const { inject } = Ember;
+const { inject, run } = Ember;
 
 export default Ember.Mixin.create({
   notify: inject.service(),
@@ -22,14 +23,17 @@ export default Ember.Mixin.create({
       }
 
       fileProperties.filePath = filePath;
-      let file = this.get('store').createRecord('gistFile', fileProperties);
+
+      let store = this.get('store');
+      run(() => pushDeletion(store, 'gist-file', filePath));
+      let file = store.createRecord('gistFile', fileProperties);
 
       this.get('model.files').pushObject(file);
       notify.info(`File '${file.get('filePath')}' was added`);
       this.setColumnFile(fileColumn, file);
       this.set('activeEditorCol', '1');
       this.send('contentsChanged');
-      this.updateOpenFiles();
+      run.scheduleOnce('afterRender', this, this.updateOpenFiles);
     }
   },
 
@@ -67,7 +71,7 @@ export default Ember.Mixin.create({
     this.setColumnFile(activeCol, file);
     this.set('activeEditorCol', activeCol);
     this.set('activeFile', file);
-    this.updateOpenFiles();
+    run.scheduleOnce('afterRender', this, this.updateOpenFiles);
   },
 
   addFile(type) {
@@ -83,7 +87,7 @@ export default Ember.Mixin.create({
       return;
     }
     this.createFile(filePath, fileProperties);
-    this.updateOpenFiles();
+    run.scheduleOnce('afterRender', this, this.updateOpenFiles);
   },
 
   renameFile(file, filePath) {
@@ -97,7 +101,7 @@ export default Ember.Mixin.create({
 
       file.set('filePath', filePath);
       notify.info(`File ${file.get('filePath')} was added`);
-      this.updateOpenFiles();
+      run.scheduleOnce('afterRender', this, this.updateOpenFiles);
     }
   },
 
@@ -115,8 +119,8 @@ export default Ember.Mixin.create({
       });
     }
 
-    this.updateOpenFiles();
     this.send('contentsChanged');
+    run.scheduleOnce('afterRender', this, this.updateOpenFiles);
   },
 
   addComponent(path) {
