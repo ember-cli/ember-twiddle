@@ -1,89 +1,103 @@
-<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-  File <b class="caret"></b>
-</a>
-
-<ul class="dropdown-menu">
-  <li>{{#link-to 'gist.new' class="test-new-twiddle" }}New Twiddle{{/link-to}}</li>
-  {{#if model}}
-    <li role="presentation" class="divider"></li>
-    <li class="dropdown dropdown-submenu">
-      <a data-toggle="dropdown">Add...</a>
-      <ul class="dropdown-menu">
-        <li><a {{action 'addFile' ''}}>Other (empty file)</a></li>
-        <li class="dropdown dropdown-submenu">
-          <a {{action 'addComponent'}} class="add-component-link">Component (js and hbs)</a>
-          <ul class="dropdown-menu">
-            <li><a {{action 'addFile' 'component-hbs'}}>hbs only</a></li>
-            <li><a {{action 'addFile' 'component-js'}}>js only</a></li>
-          </ul>
-        </li>
-        <li><a {{action 'addFile' 'model'}}>Model</a></li>
-        <li><a {{action 'addFile' 'controller'}}>Controller</a></li>
-        <li><a {{action 'addFile' 'route'}}>Route</a></li>
-        <li><a {{action 'addFile' 'template'}} class="test-template-action">Template</a></li>
-        <li><a {{action 'addFile' 'service'}} class="test-add-service-link">Service</a></li>
-        <li><a {{action 'addHelper' 'helper'}} class="test-add-helper-link">Helper</a></li>
-        <li><a {{action 'addFile' 'router'}}>Router</a></li>
-        <li><a {{action 'addFile' 'css'}}>CSS</a></li>
-        <li class="dropdown dropdown-submenu">
-          <a data-toggle="dropdown">Tests</a>
-          <ul class="dropdown-menu">
-            <li><a {{action 'addAcceptanceTestFile'}} class="test-add-acceptance-test-link">Acceptance</a></li>
-            <li class="dropdown dropdown-submenu">
-              <a data-toggle="dropdown">Integration</a>
-              <ul class="dropdown-menu">
-                <li><a {{action 'addIntegrationTestFile' 'component'}} class="test-add-component-test-link">Component</a></li>
-              </ul>
-            </li>
-            <li class="dropdown dropdown-submenu">
-              <a data-toggle="dropdown">Unit</a>
-              <ul class="dropdown-menu">
-                <li><a {{action 'addUnitTestFile' 'controller'}}>Controller</a></li>
-                <li><a {{action 'addUnitTestFile' 'route'}} class="test-add-route-test-link">Route</a></li>
-                <li><a {{action 'addUnitTestFile' 'service'}}>Service</a></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    {{#if activeEditorCol}}
-      <li><a {{action 'renameFile' activeFile}} class="test-rename-action">Rename {{activeFile.filePath}}</a></li>
-      <li><a {{action 'renameFile' activeFile}} class="test-move-action">Move {{activeFile.filePath}}</a></li>
-      <li><a {{action 'removeFile' activeFile}} class="test-remove-action">Delete {{activeFile.filePath}}</a></li>
-    {{/if}}
-    {{#if session.isAuthenticated}}
-      <li role="presentation" class="divider"></li>
-      <li><a {{action 'saveGist' model}} class="test-save-action">Save to Github Gist</a></li>
-      {{#unless model.isNew}}
-        <li><a {{action 'share'}}>Share Twiddle</a></li>
-        <li><a {{action 'embed'}}>Embed Twiddle</a></li>
-        {{#if showFork}}
-          <li><a {{action 'fork' model}} class="test-fork-action">Fork Twiddle</a></li>
-        {{else}}
-          <li><a {{action 'copy'}} class="test-copy-action">Copy Twiddle</a></li>
-        {{/if}}
-        <li><a {{action 'deleteGist' model}} class="test-delete-action">Delete Twiddle</a></li>
-        <li role="presentation" class="divider"></li>
-        {{#if isRevision}}
-          <li><a {{action 'showCurrentVersion'}} class="test-show-current-version">Show Current Version</a></li>
-        {{else}}
-          {{#if model.history.length}}
-            <li class="dropdown dropdown-submenu">
-              <a data-toggle="dropdown">Previous Revisions</a>
-              <ul class="dropdown-menu">
-                {{#each model.history as |version|}}
-                  <li><a {{action "showRevision" version.id}} class="test-version-action">{{version.shortId}}</a></li>
-                {{/each}}
-              </ul>
-            </li>
-          {{/if}}
-        {{/if}}
-      {{/unless}}
-    {{else}}
-      <li><a {{action 'signInViaGithub'}} class="test-sign-in-action">Sign in with Github to Save</a></li>
-    {{/if}}
-    <li role="presentation" class="divider"></li>
-    <li><a {{action 'downloadProject'}} class="test-download-project-action">Download Project</a></li>
-  {{/if}}
-</ul>
+{{#if model}}
+  {{#paper-menu position='target-right target' as |menu|}}
+    {{#menu.trigger class='layout-column nested-menu-trigger'}}
+      {{#paper-button class='md-menu-origin md-button'}}
+        {{paper-icon 'insert drive file' size=21}}
+        Add File
+        {{paper-icon 'arrow drop up'}}
+      {{/paper-button}}
+    {{/menu.trigger}}
+    {{#menu.content width=3 as |content|}}
+      {{#content.menu-item class='md-menu-align-target test-new-twiddle' onClick=(action addFile '')}}
+        Other (empty file)
+      {{/content.menu-item}}
+      {{#content.menu-item}}
+        {{#paper-menu position='target-right target' as |menu|}}
+          {{#menu.trigger class='layout-column nested-menu-trigger'}}
+            {{#paper-button class='md-menu-origin'}}
+              Component (js and hbs)
+              {{paper-icon 'expand more'}}
+            {{/paper-button}}
+          {{/menu.trigger}}
+          {{#menu.content width=3 as |content|}}
+            {{#content.menu-item class='layout-column' onClick=(action addFile 'component-hbs')}}
+              hbs only
+            {{/content.menu-item}}
+            {{#content.menu-item class='layout-column' onClick=(action addFile 'component-js')}}
+              js only
+            {{/content.menu-item}}
+          {{/menu.content}}
+        {{/paper-menu}}
+      {{/content.menu-item}}
+      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'model')}}
+        Model
+      {{/content.menu-item}}
+      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'controller')}}
+        Controller
+      {{/content.menu-item}}
+      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'route')}}
+        Route
+      {{/content.menu-item}}
+      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'template')}}
+        Template
+      {{/content.menu-item}}
+      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'service')}}
+        Service
+      {{/content.menu-item}}
+      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'helper')}}
+        Helper
+      {{/content.menu-item}}
+      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'router')}}
+        Router
+      {{/content.menu-item}}
+      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'css')}}
+        CSS
+      {{/content.menu-item}}
+      {{#paper-menu position='target-right target' as |menu|}}
+        {{#menu.trigger class='layout-column nested-menu-trigger'}}
+          {{#paper-button class='md-menu-origin'}}
+            Tests
+            {{paper-icon 'expand more'}}
+          {{/paper-button}}
+        {{/menu.trigger}}
+        {{#menu.content width=3 as |content|}}
+          {{#content.menu-item class='layout-column test-add-acceptance-test-link' onClick=(action addAcceptanceTestFile)}}
+            Acceptance
+          {{/content.menu-item}}
+          {{#paper-menu position='target-right target' as |menu|}}
+            {{#menu.trigger class='layout-column nested-menu-trigger'}}
+              {{#paper-button class='md-menu-origin'}}
+                Integration
+                {{paper-icon 'expand more'}}
+              {{/paper-button}}
+            {{/menu.trigger}}
+            {{#menu.content width=3 as |content|}}
+              {{#content.menu-item class='layout-column test-add-component-test-link' onClick=(action addIntegrationTestFile 'component')}}
+                Component
+              {{/content.menu-item}}
+            {{/menu.content}}
+          {{/paper-menu}}
+          {{#paper-menu position='target-right target' as |menu|}}
+            {{#menu.trigger class='layout-column nested-menu-trigger'}}
+              {{#paper-button class='md-menu-origin'}}
+                Unit
+                {{paper-icon 'expand more'}}
+              {{/paper-button}}
+            {{/menu.trigger}}
+            {{#menu.content width=3 as |content|}}
+              {{#content.menu-item class='layout-column' onClick=(action addUnitTestFile 'controller')}}
+                Controller
+              {{/content.menu-item}}
+              {{#content.menu-item class='layout-column test-add-route-test-link' onClick=(action addUnitTestFile 'route')}}
+                Route
+              {{/content.menu-item}}
+              {{#content.menu-item class='layout-column' onClick=(action addUnitTestFile 'service')}}
+                Service
+              {{/content.menu-item}}
+            {{/menu.content}}
+          {{/paper-menu}}
+        {{/menu.content}}
+      {{/paper-menu}}
+    {{/menu.content}}
+  {{/paper-menu}}
+{{/if}}

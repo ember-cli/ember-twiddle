@@ -1,0 +1,40 @@
+{{#paper-sidenav-container class='inner-sidenav'}}
+  {{#paper-sidenav
+    class='md-whiteframe-z2 layout-column'
+    name='left'
+    lockedOpen=sidenavLockedOpen
+    open=leftSideBarOpen
+    closeOnClick=false
+    onToggle=(action (mut leftSideBarOpen))
+  }}
+    {{#paper-toolbar class='sidebar-toolbar' as |toolbar|}}
+      {{#paper-toolbar-tools}}
+        Ember Twiddle
+        <span class="flex"></span>
+
+        {{#paper-sidenav-toggle name='left' as |toggleAction|}}
+          {{#paper-button class='hide-gt-sm' iconButton=true onClick=(action toggleAction)}}
+            {{paper-icon 'chevron left'}}
+          {{/paper-button}}
+        {{/paper-sidenav-toggle}}
+
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+
+    {{#paper-content class='sidebar-content flex'}}
+      {{#if (and sidebarContentComponent (not showProfile))}}
+        {{component sidebarContentComponent showProfile=(action (mut showProfile) true)}}
+      {{else}}
+        {{user-profile hideProfile=(action 'hideProfile')}}
+      {{/if}}
+    {{/paper-content}}
+  {{/paper-sidenav}}
+
+  {{#paper-card-content class='flex'}}
+    <div class='layout-fill layout-column main-content'>
+      {{yield (hash
+        sidebarToggle=(component 'sidebar-toggle' sidenavLockedOpen=sidenavLockedOpen)
+      )}}
+    </div>
+  {{/paper-card-content}}
+{{/paper-sidenav-container}}

@@ -1,4 +1,6 @@
-<label class="checkbox-inline">{{better-checkbox id="live-reload" checked=isLiveReload action=(action "liveReloadClicked")}}Live Reload</label>
+{{#paper-checkbox value=isLiveReload onChange=(action 'liveReloadClicked')}}
+  Live Reload
+{{/paper-checkbox}}
 {{#unless isLiveReload}}
   <button class="btn-default run-now" {{action "runNowClicked"}}>Run Now</button>
 {{/unless}}

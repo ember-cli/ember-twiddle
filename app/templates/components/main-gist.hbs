@@ -1,44 +1,82 @@
-{{gist-header model=model
-              session=session
-              unsaved=unsaved
-              activeEditorCol=activeEditorCol
-              activeFile=activeFile
-              isRevision=isRevision
-              titleChanged=(action "titleChanged")
-              addFile=(action "addFile")
-              addHelper=(action "addHelper")
-              addComponent=(action "addComponent")
-              addUnitTestFile=(action "addUnitTestFile")
-              addIntegrationTestFile=(action "addIntegrationTestFile")
-              addAcceptanceTestFile=(action "addAcceptanceTestFile")
-              renameFile=(action "renameFile")
-              removeFile=(action "removeFile")
-              setEditorKeyMap=(action "setEditorKeyMap")
-              versionSelected=(action "versionSelected")
-}}
+{{#with (component 'gist-header'
+  class='flex'
+  model=model
+  session=session
+  unsaved=unsaved
+  activeFile=activeFile
+  isRevision=isRevision
+  titleChanged=(action 'titleChanged')
+  addFile=(action 'addFile')
+  addHelper=(action 'addHelper')
+  addComponent=(action 'addComponent')
+  addUnitTestFile=(action 'addUnitTestFile')
+  addIntegrationTestFile=(action 'addIntegrationTestFile')
+  addAcceptanceTestFile=(action 'addAcceptanceTestFile')
+  versionChanged=(action 'rebuildApp')
+  openFile=(action 'openFile')
+  hideFileTree=(action 'hideFileTree')
+) as |twiddleSidebar|}}
+  {{#sidebar-container sidenavLockedOpen=sidenavLockedOpen leftSideBarOpen=leftSideBarOpen sidebarContentComponent=twiddleSidebar as |sidebar|}}
+    {{gist-body model=model
+      sidebarToggle=sidebar.sidebarToggle
+      columns=columns
+      settings=settings
+      numColumns=realNumColumns
+      fullScreen=fullScreen
+      fileTreeShown=fileTreeShown
+      notify=notify
+      isBuilding=isBuilding
+      buildErrors=buildErrors
+      applicationUrl=applicationUrl
+      buildOutput=buildOutput
+      testsEnabled=testsEnabled
+      activeEditorCol=activeEditorCol
+      renameFile=(action 'showRenameFileDialog')
+      removeFile=(action 'showRemoveFileDialog')
+      selectFile=(action 'selectFile')
+      focusEditor=(action 'focusEditor')
+      updateColumn=(action 'updateColumn')
+      removeColumn=(action 'removeColumn')
+      addColumn=(action 'addColumn')
+      showFileTree=(action 'showFileTree')
+      liveReloadChanged=(action 'liveReloadChanged')
+      runNow=(action 'runNow')
+      exitFullScreen=(action 'exitFullScreen')
+      switchTests=(action 'switchTests')
+    }}
+  {{/sidebar-container}}
+{{/with}}
 
-{{gist-body model=model
-            columns=columns
-            settings=settings
-            numColumns=realNumColumns
-            fullScreen=fullScreen
-            fileTreeShown=fileTreeShown
-            notify=notify
-            isBuilding=isBuilding
-            buildErrors=buildErrors
-            applicationUrl=applicationUrl
-            buildOutput=buildOutput
-            testsEnabled=testsEnabled
-            openFile=(action "openFile")
-            hideFileTree=(action "hideFileTree")
-            focusEditor=(action "focusEditor")
-            selectFile=(action "selectFile")
-            updateColumn=(action "updateColumn")
-            removeColumn=(action "removeColumn")
-            addColumn=(action "addColumn")
-            showFileTree=(action "showFileTree")
-            liveReloadChanged=(action "liveReloadChanged")
-            runNow=(action "runNow")
-            exitFullScreen=(action "exitFullScreen")
-            switchTests=(action "switchTests")
-}}
+{{#if showRemoveFileDialog}}
+  {{#basic-dialog title='Delete File?' parentId=filePanelId onClose=(action 'hideRemoveFileDialog') as |ui|}}
+    {{#ui.content}}
+      Are you sure you want to delete this file?<br><br>
+      
+      <code>{{fileToRemove.filePath}}</code>
+    {{/ui.content}}
+
+    {{#ui.actions}}
+      {{#paper-button onClick=ui.close}}Cancel{{/paper-button}}
+      <span class='flex'></span>
+      {{#paper-button data-test-delete-file-confirm warn=true raised=true onClick=(action 'removeFile')}}
+        Delete
+      {{/paper-button}}
+    {{/ui.actions}}
+  {{/basic-dialog}}
+{{else if showRenameFileDialog}}
+  {{#basic-dialog title='Move/Rename File' parentId=filePanelId onClose=(action 'hideRenameFileDialog') as |ui|}}
+    {{#ui.content}}
+      What would you like to call this file/where would you like to move it?<br><br>
+      
+      <div class='layout-column'>
+        {{paper-input class="flex-100" label="File Path" value=newFilePath onChange=(action (mut newFilePath))}}
+      </div>
+    {{/ui.content}}
+
+    {{#ui.actions}}
+      {{#paper-button onClick=ui.close}}Cancel{{/paper-button}}
+      <span class='flex'></span>
+      {{#paper-button primary=true raised=true onClick=(action 'renameFile')}}Move/Rename{{/paper-button}}
+    {{/ui.actions}}
+  {{/basic-dialog}}
+{{/if}}

@@ -1,12 +1,23 @@
-.twiddle-panes {
-  margin: 0;
-  margin-left: 0;
-  position: absolute;
-  top: $topbar-height;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.main-content {
+  overflow-y: auto;
 
+  md-toolbar {
+    border-bottom: 1px solid $grey-3;
+    background-color: #f6f6f6 !important;
+    color: #333 !important;
+
+    md-icon {
+      color: #666 !important;
+    }
+
+    md-menu button {
+      color: #333 !important;
+      text-transform: none;
+    }
+  }
+}
+
+.twiddle-panes {
   @media (min-width: $screen-md-min) {
     display: -webkit-flex;
     display: flex;
@@ -98,10 +109,6 @@
       margin-left: 10px;
     }
 
-    .nav-right {
-      margin-left: auto;
-    }
-
     .glyphicon {
       font-size: 0.8em;
     }
@@ -181,12 +188,9 @@
 }
 
 .gist-header {
-  position: relative;
+  width: 250px;
 
   > .visible-toolbar {
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 100%;
   }
 }

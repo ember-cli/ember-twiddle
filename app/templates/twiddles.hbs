@@ -1,3 +1,9 @@
-{{saved-twiddles-header session=session}}
-
-{{saved-twiddles-table model=model}}
+{{#sidebar-container as |sidebar|}}
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools class='main-toolbar-tools'}}
+      {{component sidebar.sidebarToggle}}
+      My Twiddles
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+  {{saved-twiddles-table model=model}}
+{{/sidebar-container}}

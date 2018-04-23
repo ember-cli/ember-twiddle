@@ -1,10 +1,71 @@
+@import "ember-paper";
 @import "variables";
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "vendor/twiddlicon/twiddlicon.scss";
 @import "main";
 @import "toolbar";
 @import "twiddle-panes";
 @import "code";
 @import "output-pane";
-@import "dropdown";
 @import "saved-twiddles";
+@import "user-profile";
+
+body,
+.main-container,
+.main-gist,
+.gist-body,
+.gist-header,
+.inner-sidenav,
+.sidebar-content,
+.sidebar-container,
+.twiddle-panes {
+  width: 100%;
+  height: 100%;
+}
+
+// nested menus shouldn't have extra padding
+md-menu-item > md-menu {
+  padding: 0;
+  margin: 0;
+}
+
+// buttons in a nested menu should be flush
+md-menu-item > md-menu > .md-button {
+  border-radius: 0;
+  margin: auto 0;
+  font-size: 15px;
+  text-transform: none;
+  font-weight: 400;
+  text-align: left;
+  text-align: start;
+  height: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+  display: inline-block;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  width: 100%;
+}
+
+.tree-file[aria-level='2'] {
+  margin-left: 1em;
+}
+
+// ember-paper removes the margin from the first button
+// in a toolbar. However, we're rendering two buttons for now
+// and hiding one of them depending on the breakpoints.
+// this also removes the margin from the second button.
+.md-toolbar-tools.main-toolbar-tools > .md-button:nth-child(2) {
+  margin-left: -8px;
+}
+
+// ember-basic-dropdown creates an additional div after the trigger this fix
+// takes into account the last `md-menu` and not only the last element
+.md-toolbar-tools > md-menu:nth-last-of-type(1) {
+  margin-right: -8px;
+
+  & > .md-button {
+    margin-right: 0;
+  }
+}

@@ -1,5 +1,4 @@
 import Ember from "ember";
-import Settings from '../models/settings';
 import ColumnsMixin from "../mixins/columns";
 import FilesMixin from "../mixins/files";
 import TestFilesMixin from "../mixins/test-files";
@@ -14,15 +13,13 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
   store: inject.service(),
   fastboot: inject.service(),
 
+  classNames: ['main-gist'],
   numColumns: 1,
   fullScreen: false,
   openFiles: "",
 
   init() {
     this._super(...arguments);
-    this.set('settings', Settings.create({
-      isFastBoot: this.get('fastboot.isFastBoot')
-    }));
     this.createColumns();
     this.set('activeEditorCol', '1');
   },
@@ -56,8 +53,6 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
    * @type {Number}
    */
   activeEditorCol: null,
-
-  settings: null,
 
   /**
    * Errors during build
@@ -103,13 +98,8 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
       this.get('rebuildApp').perform();
     },
 
-    versionSelected(dependency, version) {
-      var gist = this.get('model');
-      var emberCli = this.get('emberCli');
-
-      emberCli.updateDependencyVersion(gist, dependency, version).then(() => {
-        this.get('rebuildApp').perform();
-      });
+    rebuildApp() {
+      this.get('rebuildApp').perform();
     },
 
     liveReloadChanged(isLiveReload) {
@@ -188,21 +178,62 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
      * Add a new file to the model
      * @param {String|null} type Blueprint name or null for empty file
      */
-    addFile (type) {
+    addFile(type) {
       this.addFile(type);
     },
 
-    renameFile (file) {
-      this.renameFile(file);
+    showRenameFileDialog(file, panelId) {
+      this.setProperties({
+        showRenameFileDialog: true,
+        fileToRename: file,
+        newFilePath: file.get('filePath'),
+        filePanelId: `#${panelId}`
+      });
     },
 
-    removeFile (file) {
-      if(confirm(`Are you sure you want to remove this file?\n\n${file.get('filePath')}`)) {
+    hideRenameFileDialog() {
+      this.setProperties({
+        showRenameFileDialog: false,
+        fileToRename: undefined,
+        filePanelId: ''
+      });
+    },
+
+    renameFile() {
+      let file = this.get('fileToRename');
+      let filePath = this.get('newFilePath');
+
+      this.renameFile(file, filePath);
+      this.send('hideRenameFileDialog');
+    },
+
+    showRemoveFileDialog(file, panelId) {
+      this.setProperties({
+        showRemoveFileDialog: true,
+        fileToRemove: file,
+        filePanelId: `#${panelId}`
+      });
+    },
+
+    hideRemoveFileDialog() {
+      this.setProperties({
+        showRemoveFileDialog: false,
+        fileToRemove: undefined,
+        filePanelId: ''
+      });
+    },
+
+    removeFile() {
+      let file = this.get('fileToRemove');
+
+      if (file) {
         this.removeFile(file);
       }
+
+      this.send('hideRemoveFileDialog');
     },
 
-    removeColumn (col) {
+    removeColumn(col) {
       this.removeColumn(col);
       run.scheduleOnce('afterRender', this, this.updateOpenFiles);
       this.get('transitionQueryParams')({numColumns: this.get('realNumColumns') - 1});
@@ -234,12 +265,6 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
         this.initializeColumns();
         run.scheduleOnce('afterRender', this, this.updateOpenFiles);
       });
-    },
-
-    setEditorKeyMap (keyMap) {
-      const settings = this.get('settings');
-      settings.set('keyMap', keyMap);
-      settings.save();
     },
 
     switchTests(testsEnabled) {

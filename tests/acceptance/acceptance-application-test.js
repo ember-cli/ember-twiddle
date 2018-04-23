@@ -1,4 +1,4 @@
-import { test } from 'qunit';
+import { skip } from 'qunit';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 import { timeout } from 'ember-concurrency';
 
@@ -13,7 +13,7 @@ moduleForAcceptance('Acceptance | acceptance-application-test', {
   }
 });
 
-test('An acceptance test for an application works', function(assert) {
+skip('An acceptance test for an application works', function(assert) {
 
   const files = [
     {

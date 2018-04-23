@@ -51,7 +51,7 @@ const TWIDDLE_WITH_ROUTES = [
               import config from './config/environment';
 
               var Router = Ember.Router.extend({
-                location: config.locationType
+                location: 'hash'
               });
 
               Router.map(function() {

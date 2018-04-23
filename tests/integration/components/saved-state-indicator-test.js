@@ -17,9 +17,9 @@ test('it shows unsaved if unsaved, saved if not', function(assert) {
 
   this.render(hbs`{{saved-state-indicator model=model unsaved=unsaved}}`);
 
-  assert.equal(this.$('span.indicator').text().replace(/\s+/g, " ").trim(), "3 files saved to Gist, rev a1b2c3d4");
+  assert.equal(this.$('span.indicator').text().replace(/\s+/g, " ").trim(), "3 files Saved, rev a1b2c3d4");
 
   this.set('unsaved', true);
 
-  assert.equal(this.$('span.indicator').text().trim(), "Unsaved");
+  assert.equal(this.$('span.indicator').text().trim(), "3 files Unsaved");
 });

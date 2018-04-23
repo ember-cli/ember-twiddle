@@ -1,58 +1,60 @@
-<nav class="navbar-default gist-header">
-  <div class="row toolbar visible-toolbar">
-    <div class="title">
-      {{title-input value=model.description titleChanged=(action this.attrs.titleChanged)}}
-      {{saved-state-indicator model=model unsaved=unsaved}}
+<nav class='navbar-default gist-header flex'>
+  <div class='toolbar visible-toolbar layout-column'>
+    <div class='title flex-8'>
+      {{gist-card gist=model unsaved=unsaved
+        isRevision=isRevision
+        titleChanged=(action this.attrs.titleChanged)
+        deleteGist=(route-action 'deleteGist')
+        saveGist=(route-action 'saveGist')
+        fork=(route-action 'fork')
+        copy=(route-action 'copy')
+        download=(route-action 'downloadProject')
+      }}
     </div>
 
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsed-menu" aria-expanded="false">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-  </div>
+    <div class='twiddle-pane file-tree flex'>
+      {{file-tree model=model
+        openFile=(action this.openFile)
+      }}
+    </div>
 
-  <div id="collapsed-menu" class="collapse navbar-collapse row toolbar">
-    <ul class="nav-pills main-menu">
+    {{#paper-list class='layout-column main-menu flex-nogrow'}}
       {{file-menu model=model
-                  session=session
-                  activeEditorCol=activeEditorCol
-                  activeFile=activeFile
-                  isRevision=isRevision
-                  addFile=(action this.attrs.addFile)
-                  addHelper=(action this.attrs.addHelper)
-                  addComponent=(action this.attrs.addComponent)
-                  addUnitTestFile=(action this.attrs.addUnitTestFile)
-                  addIntegrationTestFile=(action this.attrs.addIntegrationTestFile)
-                  addAcceptanceTestFile=(action this.attrs.addAcceptanceTestFile)
-                  renameFile=(action this.attrs.renameFile)
-                  removeFile=(action this.attrs.removeFile)
-                  deleteGist=(route-action "deleteGist")
-                  saveGist=(route-action "saveGist")
-                  fork=(route-action "fork")
-                  copy=(route-action "copy")
-                  signInViaGithub=(route-action "signInViaGithub")
-                  showRevision=(route-action "showRevision")
-                  showCurrentVersion=(route-action "showCurrentVersion")
-                  downloadProject=(route-action "downloadProject")
+        session=session
+        activeFile=activeFile
+        isRevision=isRevision
+        addFile=(action this.attrs.addFile)
+        addHelper=(action this.attrs.addHelper)
+        addComponent=(action this.attrs.addComponent)
+        addUnitTestFile=(action this.attrs.addUnitTestFile)
+        addIntegrationTestFile=(action this.attrs.addIntegrationTestFile)
+        addAcceptanceTestFile=(action this.attrs.addAcceptanceTestFile)
+        deleteGist=(route-action 'deleteGist')
+        saveGist=(route-action 'saveGist')
+        fork=(route-action 'fork')
+        copy=(route-action 'copy')
+        signInViaGithub=(route-action 'signInViaGithub')
+        showRevision=(route-action 'showRevision')
+        showCurrentVersion=(route-action 'showCurrentVersion')
+        downloadProject=(route-action 'downloadProject')
       }}
 
-      {{editor-mode-menu setKeyMap=(action this.attrs.setEditorKeyMap)}}
+      {{paper-divider}}
 
-      {{versions-menu versionSelected=(action this.attrs.versionSelected)
-                      emberVersions=emberVersions
-                      emberDataVersions=emberDataVersions
+      {{versions-menu model=model
+        onVersionChanged=(action this.attrs.versionChanged)
+        emberVersions=emberVersions
+        emberDataVersions=emberDataVersions
       }}
-    </ul>
 
-    <hr>
+      {{paper-divider}}
 
-    {{user-menu session=session
-                signInViaGithub=(route-action "signInViaGithub")
-                signOut=(route-action "signOut")
-                showTwiddles=(route-action "showTwiddles")
-    }}
-
-    <div></div>
+      {{user-menu session=session
+        showProfile=(action showProfile)
+        signInViaGithub=(route-action 'signInViaGithub')
+        signOut=(route-action 'signOut')
+        showTwiddles=(route-action 'showTwiddles')
+      }}
+    {{/paper-list}}
   </div>
 </nav>

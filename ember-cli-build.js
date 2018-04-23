@@ -1,4 +1,5 @@
 /* global require, module, process */
+'use strict';
 module.exports = function(defaults) {
   process.env.FASTBOOT_DISABLED = true;
 
@@ -41,9 +42,6 @@ module.exports = function(defaults) {
     codemirror: {
       modes: ['xml', 'javascript', 'handlebars', 'htmlmixed', 'css'],
       keyMaps: ['emacs', 'sublime', 'vim']
-    },
-    'ember-cli-bootstrap-sassy': {
-      'js': ['dropdown', 'collapse']
     },
     fileCreator: [
       {
@@ -92,6 +90,7 @@ module.exports = function(defaults) {
   }
 
   app.import('vendor/ember/ember-template-compiler.js');
+  app.import('vendor/flat-to-nested.js');
   app.import('vendor/shims/babel.js');
   app.import('vendor/shims/path.js');
   app.import('bower_components/file-saver/FileSaver.js');
@@ -234,7 +233,7 @@ function getEmberCLIBlueprints() {
   }
 
   // Location should be 'none' in router.js
-  fileMap['router'] = fileMap['router'].replace(/config\.locationType/, "'none'");
+  fileMap['router'] = fileMap['router'].replace(/config\.locationType/, "'hash'");
 
   fileMap['resolver'] = fs.readFileSync('app/resolver.js').toString();
   fileMap['twiddle.json'] = fs.readFileSync('blueprints/twiddle.json').toString();

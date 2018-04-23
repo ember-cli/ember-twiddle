@@ -16,9 +16,9 @@ $icon-shadow: 1px 1px 0px #fff;
 $icon-shadow-hover: 1px 1px 0px #ad9488;
 $shadow-opacity: 0.3;
 $text-shadow: rgba(0, 0, 0, $shadow-opacity) 0px 1px 0px;
-$menu-hover-bg: rgba(0, 0, 0, 0.13);
+$menu-hover-bg: rgba(0, 0, 0, 0.08);
 $menu-box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0px, inset rgba(0, 0, 0, 0.17) 0 1px 1px;
-$menu-bg: rgba(0, 0, 0, 0.2);
+$menu-bg: rgba(0, 0, 0, 0.05);
 
 $topbar-height: 60px;
 $topbar-control-height: 32px;
@@ -28,6 +28,7 @@ $url-bar-padding: 6px;
 
 $font-size: 13px;
 $font-size-larger: 15px;
+$font-size-largest: 18px;
 
 // bootstrap vars
 $brand-primary: #000;

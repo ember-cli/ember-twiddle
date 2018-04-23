@@ -1,0 +1,104 @@
+<div class='layout-column details'>
+  {{title-input value=gist.description titleChanged=titleChanged}}
+  <div class='layout-row'>
+    <div class={{if session.isAuthenticated 'flex-75' 'flex'}}>
+      {{saved-state-indicator model=gist unsaved=unsaved}}
+    </div>
+    {{#paper-button iconButton=true title='New Twiddle' onClick=(route-action 'transitionTo' 'gist.new')}}
+      {{paper-icon 'add'}}
+    {{/paper-button}}
+
+    {{#if session.isAuthenticated}}
+      {{#paper-button iconButton=true title='Save Twiddle' onClick=(action saveGist gist)}}
+        {{paper-icon 'save'}}
+      {{/paper-button}}
+    {{/if}}
+
+    {{#if (and showFork session.isAuthenticated)}}
+      {{#paper-button iconButton=true title='Fork Twiddle'  onClick=(action fork gist)}}
+        {{paper-icon 'call split'}}
+      {{/paper-button}}
+    {{else if (not gist.isNew)}}
+      {{#paper-button iconButton=true title='Duplicate Twiddle' onClick=(action copy gist)}}
+        {{paper-icon 'content copy' size=20}}
+      {{/paper-button}}
+    {{/if}}
+
+    {{#paper-menu class="test-twiddle-menu" position='target-left target' as |menu|}}
+      {{#menu.trigger class='layout-column'}}
+        {{#paper-button class='md-menu-origin' iconButton=true}}
+          {{paper-icon 'more vert'}}
+        {{/paper-button}}
+      {{/menu.trigger}}
+      {{#menu.content width=2 as |content|}}
+        {{#content.menu-item class="test-new-twiddle" title='Create New Twiddle' onClick=(route-action 'transitionTo' 'gist.new')}}
+          {{paper-icon 'add'}} New Twiddle
+        {{/content.menu-item}}
+
+        {{#if session.isAuthenticated}}
+          {{#content.menu-item class="test-save-twiddle" title='Save Twiddle' onClick=(action saveGist gist)}}
+            {{paper-icon 'save'}} Save Twiddle
+          {{/content.menu-item}}
+        {{/if}}
+
+        {{#if (and showFork session.isAuthenticated)}}
+          {{#content.menu-item class="test-fork-twiddle" title='Fork Twiddle' onClick=(action fork gist)}}
+            {{paper-icon 'call split'}} Fork Twiddle
+          {{/content.menu-item}}
+        {{else if (not gist.isNew)}}
+          {{#content.menu-item class="test-duplicate-twiddle" title='Duplicate Twiddle' onClick=(action copy gist)}}
+            {{paper-icon 'content copy' size=20}} Duplicate Twiddle
+          {{/content.menu-item}}
+        {{/if}}
+
+        {{#content.menu-item class="test-download-twiddle" title='Download Twiddle' onClick=(action download)}}
+          {{paper-icon 'file download' size=20}} Download Twiddle
+        {{/content.menu-item}}
+
+        {{#if (and (not gist.isNew) session.isAuthenticated)}}
+          {{paper-divider}}
+
+          {{#content.menu-item class="test-share-twiddle" title='Share Twiddle' onClick=(action 'share')}}
+            {{paper-icon 'share'}} Share Twiddle
+          {{/content.menu-item}}
+
+          {{#content.menu-item class="test-embed-twiddle" title='Embed Twiddle' onClick=(action 'embed')}}
+            {{paper-icon 'picture in picture alt'}} Embed Twiddle
+          {{/content.menu-item}}
+
+          {{#if isRevision}}
+            {{paper-divider}}
+            {{#content.menu-item onClick=(route-action 'showCurrentVersion')}}
+              Show Current Version
+            {{/content.menu-item}}
+          {{else if gist.history.length}}
+            {{paper-divider}}
+            {{#content.menu-item}}
+              {{#paper-menu position='target-left target' as |menu|}}
+                {{#menu.trigger class='layout-column'}}
+                  {{#paper-button class='md-button'}}
+                    {{paper-icon 'history'}} Previous Revisions
+                  {{/paper-button}}
+                {{/menu.trigger}}
+                {{#menu.content width=2 as |content|}}
+                  {{#each gist.history as |version|}}
+                    {{#content.menu-item title='Create New Twiddle' onClick=(route-action 'showRevision' version.id)}}
+                      {{version.shortId}}
+                    {{/content.menu-item}}
+                  {{/each}}
+                {{/menu.content}}
+              {{/paper-menu}}
+            {{/content.menu-item}}
+          {{/if}}
+
+          {{paper-divider}}
+
+          {{#content.menu-item class="test-delete-twiddle" title='Delete Twiddle' warn=true onClick=(action deleteGist gist)}}
+            {{paper-icon 'delete'}} Delete Twiddle
+          {{/content.menu-item}}
+
+        {{/if}}
+      {{/menu.content}}
+    {{/paper-menu}}
+  </div>
+</div>

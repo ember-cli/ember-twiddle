@@ -6,6 +6,7 @@ const { inject, run } = Ember;
 
 export default GistRoute.extend({
   emberCli: inject.service(),
+  state: inject.service(),
 
   model(params) {
     let store = this.get('store');
@@ -21,6 +22,8 @@ export default GistRoute.extend({
       files.pushObject(emberCli.generate('templates/application'));
       files.pushObject(emberCli.generate('twiddle.json'));
     }
+
+    this.set('state.lastGistId', undefined);
 
     return model;
   },

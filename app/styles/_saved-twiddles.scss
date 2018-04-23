@@ -3,27 +3,28 @@ div.table-responsive {
 }
 
 .saved-twiddles {
-  width: 80%;
-  margin: 0 auto;
+  width: 90%;
+  margin-bottom: 8px;
+  max-width: 100%;
+  width: 100%;
+  border-spacing: 0;
+  overflow: hidden;
 
-  thead th {
-    padding: 8px;
-    border: 1px solid $grey-4;
+  tr:nth-child(odd) td {
+    background-color: #f7f7f7;
   }
 
-  tbody tr:hover {
-    background-color: $pale-orange;
-    
-    a {
-      color: white;
-    }
+  td {
+    vertical-align: top;
   }
-  
-  a {
-    text-decoration: underline;
-    color: $pale-orange;
+
+  td, th {
+    padding: 12px 16px;
+    text-align: left;
   }
-  a:hover {
-    text-decoration: none;
+
+  th {
+    background-color: #eaeaea;
+    color: #757575;
   }
 }

@@ -1,6 +1,6 @@
 import Ember from "ember";
 
-const { inject, run } = Ember;
+const { inject } = Ember;
 
 export default Ember.Mixin.create({
   fastboot: inject.service(),
@@ -16,36 +16,12 @@ export default Ember.Mixin.create({
 
   init() {
     this._super(...arguments);
-    if (!this.get('fastboot.isFastBoot')) {
-      this.setupWindowUpdate();
-    }
+    this.set('applicationUrl', this.get('route'));
   },
 
   actions: {
     transitionQueryParams(queryParams) {
       return this.transitionToRoute({ queryParams }).then(() => queryParams);
     }
-  },
-
-  setupWindowUpdate() {
-    // TODO: this in a controller seems suspect, rather this should likely be
-    // part of some handshake, to ensure no races exist. This should likley not
-    // be something a controller would handle - (SP)
-    window.addEventListener('message', (m) => {
-      run(() => {
-        if(typeof m.data==='object' && 'setAppUrl' in m.data) {
-          if (!this.get('isDestroyed')) {
-            if (window.messagesWaiting > 0) {
-              window.messagesWaiting = 0;
-            }
-            const newRoute = m.data.setAppUrl || '/';
-            this.setProperties({
-              applicationUrl: newRoute,
-              route: newRoute === "/" ? undefined : newRoute
-            });
-          }
-        }
-      });
-    });
   }
 });

@@ -1,29 +1,25 @@
 {{#twiddle-panes numColumns=numColumns fullScreen=fullScreen fileTreeShown=fileTreeShown}}
   {{#unless fullScreen}}
-    {{#if fileTreeShown}}
-      <div class="twiddle-pane file-tree">
-        {{file-tree model=model
-                    openFile=(action this.openFile)
-                    hideFileTree=(action this.hideFileTree)
-        }}
-      </div>
-    {{/if}}
-
-    {{#each columns as |column|}}
+    {{#each columns as |column index|}}
       {{#if column.show}}
-        <div class="twiddle-pane code {{if column.active 'active'}}">
+        <div class="twiddle-pane code {{if column.active 'active'}}" data-test-columns='{{column.col}}'>
           {{file-editor-column col=column.col
-                               file=column.file
-                               allFiles=model.files
-                               keyMap=settings.keyMap
-                               numColumns=numColumns
-                               fileTreeShown=fileTreeShown
-                               focusEditor=(action this.focusEditor)
-                               selectFile=(action this.selectFile)
-                               contentChanged=(action this.updateColumn)
-                               removeColumn=(action this.removeColumn)
-                               addColumn=(action this.addColumn)
-                               showFileTree=(action this.showFileTree)
+            sidebarToggle=sidebarToggle
+            isFirstColumn=(eq index 0)
+            file=column.file
+            allFiles=model.files
+            keyMap=settings.keyMap
+            numColumns=numColumns
+            fileTreeShown=fileTreeShown
+            activeEditorCol=activeEditorCol
+            renameFile=(action this.attrs.renameFile)
+            removeFile=(action this.attrs.removeFile)
+            focusEditor=(action this.focusEditor)
+            selectFile=(action this.selectFile)
+            contentChanged=(action this.updateColumn)
+            removeColumn=(action this.removeColumn)
+            addColumn=(action this.addColumn)
+            showFileTree=(action this.showFileTree)
           }}
         </div>
       {{/if}}
@@ -31,29 +27,53 @@
   {{/unless}}
 
   <div class="twiddle-pane output {{if fullScreen 'full-screen'}}">
-    <div class="header">
-      {{#if noColumns}}
-        <span class="glyphicon glyphicon-plus" {{action (action this.addColumn)}} title="Show an editor panel"></span>
-      {{/if}}
-      {{build-messages notify=notify
-                       isBuilding=isBuilding
-                       buildErrors=buildErrors
-      }}
-      <label class="checkbox-inline twiddle-run-tests">
-        {{better-checkbox id="switch-tests" checked=testsEnabled action=(action this.switchTests)}}
-        Run Tests
-      </label>
-      {{run-or-live-reload liveReloadChanged=(action this.liveReloadChanged) runNow=(action this.runNow)}}
-    </div>
+    {{#paper-toolbar}}
+      {{#paper-toolbar-tools}}
+        {{#if noColumns}}
+          {{#paper-button data-test-add-panel iconButton=true title='Show an editor panel' onClick=(action this.addColumn)}}
+            {{paper-icon 'add circle outline'}}
+          {{/paper-button}}
+        {{/if}}
+
+        {{build-messages notify=notify isBuilding=isBuilding buildErrors=buildErrors}}
+        <span class="flex"></span>
+
+        {{#paper-menu position='target-left target' as |menu|}}
+          {{#menu.trigger class='layout-column'}}
+            {{#paper-button class='md-menu-origin' iconButton=true}}
+              {{paper-icon 'more vert'}}
+            {{/paper-button}}
+          {{/menu.trigger}}
+          {{#menu.content width=2 as |content|}}
+            {{#content.menu-item class='md-menu-align-target'}}
+              <div>
+                {{#paper-checkbox value=testsEnabled onChange=(action this.switchTests)}}
+                  Run Tests
+                {{/paper-checkbox}}
+              </div>
+            {{/content.menu-item}}
+            {{#content.menu-item class='md-menu-align-target'}}
+              {{run-or-live-reload liveReloadChanged=(action this.liveReloadChanged) runNow=(action this.runNow)}}
+            {{/content.menu-item}}
+          {{/menu.content}}
+        {{/paper-menu}}
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+
     <div class="url-bar">
       {{input value=applicationUrl enter=(route-action "urlChanged")}}
     </div>
+
     {{#if isBuilding}}
       <div class="ember-load-indicator">Building...</div>
     {{/if}}
+
     {{dummy-app html=buildOutput isBuilding=isBuilding}}
+
     {{#if fullScreen}}
-      <a class="exit-full-screen-link" {{action (action this.exitFullScreen)}}>Edit Twiddle</a>
+      {{#paper-button raised=true onClick=(action this.exitFullScreen)}}
+        Edit Twiddle
+      {{/paper-button}}
     {{/if}}
   </div>
 {{/twiddle-panes}}

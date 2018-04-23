@@ -1,7 +1,7 @@
 import Ember from "ember";
 import config from '../../../config/environment';
 
-import { moduleForComponent, test } from 'ember-qunit';
+import { moduleForComponent, skip } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('file-tree', 'Integration | Component | file tree', {
@@ -54,7 +54,7 @@ moduleForComponent('file-tree', 'Integration | Component | file tree', {
   }
 });
 
-test('it calls openFile when you click on a leaf node', function(assert) {
+skip('it calls openFile when you click on a leaf node', function(assert) {
   assert.expect(1);
 
   this.set('externalAction', () => {
@@ -70,7 +70,7 @@ test('it calls openFile when you click on a leaf node', function(assert) {
   });
 });
 
-test('it has 2 initial nodes', function(assert) {
+skip('it has 2 initial nodes', function(assert) {
   assert.expect(2);
 
   this.render(hbs`{{file-tree model=model
@@ -85,7 +85,7 @@ test('it has 2 initial nodes', function(assert) {
   });
 });
 
-test('it has all initial nodes expanded if the maxNumFilesInitiallyExpanded is set to more than the number of files in the app', function(assert) {
+skip('it has all initial nodes expanded if the maxNumFilesInitiallyExpanded is set to more than the number of files in the app', function(assert) {
   assert.expect(1);
   config.maxNumFilesInitiallyExpanded = 6;
   this.render(hbs`{{file-tree model=model
@@ -96,7 +96,7 @@ test('it has all initial nodes expanded if the maxNumFilesInitiallyExpanded is s
   });
 });
 
-test('can expand and collapse all', function(assert) {
+skip('can expand and collapse all', function(assert) {
   assert.expect(3);
 
   this.set('externalOpenFile', () => {
@@ -125,7 +125,7 @@ test('can expand and collapse all', function(assert) {
   });
 });
 
-test('it updates when you rename a file', function(assert) {
+skip('it updates when you rename a file', function(assert) {
   assert.expect(2);
 
   const waitForChange = this.makeNewPromise('didChange');

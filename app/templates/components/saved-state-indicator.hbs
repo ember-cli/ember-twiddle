@@ -1,8 +1,8 @@
+<div>{{model.files.length}} files</div>
 {{#if unsaved}}
   <span class="test-unsaved-indicator">Unsaved</span>
 {{else}}
-  <span>{{model.files.length}} files</span>
   {{#unless model.isNew}}
-    <a class="gist-link" href="{{model.htmlUrl}}" target="_blank">saved to Gist, rev {{model.currentRevision}}</a>
+    <a class="gist-link" href="{{model.htmlUrl}}" title='Open Gist' target="_blank">Saved, rev {{model.currentRevision}}</a>
   {{/unless}}
 {{/if}}
