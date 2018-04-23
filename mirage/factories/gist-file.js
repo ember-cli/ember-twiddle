@@ -1,7 +1,7 @@
 /**
  * This is a factory definition for a gist file
  */
-import Mirage/*, {faker} */ from 'ember-cli-mirage';
+import Mirage from 'ember-cli-mirage';
 
 export default Mirage.Factory.extend({
   type() {

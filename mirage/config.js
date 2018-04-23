@@ -14,17 +14,17 @@ export default function() {}
 export function testConfig() {
 
   this.get('/gists', function(schema) {
-    return schema.db.gists;
+    return schema.gists.all();
   });
 
   this.get('/gists/:id', function(schema, request) {
     let id = request.params.id;
-    return schema.db.gists.find(id);
+    return schema.gists.find(id);
   });
 
   this.get('/gists/:id/:rev_id', function(schema, request) {
     let id = request.params.id;
-    return schema.db["gistRevisions"].find(id);
+    return schema.gistRevisions.find(id);
   });
 
   this.post('/gists', function(schema, request) {
@@ -49,7 +49,7 @@ export function testConfig() {
   });
 
   this.get('/user', function(schema) {
-    return schema.db.users.find(1);
+    return schema.users.find(1);
   });
 
   this.get(config.addonUrl, function(schema, request) {
