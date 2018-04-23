@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import GistRoute from "ember-twiddle/routes/gist-base-route";
+import { pushDeleteAll } from "ember-twiddle/utils/push-deletion";
 
 const { inject, run } = Ember;
 
@@ -14,7 +15,7 @@ export default GistRoute.extend({
     if (params.copyCurrentTwiddle) {
       store.peekAll('gistFile').setEach('gist', model);
     } else {
-      store.unloadAll('gistFile');
+      run(() => pushDeleteAll(store, 'gist-file'));
       let files = model.get('files');
       let emberCli = this.get('emberCli');
       files.pushObject(emberCli.generate('controllers/application'));

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { inject } = Ember;
+const { inject, run } = Ember;
 
 export default Ember.Component.extend({
   resizeableColumns: inject.service(),
@@ -13,6 +13,10 @@ export default Ember.Component.extend({
 
   didRender() {
     this._super(...arguments);
+    run.schedule('afterRender', this, this.setupHandles);
+  },
+
+  setupHandles() {
     if (!this.get('media.isMobile')) {
       this.$('.twiddle-pane').after('<div class="handle"></div>');
       this.$('.handle').last().remove();

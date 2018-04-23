@@ -1,7 +1,8 @@
-import Ember from 'ember';
-import ErrorMessages from '../utils/error-messages';
+import Ember from "ember";
+import ErrorMessages from "../utils/error-messages";
+import { pushDeletion } from "../utils/push-deletion";
 
-const { inject } = Ember;
+const { inject, run } = Ember;
 
 export default Ember.Mixin.create({
   notify: inject.service(),
@@ -22,7 +23,10 @@ export default Ember.Mixin.create({
       }
 
       fileProperties.filePath = filePath;
-      let file = this.get('store').createRecord('gistFile', fileProperties);
+
+      let store = this.get('store');
+      run(() => pushDeletion(store, 'gist-file', filePath));
+      let file = store.createRecord('gistFile', fileProperties);
 
       this.get('model.files').pushObject(file);
       notify.info(`File '${file.get('filePath')}' was added`);

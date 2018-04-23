@@ -13,6 +13,10 @@ export default Ember.Component.extend({
     const files = this.get('model.files') || [];
 
     return files.reduce((accumulator, file) => {
+      if (!file) {
+        return accumulator;
+      }
+
       const path = file.get('filePath');
       const splitPath = path.split('/');
       const splitPathZeroBasedLength = splitPath.length - 1;
