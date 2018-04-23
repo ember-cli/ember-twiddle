@@ -1747,7 +1747,7 @@ broccoli-sri-hash@^2.1.0:
     sri-toolbox "^0.2.0"
     symlink-or-copy "^1.0.1"
 
-broccoli-stew@^1.0.0, broccoli-stew@^1.2.0, broccoli-stew@^1.3.3, broccoli-stew@^1.5.0:
+broccoli-stew@^1.0.0, broccoli-stew@^1.2.0, broccoli-stew@^1.3.3, broccoli-stew@^1.4.0, broccoli-stew@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/broccoli-stew/-/broccoli-stew-1.5.0.tgz#d7af8c18511dce510e49d308a62e5977f461883c"
   dependencies:
@@ -3936,11 +3936,13 @@ ember-test-helpers@^0.6.3, ember-test-helpers@~0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/ember-test-helpers/-/ember-test-helpers-0.6.3.tgz#f864cdf6f4e75f3f8768d6537785b5ab6e82d907"
 
-ember-test-selectors@0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/ember-test-selectors/-/ember-test-selectors-0.2.1.tgz#92e2b7b4a08831b148f81df93f367f3bf7ff938e"
+ember-test-selectors@0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/ember-test-selectors/-/ember-test-selectors-0.3.5.tgz#5716d1aba5a530839ef9819a6deff24ecf466bcd"
   dependencies:
-    ember-cli-babel "^5.1.7"
+    broccoli-stew "^1.4.0"
+    ember-cli-babel "^6.0.0"
+    ember-cli-version-checker "^2.0.0"
 
 ember-text-measurer@^0.4.0:
   version "0.4.0"

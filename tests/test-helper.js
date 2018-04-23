@@ -21,8 +21,8 @@ Ember.Test.registerHelper('outputPane', function(app) {
 });
 
 Ember.Test.registerHelper('outputContents', function(app, selector) {
-  let output = app.testHelpers.outputPane();
-  return output.find(selector).text().trim();
+  let output = app.testHelpers.outputPane().document;
+  return output.querySelector(selector).textContent.trim();
 });
 
 Ember.Test.registerHelper('createGist', createGist);
