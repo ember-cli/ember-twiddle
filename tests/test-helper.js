@@ -5,6 +5,7 @@ import './helpers/responsive';
 import {
   setResolver
 } from 'ember-qunit';
+import { start } from 'ember-cli-qunit';
 import createGist from "./helpers/create-gist";
 import runGist from "./helpers/run-gist";
 import runRevision from "./helpers/run-revision";
@@ -29,3 +30,5 @@ Ember.Test.registerAsyncHelper('runGist', runGist);
 Ember.Test.registerAsyncHelper('runRevision', runRevision);
 Ember.Test.registerAsyncHelper('waitForLoadedIFrame', waitForLoadedIFrame);
 Ember.Test.registerAsyncHelper('waitForUnloadedIFrame', waitForUnloadedIFrame);
+
+start();

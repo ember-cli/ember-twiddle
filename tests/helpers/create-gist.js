@@ -28,7 +28,7 @@ export default function(app, options) {
               };`
   });
 
-  let gistFiles = {};
+  let gistFiles = [];
 
   files.forEach(function (file) {
     let gistFile = server.create('gist-file', {
@@ -38,26 +38,30 @@ export default function(app, options) {
       commit: commit,
       content: file.content
     });
-    gistFiles[gistFile.filename] = gistFile;
+    gistFiles.push(gistFile);
   });
 
   server.create('user', { id: faker.random.number(99999), login: login });
   const owner = server.create('owner', { id: faker.random.number(99999), login: login });
 
   if (isGitRevision) {
-    server.create('gist-revision', {
+    let revision = server.create('gist-revision', {
       id: gist_id,
-      revId: commit,
-      owner: owner,
-      files: gistFiles
+      revId: commit
     });
+    revision.update({
+      owner,
+      files: gistFiles
+    })
   }
   if (!options.doNotCreateGist) {
-    server.create('gist', {
-      id: gist_id,
-      owner: owner,
-      files: gistFiles
+    let gist = server.create('gist', {
+      id: gist_id
     });
+    gist.update({
+      owner,
+      files: gistFiles
+    })
   }
 
 }
