@@ -24,11 +24,11 @@ test('it shows the number of build messages', function(assert) {
 
   this.render(hbs`{{build-messages buildErrors=buildErrors isBuilding=isBuilding notify=notify}}`);
 
-  assert.equal(this.$('span').text().replace(/\s+/g, " ").trim(), 'Output ( build ok. )', 'shows build ok when no buildErrors');
+  assert.equal(this.$('span').text().replace(/\s+/g, " ").trim(), 'Output (build ok)', 'shows build ok when no buildErrors');
 
   this.set('buildErrors', ['error1', 'error2']);
 
-  assert.equal(this.$('span').text().replace(/\s+/g, " ").trim(), 'Output ( 2 build errors )', 'shows number of build errors');
+  assert.equal(this.$('span').text().replace(/\s+/g, " ").trim(), 'Output (2 build errors)', 'shows number of build errors');
 });
 
 test('it calls notify.info() when clicking on build errors', function(assert) {
