@@ -6,7 +6,9 @@ import GistFactory from './gist';
 export default GistFactory.extend({
   url() {
     return `https://api.github.com/gists/${this.id}/${this.revId}`;
-  }
+  },
+  owner: null,
+  afterCreate() {}
 });
 
 /* Sample

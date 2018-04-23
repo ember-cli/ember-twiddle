@@ -4,25 +4,32 @@ import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
 import $ from 'jquery';
 
 moduleForAcceptance('Acceptance | twiddles', {
-  beforeEach: function() {
+  beforeEach() {
     server.create('user', { login: 'octocat' });
     const owner = server.create('owner', {login: 'octocat'});
-    const file = server.create('gist-file', {
+    const file1 = server.create('gist-file', {
       login: "octocat",
       filename: "twiddle.json",
       content: '{ "dependencies": {} }'
     });
-    const files = {};
-    files[file.filename] = file;
-    server.create('gist', {
-      id: '35de43cb81fc35ddffb2',
-      owner: owner,
-      files: files
+    const file2 = server.create('gist-file', {
+      login: "octocat",
+      filename: "twiddle.json",
+      content: '{ "dependencies": {} }'
     });
-    server.create('gist', {
-      id: '74bae9a34142370ff5a3',
-      owner: owner,
-      files: files
+    const gist1 = server.create('gist', {
+      id: '35de43cb81fc35ddffb2'
+    });
+    gist1.update({
+      owner,
+      files: [file1]
+    });
+    const gist2 = server.create('gist', {
+      id: '74bae9a34142370ff5a3'
+    });
+    gist2.update({
+      owner,
+      files: [file2]
     });
 
     stubValidSession(this.application, {
@@ -33,7 +40,7 @@ moduleForAcceptance('Acceptance | twiddles', {
     window.confirm = function() {};
   },
 
-  afterEach: function() {
+  afterEach() {
     window.confirm = this.cacheConfirm;
   }
 });

@@ -1,7 +1,7 @@
 /**
  * This is a factory definition for an owner
  */
-import Mirage/*, { faker } */ from 'ember-cli-mirage';
+import Mirage from 'ember-cli-mirage';
 
 export default Mirage.Factory.extend({
   avatar_url() {
