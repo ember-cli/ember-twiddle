@@ -93,5 +93,5 @@ test('you can add and remove columns', function(assert) {
 });
 
 function urlHas(text) {
-  return decodeURIComponent(window.location.search).indexOf(text) > 0;
+  return decodeURIComponent(currentURL()).indexOf(text) > 0;
 }
