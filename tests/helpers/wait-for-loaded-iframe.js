@@ -38,7 +38,7 @@ export default function(app, url) {
 
   let times = 0;
 
-  return andThen(function tryVisit() {
+  andThen(function tryVisit() {
     url = url || "/";
 
     if (times++ >= 10) {
@@ -48,5 +48,11 @@ export default function(app, url) {
     } else {
       run.later(tryVisit, 10)
     }
+  });
+
+  return andThen(function() {
+    return new RSVP.Promise(function (resolve) {
+      run.later(resolve, 10);
+    });
   });
 }
