@@ -15,11 +15,14 @@
         {{#paper-menu position='target-right target' as |menu|}}
           {{#menu.trigger class='layout-column nested-menu-trigger'}}
             {{#paper-button class='md-menu-origin'}}
-              Component (js and hbs)
+              Component
               {{paper-icon 'expand more'}}
             {{/paper-button}}
           {{/menu.trigger}}
           {{#menu.content width=3 as |content|}}
+            {{#content.menu-item class='layout-column' onClick=(action addComponent)}}
+              js & hbs
+            {{/content.menu-item}}
             {{#content.menu-item class='layout-column' onClick=(action addFile 'component-hbs')}}
               hbs only
             {{/content.menu-item}}

@@ -48,8 +48,14 @@ md-menu-item > md-menu > .md-button {
   width: 100%;
 }
 
-.tree-file[aria-level='2'] {
+.tree-file[aria-level='2'],
+.tree-folder[aria-level='2'] {
   margin-left: 1em;
+}
+
+.tree-file[aria-level='3'],
+.tree-folder[aria-level='3'] {
+  margin-left: 1.2em;
 }
 
 // ember-paper removes the margin from the first button
