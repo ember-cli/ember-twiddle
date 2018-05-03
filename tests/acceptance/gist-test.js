@@ -3,7 +3,7 @@ import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptan
 import { findMapText } from 'ember-twiddle/tests/helpers/util';
 import ErrorMessages from 'ember-twiddle/utils/error-messages';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
-
+import { timeout } from 'ember-concurrency';
 
 const firstColumn = '.code:eq(0)';
 const firstFilePicker = firstColumn + ' .dropdown-toggle';
@@ -321,6 +321,10 @@ test('unsaved indicator', function(assert) {
   click(firstColumnTextarea);
   fillIn(firstColumnTextarea, "\"some text\";");
   triggerEvent(firstColumnTextarea, "blur");
+
+  andThen(function() {
+    return timeout(10);
+  });
 
   andThen(function() {
     assert.equal(find(indicator).length, 1, "Unsaved indicator reappears after editing");

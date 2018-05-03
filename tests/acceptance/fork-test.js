@@ -59,7 +59,7 @@ test('can fork a gist', function(assert) {
     .then(() => {
       assert.equal(findAll('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
 
-      let url = window.location.href;
+      let url = currentURL();
       let route = url.substr(url.lastIndexOf('/'));
       assert.equal(route, '/bd9d8d69-a674-4e0f-867c-c8796ed151a0');
 

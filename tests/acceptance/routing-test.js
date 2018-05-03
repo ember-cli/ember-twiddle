@@ -88,7 +88,7 @@ test('Able to do routing in a gist', function(assert) {
 
   andThen(() => {
     assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 0");
-    assert.ok(decodeURIComponent(window.location.search).indexOf("route=") === -1, "URL is not added to route query string parameter 0");
+    assert.ok(decodeURIComponent(currentURL()).indexOf("route=") === -1, "URL is not added to route query string parameter 0");
 
     this.registerWaiter();
     iframe_window = outputPane();
@@ -98,7 +98,7 @@ test('Able to do routing in a gist', function(assert) {
   andThen(() => {
     assert.equal(outputContents(outletText), 'About Page', 'About Link leads to About Page being displayed');
     assert.equal(find(addressBar).val(), '/about', "Correct URL is shown in address bar 1");
-    assert.ok(decodeURIComponent(window.location.search).indexOf("route=/about") > 0, "URL is added to route query string parameter 1");
+    assert.ok(decodeURIComponent(currentURL()).indexOf("route=/about") > 0, "URL is added to route query string parameter 1");
 
     this.registerWaiter();
     iframe_window.click(iframe_window.find(indexLink));
@@ -107,7 +107,7 @@ test('Able to do routing in a gist', function(assert) {
   andThen(() => {
     assert.equal(outputContents(outletText), 'Main Page', 'Index Link leads to Main Page being displayed');
     assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 2");
-    assert.ok(decodeURIComponent(window.location.search).indexOf("route=") === -1, "URL is not added to route query string parameter 2");
+    assert.ok(decodeURIComponent(currentURL()).indexOf("route=") === -1, "URL is not added to route query string parameter 2");
   });
 });
 

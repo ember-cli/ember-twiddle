@@ -2,7 +2,7 @@ version: '3'
 
 services:
   ember:
-    image: danlynn/ember-cli:2.11.1
+    image: danlynn/ember-cli:2.14.2
     container_name: ember-twiddle
     ports:
       - 4200:4200
@@ -12,8 +12,9 @@ services:
       - ./entrypoint.sh:/entrypoint.sh
       - /app/bower_components
       - /app/node_modules
-      - /app/tmp
       - /app/dist
+    tmpfs:
+      - /app/tmp
     environment:
       - GH_API_KEY=CHANGEME
     command: ["sh", "/entrypoint.sh"]

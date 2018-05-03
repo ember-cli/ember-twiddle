@@ -100,7 +100,7 @@ export default Ember.Mixin.create({
       }
 
       file.set('filePath', filePath);
-      notify.info(`File ${file.get('filePath')} was added`);
+      this.get('notify').info(`File ${file.get('filePath')} was added`);
       run.scheduleOnce('afterRender', this, this.updateOpenFiles);
     }
   },

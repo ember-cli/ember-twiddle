@@ -3,20 +3,20 @@
 module.exports = function(defaults) {
   process.env.FASTBOOT_DISABLED = true;
 
-  var EmberApp = require('ember-cli/lib/broccoli/ember-app');
-  var funnel = require('broccoli-funnel');
-  var concat = require('broccoli-concat');
-  var mergeTrees = require('broccoli-merge-trees');
-  var babelTranspiler = require('broccoli-babel-transpiler');
-  var browserify = require('browserify');
-  var path = require('path');
-  var fs = require('fs');
+  const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+  const funnel = require('broccoli-funnel');
+  const concat = require('broccoli-concat');
+  const mergeTrees = require('broccoli-merge-trees');
+  const babelTranspiler = require('broccoli-babel-transpiler');
+  const browserify = require('browserify');
+  const path = require('path');
+  const fs = require('fs');
 
-  var env = EmberApp.env();
-  var deployTarget = process.env.DEPLOY_TARGET;
-  var isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
-  var isFastboot = process.env.EMBER_CLI_FASTBOOT;
-  var prepend = null;
+  const env = EmberApp.env();
+  const deployTarget = process.env.DEPLOY_TARGET;
+  const isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
+  const isFastboot = process.env.EMBER_CLI_FASTBOOT;
+  let prepend = null;
 
   if (isProductionLikeBuild) {
     if (deployTarget === 'production') {
@@ -27,9 +27,9 @@ module.exports = function(defaults) {
     }
   }
 
-  var blueprintsCode = getEmberCLIBlueprints();
+  const blueprintsCode = getEmberCLIBlueprints();
 
-  var app = new EmberApp(defaults, {
+  let app = new EmberApp(defaults, {
     SRI: {
       runsIn: "production"
     },
@@ -81,7 +81,7 @@ module.exports = function(defaults) {
   });
 
   if (isFastboot) {
-    var b = browserify();
+    let b = browserify();
     b.add(require.resolve('babel-core/browser-polyfill'));
     b.bundle(function(err, buf) {
       fs.writeFileSync('vendor/polyfill.js', buf);
@@ -101,12 +101,12 @@ module.exports = function(defaults) {
   app.import('vendor/bootstrap-dropdown-submenu-fix.css');
   app.import('vendor/hint.css');
 
-  var loaderTree = funnel(path.dirname(require.resolve('loader.js')), {
+  let loaderTree = funnel(path.dirname(require.resolve('loader.js')), {
     files: ['loader.js'],
     destDir: '/assets'
   });
 
-  var testLoaderTree = funnel("node_modules/ember-cli-test-loader/addon-test-support", {
+  let testLoaderTree = funnel("node_modules/ember-cli-test-loader/addon-test-support", {
     files: ['index.js'],
     getDestinationPath: function() {
       return "assets/test-loader.js";
@@ -114,33 +114,33 @@ module.exports = function(defaults) {
   });
   testLoaderTree = babelTranspiler(testLoaderTree, babelOpts());
 
-  var emberDataShims = funnel('vendor', {
+  let emberDataShims = funnel('vendor', {
     files: ['ember-data-shims.js']
   });
 
-  var bowerTree = funnel('bower_components');
-  var shimsTree = funnel('node_modules/ember-cli-shims/vendor/ember-cli-shims' , {
+  let bowerTree = funnel('bower_components');
+  let shimsTree = funnel('node_modules/ember-cli-shims/vendor/ember-cli-shims' , {
     destDir: 'ember-cli-shims'
   });
 
-  var baseResolverTree = funnel('node_modules/ember-resolver/addon', {
+  let baseResolverTree = funnel('node_modules/ember-resolver/addon', {
     destDir: 'ember-resolver'
   });
 
-  var transpiledResolverTree = babelTranspiler(baseResolverTree, babelOpts());
+  let transpiledResolverTree = babelTranspiler(baseResolverTree, babelOpts());
 
-  var baseInitializersTree = funnel('node_modules/ember-load-initializers/addon', {
+  let baseInitializersTree = funnel('node_modules/ember-load-initializers/addon', {
     destDir: 'ember-load-initializers'
   });
 
-  var transpiledInitializersTree = babelTranspiler(baseInitializersTree, babelOpts());
+  let transpiledInitializersTree = babelTranspiler(baseInitializersTree, babelOpts());
 
-  var finalQUnitTree = buildAddonTree('ember-qunit');
-  var finalTestHelpersTree = buildAddonTree('ember-test-helpers');
+  let finalQUnitTree = buildAddonTree('ember-qunit');
+  let finalTestHelpersTree = buildAddonTree('ember-test-helpers');
 
-  var mergedDepsTree = mergeTrees([bowerTree, shimsTree, transpiledInitializersTree, transpiledResolverTree, emberDataShims]);
+  let mergedDepsTree = mergeTrees([bowerTree, shimsTree, transpiledInitializersTree, transpiledResolverTree, emberDataShims]);
 
-  var twiddleVendorTree = concat(mergedDepsTree, {
+  let twiddleVendorTree = concat(mergedDepsTree, {
     inputFiles: [
       'ember-cli-shims/app-shims.js',
       'ember-load-initializers/**/*.js',
@@ -154,16 +154,16 @@ module.exports = function(defaults) {
 };
 
 function buildAddonTree(addonName) {
-  var funnel = require('broccoli-funnel');
-  var concat = require('broccoli-concat');
-  var babelTranspiler = require('broccoli-babel-transpiler');
-  var path = require('path');
+  const funnel = require('broccoli-funnel');
+  const concat = require('broccoli-concat');
+  const babelTranspiler = require('broccoli-babel-transpiler');
+  const path = require('path');
 
-  var baseTree = funnel(path.dirname(require.resolve(addonName)), {
+  let baseTree = funnel(path.dirname(require.resolve(addonName)), {
     include: ['**/*.js']
   });
 
-  var transpiledTree = babelTranspiler(baseTree, babelOpts());
+  let transpiledTree = babelTranspiler(baseTree, babelOpts());
 
   return concat(transpiledTree, {
     inputFiles: ['**/*.js'],
@@ -188,11 +188,11 @@ function babelOpts() {
 // app/lib/blueprints so we don't have to maintain our
 // own blueprints
 function getEmberCLIBlueprints() {
-  var fs = require('fs');
-  var path = require('path');
-  var fileMap = {};
+  const fs = require('fs');
+  const path = require('path');
+  let fileMap = {};
 
-  var blueprintFiles = {
+  let blueprintFiles = {
     "cliBlueprintFiles": {
       "path": "node_modules/ember-cli",
       "files": {
@@ -223,11 +223,11 @@ function getEmberCLIBlueprints() {
     }
   };
 
-  for (var list in blueprintFiles) {
-    var blueprintPath = blueprintFiles[list].path;
-    var files = blueprintFiles[list].files;
-    for (var blueprintName in files) {
-      var filePath = blueprintPath + '/blueprints/' + files[blueprintName];
+  for (let list in blueprintFiles) {
+    let blueprintPath = blueprintFiles[list].path;
+    let files = blueprintFiles[list].files;
+    for (let blueprintName in files) {
+      let filePath = blueprintPath + '/blueprints/' + files[blueprintName];
       fileMap[blueprintName] = fs.readFileSync(filePath).toString();
     }
   }
