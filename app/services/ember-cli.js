@@ -1,6 +1,7 @@
 import Babel from 'babel-core';
 import Path from 'path';
 import HbsPlugin from '../plugins/hbs-plugin';
+import NewModulesPlugin from 'babel-plugin-ember-modules-api-polyfill';
 import blueprints from '../lib/blueprints';
 import Ember from 'ember';
 import moment from 'moment';
@@ -11,6 +12,7 @@ const { computed, inject, RSVP, run, $, testing } = Ember;
 const twiddleAppName = 'twiddle';
 const oldTwiddleAppNames = ['demo-app', 'app'];
 const hbsPlugin = new HbsPlugin(Babel);
+const newModulesPlugin = new NewModulesPlugin(Babel);
 
 // These files will be included if not present
 const boilerPlateJs = [
@@ -447,7 +449,8 @@ export default Ember.Service.extend({
   compileJs(code, filePath) {
     code = this.fixTwiddleAppNames(code);
     let moduleName = this.nameWithModule(filePath);
-    return Babel.transform(code, babelOpts(moduleName)).code;
+    let output = Babel.transform(code, babelOpts(moduleName)).code;
+    return output;
   },
 
   /**
@@ -516,7 +519,8 @@ function babelOpts(moduleName) {
         loose: true,
         noInterop: true
       }],
-      hbsPlugin
+      hbsPlugin,
+      newModulesPlugin
     ]
   };
 }

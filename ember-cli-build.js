@@ -102,6 +102,10 @@ module.exports = function(defaults) {
   app.import('vendor/bootstrap-dropdown-submenu-fix.css');
   app.import('vendor/hint.css');
 
+  app.import('node_modules/babel-plugin-ember-modules-api-polyfill/src/index.js', {
+    using: [{ transformation: 'cjs', as: 'babel-plugin-ember-modules-api-polyfill' }]
+  });
+
   let loaderTree = funnel(path.dirname(require.resolve('loader.js')), {
     files: ['loader.js'],
     destDir: '/assets'
