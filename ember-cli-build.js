@@ -102,8 +102,15 @@ module.exports = function(defaults) {
   app.import('vendor/bootstrap-dropdown-submenu-fix.css');
   app.import('vendor/hint.css');
 
+  const nodeBuiltins = require('rollup-plugin-node-builtins');
+  const json = require('rollup-plugin-json');
+
   app.import('node_modules/babel-plugin-ember-modules-api-polyfill/src/index.js', {
-    using: [{ transformation: 'cjs', as: 'babel-plugin-ember-modules-api-polyfill' }]
+    using: [{
+      transformation: 'cjs',
+      as: 'babel-plugin-ember-modules-api-polyfill',
+      plugins: [nodeBuiltins(), json()]
+    }]
   });
 
   let loaderTree = funnel(path.dirname(require.resolve('loader.js')), {
