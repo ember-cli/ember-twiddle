@@ -87,6 +87,6 @@ Make use of the many generators for code, try `ember help generate` for more det
 * Upgrading the ember-cli version is extremely difficult, because we are using private apis. Try to upgrade in small pieces. Consider forking ember-cli during the upgrade process to upgrade its dependencies one by one. Don't forget to revert to a standard ember-cli version when done.
 * Add tests with your PR.
 * Upgrading ember-cli is usually not necessary to upgrade Ember or Ember Data.
-* New Ember versions will not work without upgrades to the backend.
+* New Ember versions will not work without upgrades to the [backend](https://github.com/joostdevries/twiddle-backend).
 * The backend does not have tests. Until it does, please test by actually compiling addons with Docker and an AWS account before submitting PRs.
 * If you are going to use a local backend, make changes to environment.js using [`git update-index skip-worktree [<file>...]`](https://medium.com/@igloude/git-skip-worktree-and-how-i-used-to-hate-config-files-e84a44a8c859) so that changes to your environment.js are not accidentally committed.
