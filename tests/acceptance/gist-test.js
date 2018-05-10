@@ -5,17 +5,22 @@ import ErrorMessages from 'ember-twiddle/utils/error-messages';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
 import { timeout } from 'ember-concurrency';
 
-const firstColumn = '.code:eq(0)';
-const firstFilePicker = firstColumn + ' .dropdown-toggle';
-const secondFile = firstColumn + ' .dropdown-menu li:nth-child(2) a';
-const anyFile = firstColumn + ' .dropdown-menu li:nth-child(1) a';
-const fileMenu = '.main-menu .dropdown-toggle';
-const deleteAction = '.main-menu a:contains(Delete)';
-const addTemplateAction = '.test-template-action';
-const firstFilePickerFiles = firstColumn + ' .dropdown-menu>li';
+const firstColumn = '[data-test-columns="1"]';
+const firstColumnActionsMenu = '[data-test-column-actions-menu="1"]';
+const firstFilePicker = '[data-test-column-files-menu="1"]';
+const secondFile = '.ember-basic-dropdown-content md-menu-item:nth-child(2) button';
+const anyFile = '.ember-basic-dropdown-content md-menu-item:nth-child(1) button';
+const sidebarMenuToggle = '.test-sidenav-toggle';
+const deleteAction = '[data-test-delete-file] button';
+const confirmDeleteAction = '[data-test-delete-file-confirm]';
+const addFileMenuTrigger = '[data-test-add-file-menu-trigger]';
+const addTemplateAction = '[data-test-add-template-action] button';
+const componentMenuTrigger = '[data-test-add-component-menu-trigger]';
+const addComponentAction = '[data-test-add-component-action] button';
+const firstFilePickerFiles = '.ember-basic-dropdown-content md-menu-item button';
 const firstColumnTextarea = firstColumn + ' .CodeMirror textarea';
-const displayedFiles = '.file-picker > li > a';
-const plusGlyph = ".code .glyphicon-plus";
+const displayedFiles = '[data-test-column-files-menu] button .file-path';
+const addColumnButton = '[data-test-column-add-panel="1"] button';
 
 let promptValue = '';
 
@@ -42,12 +47,13 @@ test('deleting a gist loaded in two columns', function(assert) {
 
   andThen(function() {
     assert.equal(currentURL(), '/', 'We are on the correct route');
-    click(plusGlyph);
+    click(firstColumnActionsMenu);
+    click(addColumnButton);
     click(firstFilePicker);
     click(secondFile);
-    click(firstFilePicker);
-    click(fileMenu);
+    click(firstColumnActionsMenu);
     click(deleteAction);
+    click(confirmDeleteAction);
     andThen(function() {
       assert.equal(find('.code .CodeMirror').length, 0, 'No code mirror editors active');
       assert.equal(find('.dropdown-toggle:contains(No file selected)').length, 2, 'Shows message when no file is selected.');
@@ -58,13 +64,17 @@ test('deleting a gist loaded in two columns', function(assert) {
     for (var i = 0; i < 2; ++i) {
       click(firstFilePicker);
       click(anyFile);
-      click(fileMenu);
+      click(firstColumnActionsMenu);
       click(deleteAction);
     }
 
     andThen(function() {
       click(firstFilePicker);
+    });
+
+    andThen(function() {
       assert.ok(find(anyFile).text().indexOf('twiddle.json')!==-1, 'twiddle.json remains');
+      click(anyFile);
     });
   });
 });
@@ -80,7 +90,9 @@ test('can add two templates with different names', function(assert) {
   andThen(function() {
     origFiles = find(firstFilePickerFiles).length;
     promptValue = "foo/template.hbs";
-    click(fileMenu);
+    click(anyFile);
+    click(sidebarMenuToggle);
+    click(addFileMenuTrigger);
     click(addTemplateAction);
     click(firstFilePicker);
   });
@@ -91,7 +103,9 @@ test('can add two templates with different names', function(assert) {
     numFiles = find(firstFilePickerFiles).length;
     assert.equal(numFiles, origFiles + 1, 'Added first file');
     promptValue = "bar/template.hbs";
-    click(fileMenu);
+    click(anyFile);
+    click(sidebarMenuToggle);
+    click(addFileMenuTrigger);
     click(addTemplateAction);
     click(firstFilePicker);
   });
@@ -99,64 +113,77 @@ test('can add two templates with different names', function(assert) {
   andThen(function() {
     numFiles = find(firstFilePickerFiles).length;
     assert.equal(numFiles, origFiles + 2, 'Added second file');
+    click(anyFile);
   });
 });
 
-test('can add component (js and hbs)', function(assert){
+test('can add component (js and hbs)', function(assert) {
 
   let origFileCount;
   promptValue = "components/my-comp";
   visit('/');
+  click(firstFilePicker);
   andThen(function(){
     origFileCount =  find(firstFilePickerFiles).length;
   });
 
-  click(plusGlyph);
-  click(fileMenu);
-  click('.add-component-link');
+  click(anyFile);
+  click(firstColumnActionsMenu);
+  click(addColumnButton);
+  click(sidebarMenuToggle);
+  click(addFileMenuTrigger);
+  click(componentMenuTrigger);
+  click(addComponentAction);
   click(firstFilePicker);
+
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 2, 'Added component files');
-    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    let fileNames = findMapText(firstFilePickerFiles);
     let jsFile = `${promptValue}.js`;
     let hbsFile = `templates/${promptValue}.hbs`;
     assert.equal(fileNames[3], jsFile);
     assert.equal(fileNames[4], hbsFile);
     let columnFiles = findMapText(displayedFiles);
     assert.deepEqual(columnFiles, [jsFile, hbsFile], 'Added files are displayed');
-
+    click(anyFile);
   });
 });
 
-test('can add component (js and hbs) using pod format', function(assert){
+test('can add component (js and hbs) using pod format', function(assert) {
 
   let origFileCount;
   promptValue = "my-comp";
   visit('/');
+  click(firstFilePicker);
   andThen(function(){
     origFileCount =  find(firstFilePickerFiles).length;
   });
 
-  click(plusGlyph);
-  click(fileMenu);
-  click('.add-component-link');
+  click(anyFile);
+  click(firstColumnActionsMenu);
+  click(addColumnButton);
+  click(sidebarMenuToggle);
+  click(addFileMenuTrigger);
+  click(componentMenuTrigger);
+  click(addComponentAction);
   click(firstFilePicker);
+
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 2, 'Added component files');
-    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    let fileNames = findMapText(firstFilePickerFiles);
     let jsFile = `${promptValue}/component.js`;
     let hbsFile = `${promptValue}/template.hbs`;
     assert.equal(fileNames[3], jsFile);
     assert.equal(fileNames[4], hbsFile);
     let columnFiles = findMapText(displayedFiles);
     assert.deepEqual(columnFiles, [jsFile, hbsFile], 'Added files are displayed');
-
+    click(anyFile);
   });
 });
 
-test('component without hyphen fails', function(assert){
+test('component without hyphen fails', function(assert) {
   assert.expect(2);
 
   let called = false;
@@ -167,9 +194,13 @@ test('component without hyphen fails', function(assert){
   promptValue = "components/some-dir/mycomp";
 
   visit('/');
-  click('.add-component-link');
-  click(firstFilePicker);
-  andThen(function(){
+  click(firstColumnActionsMenu);
+  click(addColumnButton);
+  click(sidebarMenuToggle);
+  click(addFileMenuTrigger);
+  click(componentMenuTrigger);
+  click(addComponentAction);
+  andThen(function() {
     assert.ok(called, "alert was called");
   });
 });
@@ -180,53 +211,65 @@ test('can add service', function(assert){
   let origFileCount;
   promptValue = "my-service/service.js";
   visit('/');
+  click(firstFilePicker);
   andThen(function(){
     origFileCount = find(firstFilePickerFiles).length;
+    click(anyFile);
   });
 
-  click(fileMenu);
-  click('.test-add-service-link');
+  click(firstColumnActionsMenu);
+  click(addColumnButton);
+  click(sidebarMenuToggle);
+  click(addFileMenuTrigger);
+  click('[data-test-add-service-action] button');
   click(firstFilePicker);
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 1, 'Added service file');
 
-    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    let fileNames = findMapText(firstFilePickerFiles);
     assert.equal(fileNames[3], promptValue, 'Added the file with the right name');
 
     let columnFiles = findMapText(displayedFiles);
     assert.ok(columnFiles.includes(promptValue), 'Added file is displayed');
+    click(anyFile);
   });
 });
 
-test('can add helper', function(assert){
+test('can add helper', function(assert) {
   assert.expect(3);
 
   let origFileCount;
   promptValue = 'helpers/my-helper.js';
   visit('/');
+  click(firstFilePicker);
   andThen(function(){
     origFileCount = find(firstFilePickerFiles).length;
+    click(anyFile);
   });
 
-  click(fileMenu);
-  click('.test-add-helper-link');
+  click(firstColumnActionsMenu);
+  click(addColumnButton);
+  click(sidebarMenuToggle);
+  click(addFileMenuTrigger);
+  click('[data-test-add-helper-action] button');
   click(firstFilePicker);
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 1, 'Added helper file');
 
-    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    let fileNames = findMapText(firstFilePickerFiles);
     assert.equal(fileNames[3], promptValue, 'Added the file with the right name');
 
     let columnFiles = findMapText(displayedFiles);
     assert.ok(columnFiles.includes(promptValue), 'Added file is displayed');
+    click(anyFile);
   });
 });
 
-test('can add unit test', function(assert){
+test('can add unit test', function(assert) {
   assert.expect(3);
 
   let origFileCount;
@@ -236,23 +279,27 @@ test('can add unit test', function(assert){
     origFileCount = find(firstFilePickerFiles).length;
   });
 
-  click(fileMenu);
-  click('.test-add-route-test-link');
+  click(firstColumnActionsMenu);
+  click(addColumnButton);
+  click(sidebarMenuToggle);
+  click(addFileMenuTrigger);
+  click('[data-test-add-route-action] button');
   click(firstFilePicker);
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 3, 'Added 3 test files');
 
-    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    let fileNames = findMapText(firstFilePickerFiles);
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
 
     let columnFiles = findMapText(displayedFiles);
     assert.ok(columnFiles.includes(promptValue), 'Added file is displayed');
+    click(anyFile);
   });
 });
 
-test('can add integration test', function(assert){
+test('can add integration test', function(assert) {
   assert.expect(3);
 
   let origFileCount;
@@ -262,7 +309,7 @@ test('can add integration test', function(assert){
     origFileCount = find(firstFilePickerFiles).length;
   });
 
-  click(fileMenu);
+  click(sidebarMenuToggle);
   click('.test-add-component-test-link');
   click(firstFilePicker);
 
@@ -278,7 +325,7 @@ test('can add integration test', function(assert){
   });
 });
 
-test('can add acceptance test', function(assert){
+test('can add acceptance test', function(assert) {
   assert.expect(3);
 
   let origFileCount;
@@ -288,7 +335,7 @@ test('can add acceptance test', function(assert){
     origFileCount = find(firstFilePickerFiles).length;
   });
 
-  click(fileMenu);
+  click(sidebarMenuToggle);
   click('.test-add-acceptance-test-link');
   click(firstFilePicker);
 
@@ -345,7 +392,8 @@ test('editing a file updates gist', function(assert) {
     promptValue = "templates/index.hbs";
   });
 
-  click(fileMenu);
+  click(sidebarMenuToggle);
+  click(addFileMenuTrigger);
   click(addTemplateAction);
   click(firstFilePicker);
 

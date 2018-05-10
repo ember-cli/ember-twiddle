@@ -9,7 +9,7 @@
         {{#if allFiles.length}}
           {{#paper-button class='md-menu-origin'}}
             {{#if file}}
-              {{file.filePath}}
+              <span class="file-path">{{file.filePath}}</span>
             {{else}}
               No file selected
             {{/if}}
@@ -27,7 +27,7 @@
         {{/each}}
       {{/menu.content}}
     {{/paper-menu}}
-    
+
     <span class="flex"></span>
 
     {{#paper-menu position='target-left target' as |menu|}}

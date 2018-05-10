@@ -3,7 +3,7 @@
     {{#paper-toolbar-tools}}
       <h2>{{title}}</h2>
       <span class='flex'></span>
-      {{#paper-button iconButton=true onClick=(action onClose)}}
+      {{#paper-button iconButton=true data-test-close-button='' onClick=(action onClose)}}
         {{paper-icon icon='close'}}
       {{/paper-button}}
     {{/paper-toolbar-tools}}

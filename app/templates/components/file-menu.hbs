@@ -1,7 +1,7 @@
 {{#if model}}
   {{#paper-menu position='target-right target' as |menu|}}
     {{#menu.trigger class='layout-column nested-menu-trigger'}}
-      {{#paper-button class='md-menu-origin md-button'}}
+      {{#paper-button class='md-menu-origin md-button' data-test-add-file-menu-trigger=''}}
         {{paper-icon 'insert drive file' size=21}}
         Add File
         {{paper-icon 'arrow drop up'}}
@@ -14,46 +14,46 @@
       {{#content.menu-item}}
         {{#paper-menu position='target-right target' as |menu|}}
           {{#menu.trigger class='layout-column nested-menu-trigger'}}
-            {{#paper-button class='md-menu-origin'}}
+            {{#paper-button class='md-menu-origin' data-test-add-component-menu-trigger=''}}
               Component
               {{paper-icon 'expand more'}}
             {{/paper-button}}
           {{/menu.trigger}}
           {{#menu.content width=3 as |content|}}
-            {{#content.menu-item class='layout-column' onClick=(action addComponent)}}
+            {{#content.menu-item class='layout-column' data-test-add-component-action='' onClick=(action addComponent)}}
               js & hbs
             {{/content.menu-item}}
-            {{#content.menu-item class='layout-column' onClick=(action addFile 'component-hbs')}}
+            {{#content.menu-item class='layout-column' data-test-add-component-hbs-action='' onClick=(action addFile 'component-hbs')}}
               hbs only
             {{/content.menu-item}}
-            {{#content.menu-item class='layout-column' onClick=(action addFile 'component-js')}}
+            {{#content.menu-item class='layout-column' data-test-add-component-js-action='' onClick=(action addFile 'component-js')}}
               js only
             {{/content.menu-item}}
           {{/menu.content}}
         {{/paper-menu}}
       {{/content.menu-item}}
-      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'model')}}
+      {{#content.menu-item class='md-menu-align-target' data-test-add-model-action='' onClick=(action addFile 'model')}}
         Model
       {{/content.menu-item}}
-      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'controller')}}
+      {{#content.menu-item class='md-menu-align-target' data-test-add-controller-action='' onClick=(action addFile 'controller')}}
         Controller
       {{/content.menu-item}}
-      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'route')}}
+      {{#content.menu-item class='md-menu-align-target' data-test-add-route-action='' onClick=(action addFile 'route')}}
         Route
       {{/content.menu-item}}
-      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'template')}}
+      {{#content.menu-item class='md-menu-align-target' data-test-add-template-action='' onClick=(action addFile 'template')}}
         Template
       {{/content.menu-item}}
-      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'service')}}
+      {{#content.menu-item class='md-menu-align-target' data-test-add-service-action='' onClick=(action addFile 'service')}}
         Service
       {{/content.menu-item}}
-      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'helper')}}
+      {{#content.menu-item class='md-menu-align-target' data-test-add-helper-action='' onClick=(action addFile 'helper')}}
         Helper
       {{/content.menu-item}}
-      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'router')}}
+      {{#content.menu-item class='md-menu-align-target' data-test-add-router-action='' onClick=(action addFile 'router')}}
         Router
       {{/content.menu-item}}
-      {{#content.menu-item class='md-menu-align-target' onClick=(action addFile 'css')}}
+      {{#content.menu-item class='md-menu-align-target' data-test-add-css-action='' onClick=(action addFile 'css')}}
         CSS
       {{/content.menu-item}}
       {{#paper-menu position='target-right target' as |menu|}}

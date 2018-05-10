@@ -1,5 +1,4 @@
 import { test } from 'qunit';
-import wait from 'ember-test-helpers/wait';
 import testSelector from 'ember-test-selectors';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 import { find, findAll, click, visit/*, click, find, fillIn, waitUntil, currentURL*/ } from 'ember-native-dom-helpers';
