@@ -2,7 +2,6 @@ import Ember from 'ember';
 import $ from 'jquery';
 
 const {
-  computed,
   run
 } = Ember;
 
@@ -17,7 +16,7 @@ export default Ember.Mixin.create({
     $(window).off('resize', this.get("resizeHandler"));
   },
 
-  resizeHandler: computed(function() {
+  resizeHandler() {
     return run.bind(this, 'didResize');
-  })
+  }
 });
