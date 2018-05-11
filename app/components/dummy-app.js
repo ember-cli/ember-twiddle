@@ -58,6 +58,10 @@ export default Ember.Component.extend(ResizeMixin, {
 
   didInsertElement() {
     this._super();
+    this.didResize();
+  },
+
+  didResize() {
     let offset = this.$().offset(), width = this.$().width(),
         height = this.$().height();
 
