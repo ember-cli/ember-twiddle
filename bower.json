@@ -1,6 +1,6 @@
 {
   "name": "ember-twiddle",
-  "version": "0.13.1",
+  "version": "0.14.0",
   "dependencies": {
     "jquery": "1.11.3",
     "bootstrap-sass": "~3.3.5",
