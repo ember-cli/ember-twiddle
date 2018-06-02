@@ -26,6 +26,7 @@ test('Able to reload the Twiddle', function(assert) {
     assert.equal(outputPane().find('input').val(), 'new value');
 
     click(".run-now");
+    waitForUnloadedIFrame();
     waitForLoadedIFrame();
   });
 
