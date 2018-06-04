@@ -99,7 +99,7 @@ export default Ember.Route.extend({
       });
     },
 
-    signInViaGithub() {
+    signInWithGithub() {
       this.session.open(this.get('toriiProvider')).catch(function(error) {
         if (alert) {
           alert('Could not sign you in: ' + error.message);
