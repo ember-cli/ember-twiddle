@@ -67,7 +67,7 @@
     "ember-git-version": "~0.1.2",
     "ember-inflector": "~2.0.0",
     "ember-load": "~0.0.12",
-    "ember-load-initializers": "^1.0.0",
+    "ember-load-initializers": "~1.0.0",
     "ember-lodash": "^4.18.0",
     "ember-moment": "^7.6.0",
     "ember-notify": "^5.2.1",
