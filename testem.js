@@ -9,6 +9,16 @@ let options = {
   ]
 };
 
+// I need this on Ubuntu Linux 16.04 LTS due to bugs
+if (process.env.TESTEM_CHROME_NO_SANDBOX) {
+  options.browser_args = {
+    Chrome: [
+      '--no-sandbox',
+      '--disable-gpu'
+    ]
+  };
+}
+
 if (process.env.TRAVIS) {
   options.browser_args = {
     Chrome: [
