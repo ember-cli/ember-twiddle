@@ -101,6 +101,8 @@ module.exports = function(defaults) {
   }
   app.import('vendor/bootstrap-dropdown-submenu-fix.css');
   app.import('vendor/hint.css');
+  app.import('node_modules/compare-versions/index.js');
+  app.import('vendor/shims/compare-versions.js');
 
   const nodeBuiltins = require('rollup-plugin-node-builtins');
   const json = require('rollup-plugin-json');

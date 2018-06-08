@@ -3,6 +3,26 @@ import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptan
 
 moduleForAcceptance('Acceptance | dependencies');
 
+const oldVersionContent = `
+{
+"dependencies": {
+"jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
+"ember": "1.13.10",
+"ember-data": "1.13.15"
+}
+}
+`;
+
+const newVersionContent = `
+{
+"dependencies": {
+"jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
+"ember": "2.17.0",
+"ember-data": "2.18.0"
+}
+}
+`;
+
 const TWIDDLE_SHOWING_VERSIONS = [
   {
     filename: "application.template.hbs",
@@ -24,16 +44,7 @@ const TWIDDLE_SHOWING_VERSIONS = [
     `
   },
   {
-    filename: 'twiddle.json',
-    content: `
-    {
-    "dependencies": {
-    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
-    "ember": "1.13.10",
-    "ember-data": "1.13.15"
-    }
-    }
-    `
+    filename: 'twiddle.json'
   }
 ];
 
@@ -73,7 +84,18 @@ test('Able to run a gist using an external dependency', function(assert) {
   });
 });
 
-test('Able to resolve ember / ember-data dependencies via version only', function(assert) {
+test('Able to resolve ember / ember-data dependencies via version only (new versions)', function(assert) {
+  TWIDDLE_SHOWING_VERSIONS[2].content = newVersionContent;
+  runGist(TWIDDLE_SHOWING_VERSIONS);
+
+  andThen(function() {
+    assert.equal(outputContents('.ember-version'), '2.17.0');
+    assert.equal(outputContents('.ember-data-version'), '2.18.0');
+  });
+});
+
+test('Able to resolve ember / ember-data dependencies via version only (old versions)', function(assert) {
+  TWIDDLE_SHOWING_VERSIONS[2].content = oldVersionContent;
   runGist(TWIDDLE_SHOWING_VERSIONS);
 
   andThen(function() {
@@ -83,25 +105,26 @@ test('Able to resolve ember / ember-data dependencies via version only', functio
 });
 
 test('Dependencies can be changed via the UI', function(assert) {
+  TWIDDLE_SHOWING_VERSIONS[2].content = newVersionContent;
   runGist(TWIDDLE_SHOWING_VERSIONS);
 
   andThen(function() {
-    assert.equal(outputContents('.ember-version'), '1.13.10');
-    assert.equal(outputContents('.ember-data-version'), '1.13.15');
+    assert.equal(outputContents('.ember-version'), '2.17.0');
+    assert.equal(outputContents('.ember-data-version'), '2.18.0');
   });
 
   andThen(function() {
     click('.versions-menu .dropdown-toggle');
-    click('.test-set-ember-data-version:contains("2.1.0")');
+    click('.test-set-ember-data-version:contains("2.16.4")');
 
     click('.versions-menu .dropdown-toggle');
-    click('.test-set-ember-version:contains("2.1.2")');
+    click('.test-set-ember-version:contains("2.15.3")');
 
     waitForLoadedIFrame();
   });
 
   andThen(function() {
-    assert.equal(outputContents('.ember-version'), '2.1.2');
-    assert.equal(outputContents('.ember-data-version'), '2.1.0');
+    assert.equal(outputContents('.ember-version'), '2.15.3');
+    assert.equal(outputContents('.ember-data-version'), '2.16.4');
   });
 });
