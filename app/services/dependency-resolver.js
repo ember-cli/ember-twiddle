@@ -2,31 +2,36 @@
 import Ember from 'ember';
 import config from '../config/environment';
 import { task, timeout } from 'ember-concurrency';
+import compareVersions from 'compare-versions';
 
-const { computed, inject, RSVP, testing } = Ember;
+const { computed, deprecate, inject, RSVP, testing } = Ember;
 
-const EMBER_VERSIONS = ['2.18.2', '2.17.2', '2.16.2', '2.15.3', '2.14.1', '2.13.0', '2.12.0', '2.11.2', '2.10.2', '2.9.1', '2.8.2', '2.7.3', '2.6.2', '2.5.1', '2.4.5', '2.3.2', '2.2.2', '2.1.2', '2.0.3', '1.13.13', '1.12.2'];
-const EMBER_DATA_VERSIONS = ['2.18.2', '2.17.1', '2.16.3', '2.15.3', '2.14.10', '2.13.2', '2.12.2', '2.11.3', '2.10.0', '2.9.0', '2.8.1', '2.7.0', '2.6.2', '2.5.5', '2.4.3', '2.3.3', '2.2.1', '2.1.0', '2.0.1', '1.13.15'];
+const EMBER_VERSIONS = ['2.18.2', '2.17.2', '2.16.2', '2.15.3', '2.14.1', '2.13.0', '2.12.0'];
+const EMBER_DATA_VERSIONS = ['2.18.2', '2.17.1', '2.16.4', '2.15.3', '2.14.10', '2.13.2', '2.12.2'];
 
 const VERSION_REGEX = /^\d+.\d+.\d+(-beta\.\d+)?$/;
 
 const CDN_MAP = {
   'ember': {
+    pakage: 'ember-source',
     library: 'ember.js',
     fileName: 'ember.debug.js'
   },
 
   'ember-template-compiler': {
+    pakage: 'ember-source',
     library: 'ember.js',
     fileName: 'ember-template-compiler.js'
   },
 
   'ember-testing': {
+    pakage: 'ember-source',
     library: 'ember.js',
     fileName: 'ember-testing.js'
   },
 
   'ember-data': {
+    pakage: 'ember-data',
     library: 'ember-data.js',
     fileName: 'ember-data.js'
   }
@@ -48,7 +53,7 @@ export default Ember.Service.extend({
 
   resolveDependencies(dependencies) {
     Object.keys(dependencies).forEach((name) => {
-      var value = dependencies[name];
+      let value = dependencies[name];
 
       dependencies[name] = this.resolveDependency(name, value);
     });
@@ -148,15 +153,39 @@ export default Ember.Service.extend({
   },
 
   channelURL(name, channel) {
-    var fileName = CHANNEL_FILENAME_MAP[name];
+    let fileName = CHANNEL_FILENAME_MAP[name];
 
     return `//s3.amazonaws.com/builds.emberjs.com/${channel}/${fileName}`;
   },
 
   cdnURL(name, version) {
-    var { library, fileName } = CDN_MAP[name];
+    let { pakage, library, fileName } = CDN_MAP[name];
 
-    return `//cdnjs.cloudflare.com/ajax/libs/${library}/${version}/${fileName}`;
+    let deprecatedUrl = `//cdnjs.cloudflare.com/ajax/libs/${library}/${version}/${fileName}`;
+
+    if (name === 'ember-data') {
+      const msg = 'It is recommended you use ember-data as an addon';
+      deprecate(msg, false, {
+        id: 'ember-twiddle.deprecate-ember-data-as-dependency',
+        until: '0.16.0',
+      });
+      this.get('notify').warning(msg);
+
+      return deprecatedUrl;
+    }
+
+    if (compareVersions(version, '2.12.0') === -1) {
+      const msg = 'Versions of Ember prior to 2.12.0 are no longer supported in Ember Twiddle';
+      deprecate(msg, false, {
+        id: 'ember-twiddle.deprecate-ember-versions-before-2-12',
+        until: '0.16.0',
+      });
+      this.get('notify').warning(msg);
+
+      return deprecatedUrl;
+    }
+
+    return `//cdn.jsdelivr.net/npm/${pakage}@${version}/dist/${fileName}`;
   },
 
   emberVersions: computed(function() {
