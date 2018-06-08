@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js",
-    "ember": "2.18.2",
-    "ember-template-compiler": "2.18.2",
-    "ember-testing": "2.18.2"
+    "ember": "3.2.0",
+    "ember-template-compiler": "3.2.0",
+    "ember-testing": "3.2.0"
   },
   "addons": {
-    "ember-data": "2.18.2"
+    "ember-data": "3.1.1"
   }
 }
