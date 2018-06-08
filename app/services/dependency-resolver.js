@@ -6,8 +6,8 @@ import compareVersions from 'compare-versions';
 
 const { computed, deprecate, inject, RSVP, testing } = Ember;
 
-const EMBER_VERSIONS = ['2.18.2', '2.17.2', '2.16.2', '2.15.3', '2.14.1', '2.13.0', '2.12.0'];
-const EMBER_DATA_VERSIONS = ['2.18.2', '2.17.1', '2.16.4', '2.15.3', '2.14.10', '2.13.2', '2.12.2'];
+const EMBER_VERSIONS = ['3.2.0', '3.1.2', '3.0.0', '2.18.2', '2.17.2', '2.16.2', '2.15.3', '2.14.1', '2.13.0', '2.12.0'];
+const EMBER_DATA_VERSIONS = ['3.1.1', '3.0.2', '2.18.2', '2.17.1', '2.16.4', '2.15.3', '2.14.10', '2.13.2', '2.12.2'];
 
 const VERSION_REGEX = /^\d+.\d+.\d+(-beta\.\d+)?$/;
 
@@ -165,7 +165,7 @@ export default Ember.Service.extend({
 
     if (name === 'ember-data') {
       const msg = 'It is recommended you use ember-data as an addon';
-      deprecate(msg, false, {
+      deprecate(msg, testing, {
         id: 'ember-twiddle.deprecate-ember-data-as-dependency',
         until: '0.16.0',
       });
@@ -176,7 +176,7 @@ export default Ember.Service.extend({
 
     if (compareVersions(version, '2.12.0') === -1) {
       const msg = 'Versions of Ember prior to 2.12.0 are no longer supported in Ember Twiddle';
-      deprecate(msg, false, {
+      deprecate(msg, testing, {
         id: 'ember-twiddle.deprecate-ember-versions-before-2-12',
         until: '0.16.0',
       });
