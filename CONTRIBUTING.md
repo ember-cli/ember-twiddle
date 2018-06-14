@@ -40,7 +40,7 @@ You will need the following things properly installed on your computer.
 
 ### Running / Development Without Docker (Recommended)
 
-* `node server.js` from your gatekeeper folder
+* `node index.js` from your gatekeeper folder
 * `yarn` from ember twiddle folder
 * `bower install` from ember twiddle folder
 * `ember server` from ember twiddle folder
@@ -55,7 +55,7 @@ You will need the following things properly installed on your computer.
 
 #### Instructions
 
-* `node server.js` from your gatekeeper folder
+* `node index.js` from your gatekeeper folder
 * `docker-compose up` from ember twiddle folder
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
