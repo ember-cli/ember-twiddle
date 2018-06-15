@@ -37,7 +37,7 @@
                   downloadProject=(route-action "downloadProject")
       }}
 
-      {{editor-mode-menu setKeyMap=(action this.attrs.setEditorKeyMap)}}
+      {{editor-mode-menu selectedKeyMap=selectedKeyMap setKeyMap=(action this.attrs.setEditorKeyMap)}}
 
       {{versions-menu versionSelected=(action this.attrs.versionSelected)
                       emberVersions=emberVersions
