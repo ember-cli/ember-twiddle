@@ -149,8 +149,11 @@ module.exports = function(defaults) {
 
   let transpiledInitializersTree = babelTranspiler(baseInitializersTree, babelOpts());
 
-  let finalQUnitTree = buildAddonTree('ember-qunit');
   let finalTestHelpersTree = buildAddonTree('ember-test-helpers');
+  console.log(app.preprocessJs);
+  let finalQUnitTree = buildAddonTree('ember-qunit', {
+    excludes: ['addon-test-support/ember-qunit/legacy-2-x/**/*.js']
+  });
 
   let mergedDepsTree = mergeTrees([bowerTree, shimsTree, transpiledInitializersTree, transpiledResolverTree, emberDataShims]);
 
@@ -164,17 +167,21 @@ module.exports = function(defaults) {
     outputFile: '/assets/twiddle-deps.js'
   });
 
-  return app.toTree(mergeTrees([twiddleVendorTree, loaderTree, testLoaderTree, finalQUnitTree, finalTestHelpersTree]));
+  return app.toTree(mergeTrees([twiddleVendorTree, loaderTree, testLoaderTree, finalTestHelpersTree, finalQUnitTree]));
 };
 
-function buildAddonTree(addonName) {
+function buildAddonTree(addonName, options = {}) {
   const funnel = require('broccoli-funnel');
   const concat = require('broccoli-concat');
   const babelTranspiler = require('broccoli-babel-transpiler');
   const path = require('path');
 
+  let { excludes } = options;
+  excludes = excludes || [];
+
   let baseTree = funnel(path.dirname(require.resolve(addonName)), {
-    include: ['**/*.js']
+    include: ['**/*.js'],
+    exclude: ['index.js', 'ember-cli-build.js', 'testem.js', 'lib/**/*.js', 'config/**/*.js', 'tests/**/*.js'].concat(excludes)
   });
 
   let transpiledTree = babelTranspiler(baseTree, babelOpts());
