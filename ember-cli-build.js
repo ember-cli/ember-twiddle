@@ -7,6 +7,7 @@ module.exports = function(defaults) {
   const concat = require('broccoli-concat');
   const mergeTrees = require('broccoli-merge-trees');
   const babelTranspiler = require('broccoli-babel-transpiler');
+  const Rollup = require('broccoli-rollup');
   const browserify = require('browserify');
   const path = require('path');
   const fs = require('fs');
@@ -151,9 +152,42 @@ module.exports = function(defaults) {
   let transpiledInitializersTree = babelTranspiler(baseInitializersTree, babelOpts());
 
   let finalTestHelpersTree = buildAddonTree('ember-test-helpers');
-  console.log(app.preprocessJs);
-  let finalQUnitTree = buildAddonTree('ember-qunit', {
-    excludes: ['addon-test-support/ember-qunit/legacy-2-x/**/*.js']
+  
+  let preprocessJs = app.registry.registry.js[0].toTree;
+  let buildPreprocessedAddon = function(addonName) {
+    return preprocessJs(path.dirname(require.resolve(addonName)) + '/addon-test-support', {
+      registry: app.registry
+    });
+  };
+  let qunitTree = buildPreprocessedAddon('ember-qunit');
+  let testHelpersTreeForQUnit = buildPreprocessedAddon('@ember/test-helpers');
+  let testLoaderTreeForQUnit = funnel("node_modules/ember-cli-test-loader/addon-test-support", {
+    files: ['index.js'],
+    getDestinationPath: function() {
+      return "ember-cli-test-loader/test-support/index.js";
+    }
+  });
+  testLoaderTreeForQUnit = new Rollup(testLoaderTreeForQUnit, {
+    rollup: {
+      input: 'ember-cli-test-loader/test-support/index.js',
+      output: {
+        file: 'ember-cli-test-loader/test-support/index.js',
+        format: 'es'
+      },
+      plugins: [
+        require('rollup-plugin-commonjs')(),
+        // require('rollup-plugin-babel')({
+        //   babelrc: false,
+        //   modules: false,
+        //   externalHelpers: true
+        // })
+      ]
+    }
+  });
+  testLoaderTreeForQUnit = babelTranspiler(testLoaderTreeForQUnit, babelOpts());
+  let finalQUnitTree = concat(mergeTrees([qunitTree, testHelpersTreeForQUnit, testLoaderTreeForQUnit]), {
+    inputFiles: ['**/*.js'],
+    outputFile: '/assets/ember-qunit.js'
   });
 
   let mergedDepsTree = mergeTrees([bowerTree, shimsTree, transpiledInitializersTree, transpiledResolverTree, emberDataShims]);
@@ -171,18 +205,15 @@ module.exports = function(defaults) {
   return app.toTree(mergeTrees([twiddleVendorTree, loaderTree, testLoaderTree, finalTestHelpersTree, finalQUnitTree]));
 };
 
-function buildAddonTree(addonName, options = {}) {
+function buildAddonTree(addonName) {
   const funnel = require('broccoli-funnel');
   const concat = require('broccoli-concat');
   const babelTranspiler = require('broccoli-babel-transpiler');
   const path = require('path');
 
-  let { excludes } = options;
-  excludes = excludes || [];
-
   let baseTree = funnel(path.dirname(require.resolve(addonName)), {
     include: ['**/*.js'],
-    exclude: ['index.js', 'ember-cli-build.js', 'testem.js', 'lib/**/*.js', 'config/**/*.js', 'tests/**/*.js'].concat(excludes)
+    exclude: ['index.js', 'ember-cli-build.js', 'testem.js', 'lib/**/*.js', 'config/**/*.js', 'tests/**/*.js']
   });
 
   let transpiledTree = babelTranspiler(baseTree, babelOpts());
@@ -201,7 +232,8 @@ function babelOpts() {
       ['transform-es2015-modules-amd', {
         loose: true,
         noInterop: true
-      }]
+      }],
+      ['babel-plugin-ember-modules-api-polyfill']
     ]
   };
 }
