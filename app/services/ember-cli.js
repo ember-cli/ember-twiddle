@@ -333,7 +333,7 @@ export default Ember.Service.extend({
         <script type="text/javascript">
           // Hack around dealing with multiple global QUnits!
           jQuery.ajax({
-            url: 'https://cdnjs.cloudflare.com/ajax/libs/qunit/2.3.2/qunit.js',
+            url: 'https://code.jquery.com/qunit/qunit-2.6.1.js',
             dataType: 'text'
           }).then(function(script) {
             Ember.run(function() {
@@ -384,19 +384,19 @@ export default Ember.Service.extend({
         </div>
         <div id="test-root"></div>`;
 
-      let moreCode = "requirejs.entries['ember-cli/test-loader'] = requirejs.entries['ember-cli-test-loader/test-support/index'] || requirejs.entries['assets/test-loader'] || requirejs.entries['ember-cli/test-loader'];\n";
-      testStuff += `<script type="text/javascript">${moreCode}require("${twiddleAppName}/tests/test-helper");</script>`;
+      let moreCode = "window.requirejs.entries['ember-cli/test-loader'] = window.requirejs.entries['ember-cli-test-loader/test-support/index'] || requirejs.entries['assets/test-loader'] || window.requirejs.entries['ember-cli/test-loader'];\n";
+      testStuff += `<script type="text/javascript">${moreCode}window.require("${twiddleAppName}/tests/test-helper");</script>`;
     }
 
     if (testing || isTestingEnabled) {
-      const testJSFiles = ['emberTestHelpers', 'emberQUnit'];
+      const testJSFiles = ['emberQUnit'];
 
       testJSFiles.forEach(jsFile => {
         depScriptTags += `<script type="text/javascript" src="${window.assetMap[jsFile]}"></script>`;
       });
 
       testStuff += `<script type="text/javascript">
-        Ember.Test.adapter = require('ember-qunit').QUnitAdapter.create();
+        Ember.Test.adapter = window.require('ember-qunit').QUnitAdapter.create();
       </script>`;
     }
 
@@ -546,11 +546,11 @@ function contentForAppBoot(content, config) {
   }
 
   monkeyPatchModules.forEach(function(mod) {
-    content.push('  require("'+mod+'").__esModule=true;');
+    content.push('  window.require("'+mod+'").__esModule=true;');
   });
 
   if (!config.testingEnabled || config.legacyTesting) {
-    content.push('  require("' +
+    content.push('  window.require("' +
       config.modulePrefix +
       '/app")["default"].create(' +
       calculateAppConfig(config) +

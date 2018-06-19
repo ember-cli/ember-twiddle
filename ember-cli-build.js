@@ -4,12 +4,12 @@ module.exports = function(defaults) {
 
   const EmberApp = require('ember-cli/lib/broccoli/ember-app');
   const funnel = require('broccoli-funnel');
-  const concat = require('broccoli-concat');
   const mergeTrees = require('broccoli-merge-trees');
   const babelTranspiler = require('broccoli-babel-transpiler');
   const browserify = require('browserify');
   const path = require('path');
   const fs = require('fs');
+  const babelOpts = require('./lib/babel-opts');
 
   const env = EmberApp.env();
   const deployTarget = process.env.DEPLOY_TARGET;
@@ -26,7 +26,7 @@ module.exports = function(defaults) {
     }
   }
 
-  const blueprintsCode = getEmberCLIBlueprints();
+  const blueprintsCode = require('./lib/get-ember-cli-blueprints')();
 
   let app = new EmberApp(defaults, {
     SRI: {
@@ -40,7 +40,8 @@ module.exports = function(defaults) {
     },
     codemirror: {
       modes: ['xml', 'javascript', 'handlebars', 'htmlmixed', 'css'],
-      keyMaps: ['emacs', 'sublime', 'vim']
+      keyMaps: ['emacs', 'sublime', 'vim'],
+      addonFiles: ['comment/comment.js']
     },
     'ember-cli-bootstrap-sassy': {
       'js': ['dropdown', 'collapse']
@@ -128,6 +129,70 @@ module.exports = function(defaults) {
   });
   testLoaderTree = babelTranspiler(testLoaderTree, babelOpts());
 
+  let finalQUnitTree = buildQUnitTree(app);
+
+  let twiddleVendorTree = buildTwiddleVendorTree();
+
+  return app.toTree(mergeTrees([twiddleVendorTree, loaderTree, testLoaderTree, finalQUnitTree]));
+};
+
+function buildQUnitTree(app) {
+  const funnel = require('broccoli-funnel');
+  const concat = require('broccoli-concat');
+  const mergeTrees = require('broccoli-merge-trees');
+  const babelTranspiler = require('broccoli-babel-transpiler');
+  const Rollup = require('broccoli-rollup');
+  const path = require('path');
+  const babelOpts = require('./lib/babel-opts');
+  
+  let preprocessJs = app.registry.registry.js[0].toTree;
+
+  let buildPreprocessedAddon = function(addonName) {
+    return preprocessJs(path.dirname(require.resolve(addonName)) + '/addon-test-support', {
+      registry: app.registry
+    });
+  };
+
+  let qunitTree = buildPreprocessedAddon('ember-qunit');
+  let testHelpersTreeForQUnit = buildPreprocessedAddon('@ember/test-helpers');
+
+  let testLoaderTreeForQUnit = funnel("node_modules/ember-cli-test-loader/addon-test-support", {
+    files: ['index.js'],
+    getDestinationPath: function() {
+      return "ember-cli-test-loader/test-support/index.js";
+    }
+  });
+
+  testLoaderTreeForQUnit = new Rollup(testLoaderTreeForQUnit, {
+    rollup: {
+      input: 'ember-cli-test-loader/test-support/index.js',
+      output: {
+        file: 'ember-cli-test-loader/test-support/index.js',
+        format: 'es'
+      },
+      plugins: [
+        require('rollup-plugin-commonjs')()
+      ]
+    }
+  });
+
+  testLoaderTreeForQUnit = babelTranspiler(testLoaderTreeForQUnit, babelOpts());
+
+  let finalQUnitTree = concat(mergeTrees([qunitTree, testHelpersTreeForQUnit, testLoaderTreeForQUnit]), {
+    inputFiles: ['**/*.js'],
+    outputFile: '/assets/ember-qunit.js'
+  });
+
+  return finalQUnitTree;
+}
+
+function buildTwiddleVendorTree() {
+  const funnel = require('broccoli-funnel');
+  const concat = require('broccoli-concat');
+  const mergeTrees = require('broccoli-merge-trees');
+  const babelTranspiler = require('broccoli-babel-transpiler');
+  const babelOpts = require('./lib/babel-opts');
+
   let emberDataShims = funnel('vendor', {
     files: ['ember-data-shims.js']
   });
@@ -149,9 +214,6 @@ module.exports = function(defaults) {
 
   let transpiledInitializersTree = babelTranspiler(baseInitializersTree, babelOpts());
 
-  let finalQUnitTree = buildAddonTree('ember-qunit');
-  let finalTestHelpersTree = buildAddonTree('ember-test-helpers');
-
   let mergedDepsTree = mergeTrees([bowerTree, shimsTree, transpiledInitializersTree, transpiledResolverTree, emberDataShims]);
 
   let twiddleVendorTree = concat(mergedDepsTree, {
@@ -164,101 +226,5 @@ module.exports = function(defaults) {
     outputFile: '/assets/twiddle-deps.js'
   });
 
-  return app.toTree(mergeTrees([twiddleVendorTree, loaderTree, testLoaderTree, finalQUnitTree, finalTestHelpersTree]));
-};
-
-function buildAddonTree(addonName) {
-  const funnel = require('broccoli-funnel');
-  const concat = require('broccoli-concat');
-  const babelTranspiler = require('broccoli-babel-transpiler');
-  const path = require('path');
-
-  let baseTree = funnel(path.dirname(require.resolve(addonName)), {
-    include: ['**/*.js']
-  });
-
-  let transpiledTree = babelTranspiler(baseTree, babelOpts());
-
-  return concat(transpiledTree, {
-    inputFiles: ['**/*.js'],
-    outputFile: '/assets/' + addonName + '.js'
-  });
-}
-
-function babelOpts() {
-  return {
-    presets: ['babel-preset-es2017'].map(require.resolve),
-    moduleIds: true,
-    plugins: [
-      ['transform-es2015-modules-amd', {
-        loose: true,
-        noInterop: true
-      }]
-    ]
-  };
-}
-
-// This copies code out of ember-cli's blueprints into
-// app/lib/blueprints so we don't have to maintain our
-// own blueprints
-function getEmberCLIBlueprints() {
-  const fs = require('fs');
-  const path = require('path');
-  let fileMap = {};
-
-  let blueprintFiles = {
-    "cliBlueprintFiles": {
-      "path": "node_modules/ember-cli",
-      "files": {
-        "app": "app/files/app/app.js",
-        "router": "app/files/app/router.js",
-        "test-helper": 'app/files/tests/test-helper.js',
-        "test-resolver": 'app/files/tests/helpers/resolver.js',
-        "test-destroy-app": 'app/files/tests/helpers/destroy-app.js',
-        "test-module-for-acceptance": 'app/files/tests/helpers/module-for-acceptance.js'
-      }
-    },
-    "legacyBlueprintFiles": {
-      "path": path.dirname(require.resolve('ember-cli-legacy-blueprints')),
-      "files": {
-        'component-hbs': 'component/files/__root__/__templatepath__/__templatename__.hbs',
-        'component-js': 'component/files/__root__/__path__/__name__.js',
-        'controller': 'controller/files/__root__/__path__/__name__.js',
-        'route': 'route/files/__root__/__path__/__name__.js',
-        'service': 'service/files/__root__/__path__/__name__.js',
-        'template': 'template/files/__root__/__path__/__name__.hbs',
-        'helper': 'helper/files/__root__/helpers/__name__.js',
-        'controller-test': 'controller-test/qunit-files/tests/unit/__path__/__test__.js',
-        'route-test': 'route-test/qunit-files/tests/unit/__path__/__test__.js',
-        'service-test': 'service-test/qunit-files/tests/unit/__path__/__test__.js',
-        'component-test': 'component-test/qunit-files/tests/__testType__/__path__/__test__.js',
-        'acceptance-test': 'acceptance-test/qunit-files/tests/acceptance/__name__-test.js'
-      }
-    }
-  };
-
-  for (let list in blueprintFiles) {
-    let blueprintPath = blueprintFiles[list].path;
-    let files = blueprintFiles[list].files;
-    for (let blueprintName in files) {
-      let filePath = blueprintPath + '/blueprints/' + files[blueprintName];
-      fileMap[blueprintName] = fs.readFileSync(filePath).toString();
-    }
-  }
-
-  // Location should be 'none' in router.js
-  fileMap['router'] = fileMap['router'].replace(/config\.locationType/, "'none'");
-
-  fileMap['resolver'] = fs.readFileSync('app/resolver.js').toString();
-  fileMap['twiddle.json'] = fs.readFileSync('blueprints/twiddle.json').toString();
-  fileMap['initializers/router'] = fs.readFileSync('blueprints/router_initializer.js').toString();
-  fileMap['initializers/mouse-events'] = fs.readFileSync('blueprints/mouse_events_initializer.js').toString();
-  fileMap['controllers/application'] = fs.readFileSync('blueprints/application_controller.js').toString();
-  fileMap['templates/application'] = fs.readFileSync('blueprints/application_template.hbs').toString();
-  fileMap['app.css'] = fs.readFileSync('blueprints/app.css').toString();
-  fileMap['index.html'] = fs.readFileSync('blueprints/index.html').toString();
-  fileMap['test-start-app'] = fs.readFileSync('blueprints/start-app.js').toString();
-  fileMap['model'] = fs.readFileSync('blueprints/model.js').toString();
-
-  return 'export default ' + JSON.stringify(fileMap);
+  return twiddleVendorTree;
 }
