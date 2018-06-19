@@ -333,7 +333,7 @@ export default Ember.Service.extend({
         <script type="text/javascript">
           // Hack around dealing with multiple global QUnits!
           jQuery.ajax({
-            url: 'https://cdnjs.cloudflare.com/ajax/libs/qunit/2.3.2/qunit.js',
+            url: 'https://code.jquery.com/qunit/qunit-2.6.1.js',
             dataType: 'text'
           }).then(function(script) {
             Ember.run(function() {
@@ -389,7 +389,7 @@ export default Ember.Service.extend({
     }
 
     if (testing || isTestingEnabled) {
-      const testJSFiles = ['emberTestHelpers', 'emberQUnit'];
+      const testJSFiles = ['emberQUnit'];
 
       testJSFiles.forEach(jsFile => {
         depScriptTags += `<script type="text/javascript" src="${window.assetMap[jsFile]}"></script>`;

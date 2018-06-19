@@ -149,8 +149,6 @@ module.exports = function(defaults) {
   });
 
   let transpiledInitializersTree = babelTranspiler(baseInitializersTree, babelOpts());
-
-  let finalTestHelpersTree = buildAddonTree('ember-test-helpers');
   
   let preprocessJs = app.registry.registry.js[0].toTree;
   let buildPreprocessedAddon = function(addonName) {
@@ -196,7 +194,7 @@ module.exports = function(defaults) {
     outputFile: '/assets/twiddle-deps.js'
   });
 
-  return app.toTree(mergeTrees([twiddleVendorTree, loaderTree, testLoaderTree, finalTestHelpersTree, finalQUnitTree]));
+  return app.toTree(mergeTrees([twiddleVendorTree, loaderTree, testLoaderTree, finalQUnitTree]));
 };
 
 function buildAddonTree(addonName) {
