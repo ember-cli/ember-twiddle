@@ -175,12 +175,7 @@ module.exports = function(defaults) {
         format: 'es'
       },
       plugins: [
-        require('rollup-plugin-commonjs')(),
-        // require('rollup-plugin-babel')({
-        //   babelrc: false,
-        //   modules: false,
-        //   externalHelpers: true
-        // })
+        require('rollup-plugin-commonjs')()
       ]
     }
   });
