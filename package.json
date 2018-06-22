@@ -19,6 +19,7 @@
   "devDependencies": {
     "@ember/test-helpers": "~0.7.18",
     "babel-plugin-ember-modules-api-polyfill": "^2.3.0",
+    "babel-preset-env-standalone": "^1.6.2",
     "babel-preset-es2017": "^6.24.1",
     "babel-standalone": "^6.26.0",
     "broccoli-asset-rev": "^2.4.5",

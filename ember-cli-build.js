@@ -57,6 +57,9 @@ module.exports = function(defaults) {
       },
       'babel-standalone': {
         import: ['babel.js']
+      },
+      'babel-preset-env-standalone': {
+        import: ['babel-preset-env.js']
       }
     },
     sourcemaps: {
@@ -143,7 +146,7 @@ function buildQUnitTree(app) {
   const Rollup = require('broccoli-rollup');
   const path = require('path');
   const babelOpts = require('./lib/babel-opts');
-  
+
   let preprocessJs = app.registry.registry.js[0].toTree;
 
   let buildPreprocessedAddon = function(addonName) {

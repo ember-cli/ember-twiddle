@@ -511,7 +511,16 @@ export default Ember.Service.extend({
  */
 function babelOpts(moduleName) {
   return {
-    presets: ['es2017'],
+    presets: [['env', {
+      targets: {
+        browsers: [
+          'last 2 chrome versions',
+          'last 2 firefox versions',
+          'last 2 safari versions',
+          'last 2 edge versions'
+        ]
+      }
+    }]],
     moduleIds: true,
     moduleId: moduleName,
     plugins: [
