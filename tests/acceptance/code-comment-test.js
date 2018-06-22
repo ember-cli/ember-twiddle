@@ -20,23 +20,34 @@ test('checks javascript comment option', async function(assert) {
 
 
   await runGist(files);
-  await click('.CodeMirror-code');
 
-  let [firstNode] = find('.cm-property');
+  let textboxNode = 'textarea:eq(1)';
+  textboxNode = '.CodeMirror textarea';
+  await click(textboxNode);
 
-  await triggerEvent(firstNode, 'keypress', {
-    keyCode: '65', // 'A'
+  await triggerEvent(textboxNode, 'keydown', {
+    keyCode: 65, // 'A'
     metaKey: true
   });
 
-  await triggerEvent(firstNode, 'keypress', {
-    keyCode: '191',   // '/'
+  await triggerEvent(textboxNode, 'keydown', {
+    keyCode: 191, // '/'
     metaKey: true
   });
 
   let [firstLine] = find('.CodeMirror-line');
-
   let content = firstLine.textContent;
 
   assert.ok(content.startsWith('//'), 'Line has been commented');
+
+  await triggerEvent(textboxNode, 'keydown', {
+    keyCode: 191, // '/'
+    metaKey: true
+  });
+
+  [firstLine] = find('.CodeMirror-line');
+  content = firstLine.textContent;
+
+  assert.notOk(content.startsWith('//'), 'Line has been uncommented');
+
 });
