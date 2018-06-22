@@ -40,7 +40,8 @@ module.exports = function(defaults) {
     },
     codemirror: {
       modes: ['xml', 'javascript', 'handlebars', 'htmlmixed', 'css'],
-      keyMaps: ['emacs', 'sublime', 'vim']
+      keyMaps: ['emacs', 'sublime', 'vim'],
+      addonFiles: ['comment/comment.js']
     },
     'ember-cli-bootstrap-sassy': {
       'js': ['dropdown', 'collapse']
