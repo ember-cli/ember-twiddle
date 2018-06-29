@@ -53,6 +53,7 @@ test('Reload the Twiddle on command (Cmd+Enter)', async(assert) => {
   assert.equal(outputPane().find('input').val(), 'new value');
 
   let textareaNode = '.CodeMirror textarea';
+  await click(textareaNode);
   await triggerEvent(textareaNode, 'keydown', {
     keyCode: 13, // 'Enter'
     metaKey: true

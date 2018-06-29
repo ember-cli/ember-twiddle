@@ -33,11 +33,13 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
 
   // eslint-disable-next-line ember/no-on-calls-in-components
   onReloadCommand: on(keyDown('Enter+cmd'), function () {
+    console.log('Enter+cmd pressed');
     this.send('runNow');
   }),
 
   // eslint-disable-next-line ember/no-on-calls-in-components
   onSaveCommand: on(keyDown('cmd+KeyS'), function (event) {
+    console.log('KeyS+cmd pressed');
     this.saveGist(this.get('model'));
     this.send('runNow');
     event.preventDefault();
