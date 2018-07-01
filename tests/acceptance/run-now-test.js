@@ -3,14 +3,14 @@ import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptan
 
 moduleForAcceptance('Acceptance | run now');
 
-test('Able to reload the Twiddle', function(assert) {
+const files = [
+  {
+    filename: "application.template.hbs",
+    content: `{{input value="initial value"}}`
+  }
+];
 
-  const files = [
-    {
-      filename: "application.template.hbs",
-      content: `{{input value="initial value"}}`
-    }
-  ];
+test('Able to reload the Twiddle', function(assert) {
 
   runGist(files);
 
@@ -36,13 +36,6 @@ test('Able to reload the Twiddle', function(assert) {
 });
 
 test('Reload the Twiddle on command (Cmd+Enter)', async(assert) => {
-
-  const files = [
-    {
-      filename: "application.template.hbs",
-      content: `{{input value="initial value"}}`
-    }
-  ];
 
   runGist(files);
 

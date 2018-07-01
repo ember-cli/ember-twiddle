@@ -71,6 +71,7 @@
     "ember-export-application-global": "^2.0.0",
     "ember-git-version": "~0.1.2",
     "ember-inflector": "~2.0.0",
+    "ember-keyboard": "^3.0.2",
     "ember-load": "~0.0.12",
     "ember-load-initializers": "~1.0.0",
     "ember-lodash": "^4.18.0",
@@ -96,8 +97,5 @@
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 8"
-  },
-  "dependencies": {
-    "ember-keyboard": "^3.0.2"
   }
 }
