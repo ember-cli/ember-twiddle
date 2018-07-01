@@ -4,10 +4,11 @@ import ColumnsMixin from "../mixins/columns";
 import FilesMixin from "../mixins/files";
 import TestFilesMixin from "../mixins/test-files";
 import AppBuilderMixin from "../mixins/app-builder";
+import { keyDown, EKMixin } from 'ember-keyboard';
 
-const { inject, computed, run } = Ember;
+const { inject, computed, run, on } = Ember;
 
-export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestFilesMixin, {
+export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestFilesMixin, EKMixin, {
   emberCli: inject.service(),
   dependencyResolver: inject.service(),
   notify: inject.service(),
@@ -24,8 +25,23 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
       isFastBoot: this.get('fastboot.isFastBoot')
     }));
     this.createColumns();
-    this.set('activeEditorCol', '1');
+    this.setProperties({
+      activeEditorCol: '1',
+      keyboardActivated: true
+    });
   },
+
+  // eslint-disable-next-line ember/no-on-calls-in-components
+  onReloadCommand: on(keyDown('Enter+cmd'), function () {
+    this.send('runNow');
+  }),
+
+  // eslint-disable-next-line ember/no-on-calls-in-components
+  onSaveCommand: on(keyDown('cmd+KeyS'), function (event) {
+    this.saveGist(this.get('model'));
+    this.send('runNow');
+    event.preventDefault();
+  }),
 
   /**
    * Output from the build, sets the `code` attr on the component

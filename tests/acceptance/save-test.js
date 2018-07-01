@@ -75,3 +75,18 @@ test('can save a gist without an id', function(assert) {
     assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
   });
 });
+
+test('gist save on cmd+s shortcut', async function(assert) {
+  // set owner of gist as currently logged in user
+  stubValidSession(this.application, {
+    currentUser: { login: "gokatz" },
+    "github-oauth2": {}
+  });
+
+  await visit('/');
+  assert.equal(find('.gist-link').length, 0, "No gist link is displayed for unsaved twiddle");
+
+  await keyDown('cmd+KeyS'); // eslint-disable-line no-undef
+
+  assert.equal(find('.gist-link').length, 1, "Gist link is shown for saved twiddle");
+});

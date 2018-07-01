@@ -21,8 +21,7 @@ test('checks javascript comment option', async function(assert) {
 
   await runGist(files);
 
-  let textboxNode = 'textarea:eq(1)';
-  textboxNode = '.CodeMirror textarea';
+  let textboxNode = '.CodeMirror textarea';
   await click(textboxNode);
 
   await triggerEvent(textboxNode, 'keydown', {
