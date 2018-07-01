@@ -52,12 +52,7 @@ test('Reload the Twiddle on command (Cmd+Enter)', async(assert) => {
   await outputPane().find('input').val('new value');
   assert.equal(outputPane().find('input').val(), 'new value');
 
-  let textareaNode = '.CodeMirror textarea';
-  await click(textareaNode);
-  await triggerEvent(textareaNode, 'keydown', {
-    keyCode: 13, // 'Enter'
-    metaKey: true
-  });
+  await keyDown('Enter+cmd'); // eslint-disable-line no-undef
 
   await waitForUnloadedIFrame();
   await waitForLoadedIFrame();

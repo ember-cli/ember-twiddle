@@ -86,12 +86,7 @@ test('gist save on cmd+s shortcut', async function(assert) {
   await visit('/');
   assert.equal(find('.gist-link').length, 0, "No gist link is displayed for unsaved twiddle");
 
-  let textareaNode = '.CodeMirror textarea';
-  await click(textareaNode);
-  await triggerEvent(textareaNode, 'keydown', {
-    keyCode: 83, // 'S'
-    metaKey: true
-  });
+  await keyDown('cmd+KeyS'); // eslint-disable-line no-undef
 
   assert.equal(find('.gist-link').length, 1, "Gist link is shown for saved twiddle");
 });
