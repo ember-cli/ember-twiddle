@@ -1,7 +1,9 @@
 <nav class='navbar-default gist-header flex'>
   <div class='toolbar visible-toolbar layout-column'>
     <div class='title flex-8'>
-      {{gist-card gist=model unsaved=unsaved
+      {{gist-card gist=model
+        unsaved=unsaved
+        isGistSaving=isGistSaving
         isRevision=isRevision
         titleChanged=(action this.attrs.titleChanged)
         deleteGist=(route-action 'deleteGist')

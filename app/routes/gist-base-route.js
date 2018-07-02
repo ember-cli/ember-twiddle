@@ -33,6 +33,8 @@ export default Ember.Route.extend({
 
     showRevision() {},
     showCurrentVersion() {},
-    signInViaGithub() {}
+    signInViaGithub() {
+      this.send('signInWithGithub');
+    }
   }
 });

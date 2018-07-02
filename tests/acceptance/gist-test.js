@@ -368,6 +368,11 @@ test('unsaved indicator', function(assert) {
   click(firstColumnTextarea);
   fillIn(firstColumnTextarea, "\"some text\";");
   triggerEvent(firstColumnTextarea, "blur");
+  triggerEvent(firstColumnTextarea, "focusout");
+
+  andThen(function() {
+    return timeout(10);
+  });
 
   andThen(function() {
     return timeout(10);
@@ -410,6 +415,11 @@ test('editing a file updates gist', function(assert) {
   click(firstColumnTextarea);
   fillIn(firstColumnTextarea, '<div class="index">some text</div>');
   triggerEvent(firstColumnTextarea, "blur");
+  triggerEvent(firstColumnTextarea, "focusout");
+
+  andThen(function() {
+    return timeout(10);
+  });
 
   andThen(function() {
     assert.equal(find(firstColumnTextarea).val(), '<div class="index">some text</div>');

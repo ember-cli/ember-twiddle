@@ -10,7 +10,7 @@ export default Ember.Component.extend({
         // eslint-disable-next-line no-console
         console.error(error);
       });
-      this.get('notify').info('Errors were dumped to console');
+      this.get('notify').error('Errors were dumped to console');
     }
   }
 });
