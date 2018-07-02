@@ -1,4 +1,4 @@
-import { skip } from 'qunit';
+import { test, skip } from 'qunit';
 import testSelector from 'ember-test-selectors';
 import wait from 'ember-test-helpers/wait';
 import { find, click } from 'ember-native-dom-helpers';
