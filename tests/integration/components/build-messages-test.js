@@ -19,7 +19,8 @@ test('it shows the number of build messages', function(assert) {
   this.set('buildErrors', []);
   this.set('isBuilding', false);
   this.set('notify', {
-    info() {}
+    info() {},
+    error() {}
   });
 
   this.render(hbs`{{build-messages buildErrors=buildErrors isBuilding=isBuilding notify=notify}}`);
@@ -31,12 +32,13 @@ test('it shows the number of build messages', function(assert) {
   assert.equal(this.$('span').text().replace(/\s+/g, " ").trim(), 'Output (2 build errors)', 'shows number of build errors');
 });
 
-test('it calls notify.info() when clicking on build errors', function(assert) {
+test('it calls notify.errpr() when clicking on build errors', function(assert) {
   assert.expect(1);
 
   let notifyObject = Ember.Object.create({
     called: false,
-    info() {
+    info() {},
+    error() {
       this.set('called', true);
     }
   });
@@ -50,5 +52,5 @@ test('it calls notify.info() when clicking on build errors', function(assert) {
 
   this.$('span a').click();
 
-  assert.ok(notifyObject.get('called'), "notify.info() was called");
+  assert.ok(notifyObject.get('called'), "notify.error() was called");
 });

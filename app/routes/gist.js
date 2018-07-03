@@ -62,10 +62,12 @@ export default Ember.Route.extend({
   actions: {
     saveGist(gist) {
       var newGist = gist.get('isNew');
+      let controller = this.get('controller');
       if (!newGist && gist.get('ownerLogin') !== this.get('session.currentUser.login')) {
         this.send('fork', gist);
         return;
       }
+      controller.set('isGistSaving', true);
       gist.save().then(() => {
         this.get('notify').info(`Saved to Gist ${gist.get('id')} on Github`);
         this.send('setSaved');
@@ -73,7 +75,8 @@ export default Ember.Route.extend({
           gist.set('gistId', gist.get('id'));
           this.transitionTo('gist.edit', gist);
         }
-      }).catch((this.catchSaveError.bind(this)));
+      }).catch((this.catchSaveError.bind(this)))
+      .finally(() => controller.set('isGistSaving', false));
     },
 
     deleteGist(gist) {
@@ -114,6 +117,19 @@ export default Ember.Route.extend({
 
     urlChanged(newUrl) {
       this.get('app').postMessage({ newUrl });
+    },
+  
+    signInWithGithub() {
+      this.session.open(this.get('toriiProvider')).catch(function(error) {
+        if (alert) {
+          alert('Could not sign you in: ' + error.message);
+        }
+        throw error;
+      });
+    },
+
+    signOut() {
+      this.session.close();
     },
 
     showCurrentVersion() {

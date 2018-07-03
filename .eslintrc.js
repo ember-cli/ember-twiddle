@@ -31,7 +31,8 @@ module.exports = {
     visit: true,
     waitForLoadedIFrame: true,
     waitForUnloadedIFrame: true,
-    '$': true
+    '$': true,
+    CodeMirror: false
   },
   rules: {
     'ember/new-module-imports': 'off'

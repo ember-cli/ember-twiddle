@@ -1,9 +1,8 @@
-import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
-
-const { run } = Ember;
-const assign = Ember.assign || Ember.merge;
+import { run } from '@ember/runloop';
+import { assign } from '@ember/polyfills';
+import keyboardRegisterTestHelpers from './ember-keyboard/register-test-helpers';
 
 export default function startApp(attrs) {
   let application;
@@ -14,6 +13,7 @@ export default function startApp(attrs) {
   run(() => {
     application = Application.create(attributes);
     application.setupForTesting();
+    keyboardRegisterTestHelpers();
     application.injectTestHelpers();
   });
 

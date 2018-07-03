@@ -6,7 +6,8 @@ moduleForComponent('main-gist', 'Unit | Component | main gist', {
     'service:ember-cli',
     'service:dependency-resolver',
     'service:notify',
-    'service:fastboot'
+    'service:fastboot',
+    'service:keyboard'
   ]
 });
 

@@ -1,5 +1,7 @@
 <div>{{model.files.length}} files</div>
-{{#if unsaved}}
+{{#if isGistSaving}}
+  <span>Saving...</span>
+{{else if unsaved}}
   <span class="test-unsaved-indicator">Unsaved</span>
 {{else}}
   {{#unless model.isNew}}
