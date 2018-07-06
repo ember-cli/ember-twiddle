@@ -46,23 +46,26 @@ test('Able to copy a revision into new gist', function(assert) {
   ]);
 
   andThen(function() {
-    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+    assert.equal(find('.test-unsaved-indicator').length, 0, 'No unsaved indicator shown');
   });
 
-  fillIn('.title input', "my twiddle");
+  fillIn('.title input', 'my twiddle');
   andThen(function() {
-    assert.equal(find('.title input').val(), "my twiddle");
+    assert.equal(find('.title input').val(), 'my twiddle');
   });
 
+  click('[data-test-output-menu]');
   click("#live-reload");
-  click('.test-copy-action');
+  click('.test-sidenav-toggle');
+  click('[title="Duplicate Twiddle"]');
+  //pauseTest();
   waitForUnloadedIFrame();
   waitForLoadedIFrame();
 
   andThen(function() {
     assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
     assert.equal(find('.test-unsaved-indicator').length, 0, "Unsaved indicator does not appear when gist is copied");
-    assert.equal(find('.test-copy-action').length, 0, "Menu item to copy gist is not shown anymore");
+    assert.equal(find('[title="Duplicate Twiddle"]').length, 0, "Menu item to copy gist is not shown anymore");
     assert.equal(outputContents('div'), 'hello world!');
   });
 });
