@@ -4,8 +4,7 @@ import config from '../config/environment';
 const { computed } = Ember;
 
 export default Ember.Component.extend({
-  tagName: 'ul',
-  classNames: ['nav', 'nav-pills', 'user-menu'],
+  classNames: ['user-menu', 'layout-column'],
 
   userName: computed.readOnly('session.currentUser.login'),
 

@@ -158,6 +158,7 @@ export default Ember.Service.extend({
   twiddleJson: inject.service(),
 
   usePods: computed.readOnly('twiddleJson.usePods'),
+  versions: computed.readOnly('twiddleJson.versions'),
   enableTesting: false,
 
   setup(gist) {

@@ -26,7 +26,7 @@ test('Able to specify EmberENV in twiddle.json', function(assert) {
     },
     {
       filename: "application.template.hbs",
-      content: "<div class='ember-env-value'>{{value}}</div>"
+      content: `<div class="ember-env-value">{{value}}</div>`
     }
   ];
 

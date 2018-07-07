@@ -1,10 +1,13 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('route:gist.edit', {
+moduleFor('route:gist', {
   needs: [
+    'service:app',
     'service:ember-cli',
     'service:dependency-resolver',
-    'service:notify'
+    'service:fastboot',
+    'service:notify',
+    'service:state'
   ]
 });
 

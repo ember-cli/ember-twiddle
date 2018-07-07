@@ -1,3 +1,5 @@
+'use strict';
+
 let options = {
   test_page: 'tests/index.html?hidepassed',
   disable_watching: true,

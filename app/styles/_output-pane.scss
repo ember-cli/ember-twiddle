@@ -5,6 +5,7 @@
 }
 .url-bar > input {
   display: block;
+  box-sizing: border-box;
   height: 25px;
   width: 100%;
   padding: 3px;
@@ -15,12 +16,6 @@
 .run-now {
   margin-left: 10px;
   padding: 1px 6px 3px;
-}
-
-.run-or-live-reload {
-  text-align: right;
-  margin-left: 10px;
-  font-size: 14px;
 }
 
 .handle {
@@ -39,4 +34,8 @@
   margin-left: auto;
   text-align: right;
   font-size: 14px;
+}
+
+.building-state .building-text {
+  margin-left: 0.5em;
 }

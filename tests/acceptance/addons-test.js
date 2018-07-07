@@ -1,4 +1,4 @@
-import { test } from 'qunit';
+import { skip } from 'qunit';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 
 moduleForAcceptance('Acceptance | addons', {
@@ -12,7 +12,7 @@ moduleForAcceptance('Acceptance | addons', {
   }
 });
 
-test('Addons work', function(assert) {
+skip('Addons work', function(assert) {
 
   const files = [
     {
@@ -61,7 +61,7 @@ test('Addons work', function(assert) {
   });
 });
 
-test('Ember Data works as an addon', function (assert) {
+skip('Ember Data works as an addon', function (assert) {
   const files = [
     {
       filename: "templates.application.hbs",

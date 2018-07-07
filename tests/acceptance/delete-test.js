@@ -1,17 +1,15 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
+import { find, click, visit } from 'ember-native-dom-helpers';
+
+const twiddleMenu = ".test-twiddle-menu";
+const menuTrigger = ".ember-basic-dropdown-trigger button";
+const deleteGistSelector = '.test-delete-twiddle';
 
 moduleForAcceptance('Acceptance | delete gist', {
-  beforeEach: function() {
-    this.cacheConfirm = window.confirm;
-    window.confirm = () => true;
-
+  beforeEach() {
     server.create('user', { login: 'octocat' });
-  },
-
-  afterEach: function() {
-    window.confirm = this.cacheConfirm;
   }
 });
 
@@ -29,11 +27,19 @@ test('can delete a gist', function(assert) {
     }
   ]);
 
-  visit('/35de43cb81fc35ddffb2');
+  let menu;
 
-  click('.test-delete-action');
-
-  andThen(function() {
-    assert.equal(currentRouteName(), 'gist.new', 'New twiddle created');
-  });
+  return visit('/35de43cb81fc35ddffb2')
+    .then(() => {
+      menu = find(twiddleMenu, document.body);
+      let el = find(menuTrigger, menu);
+      return click(el, menu);
+    })
+    .then(() => {
+      let el = find(deleteGistSelector, menu);
+      return click(el, menu);
+    })
+    .then(() => {
+      assert.ok(currentRouteName(), 'gist.new', 'New twiddle created');
+    });
 });

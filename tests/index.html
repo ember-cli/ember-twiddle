@@ -13,12 +13,24 @@
     <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
     <link rel="stylesheet" href="{{rootURL}}assets/ember-twiddle.css">
     <link rel="stylesheet" href="{{rootURL}}assets/test-support.css">
+    <style>
+      .md-open-menu-container {
+        opacity: 1;
+        transform: inherit !important;
+      }
+
+      .md-open-menu-container md-menu-content > * {
+        opacity: 1;
+      }
+    </style>
 
     {{content-for 'head-footer'}}
     {{content-for 'test-head-footer'}}
   </head>
   <body>
     <div id="main-app">
+      <div id="ember-basic-dropdown-wormhole">
+      </div>
     </div>
 
     {{content-for "body"}}

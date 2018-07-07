@@ -1,10 +1,13 @@
-{{#if isBuilding}}
-    Building...
-{{else}}
+<div class='building-state layout-row layout-align-start-center'>
+  {{#if isBuilding}}
+    {{paper-progress-circular diameter=25}}
+    <span class='building-text'>Building...</span>
+  {{else}}
     Output
-    ({{#if buildErrors}}
-        <a {{action 'showErrors'}}>{{buildErrors.length}} build errors</a>
-    {{else}}
-        build ok.
-    {{/if}})
-{{/if}}
+    ({{#if buildErrors~}}
+      <a {{action 'showErrors'}} role='button'>{{buildErrors.length}} build errors</a>
+    {{~else~}}
+      build ok
+    {{~/if}})
+  {{/if}}
+</div>

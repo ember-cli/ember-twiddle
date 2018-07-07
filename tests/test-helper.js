@@ -1,5 +1,7 @@
 import Ember from "ember";
 import resolver from './helpers/resolver';
+import './helpers/responsive';
+
 import {
   setResolver
 } from 'ember-qunit';
@@ -19,8 +21,8 @@ Ember.Test.registerHelper('outputPane', function(app) {
 });
 
 Ember.Test.registerHelper('outputContents', function(app, selector) {
-  let output = app.testHelpers.outputPane();
-  return output.document.querySelector(selector).textContent.trim();
+  let output = app.testHelpers.outputPane().document;
+  return output.querySelector(selector).textContent.trim();
 });
 
 Ember.Test.registerHelper('createGist', createGist);

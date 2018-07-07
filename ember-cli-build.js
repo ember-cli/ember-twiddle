@@ -1,4 +1,5 @@
 /* global require, module, process */
+'use strict';
 module.exports = function(defaults) {
   process.env.FASTBOOT_DISABLED = true;
 
@@ -42,9 +43,6 @@ module.exports = function(defaults) {
       modes: ['xml', 'javascript', 'handlebars', 'htmlmixed', 'css'],
       keyMaps: ['emacs', 'sublime', 'vim'],
       addonFiles: ['comment/comment.js']
-    },
-    'ember-cli-bootstrap-sassy': {
-      'js': ['dropdown', 'collapse']
     },
     fileCreator: [
       {
@@ -96,6 +94,7 @@ module.exports = function(defaults) {
   }
 
   app.import('vendor/ember/ember-template-compiler.js');
+  app.import('vendor/flat-to-nested.js');
   app.import('vendor/shims/babel.js');
   app.import('vendor/shims/path.js');
   app.import('bower_components/file-saver/FileSaver.js');

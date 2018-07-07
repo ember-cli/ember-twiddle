@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import config from '../config/environment';
 
-const { inject, $, RSVP } = Ember;
+const { inject, $, RSVP, run } = Ember;
 
 const CONFIRM_MSG = "Unsaved changes will be lost.";
 
@@ -14,9 +14,22 @@ export default Ember.Route.extend({
   titleToken: Ember.computed.readOnly('controller.model.description'),
 
   beforeModel() {
+    if (!this.get('fastboot.isFastBoot')) {
+      run.schedule('afterRender', this, this.setupWindowUpdate);
+    }
+
     return this.session.fetch(this.get('toriiProvider')).catch(function() {
       // Swallow error for now
     });
+  },
+
+  model() {
+    let applicationModel = this.modelFor('application');
+    return applicationModel;
+  },
+
+  setupController(controller, resolved) {
+    controller.setProperties(resolved);
   },
 
   activate() {
@@ -102,6 +115,10 @@ export default Ember.Route.extend({
       });
     },
 
+    urlChanged(newUrl) {
+      this.get('app').postMessage({ newUrl });
+    },
+  
     signInWithGithub() {
       this.session.open(this.get('toriiProvider')).catch(function(error) {
         if (alert) {
@@ -115,12 +132,15 @@ export default Ember.Route.extend({
       this.session.close();
     },
 
-    showTwiddles() {
-      this.transitionTo('twiddles');
+    showCurrentVersion() {
+      this.get('store').unloadAll('gistFile');
+      this.store.find('gist', this.paramsFor('gist.edit').gistId).then((model) => {
+        this.transitionTo('gist.edit', model);
+      });
     },
 
-    urlChanged(newUrl) {
-      this.get('app').postMessage({ newUrl });
+    showRevision(id) {
+      this.transitionTo('gist.edit.revision', this.paramsFor('gist.edit', 'gistId'), id);
     },
 
     downloadProject() {
@@ -179,6 +199,25 @@ export default Ember.Route.extend({
         'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js',
         resolve
       );
+    });
+  },
+
+  setupWindowUpdate() {
+    window.addEventListener('message', (m) => {
+      run(() => {
+        if(typeof m.data==='object' && 'setAppUrl' in m.data) {
+          if (!this.get('isDestroyed')) {
+            if (window.messagesWaiting > 0) {
+              window.messagesWaiting = 0;
+            }
+            const newRoute = m.data.setAppUrl || '/';
+            this.controller.setProperties({
+              applicationUrl: newRoute,
+              route: newRoute === "/" ? undefined : newRoute
+            });
+          }
+        }
+      });
     });
   }
 });

@@ -1,5 +1,7 @@
 import { test } from 'qunit';
+import testSelector from 'ember-test-selectors';
 import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
+import { find, findAll, click, visit/*, click, find, fillIn, waitUntil, currentURL*/ } from 'ember-native-dom-helpers';
 
 moduleForAcceptance('Acceptance | columns', {
   beforeEach: function() {
@@ -7,91 +9,56 @@ moduleForAcceptance('Acceptance | columns', {
   }
 });
 
-const columns = ".code";
-const firstColumn = ".code:eq(0)";
-const plusGlyph = ".code .glyphicon-plus";
-const removeGlyph = firstColumn + " .glyphicon-remove";
-const outputPlusGlyph = ".output .glyphicon-plus";
-const showFileTreeGlyph = firstColumn + " .glyphicon-chevron-right";
-const hideFileTreeGlyph = ".twiddle-pane:first-of-type .glyphicon-chevron-left";
+const columns = testSelector('columns');
+const firstColumn = testSelector('columns', '1');
+const firstColumnActionsMenu = testSelector('column-actions-menu', '1');
+const addColumnButton = testSelector('column-add-panel') + ' button';
+const removeColumnButton = testSelector('column-remove-panel') + ' button';
 
-test('you can add and remove columns', function(assert) {
+test('you can add columns', function(assert) {
   visit('/');
 
-  andThen(function() {
+  andThen(() => {
     assert.equal(currentURL(), '/', 'We are on the correct initial route');
-    assert.equal(find(columns).length, 1, 'There is one column to start');
-    assert.ok(find(firstColumn).hasClass('active'), 'The first column starts out active');
+    assert.equal(findAll(columns).length, 1, 'There is one column to start');
+    assert.ok(find(firstColumn).classList.contains('active'), 'The first column starts out active');
 
-    find(plusGlyph).click();
+    click(firstColumnActionsMenu);
   });
 
-  andThen(function() {
-    assert.ok(urlHas('numColumns=2'), 'We are on the correct route for 2 columns');
-    assert.equal(find(columns).length, 2, 'There are now 2 columns');
-    assert.ok(urlHas("openFiles=controllers.application.js,templates.application.hbs"),
-      "URL contains correct openFiles query parameter 1");
+  andThen(() => {
+    click(addColumnButton);
+  })
 
-    find(plusGlyph).click();
-  });
-
-  andThen(function() {
-    assert.ok(urlHas('numColumns=3'), 'We are on the correct route for 3 columns');
-    assert.equal(find(columns).length, 3, 'There are now 3 columns');
-    assert.ok(urlHas("openFiles=controllers.application.js,templates.application.hbs,twiddle.json"),
-      "URL contains correct openFiles query parameter 1");
-
-    find(removeGlyph).click();
-  });
-
-  andThen(function() {
-    assert.ok(urlHas('numColumns=2'), 'We are on the correct route for 2 columns');
-    assert.equal(find(columns).length, 2, 'There are now 2 columns');
-    assert.ok(urlHas("openFiles=templates.application.hbs,twiddle.json"),
-      "URL contains correct openFiles query parameter 2");
-
-    find(removeGlyph).click();
-  });
-
-  andThen(function() {
-    assert.ok(!urlHas('numColumns'), 'We are on the correct route for 1 columns');
-    assert.equal(find(columns).length, 1, 'There are now 1 columns');
-    assert.ok(urlHas("openFiles=twiddle.json"), "URL contains correct openFiles query parameter 3");
-
-    find(removeGlyph).click();
-  });
-
-  andThen(function() {
-    assert.ok(urlHas('numColumns=0'), 'We are on the correct route for 0 columns');
-    assert.equal(find(columns).length, 0, 'There are now 0 columns');
-    assert.ok(!urlHas("openFiles"), "URL does not contain openFiles query parameter");
-
-    find(outputPlusGlyph).click();
-  });
-
-  andThen(function() {
-    assert.ok(!urlHas('numColumns'), 'We are on the correct route for 1 columns');
-    assert.equal(find(columns).length, 1, 'There are now 1 columns');
-
-    assert.equal(find(".file-tree").length, 1, "The file tree is shown");
-    assert.ok(!urlHas('fileTreeShown'), 'We are on the correct route when file tree is shown');
-
-    find(hideFileTreeGlyph).click();
-  });
-
-  andThen(function() {
-    assert.ok(urlHas('fileTreeShown=false'), 'We are on the correct route when file tree is shown');
-    assert.equal(find(".file-tree").length, 0, "The file tree is hidden");
-
-    find(showFileTreeGlyph).click();
-  });
-
-  andThen(function() {
-    assert.equal(find(".file-tree").length, 1, "The file tree is shown");
-    assert.ok(!urlHas('fileTreeShown'), 'We are on the correct route when file tree is shown');
+  andThen(() => {
+    assert.ok(urlHas(currentURL(), 'numColumns=2'), 'We are on the correct route for 2 columns');
+    assert.equal(findAll(columns).length, 2, 'There are now 2 columns');
+    assert.ok(urlHas(currentURL(), 'openFiles=controllers.application.js,templates.application.hbs'),
+      'URL contains correct openFiles query parameter 1');
   });
 });
 
-function urlHas(text) {
-  return decodeURIComponent(currentURL()).indexOf(text) > 0;
+test('you can remove columns', function(assert) {
+  visit('/');
+
+  andThen(() => {
+    assert.equal(currentURL(), '/', 'We are on the correct initial route');
+    assert.equal(findAll(columns).length, 1, 'There is one column to start');
+    assert.ok(find(firstColumn).classList.contains('active'), 'The first column starts out active');
+
+    click(firstColumnActionsMenu);
+  });
+
+  andThen(() => {
+    click(removeColumnButton);
+  });
+
+  andThen(() => {
+    assert.ok(urlHas(currentURL(), 'numColumns=0'), 'We are on the correct route for 0 columns');
+    assert.equal(findAll(columns).length, 0, 'There are now 0 columns');
+  });
+});
+
+function urlHas(url, text) {
+  return decodeURIComponent(url).indexOf(text) > 0;
 }

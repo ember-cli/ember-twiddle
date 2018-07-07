@@ -1,0 +1,39 @@
+<div class='profile-header layout-column layout-align-center-center'>
+  <img class='user-avatar-large' src='{{session.currentUser.profileAvatarUrl}}' />
+  <div class='user-info'>
+    Logged in as <span class='name'>{{session.currentUser.login}}</span>
+  </div>
+{{!--
+  <div class='user-details'>
+    You have __ saved Twiddles.
+  </div>
+--}}
+</div>
+
+{{#paper-list class='layout-column flex'}}
+  {{#paper-button onClick=hideProfile}}
+    {{paper-icon 'chevron left'}} Back to Twiddle
+  {{/paper-button}}
+{{/paper-list}}
+
+{{#paper-list class='profile-menu layout-column'}}
+  {{#paper-button onClick=(route-action 'showTwiddles')}}
+    {{paper-icon 'view list'}} My Saved Twiddles
+  {{/paper-button}}
+  {{paper-divider}}
+  {{editor-mode-menu setKeyMap=(route-action 'setEditorKeyMap')}}
+  {{paper-divider}}
+  {{#if currentVersionLink}}
+    Ember Twiddle {{v}}{{version}}
+  {{/if}}
+  {{#paper-button}}
+    {{paper-icon 'code'}} Github
+  {{/paper-button}}
+  {{#paper-button}}
+    {{paper-icon 'bug report'}} Issue Tracker
+  {{/paper-button}}
+  {{paper-divider}}
+  {{#paper-button}}
+    {{paper-icon 'power settings new'}} Logout
+  {{/paper-button}}
+{{/paper-list}}
