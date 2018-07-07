@@ -25,7 +25,10 @@
       {{#if (and sidebarContentComponent (not showProfile))}}
         {{component sidebarContentComponent showProfile=(action (mut showProfile) true)}}
       {{else}}
-        {{user-profile hideProfile=(action 'hideProfile')}}
+        {{user-profile
+          hideProfile=(action 'hideProfile')
+          signOut=(route-action 'signOut')
+        }}
       {{/if}}
     {{/paper-content}}
   {{/paper-sidenav}}
