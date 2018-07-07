@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# Installing yarn
-npm install -g yarn
-
 # Install the project dependencies
-yarn
-bower install --allow-root
+bower install --allow-root & wait
+yarn & wait
 
 ember server
