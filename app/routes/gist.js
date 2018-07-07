@@ -118,7 +118,7 @@ export default Ember.Route.extend({
     urlChanged(newUrl) {
       this.get('app').postMessage({ newUrl });
     },
-  
+
     signInWithGithub() {
       this.session.open(this.get('toriiProvider')).catch(function(error) {
         if (alert) {
@@ -129,7 +129,11 @@ export default Ember.Route.extend({
     },
 
     signOut() {
-      this.session.close();
+      let self = this;
+
+      this.session.close().then(() => {
+        self.refresh();
+      })
     },
 
     showCurrentVersion() {

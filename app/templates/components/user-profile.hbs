@@ -17,23 +17,33 @@
 {{/paper-list}}
 
 {{#paper-list class='profile-menu layout-column'}}
-  {{#paper-button onClick=(route-action 'showTwiddles')}}
-    {{paper-icon 'view list'}} My Saved Twiddles
+  {{#paper-button
+    data-test-show-twiddles
+    onClick=(route-action 'showTwiddles')}}
+      {{paper-icon 'view list'}} My Saved Twiddles
   {{/paper-button}}
   {{paper-divider}}
   {{editor-mode-menu setKeyMap=(route-action 'setEditorKeyMap')}}
   {{paper-divider}}
   {{#if currentVersionLink}}
-    Ember Twiddle {{v}}{{version}}
+    <a href={{currentVersionLink}} target='_blank' data-test-current-version-link>
+      {{#paper-button class='link-to'}}
+        {{paper-icon 'open-in-new'}} Ember Twiddle {{v}}{{version}}
+      {{/paper-button}}
+    </a>
   {{/if}}
-  {{#paper-button}}
-    {{paper-icon 'code'}} Github
-  {{/paper-button}}
-  {{#paper-button}}
-    {{paper-icon 'bug report'}} Issue Tracker
-  {{/paper-button}}
+  <a href='https://github.com/ember-cli/ember-twiddle' target='_blank'>
+    {{#paper-button class='link-btn'}}
+      {{paper-icon 'code'}} Github
+    {{/paper-button}}
+  </a>
+  <a href='https://github.com/ember-cli/ember-twiddle/issues' target='_blank'>
+    {{#paper-button class='link-btn'}}
+      {{paper-icon 'bug report'}} Issue Tracker
+    {{/paper-button}}
+  </a>
   {{paper-divider}}
-  {{#paper-button}}
+  {{#paper-button data-test-sign-out onClick=(action 'signOut')}}
     {{paper-icon 'power settings new'}} Logout
   {{/paper-button}}
 {{/paper-list}}
