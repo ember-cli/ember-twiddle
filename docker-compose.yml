@@ -2,7 +2,7 @@ version: '3'
 
 services:
   ember:
-    image: danlynn/ember-cli:2.11.1
+    image: danlynn/ember-cli:2.16.2-node_8.7
     container_name: ember-twiddle
     ports:
       - 4200:4200
@@ -10,10 +10,24 @@ services:
     volumes:
       - .:/myapp
       - ./entrypoint.sh:/entrypoint.sh
-      - /app/bower_components
-      - /app/node_modules
-      - /app/tmp
-      - /app/dist
+      - /myapp/bower_components
+      - /myapp/node_modules
+      - /myapp/dist
+    tmpfs:
+      - /myapp/tmp
     environment:
       - GH_API_KEY=CHANGEME
     command: ["sh", "/entrypoint.sh"]
+  gatekeeper:
+    image: node:6.11.1-alpine
+    container_name: gatekeeper-twiddle
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+      - OAUTH_CLIENT_ID=CHANGEME
+      - OAUTH_CLIENT_SECRET=CHANGEME
+    volumes:
+      - ./gatekeeper:/home/node/app
+    ports:
+      - 9999:9999
+    command: /bin/sh -c "yarn && npm run start"

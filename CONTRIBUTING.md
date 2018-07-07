@@ -48,6 +48,8 @@ You will need the following things properly installed on your computer.
 
 ### Running / Development With Docker (OPTIONAL)
 
+Docker has been setup to make things easier to get setup and working.
+
 #### Additional Dependencies
 
 * [Docker](https://docs.docker.com/install/) (Optional)
@@ -55,9 +57,26 @@ You will need the following things properly installed on your computer.
 
 #### Instructions
 
-* `node index.js` from your gatekeeper folder
-* `docker-compose up` from ember twiddle folder
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+First thing you want to do is edit the `docker-compose.yml`
+file and change the `CHANGEME` to match your keys and secrets.
+Then you will want to run the following commands:
+
+``` bash
+# Pull gatekeeper code
+$ git submodule init
+$ git submodule update
+
+# Start Docker
+$ docker-compose up
+
+# When you are done coding, to stop the container, hit Ctrl+C
+$ docker-compose stop
+
+# When you want to start again
+$ docker-compose start
+```
+
+Visit the app at [http://localhost:4200](http://localhost:4200).
 
 ### Code Generators
 
