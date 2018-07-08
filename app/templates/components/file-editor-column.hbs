@@ -9,14 +9,14 @@
         {{#if allFiles.length}}
           {{#paper-button class='md-menu-origin'}}
             {{#if file}}
-              <span class="file-path">{{file.filePath}}</span>
+              <span class='file-path'>{{file.filePath}}</span>
             {{else}}
-              No file selected
+              <span data-test-column-none-selected={{col}}>No file selected</span>
             {{/if}}
             {{paper-icon 'arrow drop down'}}
           {{/paper-button}}
         {{else}}
-          No files available
+          <span data-test-column-none-available={{col}}>No files available</span>
         {{/if}}
       {{/menu.trigger}}
       {{#menu.content width=2 as |content|}}

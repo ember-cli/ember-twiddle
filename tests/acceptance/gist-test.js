@@ -8,8 +8,9 @@ import { timeout } from 'ember-concurrency';
 const firstColumn = '[data-test-columns="1"]';
 const firstColumnActionsMenu = '[data-test-column-actions-menu="1"]';
 const firstFilePicker = '[data-test-column-files-menu="1"]';
+const firstFile = '.ember-basic-dropdown-content md-menu-item:nth-child(1) button';
 const secondFile = '.ember-basic-dropdown-content md-menu-item:nth-child(2) button';
-const anyFile = '.ember-basic-dropdown-content md-menu-item:nth-child(1) button';
+const anyFile = '.ember-basic-dropdown-content md-menu-item button';
 const sidebarMenuToggle = '.test-sidenav-toggle';
 const deleteAction = '[data-test-delete-file] button';
 const confirmDeleteAction = '[data-test-delete-file-confirm]';
@@ -21,6 +22,7 @@ const firstFilePickerFiles = '.ember-basic-dropdown-content md-menu-item button'
 const firstColumnTextarea = firstColumn + ' .CodeMirror textarea';
 const displayedFiles = '[data-test-column-files-menu] button .file-path';
 const addColumnButton = '[data-test-column-add-panel="1"] button';
+const displayedFilesNoneSelected = '[data-test-column-none-selected="1"]';
 
 let promptValue = '';
 
@@ -56,14 +58,14 @@ test('deleting a gist loaded in two columns', function(assert) {
     click(confirmDeleteAction);
     andThen(function() {
       assert.equal(find('.code .CodeMirror').length, 0, 'No code mirror editors active');
-      assert.equal(find('.dropdown-toggle:contains(No file selected)').length, 2, 'Shows message when no file is selected.');
-      assert.equal(find('.main-menu .test-remove-action').length, 0, 'There no longer is a selected file to delete');
+      assert.equal(find(displayedFilesNoneSelected).text(), 'No file selected', 'Shows message when no file is selected.');
     });
 
     // TODO: Replace brittle for loop test code with "while there are files left..."
+    // I don't think this test actually delets all the files it's meant to, since we don't handle the async nature here.
     for (var i = 0; i < 2; ++i) {
       click(firstFilePicker);
-      click(anyFile);
+      click(firstFile);
       click(firstColumnActionsMenu);
       click(deleteAction);
     }
