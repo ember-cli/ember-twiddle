@@ -97,8 +97,8 @@ export default Ember.Component.extend({
 
   actions: {
     handleSelectTreeNode(node) {
-      if (node.original.leaf) {
-        this.openFile(node.original.path);
+      if (node.leaf) {
+        this.openFile(node.path);
         return;
       }
       this.get('jsTreeActionReceiver').send('toggleNode', node.id);
