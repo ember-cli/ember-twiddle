@@ -186,14 +186,9 @@ test('can add component (js and hbs) using pod format', function(assert) {
 });
 
 test('component without hyphen fails', function(assert) {
-  assert.expect(2);
-
-  let called = false;
-  window.alert = function(msg){
-    called = true;
-    assert.equal(msg, ErrorMessages.componentsNeedHyphens);
-  };
-  promptValue = "components/some-dir/mycomp";
+  assert.expect(1);
+  // Overrides prompt result
+  promptValue = 'components/some-dir/mycomp';
 
   visit('/');
   click(firstColumnActionsMenu);
@@ -203,7 +198,7 @@ test('component without hyphen fails', function(assert) {
   click(componentMenuTrigger);
   click(addComponentAction);
   andThen(function() {
-    assert.ok(called, "alert was called");
+    assert.ok(find('.ember-notify').text().includes(ErrorMessages.componentsNeedHyphens), 'Shows no hyphen error');
   });
 });
 
