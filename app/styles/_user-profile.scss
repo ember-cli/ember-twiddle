@@ -19,11 +19,17 @@
         font-weight: 500;
       }
     }
-
-    .user-details {}
   }
 
   .profile-menu .md-button {
     text-align: left;
+  }
+
+  a {
+    color: $brand-primary;
+  }
+
+  .link-btn {
+    width: 95%;
   }
 }
