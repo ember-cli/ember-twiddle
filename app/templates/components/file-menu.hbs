@@ -58,7 +58,7 @@
       {{/content.menu-item}}
       {{#paper-menu position='target-right target' as |menu|}}
         {{#menu.trigger class='layout-column nested-menu-trigger'}}
-          {{#paper-button class='md-menu-origin'}}
+          {{#paper-button class='md-menu-origin' data-test-add-tests-menu-trigger=''}}
             Tests
             {{paper-icon 'expand more'}}
           {{/paper-button}}
@@ -82,7 +82,7 @@
           {{/paper-menu}}
           {{#paper-menu position='target-right target' as |menu|}}
             {{#menu.trigger class='layout-column nested-menu-trigger'}}
-              {{#paper-button class='md-menu-origin'}}
+              {{#paper-button class='md-menu-origin' data-test-add-unit-tests-menu-trigger=''}}
                 Unit
                 {{paper-icon 'expand more'}}
               {{/paper-button}}
@@ -91,7 +91,7 @@
               {{#content.menu-item class='layout-column' onClick=(action addUnitTestFile 'controller')}}
                 Controller
               {{/content.menu-item}}
-              {{#content.menu-item class='layout-column test-add-route-test-link' onClick=(action addUnitTestFile 'route')}}
+              {{#content.menu-item class='layout-column' onClick=(action addUnitTestFile 'route') data-test-add-route-unit-test=''}}
                 Route
               {{/content.menu-item}}
               {{#content.menu-item class='layout-column' onClick=(action addUnitTestFile 'service')}}

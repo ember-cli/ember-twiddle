@@ -7,7 +7,7 @@ import { timeout } from 'ember-concurrency';
 
 const firstColumn = '[data-test-columns="1"]';
 const firstColumnActionsMenu = '[data-test-column-actions-menu="1"]';
-const firstFilePicker = '[data-test-column-files-menu="1"]';
+const firstColumnFilesMenu = '[data-test-column-files-menu="1"]';
 const firstFile = '.ember-basic-dropdown-content md-menu-item:nth-child(1) button';
 const secondFile = '.ember-basic-dropdown-content md-menu-item:nth-child(2) button';
 const anyFile = '.ember-basic-dropdown-content md-menu-item button';
@@ -15,6 +15,8 @@ const sidebarMenuToggle = '.test-sidenav-toggle';
 const deleteAction = '[data-test-delete-file] button';
 const confirmDeleteAction = '[data-test-delete-file-confirm]';
 const addFileMenuTrigger = '[data-test-add-file-menu-trigger]';
+const addTestsMenuTrigger = '[data-test-add-tests-menu-trigger]';
+const addUnitTestsMenuTrigger = '[data-test-add-unit-tests-menu-trigger]';
 const addTemplateAction = '[data-test-add-template-action] button';
 const componentMenuTrigger = '[data-test-add-component-menu-trigger]';
 const addComponentAction = '[data-test-add-component-action] button';
@@ -51,7 +53,7 @@ test('deleting a gist loaded in two columns', function(assert) {
     assert.equal(currentURL(), '/', 'We are on the correct route');
     click(firstColumnActionsMenu);
     click(addColumnButton);
-    click(firstFilePicker);
+    click(firstColumnFilesMenu);
     click(secondFile);
     click(firstColumnActionsMenu);
     click(deleteAction);
@@ -64,14 +66,14 @@ test('deleting a gist loaded in two columns', function(assert) {
     // TODO: Replace brittle for loop test code with "while there are files left..."
     // I don't think this test actually delets all the files it's meant to, since we don't handle the async nature here.
     for (var i = 0; i < 2; ++i) {
-      click(firstFilePicker);
+      click(firstColumnFilesMenu);
       click(firstFile);
       click(firstColumnActionsMenu);
       click(deleteAction);
     }
 
     andThen(function() {
-      click(firstFilePicker);
+      click(firstColumnFilesMenu);
     });
 
     andThen(function() {
@@ -86,7 +88,7 @@ test('can add two templates with different names', function(assert) {
   let origFiles;
 
   andThen(function() {
-    click(firstFilePicker);
+    click(firstColumnFilesMenu);
   });
 
   andThen(function() {
@@ -96,7 +98,7 @@ test('can add two templates with different names', function(assert) {
     click(sidebarMenuToggle);
     click(addFileMenuTrigger);
     click(addTemplateAction);
-    click(firstFilePicker);
+    click(firstColumnFilesMenu);
   });
 
   let numFiles;
@@ -109,7 +111,7 @@ test('can add two templates with different names', function(assert) {
     click(sidebarMenuToggle);
     click(addFileMenuTrigger);
     click(addTemplateAction);
-    click(firstFilePicker);
+    click(firstColumnFilesMenu);
   });
 
   andThen(function() {
@@ -124,7 +126,7 @@ test('can add component (js and hbs)', function(assert) {
   let origFileCount;
   promptValue = "components/my-comp";
   visit('/');
-  click(firstFilePicker);
+  click(firstColumnFilesMenu);
   andThen(function(){
     origFileCount =  find(firstFilePickerFiles).length;
   });
@@ -136,7 +138,7 @@ test('can add component (js and hbs)', function(assert) {
   click(addFileMenuTrigger);
   click(componentMenuTrigger);
   click(addComponentAction);
-  click(firstFilePicker);
+  click(firstColumnFilesMenu);
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
@@ -157,7 +159,7 @@ test('can add component (js and hbs) using pod format', function(assert) {
   let origFileCount;
   promptValue = "my-comp";
   visit('/');
-  click(firstFilePicker);
+  click(firstColumnFilesMenu);
   andThen(function(){
     origFileCount =  find(firstFilePickerFiles).length;
   });
@@ -169,7 +171,7 @@ test('can add component (js and hbs) using pod format', function(assert) {
   click(addFileMenuTrigger);
   click(componentMenuTrigger);
   click(addComponentAction);
-  click(firstFilePicker);
+  click(firstColumnFilesMenu);
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
@@ -208,7 +210,7 @@ test('can add service', function(assert){
   let origFileCount;
   promptValue = "my-service/service.js";
   visit('/');
-  click(firstFilePicker);
+  click(firstColumnFilesMenu);
   andThen(function(){
     origFileCount = find(firstFilePickerFiles).length;
     click(anyFile);
@@ -219,7 +221,7 @@ test('can add service', function(assert){
   click(sidebarMenuToggle);
   click(addFileMenuTrigger);
   click('[data-test-add-service-action] button');
-  click(firstFilePicker);
+  click(firstColumnFilesMenu);
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
@@ -240,7 +242,7 @@ test('can add helper', function(assert) {
   let origFileCount;
   promptValue = 'helpers/my-helper.js';
   visit('/');
-  click(firstFilePicker);
+  click(firstColumnFilesMenu);
   andThen(function(){
     origFileCount = find(firstFilePickerFiles).length;
     click(anyFile);
@@ -251,7 +253,7 @@ test('can add helper', function(assert) {
   click(sidebarMenuToggle);
   click(addFileMenuTrigger);
   click('[data-test-add-helper-action] button');
-  click(firstFilePicker);
+  click(firstColumnFilesMenu);
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
@@ -272,6 +274,7 @@ test('can add unit test', function(assert) {
   let origFileCount;
   promptValue = 'tests/unit/routes/my-route-test.js';
   visit('/');
+  click(firstColumnFilesMenu);
   andThen(function(){
     origFileCount = find(firstFilePickerFiles).length;
   });
@@ -280,8 +283,10 @@ test('can add unit test', function(assert) {
   click(addColumnButton);
   click(sidebarMenuToggle);
   click(addFileMenuTrigger);
-  click('[data-test-add-route-action] button');
-  click(firstFilePicker);
+  click(addTestsMenuTrigger);
+  click(addUnitTestsMenuTrigger);
+  click('[data-test-add-route-unit-test] button');
+  click(firstColumnFilesMenu);
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
@@ -308,7 +313,7 @@ test('can add integration test', function(assert) {
 
   click(sidebarMenuToggle);
   click('.test-add-component-test-link');
-  click(firstFilePicker);
+  click(firstColumnFilesMenu);
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
@@ -334,7 +339,7 @@ test('can add acceptance test', function(assert) {
 
   click(sidebarMenuToggle);
   click('.test-add-acceptance-test-link');
-  click(firstFilePicker);
+  click(firstColumnFilesMenu);
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
@@ -397,7 +402,7 @@ test('editing a file updates gist', function(assert) {
   click(sidebarMenuToggle);
   click(addFileMenuTrigger);
   click(addTemplateAction);
-  click(firstFilePicker);
+  click(firstColumnFilesMenu);
 
   andThen(function() {
     assert.equal(find(firstColumnTextarea).val(), "");
