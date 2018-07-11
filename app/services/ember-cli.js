@@ -528,6 +528,8 @@ function babelOpts(moduleName) {
         loose: true,
         noInterop: true
       }],
+      'transform-decorators-legacy',
+      'transform-class-properties',
       hbsPlugin,
       newModulesPlugin
     ]
