@@ -59,7 +59,7 @@ test('An integration test for a component works', function(assert) {
       content: `import resolver from './helpers/resolver';
                 import {
                   setResolver
-                } from 'ember-qunit';
+                } from '@ember/test-helpers';
                 import jQuery from 'jquery';
 
                 setResolver(resolver);

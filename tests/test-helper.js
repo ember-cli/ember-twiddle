@@ -2,7 +2,7 @@ import Ember from "ember";
 import resolver from './helpers/resolver';
 import {
   setResolver
-} from 'ember-qunit';
+} from '@ember/test-helpers';
 import { start } from 'ember-cli-qunit';
 import createGist from "./helpers/create-gist";
 import runGist from "./helpers/run-gist";

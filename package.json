@@ -70,7 +70,7 @@
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^2.0.0",
     "ember-git-version": "~0.1.2",
-    "ember-inflector": "~2.0.0",
+    "ember-inflector": "^2.3.0",
     "ember-keyboard": "^3.0.2",
     "ember-load": "~0.0.12",
     "ember-load-initializers": "~1.0.0",
