@@ -93,10 +93,19 @@ export default ApplicationSerializer.extend({
   },
 
   serializeHasMany(snapshot, json, relationship) {
-    if(relationship.key === 'files') {
+    if (relationship.key === 'files') {
       this.serializeFiles(snapshot, json, relationship);
     }
     else {
+
+      // suppress stupid ED warning
+      // https://github.com/emberjs/data/issues/5100
+      if (relationship.key === 'history') {
+        if (snapshot.hasMany('history') === undefined) {
+          snapshot._hasManyRelationships.history = [];
+        }
+      }
+
       this._super(...arguments);
     }
   }
