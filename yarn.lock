@@ -4164,8 +4164,8 @@ ember-concurrency@~0.8.17:
     ember-maybe-import-regenerator "^0.1.5"
 
 ember-data@^2.18.0:
-  version "2.18.4"
-  resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-2.18.4.tgz#fa4162666769b930c0cc1ee6564dade3dba8d690"
+  version "2.18.5"
+  resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-2.18.5.tgz#cb6509161883db7be3a0859349142f664bb83495"
   dependencies:
     amd-name-resolver "0.0.7"
     babel-plugin-ember-modules-api-polyfill "^1.4.2"
