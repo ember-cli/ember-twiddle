@@ -7,7 +7,8 @@ import keyboardRegisterTestHelpers from './ember-keyboard/register-test-helpers'
 export default function startApp(attrs) {
   let application;
 
-  let attributes = assign({}, config.APP);
+  let attributes = assign({ rootElement: '#main-test-app' }, config.APP);
+  attributes.autoboot = true;
   attributes = assign(attributes, attrs); // use defaults, but you can override;
 
   run(() => {

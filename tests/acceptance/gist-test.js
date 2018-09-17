@@ -200,6 +200,32 @@ test('can add service', function(assert){
   });
 });
 
+test('can add route', function(assert){
+  assert.expect(3);
+
+  let origFileCount;
+  promptValue = "routes/my-route.js";
+  visit('/');
+  andThen(function(){
+    origFileCount = find(firstFilePickerFiles).length;
+  });
+
+  click(fileMenu);
+  click('.test-add-route-link');
+  click(firstFilePicker);
+
+  andThen(function() {
+    let numFiles = find(firstFilePickerFiles).length;
+    assert.equal(numFiles, origFileCount + 1, 'Added route file');
+
+    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    assert.equal(fileNames[3], promptValue, 'Added the file with the right name');
+
+    let columnFiles = findMapText(displayedFiles);
+    assert.ok(columnFiles.includes(promptValue), 'Added route is displayed');
+  });
+});
+
 test('can add helper', function(assert){
   assert.expect(3);
 
@@ -242,7 +268,7 @@ test('can add unit test', function(assert){
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
-    assert.equal(numFiles, origFileCount + 3, 'Added 3 test files');
+    assert.equal(numFiles, origFileCount + 2, 'Added 2 test files');
 
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
@@ -268,7 +294,7 @@ test('can add integration test', function(assert){
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
-    assert.equal(numFiles, origFileCount + 3, 'Added 3 test files');
+    assert.equal(numFiles, origFileCount + 2, 'Added 2 test files');
 
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
@@ -288,13 +314,14 @@ test('can add acceptance test', function(assert){
     origFileCount = find(firstFilePickerFiles).length;
   });
 
+  click("#live-reload");
   click(fileMenu);
   click('.test-add-acceptance-test-link');
   click(firstFilePicker);
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
-    assert.equal(numFiles, origFileCount + 6, 'Added 6 test files');
+    assert.equal(numFiles, origFileCount + 5, 'Added 5 test files');
 
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
@@ -415,7 +442,7 @@ test('own gist can be copied into a new one', function(assert) {
     assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
     assert.equal(find('.test-unsaved-indicator').length, 0, "Unsaved indicator does not appear when gist is copied");
     assert.equal(find('.test-copy-action').length, 0, "Menu item to copy gist is not shown anymore");
-    assert.equal(outputContents('div'), 'hello world!');
+    assert.equal(outputContents(), 'hello world!');
   });
 });
 
@@ -447,6 +474,6 @@ test('accessing /:gist/copy creates a new Twiddle with a copy of the gist', func
     assert.equal(currentURL(), '/');
     assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
     assert.equal(find('.test-unsaved-indicator').length, 0, "Unsaved indicator does not appear when gist is copied");
-    assert.equal(outputContents('div'), 'hello world!');
+    assert.equal(outputContents(), 'hello world!');
   });
 });

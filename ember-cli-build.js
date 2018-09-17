@@ -1,4 +1,3 @@
-/* global require, module, process */
 module.exports = function(defaults) {
   process.env.FASTBOOT_DISABLED = true;
 

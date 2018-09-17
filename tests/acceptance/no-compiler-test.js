@@ -19,8 +19,6 @@ test('Able to load a gist without a template compiler', function(assert) {
   runGist(files);
 
   andThen(function() {
-    const outputDiv = 'div';
-
-    assert.equal(outputContents(outputDiv), 'Hello, World!', 'Gist with no template compiler is displayed');
+    assert.equal(outputContents(), 'Hello, World!', 'Gist with no template compiler is displayed');
   });
 });

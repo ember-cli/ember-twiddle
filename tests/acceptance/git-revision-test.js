@@ -25,9 +25,7 @@ test('Able to load a previous revision of a gist', function(assert) {
   runRevision(files);
 
   andThen(function() {
-    const outputDiv = 'div';
-
-    assert.equal(outputContents(outputDiv), 'Hello, World!', 'Previous version of a gist is displayed');
+    assert.equal(outputContents(), 'Hello, World!', 'Previous version of a gist is displayed');
   });
 });
 
@@ -63,7 +61,7 @@ test('Able to copy a revision into new gist', function(assert) {
     assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
     assert.equal(find('.test-unsaved-indicator').length, 0, "Unsaved indicator does not appear when gist is copied");
     assert.equal(find('.test-copy-action').length, 0, "Menu item to copy gist is not shown anymore");
-    assert.equal(outputContents('div'), 'hello world!');
+    assert.equal(outputContents(), 'hello world!');
   });
 });
 
@@ -84,7 +82,7 @@ test('Able to go from current version to revision and back via the UI', function
   runGist(files);
 
   andThen(() => {
-    assert.equal(outputContents('div'), 'Hello, World!');
+    assert.equal(outputContents(), 'Hello, World!');
   });
 
   createGist({
@@ -107,7 +105,7 @@ test('Able to go from current version to revision and back via the UI', function
   });
 
   andThen(() => {
-    assert.equal(outputContents('div'), 'Hello, ...');
+    assert.equal(outputContents(), 'Hello, ...');
 
     click(".test-show-current-version");
     waitForUnloadedIFrame();
@@ -115,6 +113,6 @@ test('Able to go from current version to revision and back via the UI', function
   });
 
   andThen(() => {
-    assert.equal(outputContents('div'), 'Hello, World!');
+    assert.equal(outputContents(), 'Hello, World!');
   });
 });

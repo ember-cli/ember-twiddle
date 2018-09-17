@@ -5,10 +5,6 @@ export default Ember.Mixin.create({
     this._ensureExists('tests/test-helper.js', 'test-helper');
   },
 
-  ensureTestResolverExists() {
-    this._ensureExists('tests/helpers/resolver.js', 'test-resolver');
-  },
-
   ensureTestStartAppHelperExists() {
     this._ensureExists('tests/helpers/start-app.js', 'test-start-app');
   },
@@ -43,7 +39,6 @@ export default Ember.Mixin.create({
 
   createUnitTestFile(type) {
     this.ensureTestHelperExists();
-    this.ensureTestResolverExists();
     const blueprint = type + "-" + 'test';
     const { filePath, name } = this.calculateFileVarsForTests(blueprint);
 
@@ -60,7 +55,6 @@ export default Ember.Mixin.create({
 
   createIntegrationTestFile(type) {
     this.ensureTestHelperExists();
-    this.ensureTestResolverExists();
     const blueprint = type + '-test';
     const { filePath, name } = this.calculateFileVarsForTests(blueprint);
 
@@ -78,7 +72,6 @@ export default Ember.Mixin.create({
 
   createAcceptanceTestFile() {
     this.ensureTestHelperExists();
-    this.ensureTestResolverExists();
     this.ensureTestStartAppHelperExists();
     this.ensureTestDestroyAppHelperExists();
     this.ensureTestModuleForAcceptanceHelperExists();

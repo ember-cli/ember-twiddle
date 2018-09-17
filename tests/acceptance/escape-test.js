@@ -15,8 +15,6 @@ test('Able to escape moustache tag', function(assert) {
   runGist(files);
 
   andThen(function() {
-    const outputDiv = 'div';
-
-    assert.equal(outputContents(outputDiv), '{{Moustache}} $', 'Moustache tag is escaped');
+    assert.equal(outputContents(), '{{Moustache}} $', 'Moustache tag is escaped');
   });
 });

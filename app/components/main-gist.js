@@ -260,7 +260,6 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
 
     switchTests(testsEnabled) {
       this.ensureTestHelperExists();
-      this.ensureTestResolverExists();
       this.ensureTestStartAppHelperExists();
       this.ensureTestDestroyAppHelperExists();
 
