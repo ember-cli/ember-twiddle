@@ -200,6 +200,32 @@ test('can add service', function(assert){
   });
 });
 
+test('can add route', function(assert){
+  assert.expect(3);
+
+  let origFileCount;
+  promptValue = "routes/my-route.js";
+  visit('/');
+  andThen(function(){
+    origFileCount = find(firstFilePickerFiles).length;
+  });
+
+  click(fileMenu);
+  click('.test-add-route-link');
+  click(firstFilePicker);
+
+  andThen(function() {
+    let numFiles = find(firstFilePickerFiles).length;
+    assert.equal(numFiles, origFileCount + 1, 'Added route file');
+
+    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    assert.equal(fileNames[3], promptValue, 'Added the file with the right name');
+
+    let columnFiles = findMapText(displayedFiles);
+    assert.ok(columnFiles.includes(promptValue), 'Added route is displayed');
+  });
+});
+
 test('can add helper', function(assert){
   assert.expect(3);
 
@@ -288,6 +314,7 @@ test('can add acceptance test', function(assert){
     origFileCount = find(firstFilePickerFiles).length;
   });
 
+  click("#live-reload");
   click(fileMenu);
   click('.test-add-acceptance-test-link');
   click(firstFilePicker);
