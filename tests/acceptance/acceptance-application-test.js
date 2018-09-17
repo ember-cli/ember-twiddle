@@ -56,30 +56,15 @@ test('An acceptance test for an application works', function(assert) {
     },
     {
       filename: "tests/test-helper.js",
-      content: `import resolver from './helpers/resolver';
-                import {
-                  setResolver
-                } from '@ember/test-helpers';
+      content: `import Application from '../app';
+                import config from '../config/environment';
+                import { setApplication } from '@ember/test-helpers';
                 import jQuery from 'jquery';
 
-                setResolver(resolver);
+                setApplication(Application.create(config.APP));
 
                 window.testModule = 'twiddle/tests/acceptance/application-test';
                 `
-    },
-    {
-      filename: "tests/helpers/resolver.js",
-      content: `import Resolver from '../../resolver';
-                import config from '../../config/environment';
-
-                const resolver = Resolver.create();
-
-                resolver.namespace = {
-                  modulePrefix: config.modulePrefix,
-                  podModulePrefix: config.podModulePrefix
-                };
-
-                export default resolver;`
     },
     {
       filename: "tests/helpers/module-for-acceptance.js",
@@ -120,6 +105,7 @@ test('An acceptance test for an application works', function(assert) {
                   let application;
 
                   let attributes = assign({rootElement: "#test-root"}, config.APP);
+                  attributes.autoboot = true;
                   attributes = assign(attributes, attrs); // use defaults, but you can override;
 
                   run(() => {

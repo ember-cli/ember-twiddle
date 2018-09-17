@@ -242,7 +242,7 @@ test('can add unit test', function(assert){
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
-    assert.equal(numFiles, origFileCount + 3, 'Added 3 test files');
+    assert.equal(numFiles, origFileCount + 2, 'Added 2 test files');
 
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
@@ -268,7 +268,7 @@ test('can add integration test', function(assert){
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
-    assert.equal(numFiles, origFileCount + 3, 'Added 3 test files');
+    assert.equal(numFiles, origFileCount + 2, 'Added 2 test files');
 
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
@@ -294,7 +294,7 @@ test('can add acceptance test', function(assert){
 
   andThen(function() {
     let numFiles = find(firstFilePickerFiles).length;
-    assert.equal(numFiles, origFileCount + 6, 'Added 6 test files');
+    assert.equal(numFiles, origFileCount + 5, 'Added 5 test files');
 
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');

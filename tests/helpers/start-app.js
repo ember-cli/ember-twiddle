@@ -8,6 +8,7 @@ export default function startApp(attrs) {
   let application;
 
   let attributes = assign({}, config.APP);
+  attributes.autoboot = true;
   attributes = assign(attributes, attrs); // use defaults, but you can override;
 
   run(() => {

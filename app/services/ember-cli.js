@@ -108,10 +108,6 @@ const availableBlueprints = {
     blueprint: 'test-helper',
     filePath: 'tests/test-helper.js'
   },
-  'test-resolver': {
-    blueprint: 'test-resolver',
-    filePath: 'tests/helpers/resolver.js'
-  },
   'test-start-app': {
     blueprint: 'test-start-app',
     filePath: 'tests/helpers/start-app.js'
@@ -284,9 +280,7 @@ export default Ember.Service.extend({
 
     let contentForBody = `${depScriptTags}\n${appScriptTag}\n${testStuff}\n`;
 
-    if (!testingEnabled(twiddleJSON) || legacyTesting(twiddleJSON)) {
-      contentForBody += '<div id="root"></div>';
-    }
+    contentForBody += '<div id="root"></div>';
 
     index = index.replace('{{content-for \'body\'}}', contentForBody);
 
