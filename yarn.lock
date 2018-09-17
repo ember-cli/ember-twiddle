@@ -3836,7 +3836,7 @@ ember-cli-lodash-subset@^1.0.7:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/ember-cli-lodash-subset/-/ember-cli-lodash-subset-1.0.12.tgz#af2e77eba5dcb0d77f3308d3a6fd7d3450f6e537"
 
-ember-cli-mirage@~0.4.4:
+ember-cli-mirage@~0.4.9:
   version "0.4.9"
   resolved "https://registry.yarnpkg.com/ember-cli-mirage/-/ember-cli-mirage-0.4.9.tgz#c49bfe875d0cdf88c85a6ee55103d1980175b914"
   dependencies:

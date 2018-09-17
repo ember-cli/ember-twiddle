@@ -60,8 +60,10 @@ test('An acceptance test for an application works', function(assert) {
                 import config from '../config/environment';
                 import { setApplication } from '@ember/test-helpers';
                 import jQuery from 'jquery';
+                import { assign } from '@ember/polyfills';
 
-                setApplication(Application.create(config.APP));
+                let attributes = assign({ rootElement: '#main' }, config.APP);
+                setApplication(Application.create(attributes));
 
                 window.testModule = 'twiddle/tests/acceptance/application-test';
                 `

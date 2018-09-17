@@ -78,9 +78,7 @@ test('Able to run a gist using an external dependency', function(assert) {
   runGist(files);
 
   andThen(function() {
-    const outputDiv = 'div';
-
-    assert.equal(outputContents(outputDiv), '3.10.0', 'Gist including an external dependency can make use of it');
+    assert.equal(outputContents(), '3.10.0', 'Gist including an external dependency can make use of it');
   });
 });
 

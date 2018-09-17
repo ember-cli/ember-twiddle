@@ -29,8 +29,6 @@ test('Able to import a mixin', function(assert) {
   runGist(files);
 
   andThen(function() {
-    const outputDiv = 'div';
-
-    assert.equal(outputContents(outputDiv), 'Welcome to Ember Twiddle');
+    assert.equal(outputContents(), 'Welcome to Ember Twiddle');
   });
 });

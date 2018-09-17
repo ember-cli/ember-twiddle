@@ -28,8 +28,6 @@ test('Able to run a gist using an older version of Ember', function(assert) {
   runGist(files);
 
   andThen(function() {
-    const outputDiv = 'div';
-
-    assert.equal(outputContents(outputDiv), 'Hello, World!', 'Gist running Ember 1.12.1 is displayed');
+    assert.equal(outputContents(), 'Hello, World!', 'Gist running Ember 1.12.1 is displayed');
   });
 });

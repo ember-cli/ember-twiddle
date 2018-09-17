@@ -415,7 +415,7 @@ test('own gist can be copied into a new one', function(assert) {
     assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
     assert.equal(find('.test-unsaved-indicator').length, 0, "Unsaved indicator does not appear when gist is copied");
     assert.equal(find('.test-copy-action').length, 0, "Menu item to copy gist is not shown anymore");
-    assert.equal(outputContents('div'), 'hello world!');
+    assert.equal(outputContents(), 'hello world!');
   });
 });
 
@@ -447,6 +447,6 @@ test('accessing /:gist/copy creates a new Twiddle with a copy of the gist', func
     assert.equal(currentURL(), '/');
     assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
     assert.equal(find('.test-unsaved-indicator').length, 0, "Unsaved indicator does not appear when gist is copied");
-    assert.equal(outputContents('div'), 'hello world!');
+    assert.equal(outputContents(), 'hello world!');
   });
 });

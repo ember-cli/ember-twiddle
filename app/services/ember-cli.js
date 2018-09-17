@@ -280,7 +280,9 @@ export default Ember.Service.extend({
 
     let contentForBody = `${depScriptTags}\n${appScriptTag}\n${testStuff}\n`;
 
-    contentForBody += '<div id="root"></div>';
+    if (!testingEnabled(twiddleJSON) || legacyTesting(twiddleJSON)) {
+      contentForBody += '<div id="root"></div>';
+    }
 
     index = index.replace('{{content-for \'body\'}}', contentForBody);
 
