@@ -304,7 +304,7 @@ export default Ember.Service.extend({
     const isTestingEnabled = testingEnabled(twiddleJSON);
 
     if (testing && !isTestingEnabled) {
-      depScriptTags += `<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/qunit/2.3.2/qunit.js"></script>`;
+      depScriptTags += `<script type="text/javascript" src="https://code.jquery.com/qunit/qunit-2.6.1.js"></script>`;
     }
 
     depScriptTags += `<script type="text/javascript">EmberENV = ${JSON.stringify(EmberENV)};</script>`;

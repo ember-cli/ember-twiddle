@@ -17,6 +17,7 @@ Router.map(function() {
     });
   });
   this.route('twiddles');
+  this.route('catchall', { path: '*:' });
 });
 
 export default Router;
