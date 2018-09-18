@@ -526,7 +526,7 @@ function babelOpts(moduleName) {
       }],
       'transform-decorators-legacy',
       'transform-class-properties',
-      "transform-object-rest-spread",
+      'transform-object-rest-spread',
       hbsPlugin,
       newModulesPlugin
     ]
