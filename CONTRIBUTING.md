@@ -24,9 +24,8 @@ You will need the following things properly installed on your computer.
   - Go to github.com
   - click top right portrait
   - click on 'Settings'
-  - select 'Applications'
-  - click the 'Developer Applications' tab
-  - click 'Register New Appliction' button
+  - select 'Developer settings'
+  - click on 'New OAuth App' button
   - name it whatever you want (ember-twiddle-dev if you can't think of anything)
   - set the homepage url to any valid URL (http://google.com, since it doesn't actually matter)
   - set the 'Authorization callback URL' to: http://localhost:4200/
