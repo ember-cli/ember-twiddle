@@ -1,6 +1,6 @@
 {
   "name": "ember-twiddle",
-  "version": "0.15.0",
+  "version": "0.15.1",
   "description": "https://ember-twiddle.com",
   "private": true,
   "directories": {
@@ -55,7 +55,7 @@
     "ember-cli-jstree": "^1.0.12",
     "ember-cli-legacy-blueprints": "~0.2.1",
     "ember-cli-mirage": "~0.4.9",
-    "ember-cli-moment-shim": "^2.2.1",
+    "ember-cli-moment-shim": "^3.7.1",
     "ember-cli-node-assets": "~0.2.2",
     "ember-cli-preprocess-registry": "^3.1.1",
     "ember-cli-qunit": "~4.3.0",
@@ -82,7 +82,6 @@
     "ember-rfc176-data": "~0.3.2",
     "ember-route-action-helper": "^2.0.6",
     "ember-source": "~2.18.0",
-    "ember-test-helpers": "~0.6.3",
     "eslint-plugin-ember": "^5.1.0",
     "ivy-codemirror": "^2.1.0",
     "loader.js": "^4.7.0",
