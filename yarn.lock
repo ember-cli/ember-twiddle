@@ -1981,7 +1981,7 @@ broccoli-sri-hash@^2.1.0:
     sri-toolbox "^0.2.0"
     symlink-or-copy "^1.0.1"
 
-broccoli-stew@^1.0.0, broccoli-stew@^1.2.0, broccoli-stew@^1.3.3, broccoli-stew@^1.5.0:
+broccoli-stew@^1.2.0, broccoli-stew@^1.3.3, broccoli-stew@^1.5.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/broccoli-stew/-/broccoli-stew-1.6.0.tgz#01f6d92806ed6679ddbe48d405066a0e164dfbef"
   dependencies:
@@ -3785,6 +3785,10 @@ ember-cli-htmlbars@^2.0.1:
     json-stable-stringify "^1.0.0"
     strip-bom "^3.0.0"
 
+ember-cli-import-polyfill@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-import-polyfill/-/ember-cli-import-polyfill-0.2.0.tgz#c1a08a8affb45c97b675926272fe78cf4ca166f2"
+
 ember-cli-inject-live-reload@^1.7.0:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/ember-cli-inject-live-reload/-/ember-cli-inject-live-reload-1.8.2.tgz#29f875ad921e9a1dec65d2d75018891972d240bc"
@@ -3856,19 +3860,20 @@ ember-cli-mirage@~0.4.9:
     pretender "^1.6.1"
     route-recognizer "^0.2.3"
 
-ember-cli-moment-shim@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-moment-shim/-/ember-cli-moment-shim-2.2.1.tgz#78870872a626177d0b04223c9eb6be0729590e61"
+ember-cli-moment-shim@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-moment-shim/-/ember-cli-moment-shim-3.7.1.tgz#3ad691c5027c1f38a4890fe47d74b5224cc98e32"
   dependencies:
-    broccoli-funnel "^1.0.0"
-    broccoli-merge-trees "^1.0.0"
-    broccoli-stew "^1.0.0"
-    chalk "^1.1.1"
-    ember-cli-babel "^5.0.0"
-    exists-sync "0.0.3"
-    lodash.defaults "^4.1.0"
-    moment "^2.13.0"
-    moment-timezone "^0.5.0"
+    broccoli-funnel "^2.0.0"
+    broccoli-merge-trees "^2.0.0"
+    broccoli-source "^1.1.0"
+    broccoli-stew "^1.5.0"
+    chalk "^1.1.3"
+    ember-cli-babel "^6.6.0"
+    ember-cli-import-polyfill "^0.2.0"
+    lodash.defaults "^4.2.0"
+    moment "^2.19.3"
+    moment-timezone "^0.5.13"
 
 ember-cli-node-assets@^0.1.4:
   version "0.1.6"
@@ -4331,10 +4336,6 @@ ember-source@~2.18.0:
     inflection "^1.12.0"
     jquery "^3.2.1"
     resolve "^1.3.3"
-
-ember-test-helpers@~0.6.3:
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/ember-test-helpers/-/ember-test-helpers-0.6.3.tgz#f864cdf6f4e75f3f8768d6537785b5ab6e82d907"
 
 ember-try-config@^2.2.0:
   version "2.2.0"
@@ -7327,7 +7328,7 @@ lodash.debounce@^3.1.1:
   dependencies:
     lodash._getnative "^3.0.0"
 
-lodash.defaults@^4.1.0:
+lodash.defaults@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
 
@@ -8070,13 +8071,13 @@ moment-timezone@^0.3.0:
   dependencies:
     moment ">= 2.6.0"
 
-moment-timezone@^0.5.0, moment-timezone@~0.5.14:
+moment-timezone@^0.5.13, moment-timezone@~0.5.14:
   version "0.5.21"
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.21.tgz#3cba247d84492174dbf71de2a9848fa13207b845"
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.6.0", "moment@>= 2.9.0", moment@^2.13.0, moment@^2.17.1, moment@^2.18.0, moment@^2.22.0:
+"moment@>= 2.6.0", "moment@>= 2.9.0", moment@^2.17.1, moment@^2.18.0, moment@^2.19.3, moment@^2.22.0:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
