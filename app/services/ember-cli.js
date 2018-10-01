@@ -362,13 +362,11 @@ export default Ember.Service.extend({
     depScriptTags += `<script type="text/javascript" src="${window.assetMap.twiddleDeps}"></script>`;
 
     if (isTestingEnabled) {
-      const testJSFiles = ['testLoader', 'testem'];
+      const testJSFiles = ['testLoader', 'testSupport'];
 
       testJSFiles.forEach(jsFile => {
         depScriptTags += `<script type="text/javascript" src="${window.assetMap[jsFile]}"></script>`;
       });
-
-      depScriptTags += `<script type="text/javascript" src="${window.assetMap.testSupport}"></script>`;
 
       depCssLinkTags += `<link rel="stylesheet" type="text/css" href="${window.assetMap.testSupportCss}">`;
 
