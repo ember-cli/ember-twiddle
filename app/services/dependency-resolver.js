@@ -37,15 +37,6 @@ const CDN_MAP = {
   }
 };
 
-const CHANNEL_FILENAME_MAP = {
-  'ember': 'ember.debug.js',
-  'ember-template-compiler': 'ember-template-compiler.js',
-  'ember-testing': 'ember-testing.js',
-  'ember-data': 'ember-data.js'
-};
-
-const CHANNELS = ['alpha', 'canary', 'beta', 'release'];
-
 const POLL_INTERVAL = 10000;
 
 export default Ember.Service.extend({
@@ -145,17 +136,7 @@ export default Ember.Service.extend({
       return this.cdnURL(name, value);
     }
 
-    if (CHANNELS.indexOf(value) !== -1) {
-      return this.channelURL(name, value);
-    }
-
     return value;
-  },
-
-  channelURL(name, channel) {
-    let fileName = CHANNEL_FILENAME_MAP[name];
-
-    return `//s3.amazonaws.com/builds.emberjs.com/${channel}/${fileName}`;
   },
 
   cdnURL(name, version) {
@@ -189,10 +170,10 @@ export default Ember.Service.extend({
   },
 
   emberVersions: computed(function() {
-    return [...CHANNELS, ...EMBER_VERSIONS];
+    return EMBER_VERSIONS;
   }),
 
   emberDataVersions: computed(function() {
-    return [...CHANNELS, ...EMBER_DATA_VERSIONS];
+    return EMBER_DATA_VERSIONS;
   })
 });
