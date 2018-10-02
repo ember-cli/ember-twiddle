@@ -2,7 +2,7 @@
   "name": "ember-twiddle",
   "version": "0.15.1",
   "dependencies": {
-    "jquery": "1.11.3",
+    "jquery": "3.3.1",
     "bootstrap-sass": "~3.3.5",
     "dom-ruler": "~0.2.4",
     "lodash": "~3.10.1",

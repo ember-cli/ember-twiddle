@@ -115,6 +115,10 @@ module.exports = function(defaults) {
   app.import('vendor/hint.css');
   app.import('node_modules/compare-versions/index.js');
   app.import('vendor/shims/compare-versions.js');
+  app.import('node_modules/js-untar/build/dist/untar.js');
+  app.import('vendor/shims/untar.js');
+  app.import('node_modules/pako/dist/pako.js');
+  app.import('vendor/shims/pako.js');
 
   const nodeBuiltins = require('rollup-plugin-node-builtins');
   const json = require('rollup-plugin-json');

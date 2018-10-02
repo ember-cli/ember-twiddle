@@ -319,8 +319,7 @@ export default Ember.Service.extend({
       } else if (extension === '.js') {
         depScriptTags += `<script type="text/javascript" src="${dep}"></script>`;
       } else {
-        // eslint-disable-next-line no-console
-        console.warn("Could not determine extension of " + dep);
+        depScriptTags += `<script type="text/javascript">${dep}</script>`;
       }
     });
 

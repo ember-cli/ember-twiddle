@@ -3,6 +3,9 @@ import Ember from 'ember';
 import config from '../config/environment';
 import { task, timeout } from 'ember-concurrency';
 import compareVersions from 'compare-versions';
+import { resolve, hash, Promise } from 'rsvp';
+import untar from 'untar';
+import pako from 'pako';
 
 const { computed, deprecate, inject, RSVP, testing } = Ember;
 
@@ -10,6 +13,9 @@ const EMBER_VERSIONS = ['3.4.3', '3.3.2', '3.2.2', '3.1.4', '3.0.0', '2.18.2', '
 const EMBER_DATA_VERSIONS = ['3.4.2', '3.3.2', '3.2.2', '3.1.2', '3.0.4', '2.18.5', '2.17.1', '2.16.4', '2.15.3', '2.14.10', '2.13.2', '2.12.2'];
 
 const VERSION_REGEX = /^\d+.\d+.\d+(-beta\.\d+)?$/;
+
+const EMBER_SOURCE_CHANNEL_URL_HOST = 'https://s3.amazonaws.com';
+const EMBER_SOURCE_CHANNEL_URL_PATH = 'builds.emberjs.com';
 
 const CDN_MAP = {
   'ember': {
@@ -44,7 +50,7 @@ const CHANNEL_FILENAME_MAP = {
   'ember-data': 'ember-data.js'
 };
 
-const CHANNELS = ['alpha', 'canary', 'beta', 'release'];
+const CHANNELS = ['canary', 'beta', 'release'];
 
 const POLL_INTERVAL = 10000;
 
@@ -57,6 +63,7 @@ export default Ember.Service.extend({
 
       dependencies[name] = this.resolveDependency(name, value);
     });
+    return hash(dependencies);
   },
 
   resolveAddons(addons, dependencies, emberVersion) {
@@ -136,26 +143,69 @@ export default Ember.Service.extend({
         return this.resolveEmberDependency(name, value);
 
       default:
-        return value;
+        return resolve(value);
     }
   },
 
   resolveEmberDependency(name, value) {
     if (VERSION_REGEX.test(value)) {
-      return this.cdnURL(name, value);
+      return resolve(this.cdnURL(name, value));
     }
 
     if (CHANNELS.indexOf(value) !== -1) {
       return this.channelURL(name, value);
     }
 
-    return value;
+    return resolve(value);
   },
 
-  channelURL(name, channel) {
-    let fileName = CHANNEL_FILENAME_MAP[name];
+  cache: null,
 
-    return `//s3.amazonaws.com/builds.emberjs.com/${channel}/${fileName}`;
+  async channelURL(name, channel) {
+    let host = EMBER_SOURCE_CHANNEL_URL_HOST;
+    let path = EMBER_SOURCE_CHANNEL_URL_PATH;
+    let fileName = CHANNEL_FILENAME_MAP[name];
+    let cache = this.get('cache');
+    let files;
+
+    if (!cache[channel]) {
+      let response = await Ember.$.getJSON(`${host}/${path}/${channel}.json`);
+      let tgzFile = await this.getTgzFile(`${host}/${path}${response.assetPath}`);
+      let tarFile = await pako.inflate(tgzFile);
+      files = await untar(tarFile.buffer);
+      cache[channel] = files;
+    } else {
+      files = cache[channel];
+    }
+    let file = files.findBy('name', `package/dist/${fileName}`);
+    let data = await this.getBlobAsString(file.blob);
+    data = data.replace(/<\//g, '<\\/'); // escape </script>
+    return data;
+  },
+
+  async getTgzFile(url) {
+    return new Promise(resolve => {
+      let req = new XMLHttpRequest();
+      req.open("GET", url, true);
+      req.responseType = "arraybuffer";
+      req.onload = function() {
+        let arrayBuffer = req.response;
+        let byteArray = new Uint8Array(arrayBuffer);
+        resolve(byteArray);
+      };
+      req.send();
+    });
+  },
+
+  async getBlobAsString(blob) {
+    let reader = new FileReader();
+    return new Promise(resolve => {
+      reader.addEventListener('loadend', e => {
+        let text = e.srcElement.result;
+        resolve(text);
+      });
+      reader.readAsText(blob);
+    });
   },
 
   cdnURL(name, version) {
@@ -194,5 +244,10 @@ export default Ember.Service.extend({
 
   emberDataVersions: computed(function() {
     return [...CHANNELS, ...EMBER_DATA_VERSIONS];
-  })
+  }),
+
+  init() {
+    this._super(...arguments);
+    this.set('cache', {});
+  }
 });

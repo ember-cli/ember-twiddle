@@ -43,32 +43,31 @@ export default Ember.Service.extend({
     });
   },
 
-  getTwiddleJson(gist) {
-    return this._getTwiddleJson(gist).then((twiddleJson) => {
-      // Fill in any missing required dependencies
-      const dependencies = JSON.parse(blueprints['twiddle.json']).dependencies;
-      requiredDependencies.forEach(function(dep) {
-        if (!twiddleJson.dependencies[dep] && dependencies[dep]) {
-          if (dependentDependencies.includes(dep)) {
-            twiddleJson.dependencies[dep] = twiddleJson.dependencies['ember'].replace('ember.debug.js', dep + '.js');
-          } else {
-            twiddleJson.dependencies[dep] = dependencies[dep];
-          }
+  async getTwiddleJson(gist) {
+    let twiddleJson = await this._getTwiddleJson(gist);
+    // Fill in any missing required dependencies
+    const dependencies = JSON.parse(blueprints['twiddle.json']).dependencies;
+    requiredDependencies.forEach(function(dep) {
+      if (!twiddleJson.dependencies[dep] && dependencies[dep]) {
+        if (dependentDependencies.includes(dep)) {
+          twiddleJson.dependencies[dep] = twiddleJson.dependencies['ember'].replace('ember.debug.js', dep + '.js');
+        } else {
+          twiddleJson.dependencies[dep] = dependencies[dep];
         }
-      });
-
-      twiddleJson = this._dedupEmberData(twiddleJson);
-
-      const dependencyResolver = this.get('dependencyResolver');
-      const emberVersion = twiddleJson.dependencies.ember;
-      dependencyResolver.resolveDependencies(twiddleJson.dependencies);
-      if ('addons' in twiddleJson) {
-        return dependencyResolver.resolveAddons(twiddleJson.addons, twiddleJson.dependencies, emberVersion)
-          .then(() => twiddleJson);
       }
-
-      return twiddleJson;
     });
+
+    twiddleJson = this._dedupEmberData(twiddleJson);
+
+    const dependencyResolver = this.get('dependencyResolver');
+    const emberVersion = twiddleJson.dependencies.ember;
+    twiddleJson.dependencies = await dependencyResolver.resolveDependencies(twiddleJson.dependencies);
+    if ('addons' in twiddleJson) {
+      return dependencyResolver.resolveAddons(twiddleJson.addons, twiddleJson.dependencies, emberVersion)
+        .then(() => twiddleJson);
+    }
+
+    return twiddleJson;
   },
 
   _updateTwiddleJson(gist, updateFn) {
