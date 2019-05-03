@@ -2,7 +2,7 @@ import Ember from "ember";
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('user-profil-link', 'Integration | Component | user profil link', {
+moduleForComponent('user-profile-link', 'Integration | Component | user profile link', {
   integration: true
 });
 
@@ -14,7 +14,7 @@ test('it renders', function(assert) {
     htmlUrl: 'https://github.com/octocat'
   }));
 
-  this.render(hbs`{{user-profil-link user=user}}`);
+  this.render(hbs`{{user-profile-link user=user}}`);
 
   assert.equal(this.$().text().trim(), 'octocat');
 
