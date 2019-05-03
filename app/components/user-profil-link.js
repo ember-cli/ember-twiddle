@@ -5,6 +5,6 @@ export default Component.extend({
   tagName: 'a',
   classNames: ['user-link'],
   attributeBindings: ['href', 'target'],
-  target: 'blank',
+  target: '_blank',
   href: alias('user.htmlUrl'),
 });
