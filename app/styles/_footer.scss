@@ -1,0 +1,54 @@
+footer {
+
+  height: $footer-height;
+  line-height: $footer-height;
+
+  @media (min-width: $screen-md-min) {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+    border-top: $footer-border;
+    text-align: right;
+  }
+
+  @media (max-width: $screen-md-min) {
+    margin-left: -15px;
+    margin-right: -15px;
+    border-bottom: $footer-border;
+    position: relative;
+    z-index: 100;
+    opacity: 1;
+    text-align: center;
+  }
+  color: #666;
+  background: $footer-bg;
+  padding: 0 1.5rem 0;
+
+  a {
+    color: #666;
+    cursor: pointer;
+
+    &:hover {
+      border-bottom: dotted 1px;
+      text-decoration: none;
+    }
+  }
+
+  .user-link {
+    text-transform: uppercase;
+    font-weight: 500;
+
+    img {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      margin-right: 2px;
+      margin-top: -2px;
+    }
+  }
+
+  .gist-link {
+    font-weight: 500;
+  }
+}

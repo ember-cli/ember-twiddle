@@ -1,0 +1,14 @@
+{{#if owner}}
+  Author: {{user-profile-link user=owner}}
+{{else}}
+  No author (new twiddle)
+{{/if}}
+
+{{#if originalGist}}
+  |
+  Fork from: {{user-profile-link user=originalGist.owner}}'s gist
+  |
+  {{#link-to 'gist.edit' originalGist.id class="gist-link" title="Open original gist in a new ember-twiddle" target="_blank"}}
+    <span class="glyphicon glyphicon-new-window"></span>&nbsp;Open original gist
+  {{/link-to}}
+{{/if}}

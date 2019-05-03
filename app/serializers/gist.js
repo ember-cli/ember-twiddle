@@ -3,7 +3,9 @@ import ApplicationSerializer from './application';
 export default ApplicationSerializer.extend({
   attrs: {
     files: { embedded: 'always' },
-    history: { embedded: 'always', deserialize: 'records', serialize: false }
+    history: { embedded: 'always', deserialize: 'records', serialize: false },
+    owner: { embedded: 'always', deserialize: 'records', serialize: false },
+    forkOf: { embedded: 'always', deserialize: 'record', serialize: false }
   },
 
   init() {
@@ -28,6 +30,10 @@ export default ApplicationSerializer.extend({
     this.normalizeHistory(payload);
     if (payload.owner) {
       payload.owner_login = payload.owner.login;
+    }
+    //Normalise files entries for fork_of gist
+    if (payload.fork_of) {
+      this.normalizeFiles(payload.fork_of, isArray);
     }
   },
 
