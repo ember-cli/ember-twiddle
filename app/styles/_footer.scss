@@ -25,11 +25,11 @@ footer {
   background: $footer-bg;
   padding: 0 1.5rem 0;
 
-  a{
+  a {
     color: #666;
     cursor: pointer;
 
-    &:hover{
+    &:hover {
       border-bottom: dotted 1px;
       text-decoration: none;
     }
@@ -48,7 +48,7 @@ footer {
     }
   }
 
-  .gist-link{
+  .gist-link {
     font-weight: 500;
   }
 }
