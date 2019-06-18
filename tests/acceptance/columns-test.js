@@ -29,7 +29,7 @@ test('you can add and remove columns', function(assert) {
   andThen(function() {
     assert.ok(urlHas('numColumns=2'), 'We are on the correct route for 2 columns');
     assert.equal(find(columns).length, 2, 'There are now 2 columns');
-    assert.ok(urlHas("openFiles=controllers.application.js,templates.application.hbs"),
+    assert.ok(urlHas("openFiles=controllers.application\\.js,templates.application\\.hbs"),
       "URL contains correct openFiles query parameter 1");
 
     find(plusGlyph).click();
@@ -38,7 +38,7 @@ test('you can add and remove columns', function(assert) {
   andThen(function() {
     assert.ok(urlHas('numColumns=3'), 'We are on the correct route for 3 columns');
     assert.equal(find(columns).length, 3, 'There are now 3 columns');
-    assert.ok(urlHas("openFiles=controllers.application.js,templates.application.hbs,twiddle.json"),
+    assert.ok(urlHas("openFiles=controllers.application\\.js,templates.application\\.hbs,twiddle\\.json"),
       "URL contains correct openFiles query parameter 1");
 
     find(removeGlyph).click();
@@ -47,7 +47,7 @@ test('you can add and remove columns', function(assert) {
   andThen(function() {
     assert.ok(urlHas('numColumns=2'), 'We are on the correct route for 2 columns');
     assert.equal(find(columns).length, 2, 'There are now 2 columns');
-    assert.ok(urlHas("openFiles=templates.application.hbs,twiddle.json"),
+    assert.ok(urlHas("openFiles=templates.application\\.hbs,twiddle\\.json"),
       "URL contains correct openFiles query parameter 2");
 
     find(removeGlyph).click();
@@ -56,7 +56,7 @@ test('you can add and remove columns', function(assert) {
   andThen(function() {
     assert.ok(!urlHas('numColumns'), 'We are on the correct route for 1 columns');
     assert.equal(find(columns).length, 1, 'There are now 1 columns');
-    assert.ok(urlHas("openFiles=twiddle.json"), "URL contains correct openFiles query parameter 3");
+    assert.ok(urlHas("openFiles=twiddle\\.json"), "URL contains correct openFiles query parameter 3");
 
     find(removeGlyph).click();
   });
