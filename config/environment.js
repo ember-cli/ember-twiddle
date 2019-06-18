@@ -6,7 +6,7 @@ module.exports = function(environment) {
   let toriiProvider = process.env.TORII_PROVIDER || 'github-oauth2';
   let githubOauthURL = process.env.GATEKEEPER_URL || 'http://localhost:9999/authenticate/';
   let assetsHost = process.env.TWIDDLE_ASSET_HOST || '/';
-  let githubApiKey = process.env.GH_API_KEY || '2b84ab967ef8266ca0dc'
+  let githubApiKey = process.env.GH_API_KEY || '72bad01a535311cb8a5f'
 
   let ENV = {
     modulePrefix: 'ember-twiddle',
