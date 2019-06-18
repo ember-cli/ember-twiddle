@@ -47,7 +47,6 @@ test('deleting a gist loaded in two columns', function(assert) {
     click(secondFile);
     click(firstFilePicker);
     click(fileMenu);
-
     click(deleteAction);
     andThen(function() {
       assert.equal(find('.code .CodeMirror').length, 0, 'No code mirror editors active');
@@ -61,7 +60,6 @@ test('deleting a gist loaded in two columns', function(assert) {
       click(anyFile);
       click(fileMenu);
       click(deleteAction);
-
     }
 
     andThen(function() {
