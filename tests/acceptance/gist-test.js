@@ -47,6 +47,7 @@ test('deleting a gist loaded in two columns', function(assert) {
     click(secondFile);
     click(firstFilePicker);
     click(fileMenu);
+
     click(deleteAction);
     andThen(function() {
       assert.equal(find('.code .CodeMirror').length, 0, 'No code mirror editors active');
@@ -55,11 +56,12 @@ test('deleting a gist loaded in two columns', function(assert) {
     });
 
     // TODO: Replace brittle for loop test code with "while there are files left..."
-    for (var i = 0; i < 2; ++i) {
+    for (var i = 0; i < 1; ++i) {
       click(firstFilePicker);
       click(anyFile);
       click(fileMenu);
       click(deleteAction);
+
     }
 
     andThen(function() {
