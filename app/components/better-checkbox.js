@@ -8,7 +8,7 @@ export default Component.extend({
   disabled: false,
 
   change() {
-    this.set('checked', this.$().prop('checked'));
+    this.set('checked', this.element.checked);
     this.action(this.checked);
   }
 });

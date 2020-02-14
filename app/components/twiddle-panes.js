@@ -18,9 +18,9 @@ export default Component.extend({
 
   setupHandles() {
     if (!this.get('media.isMobile')) {
-      this.$('.twiddle-pane').after('<div class="handle"></div>');
-      this.$('.handle').last().remove();
-      this.$('.handle').drags({ pane: '.twiddle-pane', min: 20 });
+      $(this.element).find('.twiddle-pane').after('<div class="handle"></div>');
+      $(this.element).find('.handle').last().remove();
+      $(this.element).find('.handle').drags({ pane: '.twiddle-pane', min: 20 });
     }
   },
 
@@ -35,7 +35,7 @@ export default Component.extend({
   },
 
   cleanupDrags() {
-    this.$('.handle').drags("destroy");
-    this.$('.handle').remove();
+    $(this.element).find('.handle').drags("destroy");
+    $(this.element).find('.handle').remove();
   }
 });

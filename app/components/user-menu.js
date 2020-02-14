@@ -29,6 +29,7 @@ export default Component.extend({
       case 'staging':
         return `${baseLink}/commit/${currentRevision}`;
     }
+    return '';
   }),
 
   actions: {

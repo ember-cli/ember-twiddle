@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import $ from 'jquery';
 
 export default Component.extend({
   classNames: ['input-edit'],
@@ -6,7 +7,7 @@ export default Component.extend({
 
   //proxy clicks to input focus
   click() {
-    this.$('input').focusin();
+    $(this.element).find('input').focusin();
   },
 
   change() {
@@ -18,7 +19,7 @@ export default Component.extend({
 
       //only if not already focused so subset of the value can still be selected manually
       if(!this.active){
-        this.$('input').select().one('mouseup.selectValue',
+        $(this.element).find('input').select().one('mouseup.selectValue',
           function (e) {
             e.preventDefault();
           }
@@ -29,15 +30,15 @@ export default Component.extend({
     },
 
     inputFocusOut() {
-      if(this.$('input').val()===''){
-        this.$('input').val('New Twiddle');
+      if( $(this.element).find('input').val()===''){
+        $(this.element).find('input').val('New Twiddle');
       }
 
       this.set('active', false);
     },
 
     removeFocus() {
-      this.$('input').blur();
+      $(this.element).find('input').blur();
     },
 
     valueChanged() {

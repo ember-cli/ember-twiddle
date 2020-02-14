@@ -62,8 +62,8 @@ export default Component.extend(ResizeMixin, {
   },
 
   didResize() {
-    let offset = this.$().offset(), width = this.$().width(),
-        height = this.$().height();
+    let offset = $(this.element).offset(), width = $(this.element).width(),
+        height = $(this.element).height();
 
     $('#root').css({
       top:    offset.top,
