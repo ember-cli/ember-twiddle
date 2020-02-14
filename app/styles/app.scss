@@ -1,5 +1,4 @@
 @import "variables";
-@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "vendor/twiddlicon/twiddlicon.scss";
 @import "main";
 @import "toolbar";
@@ -9,3 +8,5 @@
 @import "dropdown";
 @import "saved-twiddles";
 @import "footer";
+
+@import "ember-bootstrap/bootstrap";

@@ -8,7 +8,6 @@
 /vendor/polyfill.js
 
 # dependencies
-/bower_components/
 /node_modules/
 
 # misc
