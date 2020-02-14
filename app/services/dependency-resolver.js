@@ -58,7 +58,7 @@ export default Service.extend({
   },
 
   resolveAddons(addons, dependencies, emberVersion) {
-    const taskInstance = this.get('resolveAddonsTask').perform(addons, dependencies, emberVersion);
+    const taskInstance = this.resolveAddonsTask.perform(addons, dependencies, emberVersion);
     return taskInstance.then(() => taskInstance.value);
   },
 
@@ -101,7 +101,7 @@ export default Service.extend({
         }
       } catch(e) {
         try {
-          this.get('notify').error(JSON.parse(e.responseText).errorMessage, {
+          this.notify.error(JSON.parse(e.responseText).errorMessage, {
             closeAfter: 10000
           });
         } catch(e2) {
@@ -157,7 +157,7 @@ export default Service.extend({
         id: 'ember-twiddle.deprecate-ember-data-as-dependency',
         until: '0.16.0',
       });
-      this.get('notify').warning(msg);
+      this.notify.warning(msg);
 
       return deprecatedUrl;
     }
@@ -168,7 +168,7 @@ export default Service.extend({
         id: 'ember-twiddle.deprecate-ember-versions-before-2-12',
         until: '0.16.0',
       });
-      this.get('notify').warning(msg);
+      this.notify.warning(msg);
 
       return deprecatedUrl;
     }

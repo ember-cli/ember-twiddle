@@ -10,10 +10,10 @@ export default Mixin.create({
   buildApp: task(function *() {
     this.set('isBuilding', true);
     this.set('buildErrors', []);
-    this.set('model.initialRoute', this.get('route'));
+    this.set('model.initialRoute', this.route);
 
     try {
-      const buildOutput = yield this.get('emberCli').compileGist(this.get('model'));
+      const buildOutput = yield this.emberCli.compileGist(this.model);
       this.set('isBuilding', false);
       this.set('buildOutput', buildOutput);
     } catch(errors) {
@@ -33,9 +33,9 @@ export default Mixin.create({
   }).enqueue(),
 
   rebuildApp: task(function *() {
-    if (this.get('isLiveReload')) {
+    if (this.isLiveReload) {
       yield timeout(500);
-      yield this.get('buildApp').perform();
+      yield this.buildApp.perform();
     }
   }).restartable(),
 

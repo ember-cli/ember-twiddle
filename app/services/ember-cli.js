@@ -164,11 +164,11 @@ export default Service.extend({
   enableTesting: false,
 
   setup(gist) {
-    this.get('twiddleJson').setup(gist);
+    this.twiddleJson.setup(gist);
   },
 
   generate(type) {
-    let store = this.get('store');
+    let store = this.store;
     run(() => pushDeletion(store, 'gist-file', type));
     return store.createRecord('gistFile', this.buildProperties(type));
   },
@@ -183,7 +183,7 @@ export default Service.extend({
       }
 
       return {
-        filePath: this.get('usePods') ? blueprint.podFilePath || blueprint.filePath : blueprint.filePath,
+        filePath: this.usePods ? blueprint.podFilePath || blueprint.filePath : blueprint.filePath,
         content: content.replace(/<%=(.*)%>/gi,'')
       };
     }
@@ -221,7 +221,7 @@ export default Service.extend({
 
     this.addBoilerPlateFiles(out, gist);
 
-    return this.get('twiddleJson').getTwiddleJson(gist)
+    return this.twiddleJson.getTwiddleJson(gist)
       .then(twiddleJSON => {
         this.addConfig(out, gist, twiddleJSON);
         this.set('enableTesting', testingEnabled(twiddleJSON));
@@ -408,7 +408,7 @@ export default Service.extend({
     requiredFiles.forEach(filePath => {
       let file = gist.get('files').findBy('filePath', filePath);
       if (!file) {
-        let store = this.get('store');
+        let store = this.store;
         run(() => pushDeletion(store, 'gist-file', filePath));
         gist.get('files').pushObject(store.createRecord('gistFile', {
           filePath: filePath,
@@ -483,11 +483,11 @@ export default Service.extend({
   },
 
   updateDependencyVersion(gist, dependencyName, version) {
-    return this.get('twiddleJson').updateDependencyVersion(gist, dependencyName, version);
+    return this.twiddleJson.updateDependencyVersion(gist, dependencyName, version);
   },
 
   ensureTestingEnabled(gist) {
-    return this.get('twiddleJson').ensureTestingEnabled(gist);
+    return this.twiddleJson.ensureTestingEnabled(gist);
   },
 
   // For backwards compatibility with old names for the twiddle app
@@ -501,7 +501,7 @@ export default Service.extend({
   },
 
   setTesting(gist, enabled = true) {
-    this.get('twiddleJson').setTesting(gist, enabled);
+    this.twiddleJson.setTesting(gist, enabled);
   }
 });
 

@@ -15,7 +15,7 @@ export default Component.extend(ResizeMixin, {
       return;
     }
 
-    if (this.get('isBuilding')) {
+    if (this.isBuilding) {
       return;
     }
 
@@ -34,7 +34,7 @@ export default Component.extend(ResizeMixin, {
 
     if (!Ember.testing && supportsSrcDoc) {
       ifrm.sandbox = 'allow-scripts allow-forms allow-modals';
-      ifrm.srcdoc = this.get('html');
+      ifrm.srcdoc = this.html;
     }
 
     this.element.appendChild(ifrm);
@@ -46,12 +46,12 @@ export default Component.extend(ResizeMixin, {
       ifrm.document.close();
     }
 
-    this.get('app').setCurrentIFrame(ifrm);
+    this.app.setCurrentIFrame(ifrm);
 
     if (Ember.testing) {
       ifrm = ifrm.contentWindow;
       ifrm.document.open();
-      ifrm.document.write(this.get('html'));
+      ifrm.document.write(this.html);
       ifrm.document.close();
     }
   },
@@ -81,6 +81,6 @@ export default Component.extend(ResizeMixin, {
       oldIframe.parentNode.removeChild(oldIframe);
     }
 
-    this.get('app').setCurrentIFrame(null);
+    this.app.setCurrentIFrame(null);
   }
 });

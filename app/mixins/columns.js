@@ -8,15 +8,15 @@ export default Mixin.create({
   columns: null,
 
   realNumColumns: computed('numColumns', function() {
-    return Math.min(this.get('numColumns'), MAX_COLUMNS);
+    return Math.min(this.numColumns, MAX_COLUMNS);
   }),
 
   getColumnFile(column) {
-    return this.get('columns').objectAt(column - 1).get('file');
+    return this.columns.objectAt(column - 1).get('file');
   },
 
   setColumnFile(column, file) {
-    this.get('columns').objectAt(column - 1).set('file', file);
+    this.columns.objectAt(column - 1).set('file', file);
   },
 
   /**
@@ -38,7 +38,7 @@ export default Mixin.create({
    * Clears the columns
    */
   clearColumns() {
-    let numColumns = this.get('realNumColumns');
+    let numColumns = this.realNumColumns;
     for (let i = 1; i <= numColumns; ++i) {
       this.setColumnFile(i, undefined);
     }
@@ -54,14 +54,14 @@ export default Mixin.create({
       return;
     }
 
-    const openFileNames = this.get('openFiles').split(",");
+    const openFileNames = this.openFiles.split(",");
     const openFiles = openFileNames.map((file) => files.findBy('fileName', file));
 
     for (let i = 1; i <= openFiles.length; ++i) {
       this.setColumnFile(i, openFiles[i - 1]);
     }
 
-    const numColumns = this.get('realNumColumns');
+    const numColumns = this.realNumColumns;
 
     let j = 0;
     const len = files.get('length');
@@ -103,14 +103,14 @@ export default Mixin.create({
   },
 
   removeColumn(col) {
-    let numColumns = this.get('realNumColumns');
+    let numColumns = this.realNumColumns;
 
     for (var i = (col|0); i < numColumns; ++i) {
       this.setColumnFile(i, this.getColumnFile(i + 1));
     }
     this.setColumnFile(numColumns, undefined);
 
-    let activeCol = this.get('activeEditorCol');
+    let activeCol = this.activeEditorCol;
     if (activeCol >= col) {
       this.set('activeEditorCol', ((activeCol|0) - 1).toString());
     }

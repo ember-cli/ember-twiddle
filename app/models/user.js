@@ -9,10 +9,10 @@ export default DS.Model.extend({
   htmlUrl: attr('string'),
 
   avatarUrl32: computed('avatarUrl', function() {
-    return this.get('avatarUrl') + '&s=32';
+    return this.avatarUrl + '&s=32';
   }),
 
   avatarUrl16: computed('avatarUrl', function() {
-    return this.get('avatarUrl') + '&s=16';
+    return this.avatarUrl + '&s=16';
   }),
 });

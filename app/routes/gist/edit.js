@@ -5,9 +5,9 @@ import { pushDeleteAll } from "ember-twiddle/utils/push-deletion";
 
 export default GistRoute.extend({
   model(params) {
-    run(() => pushDeleteAll(this.get('store'), 'gist-file'));
+    run(() => pushDeleteAll(this.store, 'gist-file'));
 
-    return this.get('store').find('gist', params.gistId);
+    return this.store.find('gist', params.gistId);
   },
 
   setupController() {

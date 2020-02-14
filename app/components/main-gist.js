@@ -41,7 +41,7 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
 
   // eslint-disable-next-line ember/no-on-calls-in-components
   onSaveCommand: on(keyDown('cmd+KeyS'), function (event) {
-    this.saveGist(this.get('model'));
+    this.saveGist(this.model);
     this.send('runNow');
     event.preventDefault();
   }),
@@ -103,13 +103,13 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
   didReceiveAttrs() {
     this._super(...arguments);
 
-    const model = this.get('model');
+    const model = this.model;
 
     if (model !== this._oldModel) {
       this.clearColumns();
       this.initializeColumns();
       run(() => {
-        this.get('rebuildApp').perform();
+        this.rebuildApp.perform();
       });
     }
 
@@ -119,21 +119,21 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
   actions: {
     contentsChanged() {
       this.set('unsaved', true);
-      this.get('rebuildApp').perform();
+      this.rebuildApp.perform();
     },
 
     versionSelected(dependency, version) {
-      var gist = this.get('model');
-      var emberCli = this.get('emberCli');
+      var gist = this.model;
+      var emberCli = this.emberCli;
 
       emberCli.updateDependencyVersion(gist, dependency, version).then(() => {
-        this.get('rebuildApp').perform();
+        this.rebuildApp.perform();
       });
     },
 
     liveReloadChanged(isLiveReload) {
       this.set('isLiveReload', isLiveReload);
-      this.get('rebuildApp').perform();
+      this.rebuildApp.perform();
     },
 
     focusEditor (editor) {
@@ -151,12 +151,12 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
     },
 
     runNow () {
-      this.get('buildApp').perform();
+      this.buildApp.perform();
     },
 
     titleChanged() {
       this.set('unsaved', true);
-      this.get('titleUpdated')();
+      this.titleUpdated();
     },
 
     showFileTree() {
@@ -179,7 +179,7 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
 
     addHelper() {
       let type = 'helper';
-      let fileProperties = this.get('emberCli').buildProperties(type);
+      let fileProperties = this.emberCli.buildProperties(type);
       let filePath = prompt('File path', fileProperties.filePath);
 
       this.addHelper(type, filePath);
@@ -224,13 +224,13 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
     removeColumn (col) {
       this.removeColumn(col);
       run.scheduleOnce('afterRender', this, this.updateOpenFiles);
-      this.get('transitionQueryParams')({numColumns: this.get('realNumColumns') - 1});
+      this.transitionQueryParams({numColumns: this.realNumColumns - 1});
     },
 
     addColumn() {
-      let numColumns = this.get('realNumColumns');
+      let numColumns = this.realNumColumns;
 
-      this.get('transitionQueryParams')({
+      this.transitionQueryParams({
         numColumns: numColumns + 1
       }).then((queryParams) => {
         this.setProperties(queryParams);
@@ -247,7 +247,7 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
     },
 
     exitFullScreen() {
-      this.get('transitionQueryParams')({
+      this.transitionQueryParams({
         fullScreen: false
       }).then(() => {
         this.initializeColumns();
@@ -256,7 +256,7 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
     },
 
     setEditorKeyMap (keyMap) {
-      const settings = this.get('settings');
+      const settings = this.settings;
       settings.set('keyMap', keyMap);
       settings.save();
     },
@@ -266,8 +266,8 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
       this.ensureTestStartAppHelperExists();
       this.ensureTestDestroyAppHelperExists();
 
-      this.get('emberCli').setTesting(this.get('model'), testsEnabled);
-      this.get('rebuildApp').perform();
+      this.emberCli.setTesting(this.model, testsEnabled);
+      this.rebuildApp.perform();
     }
   }
 });

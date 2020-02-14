@@ -17,7 +17,7 @@ export default Component.extend({
     inputFocusIn() {
 
       //only if not already focused so subset of the value can still be selected manually
-      if(!this.get('active')){
+      if(!this.active){
         this.$('input').select().one('mouseup.selectValue',
           function (e) {
             e.preventDefault();

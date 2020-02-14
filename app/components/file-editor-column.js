@@ -21,14 +21,14 @@ export default Component.extend({
   }),
 
   isLastColumn: computed('col', 'numColumns', function() {
-    let numColumns = this.get('numColumns');
-    return (this.get('col') | 0) === numColumns && numColumns < MAX_COLUMNS;
+    let numColumns = this.numColumns;
+    return (this.col | 0) === numColumns && numColumns < MAX_COLUMNS;
   }),
 
   isFirstColumn: equal('col', '1'),
 
   showFileTreeOpenIcon: computed('isFirstColumn', 'fileTreeShown', function() {
-    return this.get('isFirstColumn') && !this.get('fileTreeShown');
+    return this.isFirstColumn && !this.fileTreeShown;
   }),
 
   focusIn () {

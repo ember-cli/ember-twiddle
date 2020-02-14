@@ -7,7 +7,7 @@ export default GistEditRoute.extend({
   templateName: 'gist',
 
   model(params) {
-    let store = this.get('store');
+    let store = this.store;
     run(() => pushDeleteAll(store, 'gist-file'));
     const gistParams = this.paramsFor('gist.edit');
 
@@ -26,7 +26,7 @@ export default GistEditRoute.extend({
 
   actions: {
     showCurrentVersion() {
-      const store = this.get('store');
+      const store = this.store;
       run(() => pushDeleteAll(store, 'gist-file'));
       store.find('gist', this.paramsFor('gist.edit').gistId).then((model) => {
         this.transitionTo('gist.edit', model);

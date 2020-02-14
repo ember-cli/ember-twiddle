@@ -7,7 +7,7 @@ export default Route.extend({
   emberCli: service(),
 
   afterModel(context) {
-    return this.get('emberCli').setup(context);
+    return this.emberCli.setup(context);
   },
 
   setupController(controller, context) {

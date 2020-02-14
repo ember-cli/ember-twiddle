@@ -34,7 +34,7 @@ export default Mixin.create({
     window.addEventListener('message', (m) => {
       run(() => {
         if(typeof m.data==='object' && 'setAppUrl' in m.data) {
-          if (!this.get('isDestroyed')) {
+          if (!this.isDestroyed) {
             if (window.messagesWaiting > 0) {
               window.messagesWaiting = 0;
             }

@@ -8,7 +8,7 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    this.get('resizeableColumns'); // ensure service created
+    this.resizeableColumns; // ensure service created
   },
 
   didRender() {

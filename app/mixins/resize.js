@@ -5,12 +5,12 @@ import $ from 'jquery';
 export default Mixin.create({
   didInsertElement() {
     this._super();
-    $(window).on('resize', this.get("resizeHandler"));
+    $(window).on('resize', this.resizeHandler);
   },
 
   willDestroyElement() {
     this._super();
-    $(window).off('resize', this.get("resizeHandler"));
+    $(window).off('resize', this.resizeHandler);
   },
 
   resizeHandler() {

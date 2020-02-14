@@ -9,6 +9,6 @@ export default Component.extend({
 
   change() {
     this.set('checked', this.$().prop('checked'));
-    this.action(this.get('checked'));
+    this.action(this.checked);
   }
 });

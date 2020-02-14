@@ -11,11 +11,11 @@ export default Component.extend({
 
   actions: {
     runNowClicked() {
-      this.get('runNow')();
+      this.runNow();
     },
 
     liveReloadClicked(checked) {
-      this.get('liveReloadChanged')(checked);
+      this.liveReloadChanged(checked);
     }
   }
 });

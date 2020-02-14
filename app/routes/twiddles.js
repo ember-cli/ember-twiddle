@@ -6,7 +6,7 @@ export default Route.extend({
   toriiProvider: config.toriiProvider,
 
   beforeModel() {
-    return this.session.fetch(this.get('toriiProvider')).catch(error => {
+    return this.session.fetch(this.toriiProvider).catch(error => {
       if (!error) {
         this.transitionTo('/');
       }
@@ -14,7 +14,7 @@ export default Route.extend({
   },
 
   model() {
-    return this.get('store').query('gist', {
+    return this.store.query('gist', {
       user: this.get('session.currentUser.login'),
       per_page: 100
     });

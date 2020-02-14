@@ -7,7 +7,7 @@ export default Route.extend({
 
   actions: {
     titleUpdated() {
-      this.get('router').updateTitle();
+      this.router.updateTitle();
     }
   }
 });

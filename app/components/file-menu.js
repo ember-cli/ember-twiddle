@@ -10,7 +10,7 @@ export default Component.extend(DropdownSubmenuFixMixin, {
   // Github api does not permit forking if you own the gist already
   // Github does not provide api for forking a revision
   showFork: computed('model.ownerLogin', 'session.currentUser.login', 'isRevision', function() {
-    return !this.get('isRevision') && this.get('model.ownerLogin') !== this.get('session.currentUser.login');
+    return !this.isRevision && this.get('model.ownerLogin') !== this.get('session.currentUser.login');
   }),
 
   actions: {
