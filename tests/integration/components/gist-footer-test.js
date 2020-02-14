@@ -36,7 +36,7 @@ module('Integration | Component | gist footer', function(hooks) {
 
     assert.equal(find('footer').textContent.trim().replace(/[\t\n\s]+/g, " "), 'Author: octocat | Fork from: romgere \'s gist | Open original gist');
 
-    assert.equal(findAll('footer .user-link').length, 2);
+    assert.dom('footer .user-link').exists({ count: 2 });
 
     assert.equal(find('footer a:last-child').getAttribute('href'), '/fakegistid');
 
@@ -56,8 +56,8 @@ module('Integration | Component | gist footer', function(hooks) {
     await render(hbs`{{gist-footer owner=model.owner originalGist=model.forkOf}}`);
 
     assert.equal(find('footer').textContent.trim().replace(/[\t\n\s]+/g, " "), 'Author: octocat');
-    assert.equal(findAll('footer .user-link').length, 1);
-    assert.equal(findAll('footer a').length, 1);
+    assert.dom('footer .user-link').exists({ count: 1 });
+    assert.dom('footer a').exists({ count: 1 });
 
   });
 
@@ -72,6 +72,6 @@ module('Integration | Component | gist footer', function(hooks) {
 
     assert.equal(find('footer').textContent.trim().replace(/[\t\n\s]+/g, " "), 'No author (new twiddle)');
 
-    assert.equal(findAll('footer a').length, 0);
+    assert.dom('footer a').doesNotExist();
   });
 });

@@ -84,20 +84,20 @@ module('Acceptance | routing', function(hooks) {
     if (!find(addressBar).val()) {
       this.registerWaiter();
     }
-    assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 0");
+    assert.dom(addressBar).hasValue('/', "Correct URL is shown in address bar 0");
     assert.ok(decodeURIComponent(currentURL()).indexOf("route=") === -1, "URL is not added to route query string parameter 0");
 
     this.registerWaiter();
     iframe_window = outputPane();
     iframe_window.click(iframe_window.find(aboutLink));
     assert.equal(outputContents(outletText), 'About Page', 'About Link leads to About Page being displayed');
-    assert.equal(find(addressBar).val(), '/about', "Correct URL is shown in address bar 1");
+    assert.dom(addressBar).hasValue('/about', "Correct URL is shown in address bar 1");
     assert.ok(decodeURIComponent(currentURL()).indexOf("route=/about") > 0, "URL is added to route query string parameter 1");
 
     this.registerWaiter();
     iframe_window.click(iframe_window.find(indexLink));
     assert.equal(outputContents(outletText), 'Main Page', 'Index Link leads to Main Page being displayed');
-    assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 2");
+    assert.dom(addressBar).hasValue('/', "Correct URL is shown in address bar 2");
     assert.ok(decodeURIComponent(currentURL()).indexOf("route=") === -1, "URL is not added to route query string parameter 2");
   });
 
@@ -107,19 +107,19 @@ module('Acceptance | routing', function(hooks) {
     if (!find(addressBar).val()) {
       this.registerWaiter();
     }
-    assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 0");
+    assert.dom(addressBar).hasValue('/', "Correct URL is shown in address bar 0");
 
     await click(addressBar);
     await fillIn(addressBar, '/about');
     keyEvent(addressBar, 'keyup', 13);
     assert.equal(outputContents(outletText), 'About Page', 'Changing the URL to /about and pressing enter leads to the About Page being displayed');
-    assert.equal(find(addressBar).val(), '/about', "Correct URL is shown in address bar 1");
+    assert.dom(addressBar).hasValue('/about', "Correct URL is shown in address bar 1");
 
     await click(addressBar);
     await fillIn(addressBar, '/');
     keyEvent(addressBar, 'keyup', 13);
     assert.equal(outputContents(outletText), 'Main Page', 'Changing the URL to / and pressing enter leads to the Main Page being displayed');
-    assert.equal(find(addressBar).val(), '/', "Correct URL is shown in address bar 2");
+    assert.dom(addressBar).hasValue('/', "Correct URL is shown in address bar 2");
   });
 
   test('URL can be set via route query parameter', function(assert) {
@@ -131,7 +131,7 @@ module('Acceptance | routing', function(hooks) {
     if (!find(addressBar).val()) {
       this.registerWaiter();
     }
-    assert.equal(find(addressBar).val(), "/about", "Correct URL appears when set via query parameter");
+    assert.dom(addressBar).hasValue("/about", "Correct URL appears when set via query parameter");
     assert.equal(outputContents(outletText), 'About Page', 'Initializing the URL to /about leads to the About Page being displayed');
   });
 });

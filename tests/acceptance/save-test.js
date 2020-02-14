@@ -32,16 +32,16 @@ module('Acceptance | save gist', function(hooks) {
 
     await visit('/35de43cb81fc35ddffb2');
 
-    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
 
     await fillIn('.title input', "my twiddle");
 
-    assert.equal(find('.title input').val(), "my twiddle");
-    assert.equal(find('.test-unsaved-indicator').length, 1, "Changing title triggers unsaved indicator");
+    assert.dom('.title input').hasValue("my twiddle");
+    assert.dom('.test-unsaved-indicator').exists({ count: 1 }, "Changing title triggers unsaved indicator");
 
     await click('.test-save-action');
 
-    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
   });
 
   test('can save a gist without an id', async function(assert) {
@@ -53,16 +53,16 @@ module('Acceptance | save gist', function(hooks) {
 
     await visit('/');
 
-    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
 
     await fillIn('.title input', "my twiddle");
 
-    assert.equal(find('.title input').val(), "my twiddle");
-    assert.equal(find('.test-unsaved-indicator').length, 1, "Changing title triggers unsaved indicator");
+    assert.dom('.title input').hasValue("my twiddle");
+    assert.dom('.test-unsaved-indicator').exists({ count: 1 }, "Changing title triggers unsaved indicator");
 
     await click('.test-save-action');
 
-    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
   });
 
   test('gist save on cmd+s shortcut', async function(assert) {
@@ -73,10 +73,10 @@ module('Acceptance | save gist', function(hooks) {
     });
 
     await visit('/');
-    assert.equal(find('.gist-link').length, 0, "No gist link is displayed for unsaved twiddle");
+    assert.dom('.gist-link').doesNotExist("No gist link is displayed for unsaved twiddle");
 
     await keyDown('cmd+KeyS'); // eslint-disable-line no-undef
 
-    assert.equal(find('.gist-link').length, 1, "Gist link is shown for saved twiddle");
+    assert.dom('.gist-link').exists({ count: 1 }, "Gist link is shown for saved twiddle");
   });
 });

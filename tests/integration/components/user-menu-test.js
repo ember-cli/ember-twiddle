@@ -65,22 +65,22 @@ module('Integration | Component | user menu', function(hooks) {
   test('shows no current version link when in development environment', async function(assert) {
     await render(hbs`{{user-menu}}`);
 
-    assert.equal(findAll('.test-current-version-link').length, 0);
+    assert.dom('.test-current-version-link').doesNotExist();
   });
 
   test('shows link to release when in production environment', async function(assert) {
     await render(hbs`{{user-menu environment="production" version="4.0.4" }}`);
 
-    assert.equal(findAll('.test-current-version-link').length, 1);
-    assert.equal(find('.test-current-version-link').getAttribute('href'), "https://github.com/ember-cli/ember-twiddle/releases/tag/v4.0.4");
-    assert.equal(find('.test-current-version-link').textContent.trim(), "Ember Twiddle v4.0.4");
+    assert.dom('.test-current-version-link').exists({ count: 1 });
+    assert.dom('.test-current-version-link').hasAttribute('href', "https://github.com/ember-cli/ember-twiddle/releases/tag/v4.0.4");
+    assert.dom('.test-current-version-link').hasText('Ember Twiddle v4.0.4');
   });
 
   test('shows link to commit when in staging environment', async function(assert) {
     await render(hbs`{{user-menu environment="staging" version="4.0.4-abc" currentRevision="abcdefg" }}`);
 
-    assert.equal(findAll('.test-current-version-link').length, 1);
-    assert.equal(find('.test-current-version-link').getAttribute('href'), "https://github.com/ember-cli/ember-twiddle/commit/abcdefg");
-    assert.equal(find('.test-current-version-link').textContent.trim(), "Ember Twiddle v4.0.4-abc");
+    assert.dom('.test-current-version-link').exists({ count: 1 });
+    assert.dom('.test-current-version-link').hasAttribute('href', "https://github.com/ember-cli/ember-twiddle/commit/abcdefg");
+    assert.dom('.test-current-version-link').hasText('Ember Twiddle v4.0.4-abc');
   });
 });

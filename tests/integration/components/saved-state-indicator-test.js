@@ -22,6 +22,6 @@ module('Integration | Component | saved state indicator', function(hooks) {
 
     this.set('unsaved', true);
 
-    assert.equal(find('span.indicator').textContent.trim(), "Unsaved");
+    assert.dom('span.indicator').hasText('Unsaved');
   });
 });

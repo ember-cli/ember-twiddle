@@ -38,11 +38,11 @@ module('Acceptance | fork gist', function(hooks) {
 
     await visit('/35de43cb81fc35ddffb2');
 
-    assert.equal(findAll('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
 
     await click('.test-fork-action');
 
-    assert.equal(findAll('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
 
     let url = currentURL();
     let route = url.substr(url.lastIndexOf('/'));

@@ -34,10 +34,10 @@ module('Integration | Component | saved twiddles row', function(hooks) {
 
     await render(hbs`{{saved-twiddles-row gist=gist}}`);
 
-    assert.equal(find('.test-gist-id').textContent.trim(), '74bae9a34142370ff5a3');
-    assert.equal(find('.test-gist-updated-at').textContent.trim(), 'Wed Apr 1 2015');
-    assert.equal(find('.test-gist-numfiles').textContent.trim(), '3 files');
+    assert.dom('.test-gist-id').hasText('74bae9a34142370ff5a3');
+    assert.dom('.test-gist-updated-at').hasText('Wed Apr 1 2015');
+    assert.dom('.test-gist-numfiles').hasText('3 files');
     assert.equal(find('.test-gist-numfiles').getAttribute('title').trim(), 'some-path.js\nsome/path.js\nsome/long/path.js');
-    assert.equal(find('.test-gist-description').textContent.trim(), "Test Description");
+    assert.dom('.test-gist-description').hasText('Test Description');
   });
 });

@@ -17,10 +17,10 @@ module('Integration | Component | user profile link', function(hooks) {
 
     await render(hbs`{{user-profile-link user=user}}`);
 
-    assert.equal(find('*').textContent.trim(), 'octocat');
+    assert.dom('*').hasText('octocat');
 
-    assert.equal(find('.user-link').getAttribute('target'), '_blank');
-    assert.equal(find('.user-link').getAttribute('href'), 'https://github.com/octocat');
-    assert.equal(find('.user-link > img').getAttribute('src'), 'fake16.png');
+    assert.dom('.user-link').hasAttribute('target', '_blank');
+    assert.dom('.user-link').hasAttribute('href', 'https://github.com/octocat');
+    assert.dom('.user-link > img').hasAttribute('src', 'fake16.png');
   });
 });

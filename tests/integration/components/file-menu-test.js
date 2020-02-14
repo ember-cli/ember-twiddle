@@ -176,7 +176,7 @@ module('Integration | Component | file menu', function(hooks) {
   test("it only renders 'New Twiddle' menu item, when no model is specified", async function(assert) {
     await render(hbs`{{file-menu}}`);
 
-    assert.equal(findAll('.dropdown-menu li').length, 1, "only one menu item is rendered");
-    assert.equal(find('.dropdown-menu li').textContent.trim(), "New Twiddle");
+    assert.dom('.dropdown-menu li').exists({ count: 1 }, "only one menu item is rendered");
+    assert.dom('.dropdown-menu li').hasText('New Twiddle');
   });
 });

@@ -59,9 +59,9 @@ module('Acceptance | gist', function(hooks) {
     await click(firstFilePicker);
     await click(fileMenu);
     await click(deleteAction);
-    assert.equal(findAll('.code .CodeMirror').length, 0, 'No code mirror editors active');
+    assert.dom('.code .CodeMirror').doesNotExist('No code mirror editors active');
     assert.equal(findAll('.dropdown-toggle:contains(No file selected)').length, 2, 'Shows message when no file is selected.');
-    assert.equal(findAll('.main-menu .test-remove-action').length, 0, 'There no longer is a selected file to delete');
+    assert.dom('.main-menu .test-remove-action').doesNotExist('There no longer is a selected file to delete');
 
     // TODO: Replace brittle for loop test code with "while there are files left..."
     for (var i = 0; i < 1; ++i) {
@@ -294,7 +294,7 @@ module('Acceptance | gist', function(hooks) {
 
     await visit('/');
 
-    assert.equal(findAll(indicator).length, 0, "Unsaved indicator does not appear when first loading");
+    assert.dom(indicator).doesNotExist("Unsaved indicator does not appear when first loading");
 
     // Below doesn't work in phantomjs:
     if (/PhantomJS/.test(window.navigator.userAgent)) {
@@ -307,7 +307,7 @@ module('Acceptance | gist', function(hooks) {
     await triggerEvent(firstColumnTextarea, "focusout");
 
     return timeout(10);
-    assert.equal(findAll(indicator).length, 1, "Unsaved indicator reappears after editing");
+    assert.dom(indicator).exists({ count: 1 }, "Unsaved indicator reappears after editing");
   });
 
   test('editing a file updates gist', async function(assert) {
@@ -326,7 +326,7 @@ module('Acceptance | gist', function(hooks) {
     await click(addTemplateAction);
     await click(firstFilePicker);
 
-    assert.equal(find(firstColumnTextarea).value, "");
+    assert.dom(firstColumnTextarea).hasValue("");
 
     // Below doesn't work in phantomjs:
     if (/PhantomJS/.test(window.navigator.userAgent)) {
@@ -340,7 +340,7 @@ module('Acceptance | gist', function(hooks) {
     await triggerEvent(firstColumnTextarea, "focusout");
 
     return timeout(10);
-    assert.equal(find(firstColumnTextarea).value, '<div class="index">some text</div>');
+    assert.dom(firstColumnTextarea).hasValue('<div class="index">some text</div>');
 
     await click(".run-now");
     waitForUnloadedIFrame();
@@ -362,18 +362,18 @@ module('Acceptance | gist', function(hooks) {
       }
     ]);
 
-    assert.equal(findAll('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
 
     await fillIn('.title input', "my twiddle");
     await keyEvent('.title input', 'keyup', 13);
-    assert.equal(find('.title input').value, "my twiddle");
+    assert.dom('.title input').hasValue("my twiddle");
 
     await click("#live-reload");
     await click('.test-copy-action');
     waitForLoadedIFrame();
-    assert.equal(find('.title input').value, "New Twiddle", "Description is reset");
-    assert.equal(findAll('.test-unsaved-indicator').length, 0, "Unsaved indicator does not appear when gist is copied");
-    assert.equal(findAll('.test-copy-action').length, 0, "Menu item to copy gist is not shown anymore");
+    assert.dom('.title input').hasValue("New Twiddle", "Description is reset");
+    assert.dom('.test-unsaved-indicator').doesNotExist("Unsaved indicator does not appear when gist is copied");
+    assert.dom('.test-copy-action').doesNotExist("Menu item to copy gist is not shown anymore");
     assert.equal(outputContents(), 'hello world!');
   });
 
@@ -385,11 +385,11 @@ module('Acceptance | gist', function(hooks) {
       }
     ]);
 
-    assert.equal(findAll('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
 
     await fillIn('.title input', "my twiddle");
-    assert.equal(find('.title input').value, "my twiddle");
-    assert.equal(findAll('.test-unsaved-indicator').length, 1, "Changing title triggers unsaved indicator");
+    assert.dom('.title input').hasValue("my twiddle");
+    assert.dom('.test-unsaved-indicator').exists({ count: 1 }, "Changing title triggers unsaved indicator");
 
     await click("#live-reload");
     await visit('/35de43cb81fc35ddffb2/copy');
@@ -397,8 +397,8 @@ module('Acceptance | gist', function(hooks) {
     waitForUnloadedIFrame();
     waitForLoadedIFrame();
     assert.equal(currentURL(), '/');
-    assert.equal(find('.title input').value, "New Twiddle", "Description is reset");
-    assert.equal(findAll('.test-unsaved-indicator').length, 0, "Unsaved indicator does not appear when gist is copied");
+    assert.dom('.title input').hasValue("New Twiddle", "Description is reset");
+    assert.dom('.test-unsaved-indicator').doesNotExist("Unsaved indicator does not appear when gist is copied");
     assert.equal(outputContents(), 'hello world!');
   });
 });

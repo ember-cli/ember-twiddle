@@ -39,6 +39,6 @@ module('Integration | Component | better checkbox', function(hooks) {
 
     await render(hbs`{{better-checkbox checked=true}}`);
 
-    assert.ok(find('input').checked, 'checkbox defaults to being checked if checked=true passed in');
+    assert.dom('input').isChecked('checkbox defaults to being checked if checked=true passed in');
   });
 });

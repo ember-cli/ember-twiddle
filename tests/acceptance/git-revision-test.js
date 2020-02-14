@@ -42,19 +42,19 @@ module('Acceptance | gist-revision', function(hooks) {
       }
     ]);
 
-    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
 
     await fillIn('.title input', "my twiddle");
-    assert.equal(find('.title input').val(), "my twiddle");
+    assert.dom('.title input').hasValue("my twiddle");
 
     await click("#live-reload");
     await click('.test-copy-action');
     waitForUnloadedIFrame();
     waitForLoadedIFrame();
 
-    assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
-    assert.equal(find('.test-unsaved-indicator').length, 0, "Unsaved indicator does not appear when gist is copied");
-    assert.equal(find('.test-copy-action').length, 0, "Menu item to copy gist is not shown anymore");
+    assert.dom('.title input').hasValue("New Twiddle", "Description is reset");
+    assert.dom('.test-unsaved-indicator').doesNotExist("Unsaved indicator does not appear when gist is copied");
+    assert.dom('.test-copy-action').doesNotExist("Menu item to copy gist is not shown anymore");
     assert.equal(outputContents(), 'hello world!');
   });
 
