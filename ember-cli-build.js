@@ -33,21 +33,26 @@ module.exports = function(defaults) {
     vendorFiles: {
       'ember-testing.js': null
     },
+
     SRI: {
       runsIn: "production"
     },
+
     fingerprint: {
       enabled: isProductionLikeBuild,
       prepend: prepend,
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg', 'eot', 'ttf', 'woff', 'woff2', 'ico'],
       exclude: []
     },
+
     sourcemaps: {
       enabled: !isProductionLikeBuild
     },
+
     minifyCSS: {
       enabled: isProductionLikeBuild
     },
+
     minifyJS: {
       enabled: isProductionLikeBuild,
       options: {
@@ -57,20 +62,24 @@ module.exports = function(defaults) {
         }
       }
     },
+
     codemirror: {
       modes: ['xml', 'javascript', 'handlebars', 'htmlmixed', 'css'],
       keyMaps: ['emacs', 'sublime', 'vim'],
       addonFiles: ['comment/comment.js']
     },
+
     'ember-cli-bootstrap-sassy': {
       'js': ['dropdown', 'collapse']
     },
+
     fileCreator: [
       {
         filename: '/lib/blueprints.js',
         content: blueprintsCode
       }
     ],
+
     nodeAssets: {
       'path-browser': {
         import: ['path.js']
@@ -82,17 +91,24 @@ module.exports = function(defaults) {
         import: ['babel-preset-env.js']
       }
     },
+
     'ember-cli-babel': {
       includePolyfill: !isFastboot
     },
 
     tests: true,
-    hinting: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild
+    hinting: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
+
+    'ember-bootstrap': {
+      'bootstrapVersion': 3,
+      'importBootstrapCSS': false,
+      'importBootstrapFont': true
+    }
   });
 
   if (isFastboot) {
     let b = browserify();
-    b.add(require.resolve('babel-core/browser-polyfill'));
+    b.add(require.resolve('@babel/polyfill'));
     b.bundle(function(err, buf) {
       fs.writeFileSync('vendor/polyfill.js', buf);
     });
@@ -106,7 +122,7 @@ module.exports = function(defaults) {
   });
   app.import('vendor/shims/babel.js');
   app.import('vendor/shims/path.js');
-  app.import('bower_components/file-saver/FileSaver.js');
+  // app.import('bower_components/file-saver/FileSaver.js');
 
   if (!isFastboot) {
     app.import('vendor/drags.js');
@@ -117,7 +133,7 @@ module.exports = function(defaults) {
   app.import('vendor/shims/compare-versions.js');
 
   const nodeBuiltins = require('rollup-plugin-node-builtins');
-  const json = require('rollup-plugin-json');
+  const json = require('@rollup/plugin-json');
 
   app.import('node_modules/babel-plugin-ember-modules-api-polyfill/src/index.js', {
     using: [{
