@@ -4,6 +4,10 @@
 import Mirage from 'ember-cli-mirage';
 
 export default Mirage.Factory.extend({
+  init() {
+    this._super(...arguments);
+    this.set('forks', []);
+  },
   url() {
     return "https://api.github.com/gists/" + this.id;
   },
@@ -32,8 +36,6 @@ export default Mirage.Factory.extend({
   comments_url() {
     return `https://api.github.com/gists/${this.id}/comments`;
   },
-  //owner,
-  forks: [],
   //history,
   afterCreate(gist, server) {
     let historyEntry = server.create('gistRevision', {

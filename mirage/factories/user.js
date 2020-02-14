@@ -59,11 +59,14 @@ export default Mirage.Factory.extend({
   private_gists: 81,
   disk_usage: 10000,
   collaborators: 8,
-  plan: {
-    name: "Medium",
-      space: 400,
-      private_repos: 20,
-      collaborators: 0
+  init() {
+    this._super(...arguments);
+    this.set('plan', {
+      name: "Medium",
+        space: 400,
+        private_repos: 20,
+        collaborators: 0
+    });
   }
 });
 

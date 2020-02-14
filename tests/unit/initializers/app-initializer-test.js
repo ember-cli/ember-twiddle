@@ -3,7 +3,6 @@ import { run } from '@ember/runloop';
 
 import { initialize } from 'ember-twiddle/initializers/app-initializer';
 import { module, test } from 'qunit';
-import destroyApp from '../../helpers/destroy-app';
 
 module('Unit | Initializer | app initializer', function(hooks) {
   hooks.beforeEach(function() {
@@ -14,7 +13,7 @@ module('Unit | Initializer | app initializer', function(hooks) {
   });
 
   hooks.afterEach(function() {
-    destroyApp(this.application);
+    run(this.application, 'destroy');
   });
 
   // Replace this with your real tests.

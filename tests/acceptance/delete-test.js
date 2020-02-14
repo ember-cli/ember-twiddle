@@ -19,6 +19,7 @@ module('Acceptance | delete gist', function(hooks) {
 
   test('can delete a gist', async function(assert) {
     // set owner of gist as currently logged in user
+
     stubValidSession(this.application, {
       currentUser: {login: "Gaurav0"},
       "github-oauth2": {}

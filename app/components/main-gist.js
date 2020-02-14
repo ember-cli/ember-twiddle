@@ -4,7 +4,6 @@ import { isBlank } from '@ember/utils';
 import Component from '@ember/component';
 import { run } from '@ember/runloop';
 import { on } from '@ember/object/evented';
-import Settings from '../models/settings';
 import ColumnsMixin from "../mixins/columns";
 import FilesMixin from "../mixins/files";
 import TestFilesMixin from "../mixins/test-files";
@@ -24,7 +23,7 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
 
   init() {
     this._super(...arguments);
-    this.set('settings', Settings.create({
+    this.set('settings', this.store.createRecord('settings', {
       isFastBoot: this.get('fastboot.isFastBoot')
     }));
     this.createColumns();

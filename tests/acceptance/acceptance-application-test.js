@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { timeout } from 'ember-concurrency';
+import runGist from "./../helpers/run-gist";
 
 module('Acceptance | acceptance-application-test', function(hooks) {
   setupApplicationTest(hooks);
@@ -148,8 +149,8 @@ module('Acceptance | acceptance-application-test', function(hooks) {
     runGist(files);
 
     return timeout(500); // TODO: fix and remove this timing hack
-    const outputSpan = 'div#qunit-testresult-display > span.passed';
+    // const outputSpan = 'div#qunit-testresult-display > span.passed';
 
-    assert.equal(outputPane().$(outputSpan).text(), '1', 'acceptance test passed');
+    // assert.equal(outputPane().$(outputSpan).text(), '1', 'acceptance test passed');
   });
 });

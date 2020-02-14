@@ -25,7 +25,6 @@ const boilerPlateJs = [
   'router',
   'initializers/router',
   'initializers/mouse-events',
-  'resolver'
 ];
 
 // These files have to be present
@@ -104,10 +103,6 @@ const availableBlueprints = {
   'twiddle.json': {
     blueprint: 'twiddle.json',
     filePath: 'twiddle.json'
-  },
-  'resolver': {
-    blueprint: 'resolver',
-    filePath: 'resolver.js'
   },
   'test-helper': {
     blueprint: 'test-helper',
@@ -527,7 +522,7 @@ function babelOpts(moduleName) {
         loose: true,
         noInterop: true
       }],
-      ["@babel/plugin-proposal-decorators", { "legacy": true }],
+      // ["@babel/plugin-proposal-decorators", { "legacy": true }],
       'transform-class-properties',
       'transform-object-rest-spread',
       hbsPlugin

@@ -1,5 +1,8 @@
 import GistSerializer from './gist';
 
 export default GistSerializer.extend({
-  include: ['owner', 'files']
+  init() {
+    this._super(...arguments);
+    this.set('include', ['owner', 'files']);
+  }
 });

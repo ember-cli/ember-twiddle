@@ -114,8 +114,8 @@ module('Acceptance | integration-component-test', function(hooks) {
     runGist(files);
 
     return timeout(500); // TODO: fix and remove this timing hack
-    const outputSpan = 'div#qunit-testresult-display > span.passed';
+    // const outputSpan = 'div#qunit-testresult-display > span.passed';
 
-    assert.equal(outputPane().$(outputSpan).text(), '2', 'integration test passed');
+    // assert.equal(outputPane().$(outputSpan).text(), '2', 'integration test passed');
   });
 });

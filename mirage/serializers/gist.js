@@ -4,7 +4,10 @@ import Ember from 'ember';
 const { isArray } = Ember;
 
 export default ApplicationSerializer.extend({
-  include: ['owner', 'files', 'history'],
+  init() {
+    this._super(...arguments);
+    this.set('include', ['owner', 'files', 'history']);
+  },
   serialize() {
     let payload = ApplicationSerializer.prototype.serialize.apply(this, arguments);
     let files = payload.files;
