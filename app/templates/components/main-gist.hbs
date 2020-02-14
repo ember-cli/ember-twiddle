@@ -1,48 +1,5 @@
-{{gist-header model=model
-              session=session
-              unsaved=unsaved
-              isGistSaving=isGistSaving
-              activeEditorCol=activeEditorCol
-              activeFile=activeFile
-              isRevision=isRevision
-              selectedKeyMap=settings.keyMap
-              titleChanged=(action "titleChanged")
-              addFile=(action "addFile")
-              addHelper=(action "addHelper")
-              addComponent=(action "addComponent")
-              addUnitTestFile=(action "addUnitTestFile")
-              addIntegrationTestFile=(action "addIntegrationTestFile")
-              addAcceptanceTestFile=(action "addAcceptanceTestFile")
-              renameFile=(action "renameFile")
-              removeFile=(action "removeFile")
-              setEditorKeyMap=(action "setEditorKeyMap")
-              versionSelected=(action "versionSelected")
-}}
+<GistHeader @model={{model}} @session={{session}} @unsaved={{unsaved}} @isGistSaving={{isGistSaving}} @activeEditorCol={{activeEditorCol}} @activeFile={{activeFile}} @isRevision={{isRevision}} @selectedKeyMap={{settings.keyMap}} @titleChanged={{action "titleChanged"}} @addFile={{action "addFile"}} @addHelper={{action "addHelper"}} @addComponent={{action "addComponent"}} @addUnitTestFile={{action "addUnitTestFile"}} @addIntegrationTestFile={{action "addIntegrationTestFile"}} @addAcceptanceTestFile={{action "addAcceptanceTestFile"}} @renameFile={{action "renameFile"}} @removeFile={{action "removeFile"}} @setEditorKeyMap={{action "setEditorKeyMap"}} @versionSelected={{action "versionSelected"}} />
 
-{{gist-body model=model
-            columns=columns
-            settings=settings
-            numColumns=realNumColumns
-            fullScreen=fullScreen
-            fileTreeShown=fileTreeShown
-            notify=notify
-            isBuilding=isBuilding
-            buildErrors=buildErrors
-            applicationUrl=applicationUrl
-            buildOutput=buildOutput
-            testsEnabled=testsEnabled
-            openFile=(action "openFile")
-            hideFileTree=(action "hideFileTree")
-            focusEditor=(action "focusEditor")
-            selectFile=(action "selectFile")
-            updateColumn=(action "updateColumn")
-            removeColumn=(action "removeColumn")
-            addColumn=(action "addColumn")
-            showFileTree=(action "showFileTree")
-            liveReloadChanged=(action "liveReloadChanged")
-            runNow=(action "runNow")
-            exitFullScreen=(action "exitFullScreen")
-            switchTests=(action "switchTests")
-}}
+<GistBody @model={{model}} @columns={{columns}} @settings={{settings}} @numColumns={{realNumColumns}} @fullScreen={{fullScreen}} @fileTreeShown={{fileTreeShown}} @notify={{notify}} @isBuilding={{isBuilding}} @buildErrors={{buildErrors}} @applicationUrl={{applicationUrl}} @buildOutput={{buildOutput}} @testsEnabled={{testsEnabled}} @openFile={{action "openFile"}} @hideFileTree={{action "hideFileTree"}} @focusEditor={{action "focusEditor"}} @selectFile={{action "selectFile"}} @updateColumn={{action "updateColumn"}} @removeColumn={{action "removeColumn"}} @addColumn={{action "addColumn"}} @showFileTree={{action "showFileTree"}} @liveReloadChanged={{action "liveReloadChanged"}} @runNow={{action "runNow"}} @exitFullScreen={{action "exitFullScreen"}} @switchTests={{action "switchTests"}} />
 
-{{gist-footer owner=model.owner originalGist=model.forkOf}}
+<GistFooter @owner={{model.owner}} @originalGist={{model.forkOf}} />

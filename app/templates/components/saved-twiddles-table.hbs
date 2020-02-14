@@ -10,7 +10,7 @@
     </thead>
     <tbody>
       {{#each filteredModel as |gist|}}
-        {{saved-twiddles-row gist=gist}}
+        <SavedTwiddlesRow @gist={{gist}} />
       {{/each}}
     </tbody>
   </table>

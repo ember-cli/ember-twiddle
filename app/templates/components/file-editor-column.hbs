@@ -43,15 +43,11 @@
 </div>
 
 {{#if file}}
-{{ivy-codemirror
-    value=file.content
-    options=(hash
+<IvyCodemirror @value={{file.content}} @options={{hash
       mode=editorMode
       keyMap=keyMap
       lineNumbers=true
       fixedGutter=true
       lineWrapping=true
-      tabSize=2)
-    valueUpdated=(action "valueUpdated")
-}}
+      tabSize=2}} @valueUpdated={{action "valueUpdated"}} />
 {{/if}}

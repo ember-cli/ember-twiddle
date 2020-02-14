@@ -1,30 +1,15 @@
-{{#twiddle-panes numColumns=numColumns fullScreen=fullScreen fileTreeShown=fileTreeShown}}
+<TwiddlePanes @numColumns={{numColumns}} @fullScreen={{fullScreen}} @fileTreeShown={{fileTreeShown}}>
   {{#unless fullScreen}}
     {{#if fileTreeShown}}
       <div class="twiddle-pane file-tree">
-        {{file-tree model=model
-                    openFile=(action this.openFile)
-                    hideFileTree=(action this.hideFileTree)
-        }}
+        <FileTree @model={{model}} @openFile={{action this.openFile}} @hideFileTree={{action this.hideFileTree}} />
       </div>
     {{/if}}
 
     {{#each columns as |column|}}
       {{#if column.show}}
         <div class="twiddle-pane code {{if column.active 'active'}}">
-          {{file-editor-column col=column.col
-                               file=column.file
-                               allFiles=model.files
-                               keyMap=settings.keyMap
-                               numColumns=numColumns
-                               fileTreeShown=fileTreeShown
-                               focusEditor=(action this.focusEditor)
-                               selectFile=(action this.selectFile)
-                               contentChanged=(action this.updateColumn)
-                               removeColumn=(action this.removeColumn)
-                               addColumn=(action this.addColumn)
-                               showFileTree=(action this.showFileTree)
-          }}
+          <FileEditorColumn @col={{column.col}} @file={{column.file}} @allFiles={{model.files}} @keyMap={{settings.keyMap}} @numColumns={{numColumns}} @fileTreeShown={{fileTreeShown}} @focusEditor={{action this.focusEditor}} @selectFile={{action this.selectFile}} @contentChanged={{action this.updateColumn}} @removeColumn={{action this.removeColumn}} @addColumn={{action this.addColumn}} @showFileTree={{action this.showFileTree}} />
         </div>
       {{/if}}
     {{/each}}
@@ -35,25 +20,22 @@
       {{#if noColumns}}
         <span class="glyphicon glyphicon-plus" {{action (action this.addColumn)}} title="Show an editor panel"></span>
       {{/if}}
-      {{build-messages notify=notify
-                       isBuilding=isBuilding
-                       buildErrors=buildErrors
-      }}
+      <BuildMessages @notify={{notify}} @isBuilding={{isBuilding}} @buildErrors={{buildErrors}} />
       <label class="checkbox-inline twiddle-run-tests">
-        {{better-checkbox id="switch-tests" checked=testsEnabled action=(action this.switchTests)}}
+        <BetterCheckbox @id="switch-tests" @checked={{testsEnabled}} @action={{action this.switchTests}} />
         Run Tests
       </label>
-      {{run-or-live-reload liveReloadChanged=(action this.liveReloadChanged) runNow=(action this.runNow)}}
+      <RunOrLiveReload @liveReloadChanged={{action this.liveReloadChanged}} @runNow={{action this.runNow}} />
     </div>
     <div class="url-bar">
-      {{input value=applicationUrl enter=(route-action "urlChanged")}}
+      <Input @value={{applicationUrl}} @enter={{route-action "urlChanged"}} />
     </div>
     {{#if isBuilding}}
       <div class="ember-load-indicator">Building...</div>
     {{/if}}
-    {{dummy-app html=buildOutput isBuilding=isBuilding}}
+    <DummyApp @html={{buildOutput}} @isBuilding={{isBuilding}} />
     {{#if fullScreen}}
       <a class="exit-full-screen-link" {{action (action this.exitFullScreen)}}>Edit Twiddle</a>
     {{/if}}
   </div>
-{{/twiddle-panes}}
+</TwiddlePanes>
