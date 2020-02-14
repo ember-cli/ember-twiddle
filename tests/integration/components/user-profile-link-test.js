@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | user profile link', function(hooks) {
@@ -17,10 +17,10 @@ module('Integration | Component | user profile link', function(hooks) {
 
     await render(hbs`{{user-profile-link user=user}}`);
 
-    assert.equal(this.$().text().trim(), 'octocat');
+    assert.equal(find('*').textContent.trim(), 'octocat');
 
-    assert.equal(this.$('.user-link').attr('target'), '_blank');
-    assert.equal(this.$('.user-link').attr('href'), 'https://github.com/octocat');
-    assert.equal(this.$('.user-link > img').attr('src'), 'fake16.png');
+    assert.equal(find('.user-link').getAttribute('target'), '_blank');
+    assert.equal(find('.user-link').getAttribute('href'), 'https://github.com/octocat');
+    assert.equal(find('.user-link > img').getAttribute('src'), 'fake16.png');
   });
 });

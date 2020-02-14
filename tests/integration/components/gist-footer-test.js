@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupRouter from '../../helpers/setup-router';
 
@@ -34,11 +34,11 @@ module('Integration | Component | gist footer', function(hooks) {
 
     await render(hbs`{{gist-footer owner=model.owner originalGist=model.forkOf}}`);
 
-    assert.equal(this.$('footer').text().trim().replace(/[\t\n\s]+/g, " "), 'Author: octocat | Fork from: romgere \'s gist | Open original gist');
+    assert.equal(find('footer').textContent.trim().replace(/[\t\n\s]+/g, " "), 'Author: octocat | Fork from: romgere \'s gist | Open original gist');
 
-    assert.equal(this.$('footer .user-link').length, 2);
+    assert.equal(findAll('footer .user-link').length, 2);
 
-    assert.equal(this.$('footer a:last-child').attr('href'), '/fakegistid');
+    assert.equal(find('footer a:last-child').getAttribute('href'), '/fakegistid');
 
   });
 
@@ -55,9 +55,9 @@ module('Integration | Component | gist footer', function(hooks) {
 
     await render(hbs`{{gist-footer owner=model.owner originalGist=model.forkOf}}`);
 
-    assert.equal(this.$('footer').text().trim().replace(/[\t\n\s]+/g, " "), 'Author: octocat');
-    assert.equal(this.$('footer .user-link').length, 1);
-    assert.equal(this.$('footer a').length, 1);
+    assert.equal(find('footer').textContent.trim().replace(/[\t\n\s]+/g, " "), 'Author: octocat');
+    assert.equal(findAll('footer .user-link').length, 1);
+    assert.equal(findAll('footer a').length, 1);
 
   });
 
@@ -70,8 +70,8 @@ module('Integration | Component | gist footer', function(hooks) {
 
     await render(hbs`{{gist-footer owner=model.owner originalGist=model.forkOf}}`);
 
-    assert.equal(this.$('footer').text().trim().replace(/[\t\n\s]+/g, " "), 'No author (new twiddle)');
+    assert.equal(find('footer').textContent.trim().replace(/[\t\n\s]+/g, " "), 'No author (new twiddle)');
 
-    assert.equal(this.$('footer a').length, 0);
+    assert.equal(findAll('footer a').length, 0);
   });
 });

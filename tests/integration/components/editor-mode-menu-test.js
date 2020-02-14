@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | editor mode menu', function(hooks) {
@@ -18,6 +18,6 @@ module('Integration | Component | editor mode menu', function(hooks) {
 
     await render(hbs`{{editor-mode-menu setKeyMap=(action "setKeyMap")}}`);
 
-    this.$('.key-map-option.vim').click();
+    await click('.key-map-option.vim');
   });
 });

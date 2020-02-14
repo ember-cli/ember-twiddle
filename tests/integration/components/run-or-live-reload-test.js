@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -35,7 +35,7 @@ module('Integration | Component | run or live reload', function(hooks) {
     assert.ok(!liveReloadCheckbox.prop('checked'), 'isLiveReload changes to false on click of live reload checkbox');
     assert.equal(liveReloadChangedCalledTimes, 1, 'liveReloadChanged was called on click of live reload checkbox');
 
-    this.$('.run-now').click();
+    await click('.run-now');
 
     assert.ok(runNowCalled, 'runNow was called on click of run now button');
 
