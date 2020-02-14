@@ -11,6 +11,7 @@ import Ember from 'ember';
 import moment from 'moment';
 import _template from "lodash/template";
 import { pushDeletion } from 'ember-twiddle/utils/push-deletion';
+import NewModulesPlugin from 'babel-plugin-ember-modules-api-polyfill';
 
 const {
   testing
@@ -531,7 +532,8 @@ function babelOpts(moduleName) {
       'transform-decorators-legacy',
       'transform-class-properties',
       'transform-object-rest-spread',
-      hbsPlugin
+      hbsPlugin,
+      newModulesPlugin
     ]
   };
 }
