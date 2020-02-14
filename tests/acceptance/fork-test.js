@@ -1,10 +1,12 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
 import Mirage from 'ember-cli-mirage';
 
-moduleForAcceptance('Acceptance | fork gist', {
-  beforeEach: function() {
+module('Acceptance | fork gist', function(hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function() {
     this.cacheConfirm = window.confirm;
     window.confirm = () => true;
     server.create('user', { login: 'octocat' });
@@ -13,36 +15,32 @@ moduleForAcceptance('Acceptance | fork gist', {
       let gist = server.create('gist', { id: 'bd9d8d69-a674-4e0f-867c-c8796ed151a0' });
       return new Mirage.Response(200, {}, gist);
     });
-  },
+  });
 
-  afterEach: function() {
+  hooks.afterEach(function() {
     window.confirm = this.cacheConfirm;
-  }
-});
-
-test('can fork a gist', function(assert) {
-  // set owner of gist as currently logged in user
-  stubValidSession(this.application, {
-    currentUser: {login: "octocat"},
-    "github-oauth2": {}
   });
 
-  runGist([
-    {
-      filename: 'application.template.hbs',
-      content: 'hello world!'
-    }
-  ]);
+  test('can fork a gist', async function(assert) {
+    // set owner of gist as currently logged in user
+    stubValidSession(this.application, {
+      currentUser: {login: "octocat"},
+      "github-oauth2": {}
+    });
 
-  visit('/35de43cb81fc35ddffb2');
+    runGist([
+      {
+        filename: 'application.template.hbs',
+        content: 'hello world!'
+      }
+    ]);
 
-  andThen(function () {
+    await visit('/35de43cb81fc35ddffb2');
+
     assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
-  });
 
-  click('.test-fork-action');
+    await click('.test-fork-action');
 
-  andThen(function() {
     assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
 
     let url = currentURL();

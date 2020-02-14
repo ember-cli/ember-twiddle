@@ -1,54 +1,47 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('Acceptance | run now');
+module('Acceptance | run now', function(hooks) {
+  setupApplicationTest(hooks);
 
-const files = [
-  {
-    filename: "application.template.hbs",
-    content: `{{input value="initial value"}}`
-  }
-];
+  const files = [
+    {
+      filename: "application.template.hbs",
+      content: `{{input value="initial value"}}`
+    }
+  ];
 
-test('Able to reload the Twiddle', function(assert) {
+  test('Able to reload the Twiddle', async function(assert) {
+    runGist(files);
 
-  runGist(files);
+    await click("#live-reload");
 
-  click("#live-reload");
-
-  andThen(function() {
     assert.equal(outputPane().find('input').val(), 'initial value');
 
     outputPane().find('input').val('new value');
-  });
-
-  andThen(function() {
     assert.equal(outputPane().find('input').val(), 'new value');
 
-    click(".run-now");
+    await click(".run-now");
     waitForUnloadedIFrame();
     waitForLoadedIFrame();
-  });
-
-  andThen(function() {
     assert.equal(outputPane().find('input').val(), 'initial value');
   });
-});
 
-test('Reload the Twiddle on command (Cmd+Enter)', async(assert) => {
+  test('Reload the Twiddle on command (Cmd+Enter)', async(assert) => {
 
-  runGist(files);
+    runGist(files);
 
-  await click("#live-reload");
-  assert.equal(outputPane().find('input').val(), 'initial value');
-  
-  await outputPane().find('input').val('new value');
-  assert.equal(outputPane().find('input').val(), 'new value');
+    await click("#live-reload");
+    assert.equal(outputPane().find('input').val(), 'initial value');
+    
+    await outputPane().find('input').val('new value');
+    assert.equal(outputPane().find('input').val(), 'new value');
 
-  await keyDown('Enter+cmd'); // eslint-disable-line no-undef
+    await keyDown('Enter+cmd'); // eslint-disable-line no-undef
 
-  await waitForUnloadedIFrame();
-  await waitForLoadedIFrame();
+    await waitForUnloadedIFrame();
+    await waitForLoadedIFrame();
 
-  assert.equal(outputPane().find('input').val(), 'initial value');
+    assert.equal(outputPane().find('input').val(), 'initial value');
+  });
 });

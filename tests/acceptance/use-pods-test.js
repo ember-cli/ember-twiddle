@@ -1,5 +1,5 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import $ from 'jquery';
 
 const firstColumn = '.code:eq(0)';
@@ -7,63 +7,61 @@ const firstFilePicker = firstColumn + ' .dropdown-toggle';
 const fileMenu = '.main-menu .dropdown-toggle';
 const addTemplateAction = '.test-template-action';
 
-moduleForAcceptance('Acceptance | use pods', {
-  beforeEach: function() {
+module('Acceptance | use pods', function(hooks) {
+  setupApplicationTest(hooks);
+
+  hooks.beforeEach(function() {
     this.cachePrompt = window.prompt;
     window.prompt = (text, defaultResponse) => defaultResponse;
-  },
-
-  afterEach: function() {
-    window.prompt = this.cachePrompt;
-  }
-});
-
-test('Use pods option works', function(assert) {
-
-  const files = [
-    {
-      filename: "application.template.hbs",
-      content: "Welcome to {{appName}}"
-    },
-    {
-      filename: "application.controller.js",
-      content: `import Ember from "ember";
-                export default Ember.Controller.extend({
-                  appName: 'Ember Twiddle'
-                });`
-    },
-    {
-      filename: "twiddle.json",
-      content: `{
-                  "version": "0.7.0",
-                  "EmberENV": {
-                    "FEATURES": {}
-                  },
-                  "options": {
-                    "use_pods": true,
-                    "enable-testing": false
-                  },
-                  "dependencies": {
-                    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
-                    "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/2.4.3/ember.debug.js",
-                    "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/2.4.0/ember-data.js"
-                  }
-                }`
-    }
-  ];
-
-  runGist(files);
-
-  andThen(function() {
-    assert.equal(outputContents(), 'Welcome to Ember Twiddle');
   });
 
-  click(firstFilePicker);
-  click(fileMenu);
-  click(addTemplateAction);
-  click(firstFilePicker);
+  hooks.afterEach(function() {
+    window.prompt = this.cachePrompt;
+  });
 
-  andThen(function() {
+  test('Use pods option works', async function(assert) {
+
+    const files = [
+      {
+        filename: "application.template.hbs",
+        content: "Welcome to {{appName}}"
+      },
+      {
+        filename: "application.controller.js",
+        content: `import Ember from "ember";
+                  export default Ember.Controller.extend({
+                    appName: 'Ember Twiddle'
+                  });`
+      },
+      {
+        filename: "twiddle.json",
+        content: `{
+                    "version": "0.7.0",
+                    "EmberENV": {
+                      "FEATURES": {}
+                    },
+                    "options": {
+                      "use_pods": true,
+                      "enable-testing": false
+                    },
+                    "dependencies": {
+                      "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
+                      "ember": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/2.4.3/ember.debug.js",
+                      "ember-data": "https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/2.4.0/ember-data.js"
+                    }
+                  }`
+      }
+    ];
+
+    runGist(files);
+
+    assert.equal(outputContents(), 'Welcome to Ember Twiddle');
+
+    await click(firstFilePicker);
+    await click(fileMenu);
+    await click(addTemplateAction);
+    await click(firstFilePicker);
+
     assert.equal($(firstFilePicker).text().trim(), "my-route/template.hbs", "Use pods option creates correct filename");
   });
 });

@@ -1,37 +1,44 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('better-checkbox', 'Integration | Component | better checkbox', {
-  integration: true
-});
+module('Integration | Component | better checkbox', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it functions', function(assert) {
-  assert.expect(3);
+  hooks.beforeEach(function() {
+    this.actions = {};
+    this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
+  });
 
-  // let checkboxChangedCalledTimes = 0;
-  this.on('checkboxChanged', () => { /* checkboxChangedCalledTimes++; */ });
+  test('it functions', async function(assert) {
+    assert.expect(3);
 
-  this.render(hbs`{{better-checkbox action=(action "checkboxChanged")}}`);
+    // let checkboxChangedCalledTimes = 0;
+    this.actions.checkboxChanged = () => { /* checkboxChangedCalledTimes++; */ };
 
-  let comp = this.$('input');
+    await render(hbs`{{better-checkbox action=(action "checkboxChanged")}}`);
 
-  assert.ok(!comp.prop('checked'), 'checkbox defaults to being unchecked');
+    let comp = this.$('input');
 
-  comp.click();
+    assert.ok(!comp.prop('checked'), 'checkbox defaults to being unchecked');
 
-  assert.ok(comp.prop('checked'), 'checkbox becomes checked after click');
-  // assert.equal(checkboxChangedCalledTimes, 1, 'action is called on click'); // Not sure why this isn't working; change() does not get called
+    comp.click();
 
-  comp.click();
+    assert.ok(comp.prop('checked'), 'checkbox becomes checked after click');
+    // assert.equal(checkboxChangedCalledTimes, 1, 'action is called on click'); // Not sure why this isn't working; change() does not get called
 
-  assert.ok(!comp.prop('checked'), 'checkbox becomes unchecked after second click');
-  // assert.equal(checkboxChangedCalledTimes, 2, 'action is called on click again'); // Not working either
-});
+    comp.click();
 
-test('it\'s initial checked state can be set to true', function(assert) {
-  assert.expect(1);
+    assert.ok(!comp.prop('checked'), 'checkbox becomes unchecked after second click');
+    // assert.equal(checkboxChangedCalledTimes, 2, 'action is called on click again'); // Not working either
+  });
 
-  this.render(hbs`{{better-checkbox checked=true}}`);
+  test('it\'s initial checked state can be set to true', async function(assert) {
+    assert.expect(1);
 
-  assert.ok(this.$('input').prop('checked'), 'checkbox defaults to being checked if checked=true passed in');
+    await render(hbs`{{better-checkbox checked=true}}`);
+
+    assert.ok(this.$('input').prop('checked'), 'checkbox defaults to being checked if checked=true passed in');
+  });
 });
