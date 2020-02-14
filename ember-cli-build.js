@@ -132,17 +132,6 @@ module.exports = function(defaults) {
   app.import('node_modules/compare-versions/index.js');
   app.import('vendor/shims/compare-versions.js');
 
-  const nodeBuiltins = require('rollup-plugin-node-builtins');
-  const json = require('@rollup/plugin-json');
-
-  app.import('node_modules/babel-plugin-ember-modules-api-polyfill/src/index.js', {
-    using: [{
-      transformation: 'cjs',
-      as: 'babel-plugin-ember-modules-api-polyfill',
-      plugins: [nodeBuiltins(), json()]
-    }]
-  });
-
   let loaderTree = funnel(path.dirname(require.resolve('loader.js')), {
     files: ['loader.js'],
     destDir: '/assets'

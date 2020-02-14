@@ -6,7 +6,6 @@ import $ from 'jquery';
 import Babel from 'babel-core';
 import Path from 'path';
 import HbsPlugin from '../plugins/hbs-plugin';
-import NewModulesPlugin from 'babel-plugin-ember-modules-api-polyfill';
 import blueprints from '../lib/blueprints';
 import Ember from 'ember';
 import moment from 'moment';
@@ -532,8 +531,7 @@ function babelOpts(moduleName) {
       'transform-decorators-legacy',
       'transform-class-properties',
       'transform-object-rest-spread',
-      hbsPlugin,
-      newModulesPlugin
+      hbsPlugin
     ]
   };
 }
