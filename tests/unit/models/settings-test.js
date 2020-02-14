@@ -1,11 +1,5 @@
+import { set, get, getProperties } from '@ember/object';
 import { moduleFor, test } from 'ember-qunit';
-import Ember from 'ember';
-
-const {
-  getProperties,
-  get,
-  set
-} = Ember;
 
 moduleFor('model:settings', 'Unit | Model | Settings', {
   beforeEach() {

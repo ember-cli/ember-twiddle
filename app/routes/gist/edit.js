@@ -1,8 +1,7 @@
-import Ember from "ember";
+import { get } from '@ember/object';
+import { run, schedule } from '@ember/runloop';
 import GistRoute from "ember-twiddle/routes/gist-base-route";
 import { pushDeleteAll } from "ember-twiddle/utils/push-deletion";
-
-const { get, run } = Ember;
 
 export default GistRoute.extend({
   model(params) {
@@ -15,7 +14,7 @@ export default GistRoute.extend({
     this._super(...arguments);
 
     const gistController = this.controllerFor('gist');
-    Ember.run.schedule('afterRender', function() {
+    schedule('afterRender', function() {
       gistController.set('unsaved', false);
     });
   },

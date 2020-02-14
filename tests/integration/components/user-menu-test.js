@@ -1,4 +1,4 @@
-import Ember from "ember";
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -9,7 +9,7 @@ moduleForComponent('user-menu', 'Integration | Component | user menu', {
     this.signOutCalled = false;
     this.showTwiddlesCalled = false;
 
-    this.set('session', Ember.Object.create({
+    this.set('session', EmberObject.create({
       isOpening: false,
       isAuthenticated: false,
       currentUser: {

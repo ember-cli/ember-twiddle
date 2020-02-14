@@ -1,5 +1,7 @@
+import { run } from '@ember/runloop';
+import { A } from '@ember/array';
+import EmberObject from '@ember/object';
 import { moduleFor, test } from 'ember-qunit';
-import Ember from 'ember';
 
 moduleFor('service:ember-cli', 'Unit | Service | ember cli', {
   // Specify the other units that are required for this test.
@@ -19,19 +21,19 @@ test('compiling a gist works', function(assert) {
   let service = this.subject();
   assert.ok(service);
 
-  var gist = Ember.Object.create({
-    files: Ember.A([
-      Ember.Object.create({
+  var gist = EmberObject.create({
+    files: A([
+      EmberObject.create({
         filePath: 'templates/application.hbs',
         extension: '.hbs',
         content: '<h1>Hi, I\'m{{appName}}</h1>'
       }),
-      Ember.Object.create({
+      EmberObject.create({
         filePath: 'controllers/application.js',
         extension: '.js',
         content: 'import Ember from "ember";\n\nexport default Ember.Controller.extend({appName:"foo"});'
       }),
-      Ember.Object.create({
+      EmberObject.create({
         filePath: 'twiddle.json',
         extension: '.json',
         content: `{
@@ -53,7 +55,7 @@ test('compiling a gist works', function(assert) {
     ])
   });
 
-  Ember.run(function() {
+  run(function() {
     service.compileGist(gist).then(function(output) {
       output = output.replace(/define\('([a-z0-9-/]+)'/gi,'define("$1"');
       assert.ok(output.indexOf('define("twiddle/router"')>-1, 'build contains router');
@@ -125,7 +127,7 @@ test("buildHtml works when testing not enabled", function(assert) {
     }
   };
 
-  var gist = Ember.Object.create({
+  var gist = EmberObject.create({
     initialRoute: "/"
   });
 
@@ -157,7 +159,7 @@ test("buildHtml works when testing is enabled", function(assert) {
     }
   };
 
-  var gist = Ember.Object.create({});
+  var gist = EmberObject.create({});
 
   var output = service.buildHtml(gist, '', '', twiddleJson);
 
@@ -173,9 +175,27 @@ test("fixTwiddleAppNames works", function(assert) {
 
   assert.equal(service.fixTwiddleAppNames("import a from 'app/b';"), "import a from 'twiddle/b';");
   assert.equal(service.fixTwiddleAppNames('import ab from "demo-app/bc";'), 'import ab from "twiddle/bc";');
-  assert.equal(service.fixTwiddleAppNames('import {a, b} from "demo-app/c.js";'), 'import {a, b} from "twiddle/c.js";');
-  assert.equal(service.fixTwiddleAppNames("import a, {b, c} from 'demo-app/d';"), "import a, {b, c} from 'twiddle/d';");
-  assert.equal(service.fixTwiddleAppNames("import {bc, cd}, ab from 'demo-app/de';"), "import {bc, cd}, ab from 'twiddle/de';");
+  assert.equal(service.fixTwiddleAppNames('import {
+  a,
+  b} from "demo-app/c.js";'),
+  'import {a,
+  b
+} from "twiddle/c.js";');
+  assert.equal(service.fixTwiddleAppNames("import a, {
+  b,
+  c} from 'demo-app/d';"),
+  "import a,
+  {b,
+  c
+} from 'twiddle/d';");
+  assert.equal(service.fixTwiddleAppNames("import {
+  bc,
+  cd},
+  ab from 'demo-app/de';"),
+  "import {bc,
+  cd},
+  a
+} from 'twiddle/de';");
   assert.equal(service.fixTwiddleAppNames(`import {
   a,
   b,

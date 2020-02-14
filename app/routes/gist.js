@@ -1,17 +1,19 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { readOnly } from '@ember/object/computed';
+import Route from '@ember/routing/route';
+import $ from 'jquery';
+import RSVP from 'rsvp';
 import config from '../config/environment';
-
-const { inject, $, RSVP } = Ember;
 
 const CONFIRM_MSG = "Unsaved changes will be lost.";
 
-export default Ember.Route.extend({
+export default Route.extend({
   toriiProvider: config.toriiProvider,
-  notify: inject.service(),
-  app: inject.service(),
-  fastboot: inject.service(),
+  notify: service(),
+  app: service(),
+  fastboot: service(),
 
-  titleToken: Ember.computed.readOnly('controller.model.description'),
+  titleToken: readOnly('controller.model.description'),
 
   beforeModel() {
     return this.session.fetch(this.get('toriiProvider')).catch(function() {

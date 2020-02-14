@@ -1,9 +1,9 @@
-import Ember from "ember";
+import { inject as service } from '@ember/service';
+import Mixin from '@ember/object/mixin';
+import { run } from '@ember/runloop';
 
-const { inject, run } = Ember;
-
-export default Ember.Mixin.create({
-  fastboot: inject.service(),
+export default Mixin.create({
+  fastboot: service(),
 
   queryParams: ['numColumns', 'fullScreen', 'route', 'openFiles', 'fileTreeShown'],
   numColumns: 1,

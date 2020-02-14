@@ -1,4 +1,4 @@
-import Ember from "ember";
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import setupRouter from '../../helpers/setup-router';
@@ -12,7 +12,7 @@ moduleForComponent('owner-info', 'Integration | Component | gist footer', {
 
 test('it renders with author and fork', function(assert) {
 
-  this.set('model', Ember.Object.create({
+  this.set('model', EmberObject.create({
     owner: {
       login: 'octocat',
       avatarUrl16: 'fake16.png',
@@ -40,7 +40,7 @@ test('it renders with author and fork', function(assert) {
 
 test('it renders with author and no fork', function(assert) {
 
-  this.set('model', Ember.Object.create({
+  this.set('model', EmberObject.create({
     owner: {
       login: 'octocat',
       avatarUrl16: 'fake16.png',
@@ -59,7 +59,7 @@ test('it renders with author and no fork', function(assert) {
 
 test('it renders without author (new twiddle)', function(assert) {
 
-  this.set('model', Ember.Object.create({
+  this.set('model', EmberObject.create({
     owner: null,
     forkOf: null
   }));

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -35,7 +35,7 @@ test('it shows the number of build messages', function(assert) {
 test('it calls notify.errpr() when clicking on build errors', function(assert) {
   assert.expect(1);
 
-  let notifyObject = Ember.Object.create({
+  let notifyObject = EmberObject.create({
     called: false,
     info() {},
     error() {

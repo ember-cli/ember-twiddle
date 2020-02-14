@@ -1,9 +1,9 @@
-import Ember from "ember";
+import Service, { inject as service } from '@ember/service';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
 
-const { $, inject, run } = Ember;
-
-export default Ember.Service.extend({
-  fastboot: inject.service(),
+export default Service.extend({
+  fastboot: service(),
 
   init() {
     this._super(...arguments);

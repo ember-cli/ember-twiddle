@@ -1,10 +1,17 @@
 /* eslint-disable no-console */
+import $ from 'jquery';
+
+import Service, { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
+import RSVP from 'rsvp';
 import Ember from 'ember';
 import config from '../config/environment';
 import { task, timeout } from 'ember-concurrency';
 import compareVersions from 'compare-versions';
 import { deprecate } from '@ember/application/deprecations';
-const { computed, inject, RSVP, testing } = Ember;
+const {
+  testing
+} = Ember;
 
 const EMBER_VERSIONS = ['3.8.1', '3.7.3', '3.6.1', '3.5.1', '3.4.3', '3.3.2', '3.2.2', '3.1.4', '3.0.0', '2.18.2', '2.17.2', '2.16.2', '2.15.3', '2.14.1', '2.13.0', '2.12.0'];
 const EMBER_DATA_VERSIONS = ['3.8.1', '3.7.0', '3.6.0', '3.5.2', '3.4.2', '3.3.2', '3.2.2', '3.1.2', '3.0.4', '2.18.5', '2.17.1', '2.16.4', '2.15.3', '2.14.10', '2.13.2', '2.12.2'];
@@ -39,8 +46,8 @@ const CDN_MAP = {
 
 const POLL_INTERVAL = 10000;
 
-export default Ember.Service.extend({
-  notify: inject.service(),
+export default Service.extend({
+  notify: service(),
 
   resolveDependencies(dependencies) {
     Object.keys(dependencies).forEach((name) => {
@@ -114,7 +121,7 @@ export default Ember.Service.extend({
   resolveAddon(name, value, emberVersion) {
     const url = `${config.addonUrl}?ember_version=${emberVersion}&addon=${name}&addon_version=${value}`;
     return new RSVP.Promise(function(resolve) {
-      Ember.$.getJSON(url).then(resolve);
+      $.getJSON(url).then(resolve);
     });
   },
 

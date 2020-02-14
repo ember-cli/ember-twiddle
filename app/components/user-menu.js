@@ -1,13 +1,13 @@
-import Ember from 'ember';
+import { readOnly } from '@ember/object/computed';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import config from '../config/environment';
 
-const { computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'ul',
   classNames: ['nav', 'nav-pills', 'user-menu'],
 
-  userName: computed.readOnly('session.currentUser.login'),
+  userName: readOnly('session.currentUser.login'),
 
   version: config.APP.version,
   environment: config.environment,

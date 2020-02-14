@@ -1,4 +1,4 @@
-import Ember from "ember";
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -8,7 +8,7 @@ moduleForComponent('user-profile-link', 'Integration | Component | user profile 
 
 test('it renders', function(assert) {
 
-  this.set('user', Ember.Object.create({
+  this.set('user', EmberObject.create({
     login: 'octocat',
     avatarUrl16: 'fake16.png',
     htmlUrl: 'https://github.com/octocat'

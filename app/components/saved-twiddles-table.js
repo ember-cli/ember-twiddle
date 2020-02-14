@@ -1,8 +1,9 @@
-import Ember from "ember";
+import { filter } from '@ember/object/computed';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
 
-  filteredModel: Ember.computed.filter('model', function(gist) {
+  filteredModel: filter('model', function(gist) {
     return gist.get('files').map(function(file) {
       return file.get('fileName');
     }).includes('twiddle.json');

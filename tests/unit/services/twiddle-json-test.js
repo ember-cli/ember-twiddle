@@ -1,4 +1,5 @@
-import Ember from "ember";
+import { A } from '@ember/array';
+import EmberObject from '@ember/object';
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('service:twiddle-json', 'Unit | Service | twiddle json', {
@@ -11,8 +12,8 @@ test("getTwiddleJson() resolves dependencies", function(assert) {
   let done = assert.async();
   var service = this.subject();
 
-  var gist = Ember.Object.create({
-    files: Ember.A([Ember.Object.create({
+  var gist = EmberObject.create({
+    files: A([EmberObject.create({
       filePath: 'twiddle.json',
       content: `
         {
@@ -45,8 +46,8 @@ test("updateDependencyVersion() updates the version of the dependency in twiddle
   let done = assert.async();
   var service = this.subject();
 
-  var gist = Ember.Object.create({
-    files: Ember.A([Ember.Object.create({
+  var gist = EmberObject.create({
+    files: A([EmberObject.create({
       filePath: 'twiddle.json',
       content: `
         {
@@ -74,8 +75,8 @@ test("updateDependencyVersion() updates the version of ember-template-compiler i
   let done = assert.async();
   var service = this.subject();
 
-  var gist = Ember.Object.create({
-    files: Ember.A([Ember.Object.create({
+  var gist = EmberObject.create({
+    files: A([EmberObject.create({
       filePath: 'twiddle.json',
       content: `
         {
@@ -104,8 +105,8 @@ test("updateDependencyVersion() updates the version of ember-testing if ember is
   let done = assert.async();
   var service = this.subject();
 
-  var gist = Ember.Object.create({
-    files: Ember.A([Ember.Object.create({
+  var gist = EmberObject.create({
+    files: A([EmberObject.create({
       filePath: 'twiddle.json',
       content: `
         {

@@ -1,11 +1,8 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { run } from '@ember/runloop';
 import $ from 'jquery';
 
-const {
-  run
-} = Ember;
-
-export default Ember.Mixin.create({
+export default Mixin.create({
   didInsertElement() {
     this._super();
     $(window).on('resize', this.get("resizeHandler"));

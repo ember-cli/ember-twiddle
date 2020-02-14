@@ -1,4 +1,7 @@
-import Ember from "ember";
+import {
+  registerHelper,
+  registerAsyncHelper
+} from '@ember/test';
 import Application from '../app';
 import config from "../config/environment";
 import { setApplication } from '@ember/test-helpers';
@@ -15,11 +18,11 @@ setApplication(Application.create(attributes));
 
 const iframe = "iframe#dummy-content-iframe";
 
-Ember.Test.registerHelper('outputPane', function(app) {
+registerHelper('outputPane', function(app) {
   return app.testHelpers.find(iframe)[0].contentWindow;
 });
 
-Ember.Test.registerHelper('outputContents', function(app, selector) {
+registerHelper('outputContents', function(app, selector) {
   let output = app.testHelpers.outputPane();
   let outputDiv = output.document.querySelector('#root');
   if (selector) {
@@ -28,10 +31,10 @@ Ember.Test.registerHelper('outputContents', function(app, selector) {
   return outputDiv.textContent.trim();
 });
 
-Ember.Test.registerHelper('createGist', createGist);
-Ember.Test.registerAsyncHelper('runGist', runGist);
-Ember.Test.registerAsyncHelper('runRevision', runRevision);
-Ember.Test.registerAsyncHelper('waitForLoadedIFrame', waitForLoadedIFrame);
-Ember.Test.registerAsyncHelper('waitForUnloadedIFrame', waitForUnloadedIFrame);
+registerHelper('createGist', createGist);
+registerAsyncHelper('runGist', runGist);
+registerAsyncHelper('runRevision', runRevision);
+registerAsyncHelper('waitForLoadedIFrame', waitForLoadedIFrame);
+registerAsyncHelper('waitForUnloadedIFrame', waitForUnloadedIFrame);
 
 start();

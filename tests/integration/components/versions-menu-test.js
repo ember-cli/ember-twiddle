@@ -1,4 +1,4 @@
-import Ember from "ember";
+import Service from '@ember/service';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -6,7 +6,7 @@ moduleForComponent('versions-menu', 'Integration | Component | versions menu', {
   integration: true,
 
   beforeEach() {
-    this.depResolverStub = Ember.Service.extend({
+    this.depResolverStub = Service.extend({
       init() {
         this._super(...arguments);
         this.emberVersions = ['1.2.3'];

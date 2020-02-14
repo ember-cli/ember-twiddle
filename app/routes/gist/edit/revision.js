@@ -1,8 +1,6 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
 import GistEditRoute from "../edit";
 import { pushDeleteAll } from "ember-twiddle/utils/push-deletion";
-
-const { run } = Ember;
 
 export default GistEditRoute.extend({
 

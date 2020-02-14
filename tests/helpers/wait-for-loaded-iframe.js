@@ -1,6 +1,5 @@
-import Ember from "ember";
-
-const { RSVP, run } = Ember;
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
 
 export default function(app, url) {
   let iframeWindow;

@@ -1,4 +1,4 @@
-import Ember from "ember";
+import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -23,11 +23,11 @@ moduleForComponent('file-menu', 'Integration | Component | file menu', {
     this.gistToFork = null;
     this.gistToDelete = null;
 
-    this.file = Ember.Object.create({
+    this.file = EmberObject.create({
       filePath: "some.path.js"
     });
 
-    this.gist = Ember.Object.create({
+    this.gist = EmberObject.create({
       id: '74bae9a34142370ff5a3',
       files: [this.file],
       history: [],
@@ -38,7 +38,7 @@ moduleForComponent('file-menu', 'Integration | Component | file menu', {
     // Set any properties with this.set('myProperty', 'value');
     this.set('model', this.gist);
 
-    this.set('session', Ember.Object.create({
+    this.set('session', EmberObject.create({
       isAuthenticated: true,
       currentUser: {
         login: 'octocat'

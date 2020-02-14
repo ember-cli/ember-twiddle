@@ -1,11 +1,10 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { run } from '@ember/runloop';
 import GistRoute from "ember-twiddle/routes/gist-base-route";
 import { pushDeleteAll } from "ember-twiddle/utils/push-deletion";
 
-const { inject, run } = Ember;
-
 export default GistRoute.extend({
-  emberCli: inject.service(),
+  emberCli: service(),
 
   model(params) {
     let store = this.get('store');

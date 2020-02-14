@@ -1,7 +1,5 @@
-import Ember from "ember";
+import { isArray } from '@ember/array';
 import runGist from "./run-gist";
-
-const { isArray } = Ember;
 
 export default function(app, options) {
   if (isArray(options)) {

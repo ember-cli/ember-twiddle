@@ -1,7 +1,6 @@
-import Ember from "ember";
+import EmberObject from '@ember/object';
+import RSVP from 'rsvp';
 import { moduleFor, test } from 'ember-qunit';
-
-const { RSVP } = Ember;
 
 moduleFor('route:gist', {
   needs: [
@@ -28,7 +27,7 @@ test('deleting a gist requires confirmation', function(assert) {
       info() {}
     }
   });
-  let gistClass = Ember.Object.extend({
+  let gistClass = EmberObject.extend({
     called: false,
     destroyRecord() {
       this.set('called', true);
