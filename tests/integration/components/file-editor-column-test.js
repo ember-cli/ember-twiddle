@@ -64,7 +64,7 @@ module('Integration | Component | file editor column', function(hooks) {
       {{file-editor-column col='1' file=file contentChanged=(action externalAction) focusEditor=(action ignoreAction)}}
     `);
 
-    const codeMirrorInstance = this.$('.CodeMirror')[0].CodeMirror;
+    const codeMirrorInstance = $(this.element).find('.CodeMirror')[0].CodeMirror;
     codeMirrorInstance.triggerOnKeyDown(enterKeyEvent);
   });
 

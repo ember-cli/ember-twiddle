@@ -33,6 +33,6 @@ module('Integration | Component | versions menu', function(hooks) {
 
     await render(hbs`{{versions-menu versionSelected=(action "versionSelected")}}`);
 
-    this.$('.test-set-ember-version:contains("1.2.3")').click();
+    $(this.element).find('.test-set-ember-version:contains("1.2.3")').click();
   });
 });

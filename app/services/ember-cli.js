@@ -11,7 +11,6 @@ import Ember from 'ember';
 import moment from 'moment';
 import _template from "lodash/template";
 import { pushDeletion } from 'ember-twiddle/utils/push-deletion';
-import NewModulesPlugin from 'babel-plugin-ember-modules-api-polyfill';
 
 const {
   testing
@@ -19,7 +18,6 @@ const {
 const twiddleAppName = 'twiddle';
 const oldTwiddleAppNames = ['demo-app', 'app'];
 const hbsPlugin = new HbsPlugin(Babel);
-const newModulesPlugin = new NewModulesPlugin(Babel);
 
 // These files will be included if not present
 const boilerPlateJs = [
@@ -529,11 +527,10 @@ function babelOpts(moduleName) {
         loose: true,
         noInterop: true
       }],
-      'transform-decorators-legacy',
+      ["@babel/plugin-proposal-decorators", { "legacy": true }],
       'transform-class-properties',
       'transform-object-rest-spread',
-      hbsPlugin,
-      newModulesPlugin
+      hbsPlugin
     ]
   };
 }

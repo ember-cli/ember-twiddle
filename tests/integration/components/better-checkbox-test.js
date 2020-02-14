@@ -19,7 +19,7 @@ module('Integration | Component | better checkbox', function(hooks) {
 
     await render(hbs`{{better-checkbox action=(action "checkboxChanged")}}`);
 
-    let comp = this.$('input');
+    let comp = $(this.element).find('input');
 
     assert.ok(!comp.prop('checked'), 'checkbox defaults to being unchecked');
 

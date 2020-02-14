@@ -26,7 +26,7 @@ module('Integration | Component | twiddle panes', function(hooks) {
 
     assert.dom('.handle').exists({ count: 3 }, 'Renders 3 handles if 4 columns');
 
-    this.$('.twiddle-pane').last().after('<div class="twiddle-pane"></div>');
+    $(this.element).find('.twiddle-pane').last().after('<div class="twiddle-pane"></div>');
     this.set('numColumns', 5);
 
     assert.dom('.handle').exists({ count: 4 }, 'Increases handles to 4 if a column is inserted');

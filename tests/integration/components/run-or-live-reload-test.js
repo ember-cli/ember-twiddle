@@ -26,7 +26,7 @@ module('Integration | Component | run or live reload', function(hooks) {
 
     await render(hbs`{{run-or-live-reload liveReloadChanged=(action "liveReloadChanged") runNow=(action "runNow")}}`);
 
-    let liveReloadCheckbox = this.$("#live-reload");
+    let liveReloadCheckbox = $(this.element).find("#live-reload");
 
     assert.ok(liveReloadCheckbox.prop('checked'), 'isLiveReload defaults to true');
 

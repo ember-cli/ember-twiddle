@@ -97,7 +97,7 @@ module('Acceptance | integration-component-test', function(hooks) {
 
                     this.render(hbs\`{{my-component}}\`);
 
-                    assert.equal(this.$().text().trim(), '');
+                    assert.equal($(this.element).text().trim(), '');
 
                     // Template block usage:
                     this.render(hbs\`
@@ -106,7 +106,7 @@ module('Acceptance | integration-component-test', function(hooks) {
                       {{/my-component}}
                     \`);
 
-                    assert.equal(this.$().text().trim(), 'template block text');
+                    assert.equal($(this.element).text().trim(), 'template block text');
                   });`
       }
     ];

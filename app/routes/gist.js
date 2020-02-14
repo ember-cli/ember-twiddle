@@ -26,7 +26,7 @@ export default Route.extend({
       return;
     }
     this.set('boundConfirmUnload', this.confirmUnload.bind(this));
-    $(window).on('beforeunload', this.boundConfirmUnload);
+    jQuery(window).on('beforeunload', this.boundConfirmUnload);
   },
 
   deactivate() {
@@ -35,7 +35,7 @@ export default Route.extend({
       this.store.unloadRecord(gist);
     }
     if (!this.get('fastboot.isFastBoot')) {
-      $(window).off('beforeunload', this.boundConfirmUnload);
+      jQuery(window).off('beforeunload', this.boundConfirmUnload);
     }
   },
 

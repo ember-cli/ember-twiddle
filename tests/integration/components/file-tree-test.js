@@ -70,7 +70,7 @@ module('Integration | Component | file tree', function(hooks) {
                               didBecomeReady=(action didBecomeReady)}}`);
 
     return this.get('waitForRender').then(() => {
-      this.$('.jstree-anchor').eq(0).click();
+      $(this.element).find('.jstree-anchor').eq(0).click();
     });
   });
 
@@ -141,14 +141,14 @@ module('Integration | Component | file tree', function(hooks) {
     return this.get('waitForRender').then(async () => {
       await click('.twiddlicon-expand-all');
 
-      assert.equal(this.$('.jstree-anchor').eq(0).text().trim(), "some-path.js");
+      assert.equal($(this.element).find('.jstree-anchor').eq(0).text().trim(), "some-path.js");
 
       this.set('model.files.firstObject.filePath', 'some-new-path.js');
 
       return waitForChange;
     }).then(() => {
 
-      assert.equal(this.$('.jstree-anchor').eq(0).text().trim(), "some-new-path.js", "Tree updated when file renamed");
+      assert.equal($(this.element).find('.jstree-anchor').eq(0).text().trim(), "some-new-path.js", "Tree updated when file renamed");
     });
   });
 });
