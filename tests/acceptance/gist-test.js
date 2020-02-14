@@ -1,3 +1,14 @@
+import {
+  click,
+  fillIn,
+  find,
+  keyEvent,
+  findAll,
+  currentURL,
+  blur,
+  triggerEvent,
+  visit,
+} from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { findMapText } from 'ember-twiddle/tests/helpers/util';
@@ -48,9 +59,9 @@ module('Acceptance | gist', function(hooks) {
     await click(firstFilePicker);
     await click(fileMenu);
     await click(deleteAction);
-    assert.equal(find('.code .CodeMirror').length, 0, 'No code mirror editors active');
-    assert.equal(find('.dropdown-toggle:contains(No file selected)').length, 2, 'Shows message when no file is selected.');
-    assert.equal(find('.main-menu .test-remove-action').length, 0, 'There no longer is a selected file to delete');
+    assert.equal(findAll('.code .CodeMirror').length, 0, 'No code mirror editors active');
+    assert.equal(findAll('.dropdown-toggle:contains(No file selected)').length, 2, 'Shows message when no file is selected.');
+    assert.equal(findAll('.main-menu .test-remove-action').length, 0, 'There no longer is a selected file to delete');
 
     // TODO: Replace brittle for loop test code with "while there are files left..."
     for (var i = 0; i < 1; ++i) {
@@ -61,7 +72,7 @@ module('Acceptance | gist', function(hooks) {
     }
 
     await click(firstFilePicker);
-    assert.ok(find(anyFile).text().indexOf('twiddle.json')!==-1, 'twiddle.json remains');
+    assert.ok(find(anyFile).textContent.indexOf('twiddle.json')!==-1, 'twiddle.json remains');
   });
 
   test('can add two templates with different names', async function(assert) {
@@ -69,7 +80,7 @@ module('Acceptance | gist', function(hooks) {
     let origFiles;
 
     await click(firstFilePicker);
-    origFiles = find(firstFilePickerFiles).length;
+    origFiles = findAll(firstFilePickerFiles).length;
     promptValue = "foo/template.hbs";
     await click(fileMenu);
     await click(addTemplateAction);
@@ -77,13 +88,13 @@ module('Acceptance | gist', function(hooks) {
 
     let numFiles;
 
-    numFiles = find(firstFilePickerFiles).length;
+    numFiles = findAll(firstFilePickerFiles).length;
     assert.equal(numFiles, origFiles + 1, 'Added first file');
     promptValue = "bar/template.hbs";
     await click(fileMenu);
     await click(addTemplateAction);
     await click(firstFilePicker);
-    numFiles = find(firstFilePickerFiles).length;
+    numFiles = findAll(firstFilePickerFiles).length;
     assert.equal(numFiles, origFiles + 2, 'Added second file');
   });
 
@@ -91,13 +102,13 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = "components/my-comp";
     await visit('/');
-    origFileCount =  find(firstFilePickerFiles).length;
+    origFileCount =  findAll(firstFilePickerFiles).length;
 
     await click(plusGlyph);
     await click(fileMenu);
     await click('.add-component-link');
     await click(firstFilePicker);
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = findAll(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 2, 'Added component files');
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
     let jsFile = `${promptValue}.js`;
@@ -112,13 +123,13 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = "my-comp";
     await visit('/');
-    origFileCount =  find(firstFilePickerFiles).length;
+    origFileCount =  findAll(firstFilePickerFiles).length;
 
     await click(plusGlyph);
     await click(fileMenu);
     await click('.add-component-link');
     await click(firstFilePicker);
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = findAll(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 2, 'Added component files');
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
     let jsFile = `${promptValue}/component.js`;
@@ -151,13 +162,13 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = "my-service/service.js";
     await visit('/');
-    origFileCount = find(firstFilePickerFiles).length;
+    origFileCount = findAll(firstFilePickerFiles).length;
 
     await click(fileMenu);
     await click('.test-add-service-link');
     await click(firstFilePicker);
 
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = findAll(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 1, 'Added service file');
 
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
@@ -173,13 +184,13 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = "routes/my-route.js";
     await visit('/');
-    origFileCount = find(firstFilePickerFiles).length;
+    origFileCount = findAll(firstFilePickerFiles).length;
 
     await click(fileMenu);
     await click('.test-add-route-link');
     await click(firstFilePicker);
 
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = findAll(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 1, 'Added route file');
 
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
@@ -195,13 +206,13 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = 'helpers/my-helper.js';
     await visit('/');
-    origFileCount = find(firstFilePickerFiles).length;
+    origFileCount = findAll(firstFilePickerFiles).length;
 
     await click(fileMenu);
     await click('.test-add-helper-link');
     await click(firstFilePicker);
 
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = findAll(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 1, 'Added helper file');
 
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
@@ -217,13 +228,13 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = 'tests/unit/routes/my-route-test.js';
     await visit('/');
-    origFileCount = find(firstFilePickerFiles).length;
+    origFileCount = findAll(firstFilePickerFiles).length;
 
     await click(fileMenu);
     await click('.test-add-route-test-link');
     await click(firstFilePicker);
 
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = findAll(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 2, 'Added 2 test files');
 
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
@@ -239,13 +250,13 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = 'tests/integration/components/my-component-test.js';
     await visit('/');
-    origFileCount = find(firstFilePickerFiles).length;
+    origFileCount = findAll(firstFilePickerFiles).length;
 
     await click(fileMenu);
     await click('.test-add-component-test-link');
     await click(firstFilePicker);
 
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = findAll(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 2, 'Added 2 test files');
 
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
@@ -261,14 +272,14 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = 'tests/acceptance/my-acceptance-test.js';
     await visit('/');
-    origFileCount = find(firstFilePickerFiles).length;
+    origFileCount = findAll(firstFilePickerFiles).length;
 
     await click("#live-reload");
     await click(fileMenu);
     await click('.test-add-acceptance-test-link');
     await click(firstFilePicker);
 
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = findAll(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 5, 'Added 5 test files');
 
     let fileNames = findMapText(`${firstFilePickerFiles}  a`);
@@ -283,7 +294,7 @@ module('Acceptance | gist', function(hooks) {
 
     await visit('/');
 
-    assert.equal(find(indicator).length, 0, "Unsaved indicator does not appear when first loading");
+    assert.equal(findAll(indicator).length, 0, "Unsaved indicator does not appear when first loading");
 
     // Below doesn't work in phantomjs:
     if (/PhantomJS/.test(window.navigator.userAgent)) {
@@ -292,11 +303,11 @@ module('Acceptance | gist', function(hooks) {
 
     await click(firstColumnTextarea);
     await fillIn(firstColumnTextarea, "\"some text\";");
-    await triggerEvent(firstColumnTextarea, "blur");
+    await await blur(firstColumnTextarea);
     await triggerEvent(firstColumnTextarea, "focusout");
 
     return timeout(10);
-    assert.equal(find(indicator).length, 1, "Unsaved indicator reappears after editing");
+    assert.equal(findAll(indicator).length, 1, "Unsaved indicator reappears after editing");
   });
 
   test('editing a file updates gist', async function(assert) {
@@ -315,7 +326,7 @@ module('Acceptance | gist', function(hooks) {
     await click(addTemplateAction);
     await click(firstFilePicker);
 
-    assert.equal(find(firstColumnTextarea).val(), "");
+    assert.equal(find(firstColumnTextarea).value, "");
 
     // Below doesn't work in phantomjs:
     if (/PhantomJS/.test(window.navigator.userAgent)) {
@@ -325,11 +336,11 @@ module('Acceptance | gist', function(hooks) {
     await click("#live-reload");
     await click(firstColumnTextarea);
     await fillIn(firstColumnTextarea, '<div class="index">some text</div>');
-    await triggerEvent(firstColumnTextarea, "blur");
+    await await blur(firstColumnTextarea);
     await triggerEvent(firstColumnTextarea, "focusout");
 
     return timeout(10);
-    assert.equal(find(firstColumnTextarea).val(), '<div class="index">some text</div>');
+    assert.equal(find(firstColumnTextarea).value, '<div class="index">some text</div>');
 
     await click(".run-now");
     waitForUnloadedIFrame();
@@ -351,18 +362,18 @@ module('Acceptance | gist', function(hooks) {
       }
     ]);
 
-    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+    assert.equal(findAll('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
 
     await fillIn('.title input', "my twiddle");
-    keyEvent('.title input', 'keyup', 13);
-    assert.equal(find('.title input').val(), "my twiddle");
+    await keyEvent('.title input', 'keyup', 13);
+    assert.equal(find('.title input').value, "my twiddle");
 
     await click("#live-reload");
     await click('.test-copy-action');
     waitForLoadedIFrame();
-    assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
-    assert.equal(find('.test-unsaved-indicator').length, 0, "Unsaved indicator does not appear when gist is copied");
-    assert.equal(find('.test-copy-action').length, 0, "Menu item to copy gist is not shown anymore");
+    assert.equal(find('.title input').value, "New Twiddle", "Description is reset");
+    assert.equal(findAll('.test-unsaved-indicator').length, 0, "Unsaved indicator does not appear when gist is copied");
+    assert.equal(findAll('.test-copy-action').length, 0, "Menu item to copy gist is not shown anymore");
     assert.equal(outputContents(), 'hello world!');
   });
 
@@ -374,11 +385,11 @@ module('Acceptance | gist', function(hooks) {
       }
     ]);
 
-    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+    assert.equal(findAll('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
 
     await fillIn('.title input', "my twiddle");
-    assert.equal(find('.title input').val(), "my twiddle");
-    assert.equal(find('.test-unsaved-indicator').length, 1, "Changing title triggers unsaved indicator");
+    assert.equal(find('.title input').value, "my twiddle");
+    assert.equal(findAll('.test-unsaved-indicator').length, 1, "Changing title triggers unsaved indicator");
 
     await click("#live-reload");
     await visit('/35de43cb81fc35ddffb2/copy');
@@ -386,8 +397,8 @@ module('Acceptance | gist', function(hooks) {
     waitForUnloadedIFrame();
     waitForLoadedIFrame();
     assert.equal(currentURL(), '/');
-    assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
-    assert.equal(find('.test-unsaved-indicator').length, 0, "Unsaved indicator does not appear when gist is copied");
+    assert.equal(find('.title input').value, "New Twiddle", "Description is reset");
+    assert.equal(findAll('.test-unsaved-indicator').length, 0, "Unsaved indicator does not appear when gist is copied");
     assert.equal(outputContents(), 'hello world!');
   });
 });

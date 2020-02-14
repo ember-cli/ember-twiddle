@@ -1,3 +1,4 @@
+import { click, findAll, currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
@@ -37,11 +38,11 @@ module('Acceptance | fork gist', function(hooks) {
 
     await visit('/35de43cb81fc35ddffb2');
 
-    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+    assert.equal(findAll('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
 
     await click('.test-fork-action');
 
-    assert.equal(find('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
+    assert.equal(findAll('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
 
     let url = currentURL();
     let route = url.substr(url.lastIndexOf('/'));

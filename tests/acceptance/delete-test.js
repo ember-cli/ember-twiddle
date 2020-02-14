@@ -1,3 +1,4 @@
+import { click, currentRouteName, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
