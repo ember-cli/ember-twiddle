@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import Ember from 'ember';
+import Settings from 'ember-twiddle/models/settings';
 
 import { run } from '@ember/runloop';
 
@@ -24,7 +25,7 @@ module('Unit | Model | Settings', function(hooks) {
   test('it has default settings when no local settings are present', function(assert) {
     assert.expect(1);
 
-    const settings = run(() => this.owner.lookup('service:store').createRecord('settings'));
+    const settings = Settings.create();
 
     assert.deepEqual(getProperties(settings, 'keyMap'), {
       keyMap: 'default'
@@ -37,22 +38,22 @@ module('Unit | Model | Settings', function(hooks) {
     const localSettings = JSON.stringify({ keyMap: 'vim' });
     window.localStorage.setItem('ember_twiddle_settings', localSettings);
 
-    const settings = run(() => this.owner.lookup('service:store').createRecord('settings'));
+    const settings = Settings.create();
 
     assert.deepEqual(getProperties(settings, 'keyMap'), {
       keyMap: 'vim'
     }, 'local settings overrode default settings');
   });
 
-  test('save() persists settings to localStorage', function(assert) {
+  test('save() persists settings to localStorage', async function(assert) {
     assert.expect(1);
 
-    const settings = run(() => this.owner.lookup('service:store').createRecord('settings'));
+    const settings = Settings.create();
 
     set(settings, 'keyMap', 'emacs');
     settings.save();
 
-    const anotherSettings = run(() => this.owner.lookup('service:store').createRecord('settings'));
+    const anotherSettings = Settings.create();
     assert.equal(get(anotherSettings, 'keyMap'), 'emacs',
       'new Settings has previously persisted settings');
   });
