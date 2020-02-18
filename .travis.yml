@@ -1,13 +1,13 @@
 ---
 language: node_js
 node_js:
-  - "6"
+  - "8"
 
 notifications:
   email: false
 
 sudo: required
-dist: trusty
+dist: xenial
 
 addons:
   chrome: stable
@@ -23,13 +23,10 @@ env:
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add bower
-  - bower --version
   - yarn --version
 
 install:
   - yarn install --non-interactive
-  - bower install
 
 script:
   - yarn lint:js

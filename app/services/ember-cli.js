@@ -108,10 +108,6 @@ const availableBlueprints = {
     blueprint: 'test-helper',
     filePath: 'tests/test-helper.js'
   },
-  'test-resolver': {
-    blueprint: 'test-resolver',
-    filePath: 'tests/helpers/resolver.js'
-  },
   'test-start-app': {
     blueprint: 'test-start-app',
     filePath: 'tests/helpers/start-app.js'
@@ -309,7 +305,7 @@ export default Ember.Service.extend({
     const isTestingEnabled = testingEnabled(twiddleJSON);
 
     if (testing && !isTestingEnabled) {
-      depScriptTags += `<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/qunit/2.3.2/qunit.js"></script>`;
+      depScriptTags += `<script type="text/javascript" src="https://code.jquery.com/qunit/qunit-2.6.1.js"></script>`;
     }
 
     depScriptTags += `<script type="text/javascript">EmberENV = ${JSON.stringify(EmberENV)};</script>`;
@@ -367,13 +363,11 @@ export default Ember.Service.extend({
     depScriptTags += `<script type="text/javascript" src="${window.assetMap.twiddleDeps}"></script>`;
 
     if (isTestingEnabled) {
-      const testJSFiles = ['testLoader', 'testem'];
+      const testJSFiles = ['testLoader', 'testSupport'];
 
       testJSFiles.forEach(jsFile => {
         depScriptTags += `<script type="text/javascript" src="${window.assetMap[jsFile]}"></script>`;
       });
-
-      depScriptTags += `<script type="text/javascript" src="${window.assetMap.testSupport}"></script>`;
 
       depCssLinkTags += `<link rel="stylesheet" type="text/css" href="${window.assetMap.testSupportCss}">`;
 
@@ -529,6 +523,9 @@ function babelOpts(moduleName) {
         loose: true,
         noInterop: true
       }],
+      'transform-decorators-legacy',
+      'transform-class-properties',
+      'transform-object-rest-spread',
       hbsPlugin,
       newModulesPlugin
     ]

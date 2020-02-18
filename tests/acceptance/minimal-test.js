@@ -15,8 +15,6 @@ test('Able to do load a minimal gist', function(assert) {
   runGist(files);
 
   andThen(function() {
-    const outputDiv = 'div';
-
-    assert.equal(outputContents(outputDiv), 'Hello, World!', 'Minimal gist is displayed');
+    assert.equal(outputContents(), 'Hello, World!', 'Minimal gist is displayed');
   });
 });

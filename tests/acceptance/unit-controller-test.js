@@ -48,7 +48,7 @@ skip('A unit test for controllers works', function(assert) {
       content: `import resolver from './helpers/resolver';
                 import {
                   setResolver
-                } from 'ember-qunit';
+                } from '@ember/test-helpers';
 
                 setResolver(resolver);
 

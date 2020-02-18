@@ -6,8 +6,8 @@ import compareVersions from 'compare-versions';
 
 const { computed, deprecate, inject, RSVP, testing } = Ember;
 
-const EMBER_VERSIONS = ['3.2.2', '3.1.3', '3.0.0', '2.18.2', '2.17.2', '2.16.2', '2.15.3', '2.14.1', '2.13.0', '2.12.0'];
-const EMBER_DATA_VERSIONS = ['3.2.0', '3.1.1', '3.0.2', '2.18.2', '2.17.1', '2.16.4', '2.15.3', '2.14.10', '2.13.2', '2.12.2'];
+const EMBER_VERSIONS = ['3.8.1', '3.7.3', '3.6.1', '3.5.1', '3.4.3', '3.3.2', '3.2.2', '3.1.4', '3.0.0', '2.18.2', '2.17.2', '2.16.2', '2.15.3', '2.14.1', '2.13.0', '2.12.0'];
+const EMBER_DATA_VERSIONS = ['3.8.1', '3.7.0', '3.6.0', '3.5.2', '3.4.2', '3.3.2', '3.2.2', '3.1.2', '3.0.4', '2.18.5', '2.17.1', '2.16.4', '2.15.3', '2.14.10', '2.13.2', '2.12.2'];
 
 const VERSION_REGEX = /^\d+.\d+.\d+(-beta\.\d+)?$/;
 
@@ -36,15 +36,6 @@ const CDN_MAP = {
     fileName: 'ember-data.js'
   }
 };
-
-const CHANNEL_FILENAME_MAP = {
-  'ember': 'ember.debug.js',
-  'ember-template-compiler': 'ember-template-compiler.js',
-  'ember-testing': 'ember-testing.js',
-  'ember-data': 'ember-data.js'
-};
-
-const CHANNELS = ['alpha', 'canary', 'beta', 'release'];
 
 const POLL_INTERVAL = 10000;
 
@@ -145,17 +136,7 @@ export default Ember.Service.extend({
       return this.cdnURL(name, value);
     }
 
-    if (CHANNELS.indexOf(value) !== -1) {
-      return this.channelURL(name, value);
-    }
-
     return value;
-  },
-
-  channelURL(name, channel) {
-    let fileName = CHANNEL_FILENAME_MAP[name];
-
-    return `//s3.amazonaws.com/builds.emberjs.com/${channel}/${fileName}`;
   },
 
   cdnURL(name, version) {
@@ -189,10 +170,10 @@ export default Ember.Service.extend({
   },
 
   emberVersions: computed(function() {
-    return [...CHANNELS, ...EMBER_VERSIONS];
+    return EMBER_VERSIONS;
   }),
 
   emberDataVersions: computed(function() {
-    return [...CHANNELS, ...EMBER_DATA_VERSIONS];
+    return EMBER_DATA_VERSIONS;
   })
 });

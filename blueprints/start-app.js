@@ -9,6 +9,7 @@ export default function startApp(attrs) {
   let application;
 
   let attributes = assign({rootElement: "#test-root"}, config.APP);
+  attributes.autoboot = true;
   attributes = assign(attributes, attrs); // use defaults, but you can override;
 
   run(() => {

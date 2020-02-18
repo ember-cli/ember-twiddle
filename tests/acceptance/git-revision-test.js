@@ -25,9 +25,7 @@ test('Able to load a previous revision of a gist', function(assert) {
   runRevision(files);
 
   andThen(function() {
-    const outputDiv = 'div';
-
-    assert.equal(outputContents(outputDiv), 'Hello, World!', 'Previous version of a gist is displayed');
+    assert.equal(outputContents(), 'Hello, World!', 'Previous version of a gist is displayed');
   });
 });
 
@@ -87,7 +85,7 @@ test('Able to go from current version to revision and back via the UI', function
   runGist(files);
 
   andThen(() => {
-    assert.equal(outputContents('div'), 'Hello, World!');
+    assert.equal(outputContents(), 'Hello, World!');
   });
 
   createGist({
@@ -110,7 +108,7 @@ test('Able to go from current version to revision and back via the UI', function
   });
 
   andThen(() => {
-    assert.equal(outputContents('div'), 'Hello, ...');
+    assert.equal(outputContents(), 'Hello, ...');
 
     click(".test-show-current-version");
     waitForUnloadedIFrame();
@@ -118,6 +116,6 @@ test('Able to go from current version to revision and back via the UI', function
   });
 
   andThen(() => {
-    assert.equal(outputContents('div'), 'Hello, World!');
+    assert.equal(outputContents(), 'Hello, World!');
   });
 });

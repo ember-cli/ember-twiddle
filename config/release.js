@@ -1,3 +1,3 @@
 module.exports = {
-  manifest: ['bower.json', 'package.json', 'blueprints/twiddle.json']
+  manifest: ['package.json', 'blueprints/twiddle.json']
 }

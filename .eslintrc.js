@@ -55,11 +55,21 @@ module.exports = {
         node: true
       }
     },
+
     // mirage files
     {
       files: ['mirage/**'],
       rules: {
         'ember/avoid-leaking-state-in-ember-objects': 'off'
+      }
+    },
+
+    // test files
+    {
+      files: ['tests/**/*.js'],
+      excludedFiles: ['tests/dummy/**/*.js'],
+      env: {
+        embertest: true
       }
     }
   ]

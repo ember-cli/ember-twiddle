@@ -6,6 +6,8 @@ import destroyApp from '../helpers/destroy-app';
 export default function(name, options = {}) {
   module(name, {
     beforeEach() {
+      window.server && window.server.shutdown();
+
       this.application = startApp();
 
       if (options.beforeEach) {

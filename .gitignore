@@ -20,6 +20,7 @@ npm-debug.log*
 yarn-error.log
 testem.log
 .vscode
+jsconfig.json
 
 # ember-try
 .node_modules.ember-try/

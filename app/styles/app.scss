@@ -1,5 +1,6 @@
 @import "ember-paper";
 @import "variables";
+@import "bootstrap";
 @import "vendor/twiddlicon/twiddlicon.scss";
 @import "main";
 @import "toolbar";
@@ -8,6 +9,7 @@
 @import "output-pane";
 @import "saved-twiddles";
 @import "user-profile";
+@import "footer";
 
 body,
 .main-container,

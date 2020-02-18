@@ -2,7 +2,7 @@ import DS from 'ember-data';
 import Ember from 'ember';
 import { memberAction } from 'ember-api-actions';
 
-const { attr, hasMany } = DS;
+const { attr, hasMany, belongsTo } = DS;
 const {
   computed,
   computed: { oneWay },
@@ -25,6 +25,11 @@ export default DS.Model.extend({
   shortId: computed('id', function() {
     return (this.get('id')||'').substring(0,7);
   }),
+
+  owner: belongsTo('user', { async: false }),
+
+  forkOf: belongsTo('gist', { async: false, inverse: null }),
+
 
   /**
    * Just call this action to fork

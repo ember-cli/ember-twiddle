@@ -10,7 +10,6 @@ services:
     volumes:
       - .:/myapp
       - ./entrypoint.sh:/entrypoint.sh
-      - /myapp/bower_components
       - /myapp/node_modules
       - /myapp/dist
     tmpfs:

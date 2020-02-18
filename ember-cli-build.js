@@ -1,5 +1,3 @@
-/* global require, module, process */
-'use strict';
 module.exports = function(defaults) {
   process.env.FASTBOOT_DISABLED = true;
 
@@ -11,6 +9,8 @@ module.exports = function(defaults) {
   const path = require('path');
   const fs = require('fs');
   const babelOpts = require('./lib/babel-opts');
+  const buildQUnitTree = require('./lib/build-qunit-tree');
+  const buildTwiddleVendorTree = require('./lib/build-twiddle-ember-tree');
 
   const env = EmberApp.env();
   const deployTarget = process.env.DEPLOY_TARGET;
@@ -30,6 +30,9 @@ module.exports = function(defaults) {
   const blueprintsCode = require('./lib/get-ember-cli-blueprints')();
 
   let app = new EmberApp(defaults, {
+    vendorFiles: {
+      'ember-testing.js': null
+    },
     SRI: {
       runsIn: "production"
     },
@@ -38,6 +41,21 @@ module.exports = function(defaults) {
       prepend: prepend,
       extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'svg', 'eot', 'ttf', 'woff', 'woff2', 'ico'],
       exclude: []
+    },
+    sourcemaps: {
+      enabled: !isProductionLikeBuild
+    },
+    minifyCSS: {
+      enabled: isProductionLikeBuild
+    },
+    minifyJS: {
+      enabled: isProductionLikeBuild,
+      options: {
+        // Fix for minification bug with Uglify & Babel: Babel depends on constructor.name === "Plugin"
+        mangle: {
+          except: ['Plugin']
+        }
+      }
     },
     codemirror: {
       modes: ['xml', 'javascript', 'handlebars', 'htmlmixed', 'css'],
@@ -61,21 +79,6 @@ module.exports = function(defaults) {
         import: ['babel-preset-env.js']
       }
     },
-    sourcemaps: {
-      enabled: !isProductionLikeBuild
-    },
-    minifyCSS: {
-      enabled: isProductionLikeBuild
-    },
-    minifyJS: {
-      enabled: isProductionLikeBuild,
-      options: {
-        // Fix for minification bug with Uglify & Babel: Babel depends on constructor.name === "Plugin"
-        mangle: {
-          except: ['Plugin']
-        }
-      }
-    },
     'ember-cli-babel': {
       includePolyfill: !isFastboot
     },
@@ -95,9 +98,12 @@ module.exports = function(defaults) {
 
   app.import('vendor/ember/ember-template-compiler.js');
   app.import('vendor/flat-to-nested.js');
+  app.import('vendor/ember/ember-testing.js', {
+    type: 'vendor',
+    outputFile: 'ember-local-testing.js'
+  });
   app.import('vendor/shims/babel.js');
   app.import('vendor/shims/path.js');
-  app.import('bower_components/file-saver/FileSaver.js');
 
   if (!isFastboot) {
     app.import('vendor/drags.js');
@@ -135,98 +141,12 @@ module.exports = function(defaults) {
 
   let twiddleVendorTree = buildTwiddleVendorTree();
 
-  return app.toTree(mergeTrees([twiddleVendorTree, loaderTree, testLoaderTree, finalQUnitTree]));
+  return app.toTree(mergeTrees([
+    twiddleVendorTree,
+    loaderTree,
+    testLoaderTree,
+    finalQUnitTree
+  ]));
 };
 
-function buildQUnitTree(app) {
-  const funnel = require('broccoli-funnel');
-  const concat = require('broccoli-concat');
-  const mergeTrees = require('broccoli-merge-trees');
-  const babelTranspiler = require('broccoli-babel-transpiler');
-  const Rollup = require('broccoli-rollup');
-  const path = require('path');
-  const babelOpts = require('./lib/babel-opts');
 
-  let preprocessJs = app.registry.registry.js[0].toTree;
-
-  let buildPreprocessedAddon = function(addonName) {
-    return preprocessJs(path.dirname(require.resolve(addonName)) + '/addon-test-support', {
-      registry: app.registry
-    });
-  };
-
-  let qunitTree = buildPreprocessedAddon('ember-qunit');
-  let testHelpersTreeForQUnit = buildPreprocessedAddon('@ember/test-helpers');
-
-  let testLoaderTreeForQUnit = funnel("node_modules/ember-cli-test-loader/addon-test-support", {
-    files: ['index.js'],
-    getDestinationPath: function() {
-      return "ember-cli-test-loader/test-support/index.js";
-    }
-  });
-
-  testLoaderTreeForQUnit = new Rollup(testLoaderTreeForQUnit, {
-    rollup: {
-      input: 'ember-cli-test-loader/test-support/index.js',
-      output: {
-        file: 'ember-cli-test-loader/test-support/index.js',
-        format: 'es'
-      },
-      plugins: [
-        require('rollup-plugin-commonjs')()
-      ]
-    }
-  });
-
-  testLoaderTreeForQUnit = babelTranspiler(testLoaderTreeForQUnit, babelOpts());
-
-  let finalQUnitTree = concat(mergeTrees([qunitTree, testHelpersTreeForQUnit, testLoaderTreeForQUnit]), {
-    inputFiles: ['**/*.js'],
-    outputFile: '/assets/ember-qunit.js'
-  });
-
-  return finalQUnitTree;
-}
-
-function buildTwiddleVendorTree() {
-  const funnel = require('broccoli-funnel');
-  const concat = require('broccoli-concat');
-  const mergeTrees = require('broccoli-merge-trees');
-  const babelTranspiler = require('broccoli-babel-transpiler');
-  const babelOpts = require('./lib/babel-opts');
-
-  let emberDataShims = funnel('vendor', {
-    files: ['ember-data-shims.js']
-  });
-
-  let bowerTree = funnel('bower_components');
-  let shimsTree = funnel('node_modules/ember-cli-shims/vendor/ember-cli-shims' , {
-    destDir: 'ember-cli-shims'
-  });
-
-  let baseResolverTree = funnel('node_modules/ember-resolver/addon', {
-    destDir: 'ember-resolver'
-  });
-
-  let transpiledResolverTree = babelTranspiler(baseResolverTree, babelOpts());
-
-  let baseInitializersTree = funnel('node_modules/ember-load-initializers/addon', {
-    destDir: 'ember-load-initializers'
-  });
-
-  let transpiledInitializersTree = babelTranspiler(baseInitializersTree, babelOpts());
-
-  let mergedDepsTree = mergeTrees([bowerTree, shimsTree, transpiledInitializersTree, transpiledResolverTree, emberDataShims]);
-
-  let twiddleVendorTree = concat(mergedDepsTree, {
-    inputFiles: [
-      'ember-cli-shims/app-shims.js',
-      'ember-load-initializers/**/*.js',
-      'ember-resolver/**/*.js',
-      'ember-data-shims.js'
-    ],
-    outputFile: '/assets/twiddle-deps.js'
-  });
-
-  return twiddleVendorTree;
-}

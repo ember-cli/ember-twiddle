@@ -55,9 +55,7 @@ skip('Addons work', function(assert) {
   runGist(files);
 
   andThen(function() {
-    const outputDiv = 'div';
-
-    assert.equal(outputContents(outputDiv), 'Welcome to Ember Twiddle');
+    assert.equal(outputContents(), 'Welcome to Ember Twiddle');
   });
 });
 
@@ -99,12 +97,12 @@ skip('Ember Data works as an addon', function (assert) {
                   },
                   "dependencies": {
                     "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
-                    "ember": "2.11.2",
-                    "ember-template-compiler": "2.11.2",
-                    "ember-testing": "2.11.2"
+                    "ember": "3.8.1",
+                    "ember-template-compiler": "3.8.1",
+                    "ember-testing": "3.8.1"
                   },
                   "addons": {
-                    "ember-data": "2.11.3"
+                    "ember-data": "3.8.1"
                   }
                 }`
       }
@@ -113,8 +111,6 @@ skip('Ember Data works as an addon', function (assert) {
   runGist(files);
 
   andThen(function() {
-    const outputDiv = 'div';
-
-    assert.equal(outputContents(outputDiv), 'Welcome to Ember Twiddle');
+    assert.equal(outputContents(), 'Welcome to Ember Twiddle');
   });
 });
