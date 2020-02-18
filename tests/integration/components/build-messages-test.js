@@ -1,56 +1,60 @@
 /* eslint-disable no-console */
 import Ember from 'ember';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('build-messages', 'Integration | Component | build messages', {
-  integration: true,
-  beforeEach() {
+module('Integration | Component | build messages', function(hooks) {
+  setupRenderingTest(hooks);
+
+  hooks.beforeEach(function() {
     this.cacheConsole = console.error;
-  },
-  afterEach() {
+  });
+
+  hooks.afterEach(function() {
     console.error = this.cacheConsole;
-  }
-});
-
-test('it shows the number of build messages', function(assert) {
-  assert.expect(2);
-
-  this.set('buildErrors', []);
-  this.set('isBuilding', false);
-  this.set('notify', {
-    info() {},
-    error() {}
   });
 
-  this.render(hbs`{{build-messages buildErrors=buildErrors isBuilding=isBuilding notify=notify}}`);
+  test('it shows the number of build messages', async function(assert) {
+    assert.expect(2);
 
-  assert.equal(this.$('span').text().replace(/\s+/g, " ").trim(), 'Output ( build ok. )', 'shows build ok when no buildErrors');
+    this.set('buildErrors', []);
+    this.set('isBuilding', false);
+    this.set('notify', {
+      info() {},
+      error() {}
+    });
 
-  this.set('buildErrors', ['error1', 'error2']);
+    await render(hbs`{{build-messages buildErrors=buildErrors isBuilding=isBuilding notify=notify}}`);
 
-  assert.equal(this.$('span').text().replace(/\s+/g, " ").trim(), 'Output ( 2 build errors )', 'shows number of build errors');
-});
+    assert.equal(this.$('span').text().replace(/\s+/g, " ").trim(), 'Output ( build ok. )', 'shows build ok when no buildErrors');
 
-test('it calls notify.errpr() when clicking on build errors', function(assert) {
-  assert.expect(1);
+    this.set('buildErrors', ['error1', 'error2']);
 
-  let notifyObject = Ember.Object.create({
-    called: false,
-    info() {},
-    error() {
-      this.set('called', true);
-    }
+    assert.equal(this.$('span').text().replace(/\s+/g, " ").trim(), 'Output ( 2 build errors )', 'shows number of build errors');
   });
 
-  console.error = () => {};
-  this.set('buildErrors', ['error1', 'error2']);
-  this.set('isBuilding', false);
-  this.set('notify', notifyObject);
+  test('it calls notify.errpr() when clicking on build errors', async function(assert) {
+    assert.expect(1);
 
-  this.render(hbs`{{build-messages buildErrors=buildErrors isBuilding=isBuilding notify=notify}}`);
+    let notifyObject = Ember.Object.create({
+      called: false,
+      info() {},
+      error() {
+        this.set('called', true);
+      }
+    });
 
-  this.$('span a').click();
+    console.error = () => {};
+    this.set('buildErrors', ['error1', 'error2']);
+    this.set('isBuilding', false);
+    this.set('notify', notifyObject);
 
-  assert.ok(notifyObject.get('called'), "notify.error() was called");
+    await render(hbs`{{build-messages buildErrors=buildErrors isBuilding=isBuilding notify=notify}}`);
+
+    this.$('span a').click();
+
+    assert.ok(notifyObject.get('called'), "notify.error() was called");
+  });
 });

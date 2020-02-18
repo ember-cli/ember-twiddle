@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import wait from 'ember-test-helpers/wait';
 import RSVP from 'rsvp';
+import { settled } from '@ember/test-helpers';
 
 const { Test, run } = Ember;
 
@@ -12,7 +12,7 @@ export default function(app) {
   let ctx = { app };
   Test.registerWaiter(ctx, hasNoIframe);
 
-  return wait().then(() => {
+  return settled().then(() => {
     Test.unregisterWaiter(ctx, hasNoIframe);
     return RSVP.resolve();
   }).then(() => {

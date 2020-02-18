@@ -1,40 +1,47 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
-moduleForComponent('run-or-live-reload', 'Integration | Component | run or live reload', {
-  integration: true
-});
+module('Integration | Component | run or live reload', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it functions', function(assert) {
-  assert.expect(6);
+  hooks.beforeEach(function() {
+    this.actions = {};
+    this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
+  });
 
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+  test('it functions', async function(assert) {
+    assert.expect(6);
 
-  let liveReloadChangedCalledTimes = 0;
-  let runNowCalled = false;
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.on('liveReloadChanged', () => { liveReloadChangedCalledTimes++; });
-  this.on('runNow', () => { runNowCalled = true; });
+    let liveReloadChangedCalledTimes = 0;
+    let runNowCalled = false;
 
-  this.render(hbs`{{run-or-live-reload liveReloadChanged=(action "liveReloadChanged") runNow=(action "runNow")}}`);
+    this.actions.liveReloadChanged = () => { liveReloadChangedCalledTimes++; };
+    this.actions.runNow = () => { runNowCalled = true; };
 
-  let liveReloadCheckbox = this.$("#live-reload");
+    await render(hbs`{{run-or-live-reload liveReloadChanged=(action "liveReloadChanged") runNow=(action "runNow")}}`);
 
-  assert.ok(liveReloadCheckbox.prop('checked'), 'isLiveReload defaults to true');
+    let liveReloadCheckbox = this.$("#live-reload");
 
-  liveReloadCheckbox.click();
+    assert.ok(liveReloadCheckbox.prop('checked'), 'isLiveReload defaults to true');
 
-  assert.ok(!liveReloadCheckbox.prop('checked'), 'isLiveReload changes to false on click of live reload checkbox');
-  assert.equal(liveReloadChangedCalledTimes, 1, 'liveReloadChanged was called on click of live reload checkbox');
+    liveReloadCheckbox.click();
 
-  this.$('.run-now').click();
+    assert.ok(!liveReloadCheckbox.prop('checked'), 'isLiveReload changes to false on click of live reload checkbox');
+    assert.equal(liveReloadChangedCalledTimes, 1, 'liveReloadChanged was called on click of live reload checkbox');
 
-  assert.ok(runNowCalled, 'runNow was called on click of run now button');
+    this.$('.run-now').click();
 
-  liveReloadCheckbox.click();
+    assert.ok(runNowCalled, 'runNow was called on click of run now button');
 
-  assert.ok(liveReloadCheckbox.prop('checked'), 'isLiveReload changes back to true on click of live reload checkbox');
-  assert.equal(liveReloadChangedCalledTimes, 2, 'liveReloadChanged was called again on click of live reload checkbox');
+    liveReloadCheckbox.click();
+
+    assert.ok(liveReloadCheckbox.prop('checked'), 'isLiveReload changes back to true on click of live reload checkbox');
+    assert.equal(liveReloadChangedCalledTimes, 2, 'liveReloadChanged was called again on click of live reload checkbox');
+  });
 });

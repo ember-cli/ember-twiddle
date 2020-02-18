@@ -1,32 +1,34 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('twiddle-panes', 'Integration | Component | twiddle panes', {
-  integration: true
-});
+module('Integration | Component | twiddle panes', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
-  assert.expect(3);
+  test('it renders', async function(assert) {
+    assert.expect(3);
 
-  this.render(hbs`{{twiddle-panes}}`);
+    await render(hbs`{{twiddle-panes}}`);
 
-  assert.equal(this.$('.handle').length, 0, 'Still renders if no columns');
+    assert.equal(this.$('.handle').length, 0, 'Still renders if no columns');
 
-  this.set('numColumns', 4);
+    this.set('numColumns', 4);
 
-  this.render(hbs`
-    {{#twiddle-panes numColumns=numColumns}}
-      <div class="twiddle-pane"></div>
-      <div class="twiddle-pane"></div>
-      <div class="twiddle-pane"></div>
-      <div class="twiddle-pane"></div>
-    {{/twiddle-panes}}
-  `);
+    await render(hbs`
+      {{#twiddle-panes numColumns=numColumns}}
+        <div class="twiddle-pane"></div>
+        <div class="twiddle-pane"></div>
+        <div class="twiddle-pane"></div>
+        <div class="twiddle-pane"></div>
+      {{/twiddle-panes}}
+    `);
 
-  assert.equal(this.$('.handle').length, 3, 'Renders 3 handles if 4 columns');
+    assert.equal(this.$('.handle').length, 3, 'Renders 3 handles if 4 columns');
 
-  this.$('.twiddle-pane').last().after('<div class="twiddle-pane"></div>');
-  this.set('numColumns', 5);
+    this.$('.twiddle-pane').last().after('<div class="twiddle-pane"></div>');
+    this.set('numColumns', 5);
 
-  assert.equal(this.$('.handle').length, 4, 'Increases handles to 4 if a column is inserted');
+    assert.equal(this.$('.handle').length, 4, 'Increases handles to 4 if a column is inserted');
+  });
 });
