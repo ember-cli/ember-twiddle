@@ -11,7 +11,6 @@ You will need the following things properly installed on your computer.
 * [Git](http://git-scm.com/)
 * [Node.js](http://nodejs.org/) (with NPM)
 * [Yarn](https://yarnpkg.com)
-* [Bower](http://bower.io/)
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS 2](http://phantomjs.org/)
 * [Gatekeeper](https://github.com/prose/gatekeeper)
@@ -41,7 +40,6 @@ You will need the following things properly installed on your computer.
 
 * `node index.js` from your gatekeeper folder
 * `yarn` from ember twiddle folder
-* `bower install` from ember twiddle folder
 * `ember server` from ember twiddle folder
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
