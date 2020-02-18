@@ -1,13 +1,13 @@
 ---
 language: node_js
 node_js:
-  - "6"
+  - "8"
 
 notifications:
   email: false
 
 sudo: required
-dist: trusty
+dist: xenial
 
 addons:
   chrome: stable

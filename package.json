@@ -1,6 +1,6 @@
 {
   "name": "ember-twiddle",
-  "version": "0.15.1",
+  "version": "0.16.0",
   "description": "https://ember-twiddle.com",
   "private": true,
   "directories": {
@@ -99,6 +99,6 @@
     "ember-cli-shims/ember-cli-version-checker": "2.2.0"
   },
   "engines": {
-    "node": "6.* || >= 8"
+    "node": ">= 8"
   }
 }
