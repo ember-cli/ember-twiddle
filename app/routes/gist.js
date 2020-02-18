@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import config from '../config/environment';
+import { saveAs } from 'file-saver';
 
 const { inject, $, RSVP, run } = Ember;
 
@@ -148,20 +149,22 @@ export default Ember.Route.extend({
     },
 
     downloadProject() {
-      this.downloadJSZip().then(() => {
-        const zip = new window.JSZip();
+      return new RSVP.Promise(resolve => {
+        this.downloadJSZip().then(() => {
+          const zip = new window.JSZip();
 
-        this.controller.get('model.files')
-        .toArray()
-        .forEach(function(f) {
-          zip.file(
-            'ember-twiddle/' + f.get('filePath'),
-            f.get('content')
-          );
-        });
+          this.controller.get('model.files')
+          .toArray()
+          .forEach(function(f) {
+            zip.file(
+              'ember-twiddle/' + f.get('filePath'),
+              f.get('content')
+            );
+          });
 
-        zip.generateAsync({type:'blob'}).then(function(content) {
-          window.saveAs(content, 'ember-twiddle.zip');
+          zip.generateAsync({type:'blob'}).then(function(content) {
+            resolve(saveAs(content, 'ember-twiddle.zip'));
+          });
         });
       });
     }

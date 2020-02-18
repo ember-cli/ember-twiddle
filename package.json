@@ -87,6 +87,7 @@
     "ember-test-selectors": "0.3.5",
     "ember-source": "~2.18.0",
     "eslint-plugin-ember": "^5.1.0",
+    "file-saver": "^2.0.2",
     "ivy-codemirror": "^2.1.0",
     "ivy-tree": "0.1.1",
     "loader.js": "^4.7.0",
