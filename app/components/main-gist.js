@@ -13,11 +13,12 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
   notify: inject.service(),
   store: inject.service(),
   fastboot: inject.service(),
+  media: inject.service(),
 
   classNames: ['main-gist'],
   numColumns: 1,
   fullScreen: false,
-  sidenavLockedOpen: true,
+  
   openFiles: "",
 
   init() {
@@ -27,6 +28,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
       activeEditorCol: '1',
       keyboardActivated: true
     });
+    this.set('sidenavLockedOpen', !this.media.isMobile);
   },
 
   // eslint-disable-next-line ember/no-on-calls-in-components

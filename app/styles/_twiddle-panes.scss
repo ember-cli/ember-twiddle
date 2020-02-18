@@ -23,9 +23,6 @@
     display: flex;
     bottom: $footer-height;
   }
-  @media (max-width: $screen-md-min) {
-    padding-top: $footer-height;
-  }
 
   .twiddle-pane {
     padding: 0;
