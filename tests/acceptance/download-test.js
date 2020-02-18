@@ -44,7 +44,7 @@ module('Acceptance | download gist', function(hooks) {
 
     await visit('/35de43cb81fc35ddffb2');
 
-    await waitForLoadedIFrame();
+    await await waitForLoadedIFrame();
 
     await click('.test-download-project-action');
 

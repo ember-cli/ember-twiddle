@@ -29,7 +29,7 @@ module('Acceptance | run now', function(hooks) {
 
     await click(".run-now");
     waitForUnloadedIFrame();
-    waitForLoadedIFrame();
+    await waitForLoadedIFrame();
     assert.equal(outputPane().find('input').val(), 'initial value');
   });
 
@@ -46,7 +46,7 @@ module('Acceptance | run now', function(hooks) {
     await keyDown('Enter+cmd'); // eslint-disable-line no-undef
 
     await waitForUnloadedIFrame();
-    await waitForLoadedIFrame();
+    await await waitForLoadedIFrame();
 
     assert.equal(outputPane().find('input').val(), 'initial value');
   });
