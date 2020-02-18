@@ -1,8 +1,7 @@
 import Ember from 'ember';
-import RSVP from 'rsvp';
 import { settled } from '@ember/test-helpers';
 
-const { Test, run } = Ember;
+const { Test } = Ember;
 
 function hasNoIframe() {
   return this.app.testHelpers.find('iframe').length > 0;
