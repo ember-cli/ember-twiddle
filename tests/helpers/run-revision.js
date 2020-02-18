@@ -3,12 +3,12 @@ import runGist from "./run-gist";
 
 const { isArray } = Ember;
 
-export default function(app, options) {
+export default async function(app, options) {
   if (isArray(options)) {
     options = {files: options};
   }
 
   options.type = "revision";
 
-  return runGist(app, options);
+  return await runGist(app, options);
 }

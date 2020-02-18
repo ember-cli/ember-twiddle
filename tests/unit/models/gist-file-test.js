@@ -1,33 +1,34 @@
-import { moduleForModel, test } from 'ember-qunit';
+import { run } from '@ember/runloop';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const { run } = Ember;
 
-moduleForModel('gist-file', 'Unit | Model | gist file', {
-  needs: ['model:gist', 'model:gist-revision', 'model:gist-version']
-});
+module('Unit | Model | gist file', function(hooks) {
+  setupTest(hooks);
 
-test('it calls "registerDeletedFile" on gist relationship when deleting a record', function(assert) {
-  assert.expect(1);
+  test('it calls "registerDeletedFile" on gist relationship when deleting a record', function(assert) {
+    assert.expect(1);
 
-  const adapter = DS.Adapter.extend({
-    createRecord() {
-      return Ember.RSVP.resolve({ id: 1 });
-    }
-  });
-  this.register('adapter:application', adapter);
-  const store = this.store();
+    const adapter = DS.Adapter.extend({
+      createRecord() {
+        return Ember.RSVP.resolve({ id: 1 });
+      }
+    });
+    this.owner.register('adapter:application', adapter);
+    const store = this.owner.lookup('service:store');
 
-  run(() => {
-    const gist = store.createRecord('gist');
-    gist.registerDeletedFile = () => {
-      assert.ok(true, '"registerDeletedFile" was called');
-    };
-    const model = this.subject({ gist });
+    run(() => {
+      const gist = store.createRecord('gist');
+      gist.registerDeletedFile = () => {
+        assert.ok(true, '"registerDeletedFile" was called');
+      };
+      const model = run(() => this.owner.lookup('service:store').createRecord('gist-file', { gist }));
 
-    model.save().then(() => {
-      model.deleteRecord();
+      model.save().then(() => {
+        model.deleteRecord();
+      });
     });
   });
 });

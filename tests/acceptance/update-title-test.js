@@ -1,24 +1,23 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-moduleForAcceptance('Acceptance | title input', {
-  beforeEach: function() {
+module('Acceptance | title input', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+
+  hooks.beforeEach(function() {
     server.create('user', { login: 'octocat' });
-  }
-});
-
-const descriptionInput = "input.test-description-input";
-
-test('Changing gist description changes document title', function(assert) {
-  visit('/');
-
-  andThen(() => {
-    assert.equal(document.title, "Ember Twiddle - New Twiddle");
-
-    fillIn(descriptionInput, "New Gist Description");
   });
 
-  andThen(() => {
+  const descriptionInput = "input.test-description-input";
+
+  test('Changing gist description changes document title', async function(assert) {
+    await visit('/');
+
+    assert.equal(document.title, "Ember Twiddle - New Twiddle");
+
+    await fillIn(descriptionInput, "New Gist Description");
     assert.equal(document.title, "Ember Twiddle - New Gist Description");
   });
 });

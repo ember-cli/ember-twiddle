@@ -1,10 +1,14 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
 import $ from 'jquery';
 
-moduleForAcceptance('Acceptance | twiddles', {
-  beforeEach() {
+module('Acceptance | twiddles', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+  
+  hooks.beforeEach(function() {
     server.create('user', { login: 'octocat' });
     const owner = server.create('owner', {login: 'octocat'});
     const file1 = server.create('gist-file', {
@@ -38,54 +42,42 @@ moduleForAcceptance('Acceptance | twiddles', {
 
     this.cacheConfirm = window.confirm;
     window.confirm = function() {};
-  },
+  });
 
-  afterEach() {
+  hooks.afterEach(function() {
     window.confirm = this.cacheConfirm;
-  }
-});
+  });
 
-test('visiting /twiddles', function(assert) {
-  assert.expect(5);
+  test('visiting /twiddles', async function(assert) {
+    assert.expect(5);
 
-  visit('/twiddles');
+    await visit('/twiddles');
 
-  andThen(function() {
     assert.equal($('.saved-twiddles-header').text().trim(), "My Saved Twiddles");
 
     assert.equal($('.saved-twiddles tr').length, 2);
     assert.equal($('.saved-twiddles tr').eq(0).find('.test-gist-id').text().trim(), '35de43cb81fc35ddffb2');
     assert.equal($('.saved-twiddles tr').eq(1).find('.test-gist-id').text().trim(), '74bae9a34142370ff5a3');
 
-    click($('.saved-twiddles tr').eq(0).find('.test-gist-twiddle-link>a'));
-  });
-
-  andThen(function() {
+    await click($('.saved-twiddles tr').eq(0).find('.test-gist-twiddle-link>a'));
     assert.equal(currentURL(), '/35de43cb81fc35ddffb2', 'Able to click on a twiddle and go to the twiddle');
   });
-});
 
-test('a new twiddle can be created via File menu', function(assert) {
-  visit('/twiddles');
-  click('.dropdown-menu .test-new-twiddle');
+  test('a new twiddle can be created via File menu', async function(assert) {
+    await visit('/twiddles');
+    await click('.dropdown-menu .test-new-twiddle');
 
-  andThen(function() {
     assert.equal(currentURL(), '/', 'Empty twiddle page is shown');
 
     // it can be navigated back to the list of twiddles via the user menu
-    click('.user-menu .test-show-twiddles');
-  });
-
-  andThen(function() {
+    await click('.user-menu .test-show-twiddles');
     assert.equal(currentURL(), '/twiddles');
   });
-});
 
-test('signing out navigates to the new twiddle route', function(assert) {
-  visit('/twiddles');
-  click('.user-menu .test-sign-out');
+  test('signing out navigates to the new twiddle route', async function(assert) {
+    await visit('/twiddles');
+    await click('.user-menu .test-sign-out');
 
-  andThen(function() {
     assert.equal(currentURL(), '/', 'Empty twiddle page is shown');
   });
 });
