@@ -78,7 +78,7 @@
     "ember-moment": "^7.6.0",
     "ember-native-dom-helpers": "0.5.0",
     "ember-notify": "^5.2.1",
-    "ember-paper": "1.0.0-beta.2",
+    "ember-paper": "1.0.0-beta.26",
     "ember-resolver": "^4.0.0",
     "ember-responsive": "^2.0.8",
     "ember-rfc176-data": "~0.3.2",
