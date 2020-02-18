@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
+import { visit } from '@ember/test-helpers';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
 import runGist from '../helpers/run-gist';
@@ -21,7 +22,7 @@ module('Acceptance | save gist', function(hooks) {
 
   test('can save a gist with an id', async function(assert) {
     // set owner of gist as currently logged in user
-    stubValidSession(this.application, {
+    stubValidSession(this, {
       currentUser: {login: "Gaurav0"},
       "github-oauth2": {}
     });
@@ -49,7 +50,7 @@ module('Acceptance | save gist', function(hooks) {
 
   test('can save a gist without an id', async function(assert) {
     // set owner of gist as currently logged in user
-    stubValidSession(this.application, {
+    stubValidSession(this, {
       currentUser: {login: "Gaurav0"},
       "github-oauth2": {}
     });
@@ -70,7 +71,7 @@ module('Acceptance | save gist', function(hooks) {
 
   test('gist save on cmd+s shortcut', async function(assert) {
     // set owner of gist as currently logged in user
-    stubValidSession(this.application, {
+    stubValidSession(this, {
       currentUser: { login: "gokatz" },
       "github-oauth2": {}
     });

@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
+import { visit } from '@ember/test-helpers';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import runGist from '../helpers/run-gist';
@@ -21,7 +22,7 @@ module('Acceptance | delete gist', function(hooks) {
 
   test('can delete a gist', async function(assert) {
     // set owner of gist as currently logged in user
-    stubValidSession(this.application, {
+    stubValidSession(this, {
       currentUser: {login: "Gaurav0"},
       "github-oauth2": {}
     });
