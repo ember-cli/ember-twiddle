@@ -337,7 +337,7 @@ module('Acceptance | gist', function(hooks) {
     assert.equal(find(firstColumnTextarea).val(), '<div class="index">some text</div>');
 
     await click(".run-now");
-    waitForUnloadedIFrame();
+    await waitForUnloadedIFrame();
     await waitForLoadedIFrame();
     assert.equal(outputContents('.index'), 'some text');
   });
@@ -388,7 +388,7 @@ module('Acceptance | gist', function(hooks) {
     await click("#live-reload");
     await visit('/35de43cb81fc35ddffb2/copy');
     await click(".run-now");
-    waitForUnloadedIFrame();
+    await waitForUnloadedIFrame();
     await waitForLoadedIFrame();
     assert.equal(currentURL(), '/');
     assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");

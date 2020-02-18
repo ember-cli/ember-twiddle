@@ -8,16 +8,10 @@ function hasNoIframe() {
   return this.app.testHelpers.find('iframe').length > 0;
 }
 
-export default function(app) {
+export default async function(app) {
   let ctx = { app };
   Test.registerWaiter(ctx, hasNoIframe);
 
-  return settled().then(() => {
-    Test.unregisterWaiter(ctx, hasNoIframe);
-    return RSVP.resolve();
-  }).then(() => {
-    return new RSVP.Promise(function (resolve) {
-      run.later(resolve, 10);
-    });
-  });
+  await settled();
+  Test.unregisterWaiter(ctx, hasNoIframe);
 }

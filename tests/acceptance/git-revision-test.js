@@ -56,7 +56,7 @@ module('Acceptance | gist-revision', function(hooks) {
 
     await click("#live-reload");
     await click('.test-copy-action');
-    waitForUnloadedIFrame();
+    await waitForUnloadedIFrame();
     await waitForLoadedIFrame();
 
     assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
@@ -97,12 +97,12 @@ module('Acceptance | gist-revision', function(hooks) {
     });
 
     await click(".test-version-action");
-    waitForUnloadedIFrame();
+    await waitForUnloadedIFrame();
     await waitForLoadedIFrame();
     assert.equal(outputContents(), 'Hello, ...');
 
     await click(".test-show-current-version");
-    waitForUnloadedIFrame();
+    await waitForUnloadedIFrame();
     await waitForLoadedIFrame();
     assert.equal(outputContents(), 'Hello, World!');
   });
