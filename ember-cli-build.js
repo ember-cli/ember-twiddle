@@ -106,7 +106,6 @@ module.exports = function(defaults) {
   });
   app.import('vendor/shims/babel.js');
   app.import('vendor/shims/path.js');
-  app.import('bower_components/file-saver/FileSaver.js');
 
   if (!isFastboot) {
     app.import('vendor/drags.js');
