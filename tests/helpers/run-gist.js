@@ -27,5 +27,5 @@ export default async function(app, options = {}) {
 
   await visit(url);
 
-  return waitForLoadedIFrame(initialRoute);
+  return await await waitForLoadedIFrame(initialRoute);
 }

@@ -57,7 +57,7 @@ module('Acceptance | gist-revision', function(hooks) {
     await click("#live-reload");
     await click('.test-copy-action');
     waitForUnloadedIFrame();
-    waitForLoadedIFrame();
+    await waitForLoadedIFrame();
 
     assert.equal(find('.title input').val(), "New Twiddle", "Description is reset");
     assert.equal(find('.test-unsaved-indicator').length, 0, "Unsaved indicator does not appear when gist is copied");
@@ -98,12 +98,12 @@ module('Acceptance | gist-revision', function(hooks) {
 
     await click(".test-version-action");
     waitForUnloadedIFrame();
-    waitForLoadedIFrame();
+    await waitForLoadedIFrame();
     assert.equal(outputContents(), 'Hello, ...');
 
     await click(".test-show-current-version");
     waitForUnloadedIFrame();
-    waitForLoadedIFrame();
+    await waitForLoadedIFrame();
     assert.equal(outputContents(), 'Hello, World!');
   });
 });

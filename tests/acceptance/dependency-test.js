@@ -114,7 +114,7 @@ module('Acceptance | dependencies', function(hooks) {
     await click('.versions-menu .dropdown-toggle');
     await click('.test-set-ember-version:contains("2.15.3")');
 
-    waitForLoadedIFrame();
+    await waitForLoadedIFrame();
     assert.equal(outputContents('.ember-version'), '2.15.3');
     assert.equal(outputContents('.ember-data-version'), '2.16.4');
   });
