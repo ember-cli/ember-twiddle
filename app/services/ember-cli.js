@@ -305,6 +305,7 @@ export default Ember.Service.extend({
 
     if (testing && !isTestingEnabled) {
       depScriptTags += `<script type="text/javascript" src="https://code.jquery.com/qunit/qunit-2.6.1.js"></script>`;
+      depScriptTags += `<script type="text/javascript">QUnit.config.autostart = false;</script>`;
     }
 
     depScriptTags += `<script type="text/javascript">EmberENV = ${JSON.stringify(EmberENV)};</script>`;
