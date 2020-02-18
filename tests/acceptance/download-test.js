@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
+import { visit } from '@ember/test-helpers';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
 import * as FileSaver from 'file-saver';
@@ -30,7 +31,7 @@ module('Acceptance | download gist', function(hooks) {
 
   test('can download gist', async function(assert) {
     // set owner of gist as currently logged in user
-    stubValidSession(this.application, {
+    stubValidSession(this, {
       currentUser: {login: "Gaurav0"},
       "github-oauth2": {}
     });

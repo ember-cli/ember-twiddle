@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
+import { visit } from '@ember/test-helpers';
 import { findMapText } from 'ember-twiddle/tests/helpers/util';
 import ErrorMessages from 'ember-twiddle/utils/error-messages';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
@@ -344,7 +345,7 @@ module('Acceptance | gist', function(hooks) {
 
   test('own gist can be copied into a new one', async function(assert) {
     // set owner of gist as currently logged in user
-    stubValidSession(this.application, {
+    stubValidSession(this, {
       currentUser: { login: "Gaurav0" },
       "github-oauth2": {}
     });

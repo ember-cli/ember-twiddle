@@ -37,7 +37,7 @@ module('Acceptance | gist-revision', function(hooks) {
 
   test('Able to copy a revision into new gist', async function(assert) {
     // set owner of gist as currently logged in user
-    stubValidSession(this.application, {
+    stubValidSession(this, {
       currentUser: { login: "Gaurav0" },
       "github-oauth2": {}
     });
@@ -67,7 +67,7 @@ module('Acceptance | gist-revision', function(hooks) {
 
   test('Able to go from current version to revision and back via the UI', async function(assert) {
     // set owner of gist as currently logged in user
-    stubValidSession(this.application, {
+    stubValidSession(this, {
       currentUser: { login: "Gaurav0" },
       "github-oauth2": {}
     });
