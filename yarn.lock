@@ -5987,10 +5987,10 @@ ember-concurrency@~0.8.17:
     ember-cli-babel "^6.8.2"
     ember-maybe-import-regenerator "^0.1.5"
 
-ember-data@^2.18.0:
-  version "2.18.5"
-  resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-2.18.5.tgz#cb6509161883db7be3a0859349142f664bb83495"
-  integrity sha512-WWZVIaMESZ+RgGOW6AsmuuJdKhmbWZMpGoLfZDHmypK45X5Fg7lKG6kJeqrzB/Ilg8r5KlyEpteDBiYXQshSQQ==
+ember-data@~3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-3.0.4.tgz#d66473727a87ea85a8561263d949cea89775172f"
+  integrity sha512-EMvYvp5Wly3y1TV+Vo81Uj2JNvQle8p9CnMyfSFEo4Q0f+8USnlmn/88HInTMrAW8uIAsvCHfJjari1z3UhdEw==
   dependencies:
     amd-name-resolver "0.0.7"
     babel-plugin-ember-modules-api-polyfill "^1.4.2"
@@ -6222,10 +6222,10 @@ ember-runtime-enumerable-includes-polyfill@^2.0.0:
     ember-cli-babel "^6.9.0"
     ember-cli-version-checker "^2.1.0"
 
-ember-source@~2.18.0:
-  version "2.18.2"
-  resolved "https://registry.yarnpkg.com/ember-source/-/ember-source-2.18.2.tgz#75d00eef5488bfe504044b025c752ba924eaf87f"
-  integrity sha1-ddAO71SIv+UEBEsCXHUrqSTq+H8=
+ember-source@~3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ember-source/-/ember-source-3.0.0.tgz#51811cae98d2ceec53bcfbaa876d02b2b5b2159f"
+  integrity sha1-UYEcrpjSzuxTvPuqh20CsrWyFZ8=
   dependencies:
     broccoli-funnel "^2.0.1"
     broccoli-merge-trees "^2.0.0"
@@ -6234,7 +6234,6 @@ ember-source@~2.18.0:
     ember-cli-normalize-entity-name "^1.0.0"
     ember-cli-path-utils "^1.0.0"
     ember-cli-string-utils "^1.1.0"
-    ember-cli-test-info "^1.0.0"
     ember-cli-valid-component-name "^1.0.0"
     ember-cli-version-checker "^2.1.0"
     ember-router-generator "^1.2.3"
