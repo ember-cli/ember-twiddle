@@ -17,6 +17,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
   classNames: ['main-gist'],
   numColumns: 1,
   fullScreen: false,
+  sidenavLockedOpen: true,
   openFiles: "",
 
   init() {
