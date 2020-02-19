@@ -83,7 +83,7 @@
     "ember-responsive": "^2.0.8",
     "ember-rfc176-data": "~0.3.2",
     "ember-route-action-helper": "^2.0.6",
-    "ember-source": "~3.0.0",
+    "ember-source": "~3.4.0",
     "eslint-plugin-ember": "^5.1.0",
     "file-saver": "^2.0.2",
     "ivy-codemirror": "^2.1.0",
