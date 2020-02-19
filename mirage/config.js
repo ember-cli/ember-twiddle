@@ -13,8 +13,6 @@ export default function() {}
  */
 export function testConfig() {
 
-  this.timing = 10;
-
   this.get('/gists', function(schema) {
     return schema.gists.all();
   });

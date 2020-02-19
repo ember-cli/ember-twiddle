@@ -3,7 +3,7 @@ import { faker } from "ember-cli-mirage";
 
 const { isArray } = Ember;
 
-export default function(app, options) {
+export default function(options) {
   if (isArray(options)) {
     options = {files: options};
   }

@@ -3,8 +3,6 @@ import { setupTest } from 'ember-qunit';
 import Ember from 'ember';
 import Settings from 'ember-twiddle/models/settings';
 
-import { run } from '@ember/runloop';
-
 const {
   getProperties,
   get,

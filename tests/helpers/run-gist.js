@@ -5,8 +5,8 @@ import waitForLoadedIFrame from './wait-for-loaded-iframe';
 
 const { isArray } = Ember;
 
-export default async function(app, options = {}) {
-  createGist(app, options);
+export default async function(options = {}) {
+  createGist(options);
 
   if (isArray(options)) {
     options = { files: options };
@@ -27,5 +27,5 @@ export default async function(app, options = {}) {
 
   await visit(url);
 
-  return await await waitForLoadedIFrame(initialRoute);
+  return await waitForLoadedIFrame(initialRoute);
 }

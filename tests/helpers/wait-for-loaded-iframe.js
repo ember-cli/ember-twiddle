@@ -1,14 +1,17 @@
 import Ember from "ember";
-import { find } from '@ember/test-helpers';
+import { find, settled } from '@ember/test-helpers';
 import outputPane from './output-pane';
+import outputContents from './output-contents';
 
 const { RSVP, run } = Ember;
 
-export default async function(app, url) {
+export default async function(url) {
   let iframeWindow;
 
+  await settled();
+
   // Wait until iframe loads
-  await new RSVP.Promise(function (resolve) {
+  await run(() => new RSVP.Promise(function (resolve) {
     let times = 0;
 
     run.schedule('afterRender', function waitForRender() {
@@ -33,24 +36,45 @@ export default async function(app, url) {
         iframeWindow.document.addEventListener('DOMContentLoaded', onWindowLoad);
       }
     });
-  });
+  }));
 
+  url = url || "/";
   let times = 0;
 
-  async function tryVisit() {
-    url = url || "/";
+  await run(() => new RSVP.Promise(resolve => {
+    function tryVisit() {
 
-    if (times++ >= 10) {
-      run.cancelTimers();
-    } else if (iframeWindow.visit) {
-      await iframeWindow.visit(url);
-    } else {
-      run.later(async () => await tryVisit(), 10)
+      if (times++ >= 10) {
+        run.cancelTimers();
+        resolve();
+      } else if (iframeWindow.visit) {
+        run(() =>  {
+          iframeWindow.visit(url).then(resolve);
+        });
+      } else {
+        run.later(tryVisit, 10);
+      }
     }
-  }
-  await tryVisit();
+    run(tryVisit);
+  }));
+
+  times = 0;
+  await run(() => new RSVP.Promise(resolve => {
+    function waitForContents() {
+
+      if (times++ >= 10) {
+        run.cancelTimers();
+        resolve();
+      } else if (outputContents().length > 0) {
+        resolve();
+      } else {
+        run.later(waitForContents, 10);
+      }
+    }
+    run(waitForContents);
+  }));
 
   await new RSVP.Promise(function (resolve) {
-    run.later(resolve, 10);
+    run.later(resolve, 1000);
   });
 }

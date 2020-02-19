@@ -1,6 +1,6 @@
 import outputPane from './output-pane';
 
-export default function(app, selector) {
+export default function(selector) {
   let output = outputPane();
   let outputDiv = output.document.querySelector('#root');
   if (selector) {

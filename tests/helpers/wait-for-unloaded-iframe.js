@@ -7,10 +7,9 @@ function hasNoIframe() {
   return find('iframe').length > 0;
 }
 
-export default async function(app) {
-  let ctx = { app };
-  Test.registerWaiter(ctx, hasNoIframe);
+export default async function() {
+  Test.registerWaiter(this, hasNoIframe);
 
   await settled();
-  Test.unregisterWaiter(ctx, hasNoIframe);
+  Test.unregisterWaiter(this, hasNoIframe);
 }
