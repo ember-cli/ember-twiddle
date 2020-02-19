@@ -1,10 +1,10 @@
 import Ember from 'ember';
-import { settled } from '@ember/test-helpers';
+import { settled, find } from '@ember/test-helpers';
 
 const { Test } = Ember;
 
 function hasNoIframe() {
-  return this.app.testHelpers.find('iframe').length > 0;
+  return find('iframe').length > 0;
 }
 
 export default async function(app) {

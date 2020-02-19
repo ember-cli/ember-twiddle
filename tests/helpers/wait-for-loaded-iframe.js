@@ -1,4 +1,5 @@
 import Ember from "ember";
+import { find } from '@ember/test-helpers';
 import outputPane from './output-pane';
 
 const { RSVP, run } = Ember;
@@ -20,7 +21,7 @@ export default async function(app, url) {
         // eslint-disable-next-line no-console
         console.warn('Timeout: Twiddle has failed to load');
         run.cancelTimers();
-      } else if (app.testHelpers.find('iframe#dummy-content-iframe').length === 0) {
+      } else if (find('iframe#dummy-content-iframe').length === 0) {
         run.later(waitForRender, 10);
         return;
       }
