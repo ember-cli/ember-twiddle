@@ -75,6 +75,8 @@ export default async function(url) {
   }));
 
   await new RSVP.Promise(function (resolve) {
-    run.later(resolve, 1000);
+    run.later(resolve, 10);
   });
+
+  await settled();
 }
