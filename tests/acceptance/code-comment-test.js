@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
+import { find, click, triggerEvent } from '@ember/test-helpers';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import runGist from '../helpers/run-gist';
 
@@ -23,7 +24,7 @@ module('Acceptance | code comment', function(hooks) {
     ];
 
 
-    await await runGist(files);
+    await runGist(files);
 
     let textboxNode = '.CodeMirror textarea';
     await click(textboxNode);
@@ -38,7 +39,7 @@ module('Acceptance | code comment', function(hooks) {
       metaKey: true
     });
 
-    let [firstLine] = find('.CodeMirror-line');
+    let firstLine = find('.CodeMirror-line');
     let content = firstLine.textContent;
 
     assert.ok(content.startsWith('//'), 'Line has been commented');
@@ -48,7 +49,7 @@ module('Acceptance | code comment', function(hooks) {
       metaKey: true
     });
 
-    [firstLine] = find('.CodeMirror-line');
+    firstLine = find('.CodeMirror-line');
     content = firstLine.textContent;
 
     assert.notOk(content.startsWith('//'), 'Line has been uncommented');
