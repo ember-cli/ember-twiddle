@@ -13,6 +13,8 @@ export default function() {}
  */
 export function testConfig() {
 
+  this.timing = 10;
+
   this.get('/gists', function(schema) {
     return schema.gists.all();
   });
@@ -57,6 +59,10 @@ export function testConfig() {
       return EmberDataFixture;
     }
     return AddonFixture;
+  });
+
+  this.get('http://canary-addons.ember-twiddle.com/ember-3.8.0/ember-data/3.8.1/addon-test-support.map', function() {
+    return Mirage.Response(404, {}, "");
   });
 
   this.get("https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.10/ember-template-compiler.map", function() {
