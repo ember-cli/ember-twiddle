@@ -15,22 +15,7 @@ module.exports = {
     browser: true
   },
   globals: {
-    andThen: true,
-    click: true,
-    createGist: true,
-    currentRouteName: true,
-    currentURL: true,
-    fillIn: true,
-    keyEvent: true,
-    outputContents: true,
-    outputPane: true,
-    runGist: true,
-    runRevision: true,
     server: true,
-    triggerEvent: true,
-    visit: true,
-    waitForLoadedIFrame: true,
-    waitForUnloadedIFrame: true,
     '$': true,
     CodeMirror: false
   },

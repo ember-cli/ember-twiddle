@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { find } from '@ember/test-helpers';
 
 export function findMapText(selector, context) {
   var match = find(selector, context);

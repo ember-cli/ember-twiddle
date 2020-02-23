@@ -1,9 +1,10 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { click } from '@ember/test-helpers';
+import { click, fillIn } from '@ember/test-helpers';
 
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
+import createGist from '../helpers/create-gist';
 import runGist from '../helpers/run-gist';
 import runRevision from '../helpers/run-revision';
 import waitForLoadedIFrame from '../helpers/wait-for-loaded-iframe';

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { visit, click, currentURL } from '@ember/test-helpers';
+import { visit, find, click, fillIn, currentURL, triggerKeyEvent } from '@ember/test-helpers';
 import { findMapText } from 'ember-twiddle/tests/helpers/util';
 import ErrorMessages from 'ember-twiddle/utils/error-messages';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
@@ -360,7 +360,7 @@ module('Acceptance | gist', function(hooks) {
     assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
 
     await fillIn('.title input', "my twiddle");
-    keyEvent('.title input', 'keyup', 13);
+    await triggerKeyEvent('.title input', 'keyup', 13);
     assert.dom('.title input').hasValue("my twiddle");
 
     await click("#live-reload");

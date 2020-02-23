@@ -58,6 +58,12 @@ export default async function(url) {
     run(tryVisit);
   }));
 
+  await new RSVP.Promise(function (resolve) {
+    run.later(resolve, 10);
+  });
+
+  await settled();
+
   times = 0;
   await run(() => new RSVP.Promise(resolve => {
     function waitForContents() {
@@ -73,10 +79,4 @@ export default async function(url) {
     }
     run(waitForContents);
   }));
-
-  await new RSVP.Promise(function (resolve) {
-    run.later(resolve, 10);
-  });
-
-  await settled();
 }
