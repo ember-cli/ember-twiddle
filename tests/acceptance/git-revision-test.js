@@ -8,7 +8,6 @@ import createGist from '../helpers/create-gist';
 import runGist from '../helpers/run-gist';
 import runRevision from '../helpers/run-revision';
 import waitForLoadedIFrame from '../helpers/wait-for-loaded-iframe';
-import waitForUnloadedIFrame from '../helpers/wait-for-unloaded-iframe';
 import outputContents from '../helpers/output-contents';
 
 module('Acceptance | gist-revision', function(hooks) {
@@ -59,7 +58,6 @@ module('Acceptance | gist-revision', function(hooks) {
 
     await click("#live-reload");
     await click('.test-copy-action');
-    await waitForUnloadedIFrame();
     await waitForLoadedIFrame();
 
     assert.dom('.title input').hasValue("New Twiddle", "Description is reset");
@@ -100,12 +98,10 @@ module('Acceptance | gist-revision', function(hooks) {
     });
 
     await click(".test-version-action");
-    await waitForUnloadedIFrame();
     await waitForLoadedIFrame();
     assert.equal(outputContents(), 'Hello, ...');
 
     await click(".test-show-current-version");
-    await waitForUnloadedIFrame();
     await waitForLoadedIFrame();
     assert.equal(outputContents(), 'Hello, World!');
   });

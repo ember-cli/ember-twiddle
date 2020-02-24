@@ -1,7 +1,6 @@
 import Ember from "ember";
 import { find, settled } from '@ember/test-helpers';
 import outputPane from './output-pane';
-import outputContents from './output-contents';
 
 const { RSVP, run } = Ember;
 
@@ -63,20 +62,4 @@ export default async function(url) {
   });
 
   await settled();
-
-  times = 0;
-  await run(() => new RSVP.Promise(resolve => {
-    function waitForContents() {
-
-      if (times++ >= 10) {
-        run.cancelTimers();
-        resolve();
-      } else if (outputContents().length > 0) {
-        resolve();
-      } else {
-        run.later(waitForContents, 10);
-      }
-    }
-    run(waitForContents);
-  }));
 }

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { visit, find, click, fillIn, currentURL, triggerKeyEvent } from '@ember/test-helpers';
+import { visit, find, click, fillIn, currentURL, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
 import { findMapText } from 'ember-twiddle/tests/helpers/util';
 import ErrorMessages from 'ember-twiddle/utils/error-messages';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
@@ -8,20 +8,22 @@ import { timeout } from 'ember-concurrency';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import runGist from '../helpers/run-gist';
 import waitForLoadedIFrame from '../helpers/wait-for-loaded-iframe';
-import waitForUnloadedIFrame from '../helpers/wait-for-unloaded-iframe';
 import outputContents from '../helpers/output-contents';
 
-const firstColumn = '.code:eq(0)';
-const firstFilePicker = firstColumn + ' .dropdown-toggle';
-const secondFile = firstColumn + ' .dropdown-menu li:nth-child(2) a';
-const anyFile = firstColumn + ' .dropdown-menu li:nth-child(1) a';
+const firstColumn = () => find('.code');
+const firstFilePicker = () => firstColumn().querySelector('.dropdown-toggle');
+const secondFile = () => firstColumn().querySelector('.dropdown-menu li:nth-child(2) a');
+const anyFile = () => firstColumn().querySelector('.dropdown-menu li:nth-child(1) a');
 const fileMenu = '.main-menu .dropdown-toggle';
-const deleteAction = '.main-menu a:contains(Delete)';
+const deleteAction = '.main-menu .test-remove-action';
 const addTemplateAction = '.test-template-action';
-const firstFilePickerFiles = firstColumn + ' .dropdown-menu>li';
-const firstColumnTextarea = firstColumn + ' .CodeMirror textarea';
+const firstFilePickerFiles = () => firstColumn().querySelectorAll('.dropdown-menu>li');
+const firstColumnTextarea = () => firstColumn().querySelector('.CodeMirror textarea');
 const displayedFiles = '.file-picker > li > a';
 const plusGlyph = ".code .glyphicon-plus";
+
+const firstFilePickerFileNames = () => Array.from(firstFilePickerFiles())
+  .map(file => file.querySelector('a').textContent);
 
 let promptValue = '';
 
@@ -50,47 +52,50 @@ module('Acceptance | gist', function(hooks) {
 
     assert.equal(currentURL(), '/', 'We are on the correct route');
     await click(plusGlyph);
-    await click(firstFilePicker);
-    await click(secondFile);
-    await click(firstFilePicker);
+    await click(firstFilePicker());
+    await click(secondFile());
+    await click(firstFilePicker());
     await click(fileMenu);
     await click(deleteAction);
     assert.dom('.code .CodeMirror').doesNotExist('No code mirror editors active');
-    assert.equal(find('.dropdown-toggle:contains(No file selected)').length, 2, 'Shows message when no file is selected.');
-    assert.dom('.main-menu .test-remove-action').doesNotExist('There no longer is a selected file to delete');
+
+    // TODO: remove this use of global jquery
+    assert.equal(window.$('.dropdown-toggle:contains(No file selected)').length, 2, 'Shows message when no file is selected.');
+
+    assert.dom(deleteAction).doesNotExist('There no longer is a selected file to delete');
 
     // TODO: Replace brittle for loop test code with "while there are files left..."
     for (var i = 0; i < 1; ++i) {
-      await click(firstFilePicker);
-      await click(anyFile);
+      await click(firstFilePicker());
+      await click(anyFile());
       await click(fileMenu);
       await click(deleteAction);
     }
 
-    await click(firstFilePicker);
-    assert.ok(find(anyFile).text().indexOf('twiddle.json')!==-1, 'twiddle.json remains');
+    await click(firstFilePicker());
+    assert.ok(anyFile().textContent.indexOf('twiddle.json')!==-1, 'twiddle.json remains');
   });
 
   test('can add two templates with different names', async function(assert) {
     await visit('/');
     let origFiles;
 
-    await click(firstFilePicker);
-    origFiles = find(firstFilePickerFiles).length;
+    await click(firstFilePicker());
+    origFiles = firstFilePickerFiles().length;
     promptValue = "foo/template.hbs";
     await click(fileMenu);
     await click(addTemplateAction);
-    await click(firstFilePicker);
+    await click(firstFilePicker());
 
     let numFiles;
 
-    numFiles = find(firstFilePickerFiles).length;
+    numFiles = firstFilePickerFiles().length;
     assert.equal(numFiles, origFiles + 1, 'Added first file');
     promptValue = "bar/template.hbs";
     await click(fileMenu);
     await click(addTemplateAction);
-    await click(firstFilePicker);
-    numFiles = find(firstFilePickerFiles).length;
+    await click(firstFilePicker());
+    numFiles = firstFilePickerFiles().length;
     assert.equal(numFiles, origFiles + 2, 'Added second file');
   });
 
@@ -98,15 +103,15 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = "components/my-comp";
     await visit('/');
-    origFileCount =  find(firstFilePickerFiles).length;
+    origFileCount =  firstFilePickerFiles().length;
 
     await click(plusGlyph);
     await click(fileMenu);
     await click('.add-component-link');
-    await click(firstFilePicker);
-    let numFiles = find(firstFilePickerFiles).length;
+    await click(firstFilePicker());
+    let numFiles = firstFilePickerFiles().length;
     assert.equal(numFiles, origFileCount + 2, 'Added component files');
-    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    let fileNames = firstFilePickerFileNames();
     let jsFile = `${promptValue}.js`;
     let hbsFile = `templates/${promptValue}.hbs`;
     assert.equal(fileNames[3], jsFile);
@@ -119,15 +124,15 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = "my-comp";
     await visit('/');
-    origFileCount =  find(firstFilePickerFiles).length;
+    origFileCount =  firstFilePickerFiles().length;
 
     await click(plusGlyph);
     await click(fileMenu);
     await click('.add-component-link');
-    await click(firstFilePicker);
-    let numFiles = find(firstFilePickerFiles).length;
+    await click(firstFilePicker());
+    let numFiles = firstFilePickerFiles().length;
     assert.equal(numFiles, origFileCount + 2, 'Added component files');
-    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    let fileNames = firstFilePickerFileNames();
     let jsFile = `${promptValue}/component.js`;
     let hbsFile = `${promptValue}/template.hbs`;
     assert.equal(fileNames[3], jsFile);
@@ -148,7 +153,7 @@ module('Acceptance | gist', function(hooks) {
 
     await visit('/');
     await click('.add-component-link');
-    await click(firstFilePicker);
+    await click(firstFilePicker());
     assert.ok(called, "alert was called");
   });
 
@@ -158,16 +163,16 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = "my-service/service.js";
     await visit('/');
-    origFileCount = find(firstFilePickerFiles).length;
+    origFileCount = firstFilePickerFiles().length;
 
     await click(fileMenu);
     await click('.test-add-service-link');
-    await click(firstFilePicker);
+    await click(firstFilePicker());
 
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = firstFilePickerFiles().length;
     assert.equal(numFiles, origFileCount + 1, 'Added service file');
 
-    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    let fileNames = firstFilePickerFileNames();
     assert.equal(fileNames[3], promptValue, 'Added the file with the right name');
 
     let columnFiles = findMapText(displayedFiles);
@@ -180,16 +185,16 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = "routes/my-route.js";
     await visit('/');
-    origFileCount = find(firstFilePickerFiles).length;
+    origFileCount = firstFilePickerFiles().length;
 
     await click(fileMenu);
     await click('.test-add-route-link');
-    await click(firstFilePicker);
+    await click(firstFilePicker());
 
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = firstFilePickerFiles().length;
     assert.equal(numFiles, origFileCount + 1, 'Added route file');
 
-    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    let fileNames = firstFilePickerFileNames();
     assert.equal(fileNames[3], promptValue, 'Added the file with the right name');
 
     let columnFiles = findMapText(displayedFiles);
@@ -202,16 +207,16 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = 'helpers/my-helper.js';
     await visit('/');
-    origFileCount = find(firstFilePickerFiles).length;
+    origFileCount = firstFilePickerFiles().length;
 
     await click(fileMenu);
     await click('.test-add-helper-link');
-    await click(firstFilePicker);
+    await click(firstFilePicker());
 
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = firstFilePickerFiles().length;
     assert.equal(numFiles, origFileCount + 1, 'Added helper file');
 
-    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    let fileNames = firstFilePickerFileNames();
     assert.equal(fileNames[3], promptValue, 'Added the file with the right name');
 
     let columnFiles = findMapText(displayedFiles);
@@ -224,16 +229,16 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = 'tests/unit/routes/my-route-test.js';
     await visit('/');
-    origFileCount = find(firstFilePickerFiles).length;
+    origFileCount = firstFilePickerFiles().length;
 
     await click(fileMenu);
     await click('.test-add-route-test-link');
-    await click(firstFilePicker);
+    await click(firstFilePicker());
 
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = firstFilePickerFiles().length;
     assert.equal(numFiles, origFileCount + 2, 'Added 2 test files');
 
-    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    let fileNames = firstFilePickerFileNames();
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
 
     let columnFiles = findMapText(displayedFiles);
@@ -246,16 +251,16 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = 'tests/integration/components/my-component-test.js';
     await visit('/');
-    origFileCount = find(firstFilePickerFiles).length;
+    origFileCount = firstFilePickerFiles().length;
 
     await click(fileMenu);
     await click('.test-add-component-test-link');
-    await click(firstFilePicker);
+    await click(firstFilePicker());
 
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = firstFilePickerFiles().length;
     assert.equal(numFiles, origFileCount + 2, 'Added 2 test files');
 
-    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    let fileNames = firstFilePickerFileNames();
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
 
     let columnFiles = findMapText(displayedFiles);
@@ -268,17 +273,17 @@ module('Acceptance | gist', function(hooks) {
     let origFileCount;
     promptValue = 'tests/acceptance/my-acceptance-test.js';
     await visit('/');
-    origFileCount = find(firstFilePickerFiles).length;
+    origFileCount = firstFilePickerFiles().length;
 
     await click("#live-reload");
     await click(fileMenu);
     await click('.test-add-acceptance-test-link');
-    await click(firstFilePicker);
+    await click(firstFilePicker());
 
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = firstFilePickerFiles().length;
     assert.equal(numFiles, origFileCount + 5, 'Added 5 test files');
 
-    let fileNames = findMapText(`${firstFilePickerFiles}  a`);
+    let fileNames = firstFilePickerFileNames();
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
 
     let columnFiles = findMapText(displayedFiles);
@@ -297,10 +302,10 @@ module('Acceptance | gist', function(hooks) {
       return;
     }
 
-    await click(firstColumnTextarea);
-    await fillIn(firstColumnTextarea, "\"some text\";");
-    await triggerEvent(firstColumnTextarea, "blur");
-    await triggerEvent(firstColumnTextarea, "focusout");
+    await click(firstColumnTextarea());
+    await fillIn(firstColumnTextarea(), "\"some text\";");
+    await triggerEvent(firstColumnTextarea(), "blur");
+    await triggerEvent(firstColumnTextarea(), "focusout");
     await timeout(10);
     assert.dom(indicator).exists({ count: 1 }, "Unsaved indicator reappears after editing");
   });
@@ -319,9 +324,9 @@ module('Acceptance | gist', function(hooks) {
 
     await click(fileMenu);
     await click(addTemplateAction);
-    await click(firstFilePicker);
+    await click(firstFilePicker());
 
-    assert.dom(firstColumnTextarea).hasValue("");
+    assert.dom(firstColumnTextarea()).hasValue("");
 
     // Below doesn't work in phantomjs:
     if (/PhantomJS/.test(window.navigator.userAgent)) {
@@ -329,16 +334,15 @@ module('Acceptance | gist', function(hooks) {
     }
 
     await click("#live-reload");
-    await click(firstColumnTextarea);
-    await fillIn(firstColumnTextarea, '<div class="index">some text</div>');
-    await triggerEvent(firstColumnTextarea, "blur");
-    await triggerEvent(firstColumnTextarea, "focusout");
+    await click(firstColumnTextarea());
+    await fillIn(firstColumnTextarea(), '<div class="index">some text</div>');
+    await triggerEvent(firstColumnTextarea(), "blur");
+    await triggerEvent(firstColumnTextarea(), "focusout");
 
     await timeout(10);
-    assert.dom(firstColumnTextarea).hasValue('<div class="index">some text</div>');
+    assert.dom(firstColumnTextarea()).hasValue('<div class="index">some text</div>');
 
     await click(".run-now");
-    await waitForUnloadedIFrame();
     await waitForLoadedIFrame();
     assert.equal(outputContents('.index'), 'some text');
   });
@@ -389,7 +393,6 @@ module('Acceptance | gist', function(hooks) {
     await click("#live-reload");
     await visit('/35de43cb81fc35ddffb2/copy');
     await click(".run-now");
-    await waitForUnloadedIFrame();
     await waitForLoadedIFrame();
     assert.equal(currentURL(), '/');
     assert.dom('.title input').hasValue("New Twiddle", "Description is reset");
