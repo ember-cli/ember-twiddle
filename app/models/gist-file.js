@@ -16,7 +16,7 @@ export default DS.Model.extend({
    */
   filePath: computed('fileName', {
     get() {
-      var fileName = this.get('fileName') || '';
+      var fileName = this.fileName || '';
 
       // If the file name has an escaped `.`, we're using the new version of path
       // encoding that supports multiple periods in a path.
@@ -40,7 +40,7 @@ export default DS.Model.extend({
   }),
 
   extension: computed('filePath', function () {
-    return Path.extname(this.get('filePath'));
+    return Path.extname(this.filePath);
   }),
 
   /**
@@ -48,9 +48,9 @@ export default DS.Model.extend({
    */
   deleteRecord() {
     this._super(...arguments);
-    const gist = this.get('gist');
+    const gist = this.gist;
     if(gist) {
-      gist.registerDeletedFile(this.get('id'));
+      gist.registerDeletedFile(this.id);
 
       // Following try/catch should not be necessary. Bug in ember data?
       try {

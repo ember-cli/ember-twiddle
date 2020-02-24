@@ -19,13 +19,13 @@ export default Ember.Mixin.create({
 
   _ensureExists(filePath, blueprint) {
     if (!this.hasPath(filePath)) {
-      const fileProperties = this.get('emberCli').buildProperties(blueprint);
+      const fileProperties = this.emberCli.buildProperties(blueprint);
       this.createFile(filePath, fileProperties);
     }
   },
 
   calculateFileVarsForTests(blueprint) {
-    const fileProperties = this.get('emberCli').buildProperties(blueprint);
+    const fileProperties = this.emberCli.buildProperties(blueprint);
     const filePath = prompt('File path', fileProperties.filePath);
     const splitFilePath = filePath.split('/');
     const file = splitFilePath[splitFilePath.length - 1];
@@ -34,7 +34,7 @@ export default Ember.Mixin.create({
   },
 
   ensureTestingEnabled() {
-    return this.get('emberCli').ensureTestingEnabled(this.get('model'));
+    return this.emberCli.ensureTestingEnabled(this.model);
   },
 
   createUnitTestFile(type) {
@@ -42,7 +42,7 @@ export default Ember.Mixin.create({
     const blueprint = type + "-" + 'test';
     const { filePath, name } = this.calculateFileVarsForTests(blueprint);
 
-    const fileProperties = this.get('emberCli').buildProperties(blueprint, {
+    const fileProperties = this.emberCli.buildProperties(blueprint, {
       dasherizedModuleName: name,
       friendlyTestDescription: 'TODO: put something here'
     });
@@ -58,7 +58,7 @@ export default Ember.Mixin.create({
     const blueprint = type + '-test';
     const { filePath, name } = this.calculateFileVarsForTests(blueprint);
 
-    const fileProperties = this.get('emberCli').buildProperties(blueprint, {
+    const fileProperties = this.emberCli.buildProperties(blueprint, {
       testType: 'integration',
       componentPathName: name,
       friendlyTestDescription: 'TODO: put something here'
@@ -78,7 +78,7 @@ export default Ember.Mixin.create({
     const blueprint = 'acceptance-test';
     const { filePath, name } = this.calculateFileVarsForTests(blueprint);
 
-    const fileProperties = this.get('emberCli').buildProperties(blueprint, {
+    const fileProperties = this.emberCli.buildProperties(blueprint, {
       testFolderRoot: '../..',
       dasherizedModuleName: name,
       friendlyTestName: 'TODO: put something here'

@@ -6,11 +6,11 @@ export default Ember.Component.extend({
 
   actions: {
     showErrors() {
-      this.get('buildErrors').forEach((error) => {
+      this.buildErrors.forEach((error) => {
         // eslint-disable-next-line no-console
         console.error(error);
       });
-      this.get('notify').error('Errors were dumped to console');
+      this.notify.error('Errors were dumped to console');
     }
   }
 });

@@ -15,7 +15,7 @@ export default Ember.Object.extend({  /**
 
   resolveUser(token) {
     config.TMP_TORII_TOKEN = token;
-    return this.get('store').find('user', 'current').then((currentUser) => {
+    return this.store.find('user', 'current').then((currentUser) => {
       config.TMP_TORII_TOKEN = null;
       if (!this.get('fastboot.isFastBoot')) {
         localStorage.setItem('fiddle_gh_session', token);
@@ -48,7 +48,7 @@ export default Ember.Object.extend({  /**
    */
   open(authorization) {
     let url = config.githubOauthUrl + authorization.authorizationCode;
-    return this.get('ajax').request(url)
+    return this.ajax.request(url)
       .then(result => this.resolveUser(result.token));
   },
 

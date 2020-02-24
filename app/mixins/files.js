@@ -20,12 +20,12 @@ export default Ember.Mixin.create({
 
       fileProperties.filePath = filePath;
 
-      let store = this.get('store');
+      let store = this.store;
       run(() => pushDeletion(store, 'gist-file', filePath));
       let file = store.createRecord('gistFile', fileProperties);
 
       this.get('model.files').pushObject(file);
-      this.get('notify').info(`File ${file.get('filePath')} was added`);
+      this.notify.info(`File ${file.get('filePath')} was added`);
       this.setColumnFile(fileColumn, file);
       this.set('activeEditorCol', '1');
       this.send('contentsChanged');
@@ -51,7 +51,7 @@ export default Ember.Mixin.create({
   },
 
   updateOpenFiles() {
-    const columns = this.get('columns');
+    const columns = this.columns;
     const fileNames = columns.map(column => column.get('file.fileName'));
     const openFiles = fileNames.join(",").replace(/^,|,$/g, '');
     this.set('openFiles', openFiles);
@@ -59,7 +59,7 @@ export default Ember.Mixin.create({
 
   openFile(filePath) {
     let file = this.get('model.files').findBy('filePath', filePath);
-    let activeCol = this.get('activeEditorCol') || '1';
+    let activeCol = this.activeEditorCol || '1';
     this.setColumnFile(activeCol, file);
     this.set('activeEditorCol', activeCol);
     this.set('activeFile', file);
@@ -67,7 +67,7 @@ export default Ember.Mixin.create({
   },
 
   addFile(type) {
-    let fileProperties = type ? this.get('emberCli').buildProperties(type) : {filePath:'file.js'};
+    let fileProperties = type ? this.emberCli.buildProperties(type) : {filePath:'file.js'};
     let filePath = fileProperties.filePath;
 
     if (['twiddle.json','router', 'css'].indexOf(type)===-1) {
@@ -89,16 +89,16 @@ export default Ember.Mixin.create({
       }
 
       file.set('filePath', filePath);
-      this.get('notify').info(`File ${file.get('filePath')} was added`);
+      this.notify.info(`File ${file.get('filePath')} was added`);
       run.scheduleOnce('afterRender', this, this.updateOpenFiles);
     }
   },
 
   removeFile(file) {
     file.deleteRecord();
-    this.get('notify').info(`File ${file.get('filePath')} was deleted`);
+    this.notify.info(`File ${file.get('filePath')} was deleted`);
     this.removeFileFromColumns(file);
-    if (this.get('activeFile') === file) {
+    if (this.activeFile === file) {
       this.setProperties({
         activeFile: null,
         activeEditorCol: null
@@ -117,7 +117,7 @@ export default Ember.Mixin.create({
       return;
     }
     ['js', 'hbs'].forEach((fileExt, i)=>{
-      let fileProperties = this.get('emberCli').buildProperties(`component-${fileExt}`);
+      let fileProperties = this.emberCli.buildProperties(`component-${fileExt}`);
       let notPodPrefix = "components/";
       let filePath;
       if (path.substr(0, notPodPrefix.length) === notPodPrefix) {
@@ -135,7 +135,7 @@ export default Ember.Mixin.create({
     let file = splitFilePath[splitFilePath.length - 1];
     let name = file.replace('.js', '').camelize();
 
-    let fileProperties = this.get('emberCli').buildProperties(type, {
+    let fileProperties = this.emberCli.buildProperties(type, {
       camelizedModuleName: name
     });
 
