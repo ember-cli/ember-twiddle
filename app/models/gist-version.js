@@ -10,6 +10,6 @@ export default DS.Model.extend({
   gist: belongsTo('gist'),
 
   shortId: computed('id', function() {
-    return (this.get('id')||'').substring(0,7);
+    return (this.id||'').substring(0,7);
   })
 });

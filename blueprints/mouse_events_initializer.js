@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import jQuery from 'jquery';
 import config from '../config/environment';
 
