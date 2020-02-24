@@ -7,7 +7,7 @@ export default Ember.Route.extend({
 
   actions: {
     titleUpdated() {
-      this.get('router').updateTitle();
+      this.get('_router').updateTitle();
     }
   }
 });
