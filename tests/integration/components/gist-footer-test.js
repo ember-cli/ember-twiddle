@@ -3,15 +3,12 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import setupRouter from '../../helpers/setup-router';
 
 module('Integration | Component | gist footer', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    this.setup = function() {
-      setupRouter(this);
-    };
+    this.owner.setupRouter();
   });
 
   test('it renders with author and fork', async function(assert) {
