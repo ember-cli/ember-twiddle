@@ -6,7 +6,7 @@ import $ from 'jquery';
 import runGist from '../helpers/run-gist';
 import outputContents from '../helpers/output-contents';
 
-const firstColumn = '.code:eq(0)';
+const firstColumn = '.code';
 const firstFilePicker = firstColumn + ' .dropdown-toggle';
 const fileMenu = '.main-menu .dropdown-toggle';
 const addTemplateAction = '.test-template-action';

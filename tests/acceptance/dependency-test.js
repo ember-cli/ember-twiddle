@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import runGist from '../helpers/run-gist';
-import { click } from '@ember/test-helpers';
+import { findAll, click } from '@ember/test-helpers';
 import waitForLoadedIFrame from '../helpers/wait-for-loaded-iframe';
 import outputContents from '../helpers/output-contents';
 
@@ -110,13 +110,19 @@ module('Acceptance | dependencies', function(hooks) {
     assert.equal(outputContents('.ember-version'), '2.17.0');
     assert.equal(outputContents('.ember-data-version'), '2.18.0');
     await click('.versions-menu .dropdown-toggle');
-    await click('.test-set-ember-data-version:contains("2.16.4")');
+    await click(findContains('.test-set-ember-data-version', '2.16.4'));
 
     await click('.versions-menu .dropdown-toggle');
-    await click('.test-set-ember-version:contains("2.15.3")');
+    await click(findContains('.test-set-ember-version', '2.15.3'));
 
     await waitForLoadedIFrame();
     assert.equal(outputContents('.ember-version'), '2.15.3');
     assert.equal(outputContents('.ember-data-version'), '2.16.4');
   });
 });
+
+function findContains(selector, text) {
+  return Array.from(findAll(selector)).find(el =>
+    el.textContent.includes(text)
+  );
+}
