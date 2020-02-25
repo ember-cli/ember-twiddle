@@ -8,7 +8,7 @@ import $ from 'jquery';
 module('Acceptance | twiddles', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
-  
+
   hooks.beforeEach(function() {
     server.create('user', { login: 'octocat' });
     const owner = server.create('owner', {login: 'octocat'});
@@ -60,7 +60,7 @@ module('Acceptance | twiddles', function(hooks) {
     assert.equal($('.saved-twiddles tr').eq(0).find('.test-gist-id').text().trim(), '35de43cb81fc35ddffb2');
     assert.equal($('.saved-twiddles tr').eq(1).find('.test-gist-id').text().trim(), '74bae9a34142370ff5a3');
 
-    await click($('.saved-twiddles tr').eq(0).find('.test-gist-twiddle-link>a'));
+    await click($('.saved-twiddles tr').eq(0).find('.test-gist-twiddle-link>a')[0]);
     assert.equal(currentURL(), '/35de43cb81fc35ddffb2', 'Able to click on a twiddle and go to the twiddle');
   });
 

@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { visit, click, fillIn } from '@ember/test-helpers';
+import { visit, click, fillIn, settled } from '@ember/test-helpers';
+import { triggerKeyDown } from 'ember-keyboard';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
 import runGist from '../helpers/run-gist';
@@ -79,7 +80,8 @@ module('Acceptance | save gist', function(hooks) {
     await visit('/');
     assert.dom('.gist-link').doesNotExist("No gist link is displayed for unsaved twiddle");
 
-    await keyDown('cmd+KeyS'); // eslint-disable-line no-undef
+    await triggerKeyDown('cmd+KeyS');
+    await settled();
 
     assert.dom('.gist-link').exists({ count: 1 }, "Gist link is shown for saved twiddle");
   });
