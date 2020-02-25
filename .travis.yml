@@ -29,6 +29,7 @@ install:
   - yarn install --non-interactive
 
 script:
+  - yarn lint:hbs
   - yarn lint:js
   - yarn test
 
