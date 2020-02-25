@@ -1,84 +1,86 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('file-editor-column', 'Integration | Component | file editor column', {
-  integration: true
-});
+module('Integration | Component | file editor column', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it calls addColumn when the add column glyph is clicked', function(assert) {
-  assert.expect(1);
+  test('it calls addColumn when the add column glyph is clicked', async function(assert) {
+    assert.expect(1);
 
-  this.set('externalAction', () => {
-    assert.ok(true, 'addColumn action was called');
+    this.set('externalAction', () => {
+      assert.ok(true, 'addColumn action was called');
+    });
+
+    await render(hbs`
+      {{file-editor-column col='2' numColumns=2 addColumn=(action externalAction)}}
+    `);
+
+    this.$('.glyphicon-plus').click();
   });
 
-  this.render(hbs`
-    {{file-editor-column col='2' numColumns=2 addColumn=(action externalAction)}}
-  `);
+  test('it calls removeColumn when the remove column glyph is clicked', async function(assert) {
+    assert.expect(1);
 
-  this.$('.glyphicon-plus').click();
-});
+    this.set('externalAction', () => {
+      assert.ok(true, 'removeColumn action was called');
+    });
 
-test('it calls removeColumn when the remove column glyph is clicked', function(assert) {
-  assert.expect(1);
+    await render(hbs`
+      {{file-editor-column col='2' removeColumn=(action externalAction)}}
+    `);
 
-  this.set('externalAction', () => {
-    assert.ok(true, 'removeColumn action was called');
+    this.$('.glyphicon-remove').click();
   });
 
-  this.render(hbs`
-    {{file-editor-column col='2' removeColumn=(action externalAction)}}
-  `);
+  test('it calls showFileTree when the show file tree glyph is clicked', async function(assert) {
+    assert.expect(1);
 
-  this.$('.glyphicon-remove').click();
-});
+    this.set('externalAction', () => {
+      assert.ok(true, 'showFileTree action was called');
+    });
 
-test('it calls showFileTree when the show file tree glyph is clicked', function(assert) {
-  assert.expect(1);
+    await render(hbs`
+      {{file-editor-column col='1' fileTreeShown=false showFileTree=(action externalAction)}}
+    `);
 
-  this.set('externalAction', () => {
-    assert.ok(true, 'showFileTree action was called');
+    this.$('.glyphicon-chevron-right').click();
   });
 
-  this.render(hbs`
-    {{file-editor-column col='1' fileTreeShown=false showFileTree=(action externalAction)}}
-  `);
+  test('it calls contentChanged with true when changing the content via the code editor', async function(assert) {
+    assert.expect(1);
+    const enterKeyEvent = { keyCode: 3 };
 
-  this.$('.glyphicon-chevron-right').click();
-});
+    this.set('externalAction', (isUserChange) => {
+      assert.ok(isUserChange, 'contentChanged was called with isUserChange = true');
+    });
 
-test('it calls contentChanged with true when changing the content via the code editor', function(assert) {
-  assert.expect(1);
-  const enterKeyEvent = { keyCode: 3 };
+    this.set('ignoreAction', function() {});
 
-  this.set('externalAction', (isUserChange) => {
-    assert.ok(isUserChange, 'contentChanged was called with isUserChange = true');
+    this.set('file', { content: '' });
+
+    await render(hbs`
+      {{file-editor-column col='1' file=file contentChanged=(action externalAction) focusEditor=(action ignoreAction)}}
+    `);
+
+    const codeMirrorInstance = this.$('.CodeMirror')[0].CodeMirror;
+    codeMirrorInstance.triggerOnKeyDown(enterKeyEvent);
   });
 
-  this.set('ignoreAction', function() {});
+  test('it calls contentChanged with false when changing the content programatically', async function(assert) {
+    assert.expect(1);
 
-  this.set('file', { content: '' });
+    this.set('externalAction', (isUserChange) => {
+      assert.notOk(isUserChange, 'contentChanged was called with isUserChange = false');
+    });
 
-  this.render(hbs`
-    {{file-editor-column col='1' file=file contentChanged=(action externalAction) focusEditor=(action ignoreAction)}}
-  `);
+    this.set('file', { content: '' });
 
-  const codeMirrorInstance = this.$('.CodeMirror')[0].CodeMirror;
-  codeMirrorInstance.triggerOnKeyDown(enterKeyEvent);
-});
+    await render(hbs`
+      {{file-editor-column col='1' file=file contentChanged=(action externalAction)}}
+    `);
 
-test('it calls contentChanged with false when changing the content programatically', function(assert) {
-  assert.expect(1);
-
-  this.set('externalAction', (isUserChange) => {
-    assert.notOk(isUserChange, 'contentChanged was called with isUserChange = false');
+    this.set('file.content', 'new content');
   });
-
-  this.set('file', { content: '' });
-
-  this.render(hbs`
-    {{file-editor-column col='1' file=file contentChanged=(action externalAction)}}
-  `);
-
-  this.set('file.content', 'new content');
 });

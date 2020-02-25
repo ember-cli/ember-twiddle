@@ -1,10 +1,12 @@
 import Ember from "ember";
+import { visit } from '@ember/test-helpers';
 import createGist from "./create-gist";
+import waitForLoadedIFrame from './wait-for-loaded-iframe';
 
 const { isArray } = Ember;
 
-export default function(app, options) {
-  createGist(app, options);
+export default async function(options = {}) {
+  createGist(options);
 
   if (isArray(options)) {
     options = { files: options };
@@ -23,7 +25,7 @@ export default function(app, options) {
     url += "?route=" + initialRoute;
   }
 
-  visit(url);
+  await visit(url);
 
-  return waitForLoadedIFrame(initialRoute);
+  return await waitForLoadedIFrame(initialRoute);
 }

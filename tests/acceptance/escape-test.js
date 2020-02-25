@@ -1,20 +1,24 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import runGist from '../helpers/run-gist';
+import outputContents from '../helpers/output-contents';
 
-moduleForAcceptance('Acceptance | escaping moustaches');
+module('Acceptance | escaping moustaches', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
 
-test('Able to escape moustache tag', function(assert) {
+  test('Able to escape moustache tag', async function(assert) {
 
-  const files = [
-    {
-      filename: "application.template.hbs",
-      content: "\\{{Moustache}} ${{stuff}}"
-    }
-  ];
+    const files = [
+      {
+        filename: "application.template.hbs",
+        content: "\\{{Moustache}} ${{stuff}}"
+      }
+    ];
 
-  runGist(files);
+    await runGist(files);
 
-  andThen(function() {
     assert.equal(outputContents(), '{{Moustache}} $', 'Moustache tag is escaped');
   });
 });

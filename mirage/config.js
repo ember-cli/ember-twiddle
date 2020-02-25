@@ -13,8 +13,6 @@ export default function() {}
  */
 export function testConfig() {
 
-  this.timing = 10;
-
   this.get('/gists', function(schema) {
     return schema.gists.all();
   });
@@ -33,6 +31,10 @@ export function testConfig() {
     let gist = server.create('gist', { id: faker.random.uuid() });
     let response = assign(gist, JSON.parse(request.requestBody));
     return new Mirage.Response(200, {}, response);
+  });
+
+  this.post('/gistFiles', () => {
+    return new Mirage.Response(204);
   });
 
   this.patch('/gists/:id', (schema, request) => {
