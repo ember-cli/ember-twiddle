@@ -21,4 +21,4 @@ export default {
       }, config.TWIDDLE_ORIGIN);
     });
   }
-};
+}

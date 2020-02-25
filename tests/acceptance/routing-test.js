@@ -1,6 +1,6 @@
 import Ember from "ember";
 import { module, test } from 'qunit';
-import { click, fillIn, currentURL } from '@ember/test-helpers';
+import { find, click, fillIn, triggerKeyEvent, currentURL, settled } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import runGist from '../helpers/run-gist';
@@ -83,25 +83,27 @@ module('Acceptance | routing', function(hooks) {
   ];
 
   test('Able to do routing in a gist', async function(assert) {
-    let iframe_window;
+    let iframeWindow;
 
     await runGist(TWIDDLE_WITH_ROUTES);
 
-    if (!find(addressBar).val()) {
+    if (!find(addressBar).value) {
       this.registerWaiter();
     }
     assert.dom(addressBar).hasValue('/', "Correct URL is shown in address bar 0");
     assert.ok(decodeURIComponent(currentURL()).indexOf("route=") === -1, "URL is not added to route query string parameter 0");
 
     this.registerWaiter();
-    iframe_window = outputPane();
-    iframe_window.click(iframe_window.find(aboutLink));
+    iframeWindow = outputPane();
+    iframeWindow.click(iframeWindow.find(aboutLink));
+    await settled();
     assert.equal(outputContents(outletText), 'About Page', 'About Link leads to About Page being displayed');
     assert.dom(addressBar).hasValue('/about', "Correct URL is shown in address bar 1");
     assert.ok(decodeURIComponent(currentURL()).indexOf("route=/about") > 0, "URL is added to route query string parameter 1");
 
     this.registerWaiter();
-    iframe_window.click(iframe_window.find(indexLink));
+    iframeWindow.click(iframeWindow.find(indexLink));
+    await settled();
     assert.equal(outputContents(outletText), 'Main Page', 'Index Link leads to Main Page being displayed');
     assert.dom(addressBar).hasValue('/', "Correct URL is shown in address bar 2");
     assert.ok(decodeURIComponent(currentURL()).indexOf("route=") === -1, "URL is not added to route query string parameter 2");
@@ -110,20 +112,20 @@ module('Acceptance | routing', function(hooks) {
   test('URL can be changed via the address bar', async function(assert) {
     await runGist(TWIDDLE_WITH_ROUTES);
 
-    if (!find(addressBar).val()) {
+    if (!find(addressBar).value) {
       this.registerWaiter();
     }
     assert.dom(addressBar).hasValue('/', "Correct URL is shown in address bar 0");
 
     await click(addressBar);
     await fillIn(addressBar, '/about');
-    keyEvent(addressBar, 'keyup', 13);
+    await triggerKeyEvent(addressBar, 'keyup', 13);
     assert.equal(outputContents(outletText), 'About Page', 'Changing the URL to /about and pressing enter leads to the About Page being displayed');
     assert.dom(addressBar).hasValue('/about', "Correct URL is shown in address bar 1");
 
     await click(addressBar);
     await fillIn(addressBar, '/');
-    keyEvent(addressBar, 'keyup', 13);
+    await triggerKeyEvent(addressBar, 'keyup', 13);
     assert.equal(outputContents(outletText), 'Main Page', 'Changing the URL to / and pressing enter leads to the Main Page being displayed');
     assert.dom(addressBar).hasValue('/', "Correct URL is shown in address bar 2");
   });
@@ -134,7 +136,7 @@ module('Acceptance | routing', function(hooks) {
       initialRoute: "/about"
     });
 
-    if (!find(addressBar).val()) {
+    if (!find(addressBar).value) {
       this.registerWaiter();
     }
     assert.dom(addressBar).hasValue("/about", "Correct URL appears when set via query parameter");
