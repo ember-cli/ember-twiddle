@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { click } from '@ember/test-helpers';
+import { triggerKeyDown } from 'ember-keyboard';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import runGist from '../helpers/run-gist';
 import waitForLoadedIFrame from '../helpers/wait-for-loaded-iframe';
@@ -42,7 +43,7 @@ module('Acceptance | run now', function(hooks) {
     await outputPane().find('input').val('new value');
     assert.equal(outputPane().find('input').val(), 'new value');
 
-    await keyDown('Enter+cmd'); // eslint-disable-line no-undef
+    await triggerKeyDown('Enter+cmd');
     await waitForLoadedIFrame();
 
     assert.equal(outputPane().find('input').val(), 'initial value');
