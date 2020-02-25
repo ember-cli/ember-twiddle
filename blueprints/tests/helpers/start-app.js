@@ -1,17 +1,23 @@
+import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
-import { merge } from '@ember/polyfills';
-import { run } from '@ember/runloop';
+
+const { run } = Ember;
+const assign = Ember.assign || Ember.merge;
 
 export default function startApp(attrs) {
-  let attributes = merge({}, config.APP);
-  attributes.autoboot = true;
-  attributes = merge(attributes, attrs); // use defaults, but you can override;
+  let application;
 
-  return run(() => {
-    let application = Application.create(attributes);
+  let attributes = assign({rootElement: "#test-root"}, config.APP);
+  attributes.autoboot = true;
+  attributes.rootElement = '#ember-testing';
+  attributes = assign(attributes, attrs); // use defaults, but you can override;
+
+  run(() => {
+    application = Application.create(attributes);
     application.setupForTesting();
     application.injectTestHelpers();
-    return application;
   });
+
+  return application;
 }
