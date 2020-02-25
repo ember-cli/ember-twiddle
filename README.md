@@ -15,7 +15,8 @@ To make using Ember Twiddle secure, we use the [sandbox](http://caniuse.com/#fea
 We are planning to move to a secure solution with better compatibility soon (most likely one where the twiddle is run on a different domain).
 
 ### Ember support
-The latest working version of Ember in Ember Twiddle is 2.16. Feel free to open a PR to extend the supported versions.
+
+The latest working version of Ember in Ember Twiddle is 3.4. Feel free to open a PR to extend the supported versions.
 
 ## Feedback
 
