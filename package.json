@@ -65,6 +65,7 @@
     "ember-cli-qunit": "^4.4.0",
     "ember-cli-release": "1.0.0-beta.2",
     "ember-cli-sass": "^6.2.0",
+    "ember-cli-shims": "~1.1.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-template-lint": "^1.0.0-beta.1",
     "ember-cli-test-loader": "^2.2.0",
@@ -82,7 +83,7 @@
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-moment": "^7.6.0",
     "ember-notify": "^5.2.1",
-    "ember-resolver": "^5.0.1",
+    "ember-resolver": "^4.0.0",
     "ember-responsive": "^2.0.8",
     "ember-rfc176-data": "~0.3.2",
     "ember-route-action-helper": "^2.0.6",
@@ -106,6 +107,6 @@
     "ember-cli-shims/ember-cli-version-checker": "2.2.0"
   },
   "engines": {
-    "node": "6.* || 8.* || >= 10.*"
+    "node": ">= 8.*"
   }
 }
