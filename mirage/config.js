@@ -33,6 +33,10 @@ export function testConfig() {
     return new Mirage.Response(200, {}, response);
   });
 
+  this.post('/gistFiles', () => {
+    return new Mirage.Response(204);
+  });
+
   this.patch('/gists/:id', (schema, request) => {
     let response = JSON.parse(request.requestBody);
     response.id = request.params.id;
