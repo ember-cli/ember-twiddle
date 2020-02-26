@@ -1,8 +1,8 @@
+import { resolve } from 'rsvp';
 import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import Ember from 'ember';
 import DS from 'ember-data';
 
 module('Unit | Model | gist file', function(hooks) {
@@ -14,7 +14,7 @@ module('Unit | Model | gist file', function(hooks) {
 
     const adapter = DS.Adapter.extend({
       createRecord() {
-        return Ember.RSVP.resolve({ id: 1 });
+        return resolve({ id: 1 });
       }
     });
     this.owner.register('adapter:application', adapter);

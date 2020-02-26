@@ -1,13 +1,14 @@
-import Ember from "ember";
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'tr',
 
-  numFiles: Ember.computed('gist.files.[]', function() {
+  numFiles: computed('gist.files.[]', function() {
     return this.get('gist.files.length');
   }),
 
-  filesTitle: Ember.computed('gist.files.@each.filePath', function() {
+  filesTitle: computed('gist.files.@each.filePath', function() {
     return this.get('gist.files').toArray().mapBy('filePath').join("\n");
   })
 });

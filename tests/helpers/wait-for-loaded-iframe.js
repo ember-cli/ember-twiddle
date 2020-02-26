@@ -1,8 +1,7 @@
-import Ember from "ember";
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
 import { find, settled } from '@ember/test-helpers';
 import outputPane from './output-pane';
-
-const { RSVP, run } = Ember;
 
 export default async function(url) {
   let iframeWindow;

@@ -1,11 +1,10 @@
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 import DS from 'ember-data';
-import Ember from 'ember';
 import config from '../config/environment';
 
-const { computed, inject } = Ember;
-
 export default DS.RESTAdapter.extend({
-  fastboot: inject.service(),
+  fastboot: service(),
 
   host: config.host,
 

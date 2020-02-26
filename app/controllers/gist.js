@@ -1,4 +1,4 @@
-import Ember from "ember";
+import Controller from '@ember/controller';
 import GistController from "../mixins/gist-controller";
 
-export default Ember.Controller.extend(GistController, {});
+export default Controller.extend(GistController, {});

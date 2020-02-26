@@ -1,4 +1,4 @@
-import Ember from "ember";
+import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -31,11 +31,11 @@ module('Integration | Component | file menu', function(hooks) {
     this.gistToFork = null;
     this.gistToDelete = null;
 
-    this.file = Ember.Object.create({
+    this.file = EmberObject.create({
       filePath: "some.path.js"
     });
 
-    this.gist = Ember.Object.create({
+    this.gist = EmberObject.create({
       id: '74bae9a34142370ff5a3',
       files: [this.file],
       history: [],
@@ -46,7 +46,7 @@ module('Integration | Component | file menu', function(hooks) {
     // Set any properties with this.set('myProperty', 'value');
     this.set('model', this.gist);
 
-    this.set('session', Ember.Object.create({
+    this.set('session', EmberObject.create({
       isAuthenticated: true,
       currentUser: {
         login: 'octocat'

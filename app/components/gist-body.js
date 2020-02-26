@@ -1,7 +1,6 @@
-import Ember from "ember";
+import { equal } from '@ember/object/computed';
+import Component from '@ember/component';
 
-const { computed } = Ember;
-
-export default Ember.Component.extend({
-  noColumns: computed.equal('numColumns', 0)
+export default Component.extend({
+  noColumns: equal('numColumns', 0)
 });

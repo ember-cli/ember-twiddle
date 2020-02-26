@@ -1,13 +1,13 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { readOnly } from '@ember/object/computed';
+import Component from '@ember/component';
 import DropdownSubmenuFixMixin from "../mixins/dropdown-submenu-fix";
 
-const { computed, inject } = Ember;
-
-export default Ember.Component.extend(DropdownSubmenuFixMixin, {
-  dependencyResolver: inject.service(),
+export default Component.extend(DropdownSubmenuFixMixin, {
+  dependencyResolver: service(),
   tagName: 'li',
   classNames: ['dropdown', 'versions-menu'],
 
-  versions: computed.readOnly('dependencyResolver.emberVersions'),
-  dataVersions: computed.readOnly('dependencyResolver.emberDataVersions')
+  versions: readOnly('dependencyResolver.emberVersions'),
+  dataVersions: readOnly('dependencyResolver.emberDataVersions')
 });

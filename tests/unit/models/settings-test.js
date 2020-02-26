@@ -1,13 +1,7 @@
+import { set, get, getProperties } from '@ember/object';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import Ember from 'ember';
 import Settings from 'ember-twiddle/models/settings';
-
-const {
-  getProperties,
-  get,
-  set
-} = Ember;
 
 module('Unit | Model | Settings', function(hooks) {
   setupTest(hooks);

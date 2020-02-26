@@ -1,7 +1,8 @@
-import Ember from "ember";
+import { isArray } from '@ember/array';
+import Mixin from '@ember/object/mixin';
 import { task, timeout } from "ember-concurrency";
 
-export default Ember.Mixin.create({
+export default Mixin.create({
 
   /**
    * Build the application and set the iframe code
@@ -17,7 +18,7 @@ export default Ember.Mixin.create({
       this.set('buildOutput', buildOutput);
     } catch(errors) {
       this.set('isBuilding', false);
-      if (Ember.isArray(errors)) {
+      if (isArray(errors)) {
         this.set('buildErrors', errors);
         errors.forEach(error => {
           // eslint-disable-next-line no-console

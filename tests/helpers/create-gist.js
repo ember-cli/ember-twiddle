@@ -1,7 +1,5 @@
-import Ember from "ember";
+import { isArray } from '@ember/array';
 import { faker } from "ember-cli-mirage";
-
-const { isArray } = Ember;
 
 export default function(options) {
   if (isArray(options)) {
