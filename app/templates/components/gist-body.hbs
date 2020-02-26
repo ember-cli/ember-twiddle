@@ -49,7 +49,7 @@
       {{input value=applicationUrl enter=(route-action "urlChanged")}}
     </div>
     {{#if isBuilding}}
-      <div class="ember-load-indicator">Building...</div>
+      <div class="load-indicator">Building...</div>
     {{/if}}
     {{dummy-app html=buildOutput isBuilding=isBuilding}}
     {{#if fullScreen}}
