@@ -8,7 +8,7 @@ export default GistRoute.extend({
   model(params) {
     run(() => pushDeleteAll(this.store, 'gist-file'));
 
-    return this.store.find('gist', params.gistId);
+    return this.store.findRecord('gist', params.gistId);
   },
 
   setupController() {
