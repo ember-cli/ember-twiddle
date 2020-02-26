@@ -168,27 +168,9 @@ module('Unit | Service | ember cli', function(hooks) {
 
     assert.equal(service.fixTwiddleAppNames("import a from 'app/b';"), "import a from 'twiddle/b';");
     assert.equal(service.fixTwiddleAppNames('import ab from "demo-app/bc";'), 'import ab from "twiddle/bc";');
-    assert.equal(service.fixTwiddleAppNames('import {
-  a,
-  b} from "demo-app/c.js";'),
-  'import {a,
-  b
-} from "twiddle/c.js";');
-    assert.equal(service.fixTwiddleAppNames("import a, {
-  b,
-  c} from 'demo-app/d';"),
-  "import a,
-  {b,
-  c
-} from 'twiddle/d';");
-    assert.equal(service.fixTwiddleAppNames("import {
-  bc,
-  cd},
-  ab from 'demo-app/de';"),
-  "import {bc,
-  cd},
-  a
-} from 'twiddle/de';");
+    assert.equal(service.fixTwiddleAppNames('import {a, b} from "demo-app/c.js";'), 'import {a, b} from "twiddle/c.js";');
+    assert.equal(service.fixTwiddleAppNames("import a, {b, c} from 'demo-app/d';"), "import a, {b, c} from 'twiddle/d';");
+    assert.equal(service.fixTwiddleAppNames("import {bc, cd}, ab from 'demo-app/de';"), "import {bc, cd}, ab from 'twiddle/de';");
     assert.equal(service.fixTwiddleAppNames(`import {
     a,
     b,
