@@ -1,10 +1,9 @@
-import Ember from "ember";
+import Mixin from '@ember/object/mixin';
+import { run } from '@ember/runloop';
 import ErrorMessages from "../utils/error-messages";
 import { pushDeletion } from "../utils/push-deletion";
 
-const { run } = Ember;
-
-export default Ember.Mixin.create({
+export default Mixin.create({
   hasPath(filePath) {
     const files = this.get('model.files');
     const file = files.findBy('filePath', filePath);

@@ -1,6 +1,13 @@
 import Ember from "ember";
 import { module, test } from 'qunit';
-import { find, click, fillIn, triggerKeyEvent, currentURL, settled } from '@ember/test-helpers';
+import {
+  find,
+  click,
+  fillIn,
+  triggerKeyEvent,
+  currentURL,
+  settled
+} from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import runGist from '../helpers/run-gist';

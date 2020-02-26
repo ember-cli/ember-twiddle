@@ -1,4 +1,4 @@
-import Ember from "ember";
+import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -13,7 +13,7 @@ module('Integration | Component | gist footer', function(hooks) {
 
   test('it renders with author and fork', async function(assert) {
 
-    this.set('model', Ember.Object.create({
+    this.set('model', EmberObject.create({
       owner: {
         login: 'octocat',
         avatarUrl16: 'fake16.png',
@@ -41,7 +41,7 @@ module('Integration | Component | gist footer', function(hooks) {
 
   test('it renders with author and no fork', async function(assert) {
 
-    this.set('model', Ember.Object.create({
+    this.set('model', EmberObject.create({
       owner: {
         login: 'octocat',
         avatarUrl16: 'fake16.png',
@@ -60,7 +60,7 @@ module('Integration | Component | gist footer', function(hooks) {
 
   test('it renders without author (new twiddle)', async function(assert) {
 
-    this.set('model', Ember.Object.create({
+    this.set('model', EmberObject.create({
       owner: null,
       forkOf: null
     }));

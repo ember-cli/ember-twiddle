@@ -1,8 +1,7 @@
-import Ember from "ember";
+import EmberObject from '@ember/object';
+import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-
-const { RSVP } = Ember;
 
 module('route:gist', function(hooks) {
   setupTest(hooks);
@@ -24,7 +23,7 @@ module('route:gist', function(hooks) {
         info() {}
       }
     });
-    let gistClass = Ember.Object.extend({
+    let gistClass = EmberObject.extend({
       called: false,
       destroyRecord() {
         this.set('called', true);

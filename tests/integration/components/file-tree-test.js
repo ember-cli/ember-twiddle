@@ -1,4 +1,5 @@
-import Ember from "ember";
+import { Promise } from 'rsvp';
+import EmberObject from '@ember/object';
 import config from '../../../config/environment';
 
 import { module, test } from 'qunit';
@@ -11,27 +12,27 @@ module('Integration | Component | file tree', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    this.file1 = Ember.Object.create({
+    this.file1 = EmberObject.create({
       filePath: "some-path.js"
     });
 
-    this.file2 = Ember.Object.create({
+    this.file2 = EmberObject.create({
       filePath: "some/path.js"
     });
 
-    this.file3 = Ember.Object.create({
+    this.file3 = EmberObject.create({
       filePath: "some/long/path.js"
     });
 
-    this.file4 = Ember.Object.create({
+    this.file4 = EmberObject.create({
       filePath: "some/path/to/file.js"
     });
 
-    this.file5 = Ember.Object.create({
+    this.file5 = EmberObject.create({
       filePath: "some/path/to/file2.js"
     });
 
-    this.gist = Ember.Object.create({
+    this.gist = EmberObject.create({
       id: '74bae9a34142370ff5a3',
       files: [this.file1, this.file2, this.file3, this.file4, this.file5],
       history: [],
@@ -42,7 +43,7 @@ module('Integration | Component | file tree', function(hooks) {
     this.set('model', this.gist);
 
     this.makeNewPromise = (event) => {
-      return new Ember.RSVP.Promise(resolve => {
+      return new Promise(resolve => {
         this.set(event, () => {
           resolve();
         });

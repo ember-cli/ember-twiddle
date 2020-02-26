@@ -1,7 +1,6 @@
-import Ember from "ember";
+import Service, { inject as service } from '@ember/service';
+import RSVP from 'rsvp';
 import blueprints from '../lib/blueprints';
-
-const { inject, RSVP } = Ember;
 
 const requiredDependencies = [
   'jquery',
@@ -15,8 +14,8 @@ const dependentDependencies = [
   'ember-testing'
 ];
 
-export default Ember.Service.extend({
-  dependencyResolver: inject.service(),
+export default Service.extend({
+  dependencyResolver: service(),
 
   usePods: false,
 

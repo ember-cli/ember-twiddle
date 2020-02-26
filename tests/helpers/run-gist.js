@@ -1,9 +1,7 @@
-import Ember from "ember";
+import { isArray } from '@ember/array';
 import { visit } from '@ember/test-helpers';
 import createGist from "./create-gist";
 import waitForLoadedIFrame from './wait-for-loaded-iframe';
-
-const { isArray } = Ember;
 
 export default async function(options = {}) {
   createGist(options);

@@ -1,9 +1,8 @@
-import Ember from "ember";
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import config from '../config/environment';
 
-const { computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   jsTreeActionReceiver: null,
 
   fileTreeHash: computed('model.files.@each.filePath', function() {

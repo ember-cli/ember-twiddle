@@ -1,4 +1,4 @@
-import Ember from "ember";
+import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -10,19 +10,19 @@ module('Integration | Component | saved twiddles row', function(hooks) {
   test('it renders', async function(assert) {
     assert.expect(5);
 
-    this.file1 = Ember.Object.create({
+    this.file1 = EmberObject.create({
       filePath: "some-path.js"
     });
 
-    this.file2 = Ember.Object.create({
+    this.file2 = EmberObject.create({
       filePath: "some/path.js"
     });
 
-    this.file3 = Ember.Object.create({
+    this.file3 = EmberObject.create({
       filePath: "some/long/path.js"
     });
 
-    this.set('gist', Ember.Object.create({
+    this.set('gist', EmberObject.create({
       id: '74bae9a34142370ff5a3',
       updatedAt: new Date(2015, 3, 1),
       description: "Test Description",

@@ -1,11 +1,11 @@
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import Ember from 'ember';
 import ResizeMixin from 'ember-twiddle/mixins/resize';
 import $ from 'jquery';
 
-const { inject } = Ember;
-
-export default Ember.Component.extend(ResizeMixin, {
-  app: inject.service(),
+export default Component.extend(ResizeMixin, {
+  app: service(),
 
   iframeId: 'dummy-content-iframe',
   classNames: ['content'],

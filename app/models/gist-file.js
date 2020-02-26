@@ -1,9 +1,8 @@
+import { computed } from '@ember/object';
 import DS from 'ember-data';
-import Ember from 'ember';
 import Path from 'path';
 
 const { attr, belongsTo } = DS;
-const { computed } = Ember;
 
 export default DS.Model.extend({
   fileType: attr('string'),

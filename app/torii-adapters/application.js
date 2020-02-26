@@ -1,17 +1,18 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import EmberObject from '@ember/object';
+import { isBlank } from '@ember/utils';
+import RSVP from 'rsvp';
 import config from '../config/environment';
 
-const { inject, isBlank, RSVP } = Ember;
-
-export default Ember.Object.extend({  /**
+export default EmberObject.extend({  /**
    * Resolve the user over the Github API using the token
    * @param  token      API token (either from Cookie or Oauth)
    * @return Promise
    */
 
-  store: inject.service(),
-  ajax: inject.service(),
-  fastboot: inject.service(),
+  store: service(),
+  ajax: service(),
+  fastboot: service(),
 
   resolveUser(token) {
     config.TMP_TORII_TOKEN = token;
