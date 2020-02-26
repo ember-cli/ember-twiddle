@@ -526,13 +526,15 @@ function babelOpts(moduleName) {
     moduleIds: true,
     moduleId: moduleName,
     plugins: [
-      ['transform-es2015-modules-amd', {
+      ['transform-modules-amd', {
         loose: true,
         noInterop: true
       }],
-      'transform-decorators-legacy',
-      'transform-class-properties',
-      'transform-object-rest-spread',
+      ['proposal-decorators', {
+        legacy: true
+      }],
+      'proposal-class-properties',
+      'proposal-object-rest-spread',
       hbsPlugin,
       newModulesPlugin
     ]
