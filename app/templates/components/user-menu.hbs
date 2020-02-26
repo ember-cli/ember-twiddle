@@ -6,7 +6,7 @@
     <li class="dropdown user-dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         <span class="user-avatar">
-          <img src="{{session.currentUser.avatarUrl32}}" />
+          <img src={{session.currentUser.avatarUrl32}} alt={{session.currentUser.name}}>
         </span>
         {{userName}} <b class="caret"></b>
       </a>
@@ -31,9 +31,9 @@
   </a>
   <ul class="dropdown-menu dropdown-menu-right">
     {{#if currentVersionLink}}
-      <li><a href="{{currentVersionLink}}" target="_blank" class="test-current-version-link">Ember Twiddle {{v}}{{version}}</a></li>
+      <li><a href={{currentVersionLink}} target="_blank" rel="noopener" class="test-current-version-link">Ember Twiddle {{v}}{{version}}</a></li>
     {{/if}}
-    <li><a href="https://github.com/ember-cli/ember-twiddle" target="_blank">GitHub</a></li>
-    <li><a href="https://github.com/ember-cli/ember-twiddle/issues" target="_blank">Issue tracker</a></li>
+    <li><a href="https://github.com/ember-cli/ember-twiddle" rel="noopener" target="_blank">GitHub</a></li>
+    <li><a href="https://github.com/ember-cli/ember-twiddle/issues" rel="noopener" target="_blank">Issue tracker</a></li>
   </ul>
 </li>

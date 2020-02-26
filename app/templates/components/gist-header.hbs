@@ -1,7 +1,7 @@
 <nav class="navbar-default gist-header">
   <div class="row toolbar visible-toolbar">
     <div class="title">
-      {{title-input value=model.description titleChanged=(action this.attrs.titleChanged)}}
+      {{title-input value=model.description titleChanged=(action titleChanged)}}
       {{saved-state-indicator model=model unsaved=unsaved isGistSaving=isGistSaving}}
     </div>
 
@@ -19,14 +19,14 @@
                   activeEditorCol=activeEditorCol
                   activeFile=activeFile
                   isRevision=isRevision
-                  addFile=(action this.attrs.addFile)
-                  addHelper=(action this.attrs.addHelper)
-                  addComponent=(action this.attrs.addComponent)
-                  addUnitTestFile=(action this.attrs.addUnitTestFile)
-                  addIntegrationTestFile=(action this.attrs.addIntegrationTestFile)
-                  addAcceptanceTestFile=(action this.attrs.addAcceptanceTestFile)
-                  renameFile=(action this.attrs.renameFile)
-                  removeFile=(action this.attrs.removeFile)
+                  addFile=(action addFile)
+                  addHelper=(action addHelper)
+                  addComponent=(action addComponent)
+                  addUnitTestFile=(action addUnitTestFile)
+                  addIntegrationTestFile=(action addIntegrationTestFile)
+                  addAcceptanceTestFile=(action addAcceptanceTestFile)
+                  renameFile=(action renameFile)
+                  removeFile=(action removeFile)
                   deleteGist=(route-action "deleteGist")
                   saveGist=(route-action "saveGist")
                   fork=(route-action "fork")
@@ -37,9 +37,9 @@
                   downloadProject=(route-action "downloadProject")
       }}
 
-      {{editor-mode-menu selectedKeyMap=selectedKeyMap setKeyMap=(action this.attrs.setEditorKeyMap)}}
+      {{editor-mode-menu selectedKeyMap=selectedKeyMap setKeyMap=(action setEditorKeyMap)}}
 
-      {{versions-menu versionSelected=(action this.attrs.versionSelected)
+      {{versions-menu versionSelected=(action versionSelected)
                       emberVersions=emberVersions
                       emberDataVersions=emberDataVersions
       }}

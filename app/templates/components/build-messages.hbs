@@ -1,10 +1,12 @@
 {{#if isBuilding}}
-    Building...
+  Building...
 {{else}}
-    Output
-    ({{#if buildErrors}}
-        <a {{action 'showErrors'}}>{{buildErrors.length}} build errors</a>
-    {{else}}
-        build ok.
-    {{/if}})
+  Output
+  (
+  {{#if buildErrors}}
+    <a {{action 'showErrors'}}>{{buildErrors.length}} build errors</a>
+  {{else}}
+    build ok.
+  {{/if}}
+  )
 {{/if}}

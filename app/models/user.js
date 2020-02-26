@@ -6,6 +6,7 @@ const { computed } = Ember;
 
 export default DS.Model.extend({
   login: attr('string'),
+  name: attr('string'),
   avatarUrl: attr('string'),
   htmlUrl: attr('string'),
 
