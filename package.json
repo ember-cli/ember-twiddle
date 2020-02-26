@@ -89,7 +89,7 @@
     "ember-source": "~3.4.0",
     "eslint-plugin-ember": "^5.2.0",
     "file-saver": "^2.0.2",
-    "ivy-codemirror": "^2.1.0",
+    "ivy-codemirror": "IvyApp/ivy-codemirror#ff753f16557a7b222737575c66b3ae3ae7d484ce",
     "loader.js": "^4.7.0",
     "moment": "^2.22.0",
     "moment-timezone": "~0.5.14",
