@@ -77,6 +77,12 @@ module('Acceptance | gist-revision', function(hooks) {
       {
         filename: "application.template.hbs",
         content: "Hello, World!"
+      },
+      {
+        filename: "twiddle.json",
+        content: `{
+                    "dependencies": {}
+                  }`
       }
     ];
 
@@ -89,6 +95,12 @@ module('Acceptance | gist-revision', function(hooks) {
         {
           filename: "application.template.hbs",
           content: "Hello, ..."
+        },
+        {
+          filename: "twiddle.json",
+          content: `{
+                      "dependencies": {}
+                    }`
         }
       ],
       type: 'revision',
