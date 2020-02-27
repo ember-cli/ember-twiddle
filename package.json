@@ -106,6 +106,6 @@
     "ember-cli-shims/ember-cli-version-checker": "2.2.0"
   },
   "engines": {
-    "node": ">= 8.*"
+    "node": ">= 10.*"
   }
 }
