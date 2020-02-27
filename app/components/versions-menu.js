@@ -12,11 +12,11 @@ export default Component.extend({
 
   actions: {
     versionSelected(dependency, version) {
-      let gist = this.get('model');
-      let emberCli = this.get('emberCli');
+      let gist = this.model;
+      let emberCli = this.emberCli;
 
       emberCli.updateDependencyVersion(gist, dependency, version).then(() => {
-        this.get('onVersionChanged')();
+        this.onVersionChanged();
       });
     }
   }

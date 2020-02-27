@@ -39,7 +39,7 @@ export default Mixin.create({
    *  Test whether path is valid.  Presently only tests whether components are hyphenated.
    */
   isPathInvalid(type, path){
-    let notify = this.get('notify');
+    let notify = this.notify;
     let errorMsg = null;
 
     if (/^component/.test(type)) {
@@ -87,7 +87,7 @@ export default Mixin.create({
   },
 
   renameFile(file, filePath) {
-    let notify = this.get('notify');
+    let notify = this.notify;
 
     if (filePath) {
       if (this.get('model.files').findBy('filePath', filePath)) {

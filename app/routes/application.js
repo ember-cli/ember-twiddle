@@ -40,9 +40,9 @@ export default Route.extend({
     },
 
     signInViaGithub () {
-      let notify = this.get('notify');
+      let notify = this.notify;
 
-      this.session.open(this.get('toriiProvider')).catch((error) => {
+      this.session.open(this.toriiProvider).catch((error) => {
         notify.warning('Could not sign you in: ' + error.message);
         throw error;
       });

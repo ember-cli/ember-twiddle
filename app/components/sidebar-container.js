@@ -14,7 +14,7 @@ export default Ember.Component.extend({
       let lastGistId = this.get('state.lastGistId');
       let params = lastGistId ? ['gist.edit', lastGistId] : ['gist'];
  
-      this.get('router').transitionTo(...params).then(() => {
+      this.router.transitionTo(...params).then(() => {
         this.set('showProfile', false);
       });
     }

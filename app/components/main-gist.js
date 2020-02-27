@@ -232,8 +232,8 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
     },
 
     renameFile() {
-      let file = this.get('fileToRename');
-      let filePath = this.get('newFilePath');
+      let file = this.fileToRename;
+      let filePath = this.newFilePath;
 
       this.renameFile(file, filePath);
       this.send('hideRenameFileDialog');
@@ -256,7 +256,7 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
     },
 
     removeFile() {
-      let file = this.get('fileToRemove');
+      let file = this.fileToRemove;
 
       if (file) {
         this.removeFile(file);

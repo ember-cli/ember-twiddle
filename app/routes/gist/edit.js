@@ -30,7 +30,7 @@ export default GistRoute.extend({
 
   actions: {
     error(error) {
-      let notify = this.get('notify');
+      let notify = this.notify;
 
       if (error && error.errors && error.errors.length > 0) {
         let error1 = error.errors[0];

@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   // Github does not provide api for forking a revision
   showFork: computed('gist.{ownerLogin,isNew}', 'session.currentUser.login', 'isRevision', function() {
     let isNew = this.get('gist.isNew');
-    let notRevision = !this.get('isRevision');
+    let notRevision = !this.isRevision;
     let notOwner = this.get('gist.ownerLogin') !== this.get('session.currentUser.login');
 
     return !isNew && notRevision && notOwner;
