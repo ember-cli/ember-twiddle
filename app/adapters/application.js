@@ -1,11 +1,8 @@
+import { computed } from '@ember/object';
 import DS from 'ember-data';
-import Ember from 'ember';
 import config from '../config/environment';
 
-const { computed, inject } = Ember;
-
 export default DS.RESTAdapter.extend({
-  fastboot: inject.service(),
 
   host: config.host,
 
@@ -15,10 +12,6 @@ export default DS.RESTAdapter.extend({
     var token  = this.get('session.token') || config.TMP_TORII_TOKEN;
     if (token) {
       headers['Authorization'] = 'token ' + token;
-    }
-
-    if (this.get('fastboot.isFastBoot')) {
-      headers['user-agent'] = "fastboot";
     }
 
     return headers;

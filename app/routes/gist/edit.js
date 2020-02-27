@@ -1,25 +1,25 @@
-import Ember from "ember";
+import { get } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { run, schedule } from '@ember/runloop';
 import GistRoute from "ember-twiddle/routes/gist-base-route";
 import { pushDeleteAll } from "ember-twiddle/utils/push-deletion";
 
-const { get, inject, run } = Ember;
-
 export default GistRoute.extend({
-  notify: inject.service(),
-  state: inject.service(),
+  notify: service(),
+  state: service(),
 
   model(params) {
     this.set('state.lastGistId', params.gistId);
     run(() => pushDeleteAll(this.store, 'gist-file'));
 
-    return this.store.find('gist', params.gistId);
+    return this.store.findRecord('gist', params.gistId);
   },
 
   setupController() {
     this._super(...arguments);
 
     const gistController = this.controllerFor('gist');
-    Ember.run.schedule('afterRender', function() {
+    schedule('afterRender', function() {
       gistController.set('unsaved', false);
     });
   },

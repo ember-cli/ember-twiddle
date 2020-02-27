@@ -1,6 +1,8 @@
+import { run } from '@ember/runloop';
+import { A } from '@ember/array';
+import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import Ember from 'ember';
 
 module('Unit | Service | ember cli', function(hooks) {
   setupTest(hooks);
@@ -12,19 +14,19 @@ module('Unit | Service | ember cli', function(hooks) {
     let service = this.owner.lookup('service:ember-cli');
     assert.ok(service);
 
-    var gist = Ember.Object.create({
-      files: Ember.A([
-        Ember.Object.create({
+    var gist = EmberObject.create({
+      files: A([
+        EmberObject.create({
           filePath: 'templates/application.hbs',
           extension: '.hbs',
           content: '<h1>Hi, I\'m{{appName}}</h1>'
         }),
-        Ember.Object.create({
+        EmberObject.create({
           filePath: 'controllers/application.js',
           extension: '.js',
           content: 'import Ember from "ember";\n\nexport default Ember.Controller.extend({appName:"foo"});'
         }),
-        Ember.Object.create({
+        EmberObject.create({
           filePath: 'twiddle.json',
           extension: '.json',
           content: `{
@@ -46,7 +48,7 @@ module('Unit | Service | ember cli', function(hooks) {
       ])
     });
 
-    Ember.run(function() {
+    run(function() {
       service.compileGist(gist).then(function(output) {
         output = output.replace(/define\('([a-z0-9-/]+)'/gi,'define("$1"');
         assert.ok(output.indexOf('define("twiddle/router"')>-1, 'build contains router');
@@ -97,7 +99,7 @@ module('Unit | Service | ember cli', function(hooks) {
     var template = "`stuff`";
     var service = this.owner.lookup('service:ember-cli');
     var result = service.compileHbs(template, 'some-path');
-    var mungedCode = "\\`stuff\\`";
+    var mungedCode = '"`stuff`"';
 
     assert.ok(result.indexOf(mungedCode) > -1, 'munged template included');
   });
@@ -118,7 +120,7 @@ module('Unit | Service | ember cli', function(hooks) {
       }
     };
 
-    var gist = Ember.Object.create({
+    var gist = EmberObject.create({
       initialRoute: "/"
     });
 
@@ -150,7 +152,7 @@ module('Unit | Service | ember cli', function(hooks) {
       }
     };
 
-    var gist = Ember.Object.create({});
+    var gist = EmberObject.create({});
 
     var output = service.buildHtml(gist, '', '', twiddleJson);
 

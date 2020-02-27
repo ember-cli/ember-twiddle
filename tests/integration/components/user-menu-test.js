@@ -1,4 +1,4 @@
-import Ember from "ember";
+import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -17,7 +17,7 @@ module('Integration | Component | user menu', function(hooks) {
     this.signOutCalled = false;
     this.showTwiddlesCalled = false;
 
-    this.set('session', Ember.Object.create({
+    this.set('session', EmberObject.create({
       isOpening: false,
       isAuthenticated: false,
       currentUser: {

@@ -5,7 +5,7 @@
         unsaved=unsaved
         isGistSaving=isGistSaving
         isRevision=isRevision
-        titleChanged=(action this.attrs.titleChanged)
+        titleChanged=(action @titleChanged)
         deleteGist=(route-action 'deleteGist')
         saveGist=(route-action 'saveGist')
         fork=(route-action 'fork')
@@ -25,12 +25,12 @@
         session=session
         activeFile=activeFile
         isRevision=isRevision
-        addFile=(action this.attrs.addFile)
-        addHelper=(action this.attrs.addHelper)
-        addComponent=(action this.attrs.addComponent)
-        addUnitTestFile=(action this.attrs.addUnitTestFile)
-        addIntegrationTestFile=(action this.attrs.addIntegrationTestFile)
-        addAcceptanceTestFile=(action this.attrs.addAcceptanceTestFile)
+        addFile=(action @addFile)
+        addHelper=(action @addHelper)
+        addComponent=(action @addComponent)
+        addUnitTestFile=(action @addUnitTestFile)
+        addIntegrationTestFile=(action @addIntegrationTestFile)
+        addAcceptanceTestFile=(action @addAcceptanceTestFile)
         deleteGist=(route-action 'deleteGist')
         saveGist=(route-action 'saveGist')
         fork=(route-action 'fork')
@@ -44,7 +44,7 @@
       {{paper-divider}}
 
       {{versions-menu model=model
-        onVersionChanged=(action this.attrs.versionChanged)
+        onVersionChanged=(action @versionChanged)
         emberVersions=emberVersions
         emberDataVersions=emberDataVersions
       }}

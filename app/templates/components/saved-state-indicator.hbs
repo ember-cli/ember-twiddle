@@ -5,6 +5,6 @@
   <span class="test-unsaved-indicator">Unsaved</span>
 {{else}}
   {{#unless model.isNew}}
-    <a class="gist-link" href="{{model.htmlUrl}}" title='Open Gist' target="_blank">Saved, rev {{model.currentRevision}}</a>
+    <a class="gist-link" href={{model.htmlUrl}} title='Open Gist' target="_blank" rel="noopener">Saved, rev {{model.currentRevision}}</a>
   {{/unless}}
 {{/if}}

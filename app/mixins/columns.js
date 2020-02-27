@@ -1,11 +1,10 @@
-import Ember from "ember";
+import Mixin from '@ember/object/mixin';
+import { computed } from '@ember/object';
 import Column from '../utils/column';
-
-const { computed } = Ember;
 
 const MAX_COLUMNS = 3;
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   columns: null,
 
   realNumColumns: computed('numColumns', function() {

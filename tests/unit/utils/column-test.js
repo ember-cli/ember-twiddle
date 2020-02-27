@@ -1,11 +1,11 @@
-import Ember from "ember";
+import EmberObject from '@ember/object';
 import Column from '../../../utils/column';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | column', function() {
   test('Active Column matches', function(assert) {
     assert.expect(2);
-    var controller = Ember.Object.create({
+    var controller = EmberObject.create({
       activeEditorCol: '2',
       realNumColumns: 3
     });
@@ -17,7 +17,7 @@ module('Unit | Utility | column', function() {
 
   test('Show Column if less than or equal to realNumColumns', function(assert) {
     assert.expect(3);
-    var controller = Ember.Object.create({
+    var controller = EmberObject.create({
       activeEditorCol: '3',
       realNumColumns: 2
     });

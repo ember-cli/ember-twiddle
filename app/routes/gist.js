@@ -1,18 +1,20 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { readOnly } from '@ember/object/computed';
+import Route from '@ember/routing/route';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
+import RSVP from 'rsvp';
 import config from '../config/environment';
 import { saveAs } from 'file-saver';
 
-const { inject, $, RSVP, run } = Ember;
-
 const CONFIRM_MSG = "Unsaved changes will be lost.";
 
-export default Ember.Route.extend({
+export default Route.extend({
   toriiProvider: config.toriiProvider,
-  notify: inject.service(),
-  app: inject.service(),
-  fastboot: inject.service(),
+  notify: service(),
+  app: service(),
 
-  titleToken: Ember.computed.readOnly('controller.model.description'),
+  titleToken: readOnly('controller.model.description'),
 
   beforeModel() {
     return this.session.fetch(this.toriiProvider).catch(function() {
@@ -30,9 +32,6 @@ export default Ember.Route.extend({
   },
 
   activate() {
-    if (this.get('fastboot.isFastBoot')) {
-      return;
-    }
     this.set('boundConfirmUnload', this.confirmUnload.bind(this));
     $(window).on('beforeunload', this.boundConfirmUnload);
   },
@@ -42,9 +41,7 @@ export default Ember.Route.extend({
     if (gist.get('isNew')) {
       this.store.unloadRecord(gist);
     }
-    if (!this.get('fastboot.isFastBoot')) {
-      $(window).off('beforeunload', this.boundConfirmUnload);
-    }
+    $(window).off('beforeunload', this.boundConfirmUnload);
   },
 
   confirmUnload(event) {

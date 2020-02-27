@@ -1,11 +1,11 @@
-import Ember from "ember";
+import Mixin from '@ember/object/mixin';
+import { inject as service } from '@ember/service';
+import { run } from '@ember/runloop';
 import ErrorMessages from "../utils/error-messages";
 import { pushDeletion } from "../utils/push-deletion";
 
-const { inject, run } = Ember;
-
-export default Ember.Mixin.create({
-  notify: inject.service(),
+export default Mixin.create({
+  notify: service(),
 
   hasPath(filePath) {
     const files = this.get('model.files');

@@ -1,8 +1,7 @@
-import Ember from "ember";
+import Component from '@ember/component';
+import { equal } from '@ember/object/computed';
 
-const { computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['gist-body'],
-  noColumns: computed.equal('numColumns', 0)
+  noColumns: equal('numColumns', 0)
 });

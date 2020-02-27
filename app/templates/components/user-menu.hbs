@@ -1,7 +1,7 @@
 {{#if session.isAuthenticated}}
   {{#paper-button class='signed-in-btn' onClick=showProfile}}
     <span class="user-avatar">
-      <img src="{{session.currentUser.avatarUrl38}}" />
+      <img src={{session.currentUser.avatarUrl38}} alt="user's avatar">
     </span>
     {{userName}}
   {{/paper-button}}

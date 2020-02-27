@@ -1,11 +1,10 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
 const CONFIRM_MSG = 'Unsaved changes will be lost. Are you sure?';
 
-const { inject } = Ember;
-
-export default Ember.Route.extend({
-  emberCli: inject.service(),
+export default Route.extend({
+  emberCli: service(),
 
   afterModel(context) {
     return this.emberCli.setup(context);

@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
 
-const { inject, run } = Ember;
 
-export default Ember.Component.extend({
-  resizeableColumns: inject.service(),
+export default Component.extend({
+  resizeableColumns: service(),
   classNames: ['twiddle-panes'],
 
   init() {

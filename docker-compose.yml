@@ -2,7 +2,7 @@ version: '3'
 
 services:
   ember:
-    image: danlynn/ember-cli:2.16.2-node_8.7
+    image: danlynn/ember-cli:3.4.3-node_8.12
     container_name: ember-twiddle
     ports:
       - 4200:4200

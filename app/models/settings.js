@@ -1,10 +1,6 @@
-import Ember from 'ember';
+import ObjectProxy from '@ember/object/proxy';
+import EmberObject, { get } from '@ember/object';
 import _merge from 'lodash/merge';
-
-const {
-  ObjectProxy,
-  get
-} = Ember;
 
 export default ObjectProxy.extend({
   storageKey: 'ember_twiddle_settings',
@@ -17,10 +13,10 @@ export default ObjectProxy.extend({
   init() {
     const storageKey = get(this, 'storageKey');
     const defaultSettings = get(this, 'defaultSettings');
-    const localSettings = get(this, 'isFastBoot') ? {} : JSON.parse(localStorage.getItem(storageKey)) || {};
+    const localSettings = JSON.parse(localStorage.getItem(storageKey)) || {};
     const newSettings = _merge(defaultSettings, localSettings);
 
-    this.content = Ember.Object.create(newSettings);
+    this.content = EmberObject.create(newSettings);
     this.content.setProperties(this.content);
 
     this._super(...arguments);
@@ -30,8 +26,6 @@ export default ObjectProxy.extend({
     const storageKey = get(this, 'storageKey');
     const newSettings = JSON.stringify(get(this, 'content'));
 
-    if (!get(this, 'isFastBoot')) {
-      localStorage.setItem(storageKey, newSettings);
-    }
+    localStorage.setItem(storageKey, newSettings);
   }
 });

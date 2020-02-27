@@ -1,4 +1,4 @@
-.ember-load-indicator {
+.ember-load-indicator, .load-indicator {
   font-size: 190px;
   text-indent: -9999em;
   overflow: hidden;

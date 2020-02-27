@@ -1,19 +1,22 @@
-import Ember from "ember";
+import { inject as service } from '@ember/service';
+import { oneWay } from '@ember/object/computed';
+import { isBlank } from '@ember/utils';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
+import { on } from '@ember/object/evented';
+import Settings from '../models/settings';
 import ColumnsMixin from "../mixins/columns";
 import FilesMixin from "../mixins/files";
 import TestFilesMixin from "../mixins/test-files";
 import AppBuilderMixin from "../mixins/app-builder";
 import { keyDown, EKMixin } from 'ember-keyboard';
 
-const { inject, computed, run, on } = Ember;
-
-export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestFilesMixin, EKMixin, {
-  emberCli: inject.service(),
-  dependencyResolver: inject.service(),
-  notify: inject.service(),
-  store: inject.service(),
-  fastboot: inject.service(),
-  media: inject.service(),
+export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestFilesMixin, EKMixin, {
+  emberCli: service(),
+  dependencyResolver: service(),
+  notify: service(),
+  store: service(),
+  media: service(),
 
   classNames: ['main-gist'],
   numColumns: 1,
@@ -23,6 +26,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
 
   init() {
     this._super(...arguments);
+    this.set('settings', Settings.create());
     this.createColumns();
     this.setProperties({
       activeEditorCol: '1',
@@ -90,7 +94,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
    */
   fileTreeShown: true,
 
-  testsEnabled: computed.oneWay('emberCli.enableTesting'),
+  testsEnabled: oneWay('emberCli.enableTesting'),
 
   /**
    * reinitialize component when the model has changed
@@ -103,7 +107,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
     if (model !== this._oldModel) {
       this.clearColumns();
       this.initializeColumns();
-      Ember.run(() => {
+      run(() => {
         this.rebuildApp.perform();
       });
     }
@@ -169,7 +173,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
     addComponent() {
       const defaultPath = this.get('emberCli.usePods') ? 'my-component' : 'components/my-component';
       let path = prompt('Component path (without file extension)', defaultPath);
-      if (Ember.isBlank(path)){
+      if (isBlank(path)){
         return;
       }
 

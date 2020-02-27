@@ -1,4 +1,4 @@
-import Ember from "ember";
+import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -13,7 +13,7 @@ module('Integration | Component | versions menu', function(hooks) {
   });
 
   hooks.beforeEach(function() {
-    this.depResolverStub = Ember.Service.extend({
+    this.depResolverStub = Service.extend({
       init() {
         this._super(...arguments);
         this.emberVersions = ['1.2.3'];

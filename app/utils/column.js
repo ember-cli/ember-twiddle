@@ -1,8 +1,6 @@
-import Ember from "ember";
+import EmberObject, { computed } from '@ember/object';
 
-const { computed } = Ember;
-
-export default Ember.Object.extend ({
+export default EmberObject.extend ({
   col: "",
   controller: null,
   active: computed('controller.activeEditorCol', 'col', function() {

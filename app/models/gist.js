@@ -1,13 +1,10 @@
+import { computed } from '@ember/object';
+import { oneWay } from '@ember/object/computed';
+import { on } from '@ember/object/evented';
 import DS from 'ember-data';
-import Ember from 'ember';
 import { memberAction } from 'ember-api-actions';
 
 const { attr, hasMany, belongsTo } = DS;
-const {
-  computed,
-  computed: { oneWay },
-  on
-} = Ember;
 
 export default DS.Model.extend({
   url: attr('string'),

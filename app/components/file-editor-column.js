@@ -1,9 +1,9 @@
-import Ember from 'ember';
-
-const { computed } = Ember;
+import { equal } from '@ember/object/computed';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 const MAX_COLUMNS = 3;
 
-export default Ember.Component.extend({
+export default Component.extend({
   keyMap: 'basic',
   file: null,
 
@@ -25,7 +25,7 @@ export default Ember.Component.extend({
     return (this.col | 0) === numColumns && numColumns < MAX_COLUMNS;
   }),
 
-  isFirstColumn: computed.equal('col', '1'),
+  isFirstColumn: equal('col', '1'),
 
   showFileTreeOpenIcon: computed('isFirstColumn', 'fileTreeShown', function() {
     return this.isFirstColumn && !this.fileTreeShown;

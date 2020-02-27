@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 import config from '../config/environment';
 
-export default Ember.Route.extend({
+export default Route.extend({
   titleToken: 'My Saved Twiddles',
   toriiProvider: config.toriiProvider,
 

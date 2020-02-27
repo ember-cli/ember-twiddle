@@ -4,10 +4,12 @@
     <span class='building-text'>Building...</span>
   {{else}}
     Output
-    ({{#if buildErrors~}}
+    (
+    {{~#if buildErrors~}}
       <a {{action 'showErrors'}} role='button'>{{buildErrors.length}} build errors</a>
     {{~else~}}
       build ok
-    {{~/if}})
+    {{~/if~}}
+    )
   {{/if}}
 </div>

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import Ember from 'ember';
+import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -38,7 +38,7 @@ module('Integration | Component | build messages', function(hooks) {
   test('it calls notify.errpr() when clicking on build errors', async function(assert) {
     assert.expect(1);
 
-    let notifyObject = Ember.Object.create({
+    let notifyObject = EmberObject.create({
       called: false,
       info() {},
       error() {

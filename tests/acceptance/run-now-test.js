@@ -23,14 +23,14 @@ module('Acceptance | run now', function(hooks) {
 
     await click("#live-reload");
 
-    assert.equal(outputPane().find('input').val(), 'initial value');
+    assert.equal(findInIframe('input').value, 'initial value');
 
-    outputPane().find('input').val('new value');
-    assert.equal(outputPane().find('input').val(), 'new value');
+    findInIframe('input').value = 'new value';
+    assert.equal(findInIframe('input').value, 'new value');
 
     await click(".run-now");
     await waitForLoadedIFrame();
-    assert.equal(outputPane().find('input').val(), 'initial value');
+    assert.equal(findInIframe('input').value, 'initial value');
   });
 
   test('Reload the Twiddle on command (Cmd+Enter)', async(assert) => {
@@ -38,14 +38,20 @@ module('Acceptance | run now', function(hooks) {
     await runGist(files);
 
     await click("#live-reload");
-    assert.equal(outputPane().find('input').val(), 'initial value');
+    assert.equal(findInIframe('input').value, 'initial value');
 
-    await outputPane().find('input').val('new value');
-    assert.equal(outputPane().find('input').val(), 'new value');
+    findInIframe('input').value = 'new value';
+    assert.equal(findInIframe('input').value, 'new value');
 
     await triggerKeyDown('Enter+cmd');
     await waitForLoadedIFrame();
 
-    assert.equal(outputPane().find('input').val(), 'initial value');
+    assert.equal(findInIframe('input').value, 'initial value');
   });
 });
+
+function findInIframe(selector) {
+  let iframeWindow = outputPane();
+  let el = iframeWindow.document.querySelector(selector);
+  return el;
+}

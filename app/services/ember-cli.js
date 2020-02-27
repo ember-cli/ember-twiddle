@@ -1,3 +1,8 @@
+import { readOnly } from '@ember/object/computed';
+import Service, { inject as service } from '@ember/service';
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 import Babel from 'babel-core';
 import Path from 'path';
 import HbsPlugin from '../plugins/hbs-plugin';
@@ -8,7 +13,9 @@ import moment from 'moment';
 import _template from "lodash/template";
 import { pushDeletion } from 'ember-twiddle/utils/push-deletion';
 
-const { computed, inject, RSVP, run, $, testing } = Ember;
+const {
+  testing
+} = Ember;
 const twiddleAppName = 'twiddle';
 const oldTwiddleAppNames = ['demo-app', 'app'];
 const hbsPlugin = new HbsPlugin(Babel);
@@ -149,12 +156,12 @@ const availableBlueprints = {
  * Parts of this module are directly copied from the ember-cli
  * source code at https://github.com/ember-cli/ember-cli
  */
-export default Ember.Service.extend({
-  store: inject.service(),
-  twiddleJson: inject.service(),
+export default Service.extend({
+  store: service(),
+  twiddleJson: service(),
 
-  usePods: computed.readOnly('twiddleJson.usePods'),
-  versions: computed.readOnly('twiddleJson.versions'),
+  usePods: readOnly('twiddleJson.usePods'),
+  versions: readOnly('twiddleJson.versions'),
   enableTesting: false,
 
   setup(gist) {
@@ -520,13 +527,15 @@ function babelOpts(moduleName) {
     moduleIds: true,
     moduleId: moduleName,
     plugins: [
-      ['transform-es2015-modules-amd', {
+      ['transform-modules-amd', {
         loose: true,
         noInterop: true
       }],
-      'transform-decorators-legacy',
-      'transform-class-properties',
-      'transform-object-rest-spread',
+      ['proposal-decorators', {
+        legacy: true
+      }],
+      'proposal-class-properties',
+      'proposal-object-rest-spread',
       hbsPlugin,
       newModulesPlugin
     ]

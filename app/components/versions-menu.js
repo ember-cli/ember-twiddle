@@ -1,14 +1,14 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import { readOnly } from '@ember/object/computed';
+import Component from '@ember/component';
 
-const { computed, inject } = Ember;
-
-export default Ember.Component.extend({
-  emberCli: inject.service('ember-cli'),
-  dependencyResolver: inject.service(),
+export default Component.extend({
+  emberCli: service('ember-cli'),
+  dependencyResolver: service(),
   classNames: ['versions-menu'],
 
-  versions: computed.readOnly('dependencyResolver.emberVersions'),
-  dataVersions: computed.readOnly('dependencyResolver.emberDataVersions'),
+  versions: readOnly('dependencyResolver.emberVersions'),
+  dataVersions: readOnly('dependencyResolver.emberDataVersions'),
 
   actions: {
     versionSelected(dependency, version) {

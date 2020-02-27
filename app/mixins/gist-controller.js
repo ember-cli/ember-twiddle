@@ -1,10 +1,7 @@
-import Ember from "ember";
+import Mixin from '@ember/object/mixin';
+import { run } from '@ember/runloop';
 
-const { inject, run } = Ember;
-
-export default Ember.Mixin.create({
-  fastboot: inject.service(),
-
+export default Mixin.create({
   queryParams: ['numColumns', 'fullScreen', 'route', 'openFiles', 'fileTreeShown'],
   numColumns: 1,
   fullScreen: false,
@@ -16,7 +13,7 @@ export default Ember.Mixin.create({
 
   init() {
     this._super(...arguments);
-    this.set('applicationUrl', this.get('route'));
+    this.setupWindowUpdate();
   },
 
   actions: {

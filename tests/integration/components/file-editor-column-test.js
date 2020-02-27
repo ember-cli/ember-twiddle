@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | file editor column', function(hooks) {
@@ -50,7 +50,6 @@ module('Integration | Component | file editor column', function(hooks) {
 
   test('it calls contentChanged with true when changing the content via the code editor', async function(assert) {
     assert.expect(1);
-    const enterKeyEvent = { keyCode: 3 };
 
     this.set('externalAction', (isUserChange) => {
       assert.ok(isUserChange, 'contentChanged was called with isUserChange = true');
@@ -64,8 +63,8 @@ module('Integration | Component | file editor column', function(hooks) {
       {{file-editor-column col='1' file=file contentChanged=(action externalAction) focusEditor=(action ignoreAction)}}
     `);
 
-    const codeMirrorInstance = this.$('.CodeMirror')[0].CodeMirror;
-    codeMirrorInstance.triggerOnKeyDown(enterKeyEvent);
+    let textboxNode = '.CodeMirror textarea';
+    await fillIn(textboxNode, 'a');
   });
 
   test('it calls contentChanged with false when changing the content programatically', async function(assert) {

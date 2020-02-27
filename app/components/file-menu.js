@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import DropdownSubmenuFixMixin from '../mixins/dropdown-submenu-fix';
 
-const { computed } = Ember;
-
-export default Ember.Component.extend(DropdownSubmenuFixMixin, {
+export default Component.extend(DropdownSubmenuFixMixin, {
   // show fork option only if does not belong to user and is not a revision, otherwise show copy
   // Github api does not permit forking if you own the gist already
   // Github does not provide api for forking a revision

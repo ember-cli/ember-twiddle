@@ -1,18 +1,15 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 import config from '../config/environment';
 import Settings from '../models/settings';
 
-const { inject } = Ember;
 
-export default Ember.Route.extend({
-  notify: inject.service(),
-  fastboot: inject.service(),
+export default Route.extend({
+  notify: service(),
   toriiProvider: config.toriiProvider,
 
   model() {
-    let settings = Settings.create({
-      isFastBoot: this.get('fastboot.isFastBoot')
-    });
+    let settings = Settings.create();
 
     return {
       settings

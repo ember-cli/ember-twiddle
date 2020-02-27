@@ -1,4 +1,5 @@
-import Ember from "ember";
+import { A } from '@ember/array';
+import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
@@ -9,8 +10,8 @@ module('Unit | Service | twiddle json', function(hooks) {
     let done = assert.async();
     var service = this.owner.lookup('service:twiddle-json');
 
-    var gist = Ember.Object.create({
-      files: Ember.A([Ember.Object.create({
+    var gist = EmberObject.create({
+      files: A([EmberObject.create({
         filePath: 'twiddle.json',
         content: `
           {
@@ -43,8 +44,8 @@ module('Unit | Service | twiddle json', function(hooks) {
     let done = assert.async();
     var service = this.owner.lookup('service:twiddle-json');
 
-    var gist = Ember.Object.create({
-      files: Ember.A([Ember.Object.create({
+    var gist = EmberObject.create({
+      files: A([EmberObject.create({
         filePath: 'twiddle.json',
         content: `
           {
@@ -72,8 +73,8 @@ module('Unit | Service | twiddle json', function(hooks) {
     let done = assert.async();
     var service = this.owner.lookup('service:twiddle-json');
 
-    var gist = Ember.Object.create({
-      files: Ember.A([Ember.Object.create({
+    var gist = EmberObject.create({
+      files: A([EmberObject.create({
         filePath: 'twiddle.json',
         content: `
           {
@@ -102,8 +103,8 @@ module('Unit | Service | twiddle json', function(hooks) {
     let done = assert.async();
     var service = this.owner.lookup('service:twiddle-json');
 
-    var gist = Ember.Object.create({
-      files: Ember.A([Ember.Object.create({
+    var gist = EmberObject.create({
+      files: A([EmberObject.create({
         filePath: 'twiddle.json',
         content: `
           {

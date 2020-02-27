@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   keyMap: 'Default',
 
   init() {
@@ -17,14 +17,14 @@ export default Ember.Component.extend({
 
   actions: {
     setKeyMap(keyMap) {
-      let modes = this.get('modes');
+      let modes = this.modes;
       let mode = modes.findBy('id', keyMap);
 
       if (mode) {
         this.set('keyMap', mode.label);
       }
 
-      this.get('setKeyMap')(keyMap);
+      this.setKeyMap(keyMap);
     }
   }
 });

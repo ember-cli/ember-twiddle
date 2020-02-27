@@ -1,6 +1,13 @@
 import Ember from "ember";
 import { module, test } from 'qunit';
-import { find, click, fillIn, triggerKeyEvent, currentURL, settled } from '@ember/test-helpers';
+import {
+  find,
+  click,
+  fillIn,
+  triggerKeyEvent,
+  currentURL,
+  settled
+} from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import runGist from '../helpers/run-gist';
@@ -83,7 +90,6 @@ module('Acceptance | routing', function(hooks) {
   ];
 
   test('Able to do routing in a gist', async function(assert) {
-    let iframeWindow;
 
     await runGist(TWIDDLE_WITH_ROUTES);
 
@@ -94,16 +100,13 @@ module('Acceptance | routing', function(hooks) {
     assert.ok(decodeURIComponent(currentURL()).indexOf("route=") === -1, "URL is not added to route query string parameter 0");
 
     this.registerWaiter();
-    iframeWindow = outputPane();
-    iframeWindow.click(iframeWindow.find(aboutLink));
-    await settled();
+    await clickInIframe(aboutLink);
     assert.equal(outputContents(outletText), 'About Page', 'About Link leads to About Page being displayed');
     assert.dom(addressBar).hasValue('/about', "Correct URL is shown in address bar 1");
     assert.ok(decodeURIComponent(currentURL()).indexOf("route=/about") > 0, "URL is added to route query string parameter 1");
 
     this.registerWaiter();
-    iframeWindow.click(iframeWindow.find(indexLink));
-    await settled();
+    await clickInIframe(indexLink);
     assert.equal(outputContents(outletText), 'Main Page', 'Index Link leads to Main Page being displayed');
     assert.dom(addressBar).hasValue('/', "Correct URL is shown in address bar 2");
     assert.ok(decodeURIComponent(currentURL()).indexOf("route=") === -1, "URL is not added to route query string parameter 2");
@@ -114,6 +117,7 @@ module('Acceptance | routing', function(hooks) {
 
     if (!find(addressBar).value) {
       this.registerWaiter();
+      await settled();
     }
     assert.dom(addressBar).hasValue('/', "Correct URL is shown in address bar 0");
 
@@ -138,8 +142,15 @@ module('Acceptance | routing', function(hooks) {
 
     if (!find(addressBar).value) {
       this.registerWaiter();
+      await settled();
     }
     assert.dom(addressBar).hasValue("/about", "Correct URL appears when set via query parameter");
     assert.equal(outputContents(outletText), 'About Page', 'Initializing the URL to /about leads to the About Page being displayed');
   });
 });
+
+async function clickInIframe(selector) {
+  let iframeWindow = outputPane();
+  let el = iframeWindow.document.querySelector(selector);
+  await click(el);
+}

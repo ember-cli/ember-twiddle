@@ -1,8 +1,8 @@
-import Ember from "ember";
+import Mixin from '@ember/object/mixin';
+import { on } from '@ember/object/evented';
+import $ from 'jquery';
 
-const { on, $ } = Ember;
-
-export default Ember.Mixin.create({
+export default Mixin.create({
 
   addDropdownListener: on('didInsertElement', function() {
     this.$('[data-toggle=dropdown]').on('click', this.dropdownToggleClick);

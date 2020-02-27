@@ -1,4 +1,4 @@
-import Ember from "ember";
+import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -9,7 +9,7 @@ module('Integration | Component | user profile link', function(hooks) {
 
   test('it renders', async function(assert) {
 
-    this.set('user', Ember.Object.create({
+    this.set('user', EmberObject.create({
       login: 'octocat',
       avatarUrl16: 'fake16.png',
       htmlUrl: 'https://github.com/octocat'
