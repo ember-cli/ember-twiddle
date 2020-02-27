@@ -5,5 +5,5 @@
     return { 'default': self['Babel'] };
   }
 
-  define('babel-core', [], vendorModule);
+  define('@babel/core', [], vendorModule);
 })();

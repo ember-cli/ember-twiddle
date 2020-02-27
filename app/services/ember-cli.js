@@ -3,10 +3,11 @@ import Service, { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
 import { run } from '@ember/runloop';
 import $ from 'jquery';
-import Babel from 'babel-core';
+import Babel from '@babel/core';
 import Path from 'path';
 import HbsPlugin from '../plugins/hbs-plugin';
 import NewModulesPlugin from 'babel-plugin-ember-modules-api-polyfill';
+import DebugMacrosPlugin from 'babel-plugin-debug-macros';
 import blueprints from '../lib/blueprints';
 import Ember from 'ember';
 import moment from 'moment';
@@ -20,6 +21,9 @@ const twiddleAppName = 'twiddle';
 const oldTwiddleAppNames = ['demo-app', 'app'];
 const hbsPlugin = new HbsPlugin(Babel);
 const newModulesPlugin = new NewModulesPlugin(Babel);
+const debugMacrosPlugin = new DebugMacrosPlugin(Babel);
+console.log(Babel);
+console.log(debugMacrosPlugin);
 
 // These files will be included if not present
 const boilerPlateJs = [
@@ -512,6 +516,13 @@ export default Service.extend({
  * @return {Object}            Babel options
  */
 function babelOpts(moduleName) {
+
+  const blacklist = {
+    '@ember/debug': ['assert', 'deprecate', 'warn'],
+    '@ember/application/deprecations': ['deprecate'],
+  };
+  const isDebug = true;
+
   return {
     presets: [['env', {
       targets: {
@@ -536,7 +547,29 @@ function babelOpts(moduleName) {
       'proposal-class-properties',
       'proposal-object-rest-spread',
       hbsPlugin,
-      newModulesPlugin
+      [newModulesPlugin, { blacklist }],
+      [
+        debugMacrosPlugin,
+        {
+          flags: [
+            {
+              source: '@glimmer/env',
+              flags: { DEBUG: isDebug, CI: false },
+            },
+          ],
+
+          externalizeHelpers: {
+            global: 'Ember',
+          },
+
+          debugTools: {
+            isDebug,
+            source: '@ember/debug',
+            assertPredicateIndex: 1,
+          },
+        },
+        '@ember/debug stripping'
+      ]
     ]
   };
 }
