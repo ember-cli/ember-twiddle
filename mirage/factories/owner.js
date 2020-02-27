@@ -1,7 +1,9 @@
 /**
  * This is a factory definition for an owner
  */
-import Mirage, { faker } from 'ember-cli-mirage';
+import Mirage from 'ember-cli-mirage';
+
+import faker from 'faker';
 
 export default Mirage.Factory.extend({
   id: faker.random.number(99999),

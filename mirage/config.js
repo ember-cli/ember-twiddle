@@ -1,7 +1,8 @@
 import AddonFixture from "./fixtures/addon";
 import EmberDataFixture from "./fixtures/ember-data";
 import config from "../config/environment";
-import Mirage, { faker } from "ember-cli-mirage";
+import Mirage from "ember-cli-mirage";
+import faker from 'faker';
 import Ember from "ember";
 
 const { assign } = Ember;
