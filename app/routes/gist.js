@@ -12,7 +12,6 @@ export default Route.extend({
   toriiProvider: config.toriiProvider,
   notify: service(),
   app: service(),
-  fastboot: service(),
 
   titleToken: readOnly('controller.model.description'),
 
@@ -23,9 +22,6 @@ export default Route.extend({
   },
 
   activate() {
-    if (this.get('fastboot.isFastBoot')) {
-      return;
-    }
     this.set('boundConfirmUnload', this.confirmUnload.bind(this));
     $(window).on('beforeunload', this.boundConfirmUnload);
   },
@@ -35,9 +31,7 @@ export default Route.extend({
     if (gist.get('isNew')) {
       this.store.unloadRecord(gist);
     }
-    if (!this.get('fastboot.isFastBoot')) {
-      $(window).off('beforeunload', this.boundConfirmUnload);
-    }
+    $(window).off('beforeunload', this.boundConfirmUnload);
   },
 
   confirmUnload(event) {

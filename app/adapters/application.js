@@ -1,10 +1,8 @@
-import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import DS from 'ember-data';
 import config from '../config/environment';
 
 export default DS.RESTAdapter.extend({
-  fastboot: service(),
 
   host: config.host,
 
@@ -14,10 +12,6 @@ export default DS.RESTAdapter.extend({
     var token  = this.get('session.token') || config.TMP_TORII_TOKEN;
     if (token) {
       headers['Authorization'] = 'token ' + token;
-    }
-
-    if (this.get('fastboot.isFastBoot')) {
-      headers['user-agent'] = "fastboot";
     }
 
     return headers;

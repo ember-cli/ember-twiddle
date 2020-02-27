@@ -1,10 +1,7 @@
-import { inject as service } from '@ember/service';
 import Mixin from '@ember/object/mixin';
 import { run } from '@ember/runloop';
 
 export default Mixin.create({
-  fastboot: service(),
-
   queryParams: ['numColumns', 'fullScreen', 'route', 'openFiles', 'fileTreeShown'],
   numColumns: 1,
   fullScreen: false,
@@ -16,9 +13,7 @@ export default Mixin.create({
 
   init() {
     this._super(...arguments);
-    if (!this.get('fastboot.isFastBoot')) {
-      this.setupWindowUpdate();
-    }
+    this.setupWindowUpdate();
   },
 
   actions: {

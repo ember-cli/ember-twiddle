@@ -12,15 +12,12 @@ export default EmberObject.extend({  /**
 
   store: service(),
   ajax: service(),
-  fastboot: service(),
 
   resolveUser(token) {
     config.TMP_TORII_TOKEN = token;
     return this.store.find('user', 'current').then((currentUser) => {
       config.TMP_TORII_TOKEN = null;
-      if (!this.get('fastboot.isFastBoot')) {
-        localStorage.setItem('fiddle_gh_session', token);
-      }
+      localStorage.setItem('fiddle_gh_session', token);
       return { currentUser, token };
     });
   },
@@ -30,10 +27,6 @@ export default EmberObject.extend({  /**
    * @return Promise
    */
   fetch() {
-    if (this.get('fastboot.isFastBoot')) {
-      return RSVP.reject();
-    }
-
     let token = localStorage.getItem('fiddle_gh_session');
 
     if (isBlank(token)) {
@@ -59,11 +52,7 @@ export default EmberObject.extend({  /**
    * @return Promise
    */
   close() {
-    if (this.get('fastboot.isFastBoot')) {
-      return RSVP.reject();
-    } else {
-      localStorage.removeItem('fiddle_gh_session');
-      return RSVP.resolve();
-    }
+    localStorage.removeItem('fiddle_gh_session');
+    return RSVP.resolve();
   }
 });

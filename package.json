@@ -50,7 +50,6 @@
     "ember-cli-deprecation-workflow": "^1.0.1",
     "ember-cli-document-title-northm": "^1.0.3",
     "ember-cli-eslint": "^4.2.3",
-    "ember-cli-fastboot": "^1.0.0",
     "ember-cli-file-creator": "~0.4.0",
     "ember-cli-htmlbars": "^3.0.0",
     "ember-cli-htmlbars-inline-precompile": "^1.0.3",
