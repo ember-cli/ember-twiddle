@@ -16,7 +16,6 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
   dependencyResolver: service(),
   notify: service(),
   store: service(),
-  fastboot: service(),
 
   numColumns: 1,
   fullScreen: false,
@@ -24,9 +23,7 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
 
   init() {
     this._super(...arguments);
-    this.set('settings', Settings.create({
-      isFastBoot: this.get('fastboot.isFastBoot')
-    }));
+    this.set('settings', Settings.create());
     this.createColumns();
     this.setProperties({
       activeEditorCol: '1',

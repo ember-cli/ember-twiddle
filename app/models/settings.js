@@ -13,7 +13,7 @@ export default ObjectProxy.extend({
   init() {
     const storageKey = get(this, 'storageKey');
     const defaultSettings = get(this, 'defaultSettings');
-    const localSettings = get(this, 'isFastBoot') ? {} : JSON.parse(localStorage.getItem(storageKey)) || {};
+    const localSettings = JSON.parse(localStorage.getItem(storageKey)) || {};
     const newSettings = _merge(defaultSettings, localSettings);
 
     this.content = EmberObject.create(newSettings);
@@ -26,8 +26,6 @@ export default ObjectProxy.extend({
     const storageKey = get(this, 'storageKey');
     const newSettings = JSON.stringify(get(this, 'content'));
 
-    if (!get(this, 'isFastBoot')) {
-      localStorage.setItem(storageKey, newSettings);
-    }
+    localStorage.setItem(storageKey, newSettings);
   }
 });

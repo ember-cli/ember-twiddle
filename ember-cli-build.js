@@ -1,13 +1,10 @@
 module.exports = function(defaults) {
-  process.env.FASTBOOT_DISABLED = true;
 
   const EmberApp = require('ember-cli/lib/broccoli/ember-app');
   const funnel = require('broccoli-funnel');
   const mergeTrees = require('broccoli-merge-trees');
   const babelTranspiler = require('broccoli-babel-transpiler');
-  const browserify = require('browserify');
   const path = require('path');
-  const fs = require('fs');
   const babelOpts = require('./lib/babel-opts');
   const buildQUnitTree = require('./lib/build-qunit-tree');
   const buildTwiddleVendorTree = require('./lib/build-twiddle-ember-tree');
@@ -15,7 +12,6 @@ module.exports = function(defaults) {
   const env = EmberApp.env();
   const deployTarget = process.env.DEPLOY_TARGET;
   const isProductionLikeBuild = ['production', 'staging'].indexOf(env) > -1;
-  const isFastboot = process.env.EMBER_CLI_FASTBOOT;
   let prepend = null;
 
   if (isProductionLikeBuild) {
@@ -83,21 +79,12 @@ module.exports = function(defaults) {
       exclude: ['babel-plugin-ember-modules-api-polyfill']
     },
     'ember-cli-babel': {
-      includePolyfill: !isFastboot
+      includePolyfill: true
     },
 
     tests: true,
     hinting: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild
   });
-
-  if (isFastboot) {
-    let b = browserify();
-    b.add(require.resolve('babel-core/browser-polyfill'));
-    b.bundle(function(err, buf) {
-      fs.writeFileSync('vendor/polyfill.js', buf);
-    });
-    app.import('vendor/polyfill.js', { prepend: true });
-  }
 
   app.import('vendor/ember/ember-template-compiler.js');
   app.import('vendor/ember/ember-testing.js', {
@@ -106,10 +93,7 @@ module.exports = function(defaults) {
   });
   app.import('vendor/shims/babel.js');
   app.import('vendor/shims/path.js');
-
-  if (!isFastboot) {
-    app.import('vendor/drags.js');
-  }
+  app.import('vendor/drags.js');
   app.import('vendor/bootstrap-dropdown-submenu-fix.css');
   app.import('vendor/hint.css');
 

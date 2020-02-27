@@ -1,15 +1,11 @@
-import Service, { inject as service } from '@ember/service';
+import Service from '@ember/service';
 import $ from 'jquery';
 import { run } from '@ember/runloop';
 
 export default Service.extend({
-  fastboot: service(),
-
   init() {
     this._super(...arguments);
-    if (!this.get('fastboot.isFastBoot')) {
-      this.setupMouseEventsFromIframe();
-    }
+    this.setupMouseEventsFromIframe();
   },
 
   handleMouseEvents(m, mouseEvent) {
