@@ -23,7 +23,7 @@ export default DS.Model.extend({
   currentRevision: oneWay('history.firstObject.shortId'),
 
   shortId: computed('id', function() {
-    return (this.get('id')||'').substring(0,7);
+    return (this.id||'').substring(0,7);
   }),
 
   owner: belongsTo('user', { async: false }),
@@ -44,8 +44,8 @@ export default DS.Model.extend({
     register deleted files on the server.
    */
   registerDeletedFile(fileId) {
-    var deletedFiles = this.get('deletedFiles') || [];
-    if(!this.get('isNew')) {
+    var deletedFiles = this.deletedFiles || [];
+    if(!this.isNew) {
       deletedFiles.push(fileId);
       this.set('deletedFiles', deletedFiles);
     }

@@ -1,23 +1,15 @@
 import Ember from 'ember';
-import wait from 'ember-test-helpers/wait';
-import RSVP from 'rsvp';
+import { settled, find } from '@ember/test-helpers';
 
-const { Test, run } = Ember;
+const { Test } = Ember;
 
 function hasNoIframe() {
-  return this.app.testHelpers.find('iframe').length > 0;
+  return find('iframe').length > 0;
 }
 
-export default function(app) {
-  let ctx = { app };
-  Test.registerWaiter(ctx, hasNoIframe);
+export default async function() {
+  Test.registerWaiter(this, hasNoIframe);
 
-  return wait().then(() => {
-    Test.unregisterWaiter(ctx, hasNoIframe);
-    return RSVP.resolve();
-  }).then(() => {
-    return new RSVP.Promise(function (resolve) {
-      run.later(resolve, 10);
-    });
-  });
+  await settled();
+  Test.unregisterWaiter(this, hasNoIframe);
 }

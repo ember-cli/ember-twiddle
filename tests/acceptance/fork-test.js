@@ -1,16 +1,22 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { visit, click, currentURL } from '@ember/test-helpers';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
 import Mirage from 'ember-cli-mirage';
-import { find, findAll, click, visit } from 'ember-native-dom-helpers';
-import { resolve } from 'rsvp';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import runGist from '../helpers/run-gist';
+
 
 const twiddleMenu = ".test-twiddle-menu";
 const menuTrigger = ".ember-basic-dropdown-trigger button";
 const forkTwiddleSelector = '.test-fork-twiddle';
 
-moduleForAcceptance('Acceptance | fork gist', {
-  beforeEach: function() {
+
+module('Acceptance | fork gist', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+
+  hooks.beforeEach(function() {
     this.cacheConfirm = window.confirm;
     window.confirm = () => true;
     server.create('user', { login: 'octocat' });
@@ -19,50 +25,41 @@ moduleForAcceptance('Acceptance | fork gist', {
       let gist = server.create('gist', { id: 'bd9d8d69-a674-4e0f-867c-c8796ed151a0' });
       return new Mirage.Response(200, {}, gist);
     });
-  },
-
-  afterEach: function() {
-    window.confirm = this.cacheConfirm;
-  }
-});
-
-test('can fork a gist', function(assert) {
-  // set owner of gist as currently logged in user
-  stubValidSession(this.application, {
-    currentUser: {login: "octocat"},
-    "github-oauth2": {}
   });
 
-  runGist([
-    {
-      filename: 'application.template.hbs',
-      content: 'hello world!'
-    }
-  ]);
+  hooks.afterEach(function() {
+    window.confirm = this.cacheConfirm;
+  });
 
-  let menu;
-
-  return visit('/35de43cb81fc35ddffb2')
-    .then(() => {
-      assert.equal(findAll('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
-      return resolve();
-    })
-    .then(() => {
-      menu = find(twiddleMenu, document.body);
-      let el = find(menuTrigger, menu);
-      return click(el, document.body);
-    })
-    .then(() => {
-      let el = find(forkTwiddleSelector, document.body);
-      return click("button", el);
-    })
-    .then(() => {
-      assert.equal(findAll('.test-unsaved-indicator').length, 0, "No unsaved indicator shown");
-
-      let url = currentURL();
-      let route = url.substr(url.lastIndexOf('/'));
-      assert.equal(route, '/bd9d8d69-a674-4e0f-867c-c8796ed151a0');
-
-      return resolve();
+  test('can fork a gist', async function(assert) {
+    // set owner of gist as currently logged in user
+    stubValidSession(this, {
+      currentUser: {login: "octocat"},
+      "github-oauth2": {}
     });
+
+    await runGist([
+      {
+        filename: 'application.template.hbs',
+        content: 'hello world!'
+      }
+    ]);
+
+    await visit('/35de43cb81fc35ddffb2');
+
+    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
+
+    let menu = find('.test-twiddle-menu', document.body);
+    let el = find('.ember-basic-dropdown-trigger button', menu);
+    await click(el, document.body);
+
+    let forkEl = find('.test-fork-twiddle', document.body);
+    await click('button', forkEl);
+
+    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
+
+    let url = currentURL();
+    let route = url.substr(url.lastIndexOf('/'));
+    assert.equal(route, '/bd9d8d69-a674-4e0f-867c-c8796ed151a0');
+  });
 });

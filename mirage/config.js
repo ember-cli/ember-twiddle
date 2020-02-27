@@ -33,6 +33,10 @@ export function testConfig() {
     return new Mirage.Response(200, {}, response);
   });
 
+  this.post('/gistFiles', () => {
+    return new Mirage.Response(204);
+  });
+
   this.patch('/gists/:id', (schema, request) => {
     let response = JSON.parse(request.requestBody);
     response.id = request.params.id;
@@ -57,6 +61,10 @@ export function testConfig() {
       return EmberDataFixture;
     }
     return AddonFixture;
+  });
+
+  this.get('http://canary-addons.ember-twiddle.com/ember-3.8.0/ember-data/3.8.1/addon-test-support.map', function() {
+    return Mirage.Response(404, {}, "");
   });
 
   this.get("https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.13.10/ember-template-compiler.map", function() {

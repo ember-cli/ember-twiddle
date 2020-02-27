@@ -1,64 +1,53 @@
-import { test } from 'qunit';
-import testSelector from 'ember-test-selectors';
-import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
-import { find, findAll, click, visit/*, click, find, fillIn, waitUntil, currentURL*/ } from 'ember-native-dom-helpers';
+import { module, test } from 'qunit';
+import { visit, currentURL, findAll, click } from '@ember/test-helpers';
+import { setupApplicationTest } from 'ember-qunit';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-moduleForAcceptance('Acceptance | columns', {
-  beforeEach: function() {
+module('Acceptance | columns', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
+
+  hooks.beforeEach(function() {
     server.create('user', { login: 'octocat' });
-  }
-});
+  });
 
-const columns = testSelector('columns');
-const firstColumn = testSelector('columns', '1');
-const firstColumnActionsMenu = testSelector('column-actions-menu', '1');
-const addColumnButton = testSelector('column-add-panel') + ' button';
-const removeColumnButton = testSelector('column-remove-panel') + ' button';
+  const columns = '[data-test-columns]';
+  const firstColumn = '[data-test-columns="1"]';
+  const firstColumnActionsMenu = '[data-test-column-actions-menu="1"]';
+  const addColumnButton = '[data-test-column-add-panel] button';
+  const removeColumnButton = '[data-test-column-remove-panel] button';
 
-test('you can add columns', function(assert) {
-  visit('/');
+  test('you can add columns', async function(assert) {
+    await visit('/');
 
-  andThen(() => {
     assert.equal(currentURL(), '/', 'We are on the correct initial route');
     assert.equal(findAll(columns).length, 1, 'There is one column to start');
     assert.ok(find(firstColumn).classList.contains('active'), 'The first column starts out active');
 
-    click(firstColumnActionsMenu);
-  });
+    await click(firstColumnActionsMenu);
+    await click(addColumnButton);
 
-  andThen(() => {
-    click(addColumnButton);
-  })
-
-  andThen(() => {
-    assert.ok(urlHas(currentURL(), 'numColumns=2'), 'We are on the correct route for 2 columns');
+    assert.ok(urlHas('numColumns=2'), 'We are on the correct route for 2 columns');
     assert.equal(findAll(columns).length, 2, 'There are now 2 columns');
-    assert.ok(urlHas(currentURL(), 'openFiles=controllers.application.js,templates.application.hbs'),
+    assert.ok(urlHas('openFiles=controllers.application.js,templates.application.hbs'),
       'URL contains correct openFiles query parameter 1');
   });
-});
 
-test('you can remove columns', function(assert) {
-  visit('/');
+  test('you can remove columns', async function(assert) {
+    await visit('/');
 
-  andThen(() => {
     assert.equal(currentURL(), '/', 'We are on the correct initial route');
     assert.equal(findAll(columns).length, 1, 'There is one column to start');
     assert.ok(find(firstColumn).classList.contains('active'), 'The first column starts out active');
 
-    click(firstColumnActionsMenu);
-  });
+    await click(firstColumnActionsMenu);
+    await click(removeColumnButton);
 
-  andThen(() => {
-    click(removeColumnButton);
-  });
-
-  andThen(() => {
-    assert.ok(urlHas(currentURL(), 'numColumns=0'), 'We are on the correct route for 0 columns');
+    assert.ok(urlHas('numColumns=0'), 'We are on the correct route for 0 columns');
     assert.equal(findAll(columns).length, 0, 'There are now 0 columns');
   });
 });
 
-function urlHas(url, text) {
-  return decodeURIComponent(url).indexOf(text) > 0;
+function urlHas(text) {
+  return decodeURIComponent(currentURL()).indexOf(text) > 0;
 }

@@ -1,12 +1,16 @@
 import Ember from "ember";
 import config from '../../../config/environment';
 
-import { moduleForComponent, skip } from 'ember-qunit';
+import { module, test } from 'qunit';
+
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('file-tree', 'Integration | Component | file tree', {
-  integration: true,
-  beforeEach() {
+module('Integration | Component | file tree', function(hooks) {
+  setupRenderingTest(hooks);
+
+  hooks.beforeEach(function() {
     this.file1 = Ember.Object.create({
       filePath: "some-path.js"
     });
@@ -51,99 +55,99 @@ moduleForComponent('file-tree', 'Integration | Component | file tree', {
 
     const waitForRender = this.makeNewPromise('didBecomeReady');
     this.set('waitForRender', waitForRender);
-  }
-});
-
-skip('it calls openFile when you click on a leaf node', function(assert) {
-  assert.expect(1);
-
-  this.set('externalAction', () => {
-    assert.ok(true, 'openFile was called');
   });
 
-  this.render(hbs`{{file-tree model=model
-                            openFile=(action externalAction)
+  test('it calls openFile when you click on a leaf node', async function(assert) {
+    assert.expect(1);
+
+    this.set('externalAction', () => {
+      assert.ok(true, 'openFile was called');
+    });
+
+    await render(hbs`{{file-tree model=model
+                              openFile=(action externalAction)
+                              didBecomeReady=(action didBecomeReady)}}`);
+
+    return this.get('waitForRender').then(() => {
+      this.$('.jstree-anchor').eq(0).click();
+    });
+  });
+
+  test('it has 2 initial nodes', async function(assert) {
+    assert.expect(2);
+
+    await render(hbs`{{file-tree model=model
                             didBecomeReady=(action didBecomeReady)}}`);
 
-  return this.get('waitForRender').then(() => {
-    this.$('.jstree-anchor').eq(0).click();
-  });
-});
+    return this.get('waitForRender').then(() => {
+      assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 initial nodes");
 
-skip('it has 2 initial nodes', function(assert) {
-  assert.expect(2);
+      this.$('.jstree-ocl').click();
 
-  this.render(hbs`{{file-tree model=model
-                          didBecomeReady=(action didBecomeReady)}}`);
-
-  return this.get('waitForRender').then(() => {
-    assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 initial nodes");
-
-    this.$('.jstree-ocl').click();
-
-    assert.equal(this.$('.jstree-anchor').length, 5, "There are 5 nodes once you expand the some folder");
-  });
-});
-
-skip('it has all initial nodes expanded if the maxNumFilesInitiallyExpanded is set to more than the number of files in the app', function(assert) {
-  assert.expect(1);
-  config.maxNumFilesInitiallyExpanded = 6;
-  this.render(hbs`{{file-tree model=model
-                          didBecomeReady=(action didBecomeReady)}}`);
-
-  return this.get('waitForRender').then(() => {
-    assert.equal(this.$('.jstree-anchor').length, 9, "All initial nodes are expanded");
-  });
-});
-
-skip('can expand and collapse all', function(assert) {
-  assert.expect(3);
-
-  this.set('externalOpenFile', () => {
-    assert.ok(true, 'openFile was called');
+      assert.equal(this.$('.jstree-anchor').length, 5, "There are 5 nodes once you expand the some folder");
+    });
   });
 
-  this.set('externalHideFileTree', () => {
-    assert.ok(true, 'hideFileTree was called');
+  test('it has all initial nodes expanded if the maxNumFilesInitiallyExpanded is set to more than the number of files in the app', async function(assert) {
+    assert.expect(1);
+    config.maxNumFilesInitiallyExpanded = 6;
+    await render(hbs`{{file-tree model=model
+                            didBecomeReady=(action didBecomeReady)}}`);
+
+    return this.get('waitForRender').then(() => {
+      assert.equal(this.$('.jstree-anchor').length, 9, "All initial nodes are expanded");
+    });
   });
 
-  this.render(hbs`{{file-tree model=model
-                          openFile=(action externalOpenFile)
-                          hideFileTree=(action externalHideFileTree)
-                          didBecomeReady=(action didBecomeReady)}}`);
+  test('can expand and collapse all', async function(assert) {
+    assert.expect(3);
 
-  return this.get('waitForRender').then(() => {
-    assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 initial nodes");
+    this.set('externalOpenFile', () => {
+      assert.ok(true, 'openFile was called');
+    });
 
-    this.$('.twiddlicon-expand-all').click();
+    this.set('externalHideFileTree', () => {
+      assert.ok(true, 'hideFileTree was called');
+    });
 
-    assert.equal(this.$('.jstree-anchor').length, 9, "There are 9 nodes once you expand all");
+    await render(hbs`{{file-tree model=model
+                            openFile=(action externalOpenFile)
+                            hideFileTree=(action externalHideFileTree)
+                            didBecomeReady=(action didBecomeReady)}}`);
 
-    this.$('.twiddlicon-collapse-all').click();
+    return this.get('waitForRender').then(() => {
+      assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 initial nodes");
 
-    assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 nodes once you collapse all");
+      this.$('.twiddlicon-expand-all').click();
+
+      assert.equal(this.$('.jstree-anchor').length, 9, "There are 9 nodes once you expand all");
+
+      this.$('.twiddlicon-collapse-all').click();
+
+      assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 nodes once you collapse all");
+    });
   });
-});
 
-skip('it updates when you rename a file', function(assert) {
-  assert.expect(2);
+  test('it updates when you rename a file', async function(assert) {
+    assert.expect(2);
 
-  const waitForChange = this.makeNewPromise('didChange');
+    const waitForChange = this.makeNewPromise('didChange');
 
-  this.render(hbs`{{file-tree model=model
-                          didBecomeReady=(action didBecomeReady)
-                          didChange=(action didChange)}}`);
+    await render(hbs`{{file-tree model=model
+                            didBecomeReady=(action didBecomeReady)
+                            didChange=(action didChange)}}`);
 
-  return this.get('waitForRender').then(() => {
-    this.$('.twiddlicon-expand-all').click();
+    return this.get('waitForRender').then(() => {
+      this.$('.twiddlicon-expand-all').click();
 
-    assert.equal(this.$('.jstree-anchor').eq(0).text().trim(), "some-path.js");
+      assert.equal(this.$('.jstree-anchor').eq(0).text().trim(), "some-path.js");
 
-    this.set('model.files.firstObject.filePath', 'some-new-path.js');
+      this.set('model.files.firstObject.filePath', 'some-new-path.js');
 
-    return waitForChange;
-  }).then(() => {
+      return waitForChange;
+    }).then(() => {
 
-    assert.equal(this.$('.jstree-anchor').eq(0).text().trim(), "some-new-path.js", "Tree updated when file renamed");
+      assert.equal(this.$('.jstree-anchor').eq(0).text().trim(), "some-new-path.js", "Tree updated when file renamed");
+    });
   });
 });

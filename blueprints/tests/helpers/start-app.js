@@ -10,6 +10,7 @@ export default function startApp(attrs) {
 
   let attributes = assign({rootElement: "#test-root"}, config.APP);
   attributes.autoboot = true;
+  attributes.rootElement = '#ember-testing';
   attributes = assign(attributes, attrs); // use defaults, but you can override;
 
   run(() => {

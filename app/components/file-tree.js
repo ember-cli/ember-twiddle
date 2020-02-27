@@ -60,7 +60,7 @@ export default Ember.Component.extend({
    * Calculate data for file tree
    */
   fileTreeData: computed('fileTreeHash', function() {
-    const fileTreeHash = this.get('fileTreeHash');
+    const fileTreeHash = this.fileTreeHash;
     const fileTreeKeys = Object.keys(fileTreeHash);
     const fileTreeObjects = fileTreeKeys.map(key => fileTreeHash[key]);
 
@@ -101,7 +101,7 @@ export default Ember.Component.extend({
         this.openFile(node.path);
         return;
       }
-      this.get('jsTreeActionReceiver').send('toggleNode', node.id);
+      this.jsTreeActionReceiver.send('toggleNode', node.id);
     },
 
     didBecomeReady() {
@@ -121,11 +121,11 @@ export default Ember.Component.extend({
     },
 
     expandAll() {
-      this.get('jsTreeActionReceiver').send('openAll');
+      this.jsTreeActionReceiver.send('openAll');
     },
 
     collapseAll() {
-      this.get('jsTreeActionReceiver').send('closeAll');
+      this.jsTreeActionReceiver.send('closeAll');
     }
   }
 

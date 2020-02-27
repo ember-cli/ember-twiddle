@@ -59,7 +59,7 @@ export default Ember.Service.extend({
 
       twiddleJson = this._dedupEmberData(twiddleJson);
 
-      const dependencyResolver = this.get('dependencyResolver');
+      const dependencyResolver = this.dependencyResolver;
       const emberVersion = twiddleJson.dependencies && twiddleJson.dependencies.ember;
       const emberDataVersion = twiddleJson.dependencies && twiddleJson.dependencies['ember-data'] || twiddleJson.addons && twiddleJson.addons['ember-data'];
 

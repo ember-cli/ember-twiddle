@@ -9,7 +9,7 @@ export default GistRoute.extend({
   state: inject.service(),
 
   model(params) {
-    let store = this.get('store');
+    let store = this.store;
     let model = store.createRecord('gist', {description: 'New Twiddle'});
 
     if (params.copyCurrentTwiddle) {
@@ -17,7 +17,7 @@ export default GistRoute.extend({
     } else {
       run(() => pushDeleteAll(store, 'gist-file'));
       let files = model.get('files');
-      let emberCli = this.get('emberCli');
+      let emberCli = this.emberCli;
       files.pushObject(emberCli.generate('controllers/application'));
       files.pushObject(emberCli.generate('templates/application'));
       files.pushObject(emberCli.generate('twiddle.json'));

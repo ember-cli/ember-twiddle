@@ -38,7 +38,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
 
   // eslint-disable-next-line ember/no-on-calls-in-components
   onSaveCommand: on(keyDown('cmd+KeyS'), function (event) {
-    this.saveGist(this.get('model'));
+    this.saveGist(this.model);
     this.send('runNow');
     event.preventDefault();
   }),
@@ -98,13 +98,13 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
   didReceiveAttrs() {
     this._super(...arguments);
 
-    const model = this.get('model');
+    const model = this.model;
 
     if (model !== this._oldModel) {
       this.clearColumns();
       this.initializeColumns();
       Ember.run(() => {
-        this.get('rebuildApp').perform();
+        this.rebuildApp.perform();
       });
     }
 
@@ -114,16 +114,25 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
   actions: {
     contentsChanged() {
       this.set('unsaved', true);
-      this.get('rebuildApp').perform();
+      this.rebuildApp.perform();
     },
 
     rebuildApp() {
-      this.get('rebuildApp').perform();
+      this.rebuildApp.perform();
+    },
+
+    versionSelected(dependency, version) {
+      var gist = this.model;
+      var emberCli = this.emberCli;
+
+      emberCli.updateDependencyVersion(gist, dependency, version).then(() => {
+        this.rebuildApp.perform();
+      });
     },
 
     liveReloadChanged(isLiveReload) {
       this.set('isLiveReload', isLiveReload);
-      this.get('rebuildApp').perform();
+      this.rebuildApp.perform();
     },
 
     focusEditor (editor) {
@@ -141,12 +150,12 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
     },
 
     runNow () {
-      this.get('buildApp').perform();
+      this.buildApp.perform();
     },
 
     titleChanged() {
       this.set('unsaved', true);
-      this.get('titleUpdated')();
+      this.titleUpdated();
     },
 
     showFileTree() {
@@ -169,7 +178,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
 
     addHelper() {
       let type = 'helper';
-      let fileProperties = this.get('emberCli').buildProperties(type);
+      let fileProperties = this.emberCli.buildProperties(type);
       let filePath = prompt('File path', fileProperties.filePath);
 
       this.addHelper(type, filePath);
@@ -255,13 +264,13 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
     removeColumn(col) {
       this.removeColumn(col);
       run.scheduleOnce('afterRender', this, this.updateOpenFiles);
-      this.get('transitionQueryParams')({numColumns: this.get('realNumColumns') - 1});
+      this.transitionQueryParams({numColumns: this.realNumColumns - 1});
     },
 
     addColumn() {
-      let numColumns = this.get('realNumColumns');
+      let numColumns = this.realNumColumns;
 
-      this.get('transitionQueryParams')({
+      this.transitionQueryParams({
         numColumns: numColumns + 1
       }).then((queryParams) => {
         this.setProperties(queryParams);
@@ -278,7 +287,7 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
     },
 
     exitFullScreen() {
-      this.get('transitionQueryParams')({
+      this.transitionQueryParams({
         fullScreen: false
       }).then(() => {
         this.initializeColumns();
@@ -286,13 +295,19 @@ export default Ember.Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin,
       });
     },
 
+    setEditorKeyMap (keyMap) {
+      const settings = this.settings;
+      settings.set('keyMap', keyMap);
+      settings.save();
+    },
+
     switchTests(testsEnabled) {
       this.ensureTestHelperExists();
       this.ensureTestStartAppHelperExists();
       this.ensureTestDestroyAppHelperExists();
 
-      this.get('emberCli').setTesting(this.get('model'), testsEnabled);
-      this.get('rebuildApp').perform();
+      this.emberCli.setTesting(this.model, testsEnabled);
+      this.rebuildApp.perform();
     }
   }
 });

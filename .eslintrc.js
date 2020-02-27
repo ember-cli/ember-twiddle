@@ -15,22 +15,7 @@ module.exports = {
     browser: true
   },
   globals: {
-    andThen: true,
-    click: true,
-    createGist: true,
-    currentRouteName: true,
-    currentURL: true,
-    fillIn: true,
-    keyEvent: true,
-    outputContents: true,
-    outputPane: true,
-    runGist: true,
-    runRevision: true,
     server: true,
-    triggerEvent: true,
-    visit: true,
-    waitForLoadedIFrame: true,
-    waitForUnloadedIFrame: true,
     '$': true,
     CodeMirror: false
   },
@@ -41,8 +26,9 @@ module.exports = {
     // node files
     {
       files: [
-        'testem.js',
         'ember-cli-build.js',
+        'testem.js',
+        'blueprints/*/index.js',
         'config/**/*.js',
         'lib/*/index.js'
       ],
@@ -53,6 +39,9 @@ module.exports = {
       env: {
         browser: false,
         node: true
+      },
+      globals: {
+        self: true
       }
     },
 

@@ -8,7 +8,7 @@ export default Ember.Route.extend({
   emberCli: inject.service(),
 
   afterModel(context) {
-    return this.get('emberCli').setup(context);
+    return this.emberCli.setup(context);
   },
 
   setupController(controller, context) {

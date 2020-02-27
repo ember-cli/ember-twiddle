@@ -1,45 +1,47 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'ember-twiddle/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { visit, click, currentRouteName } from '@ember/test-helpers';
 import { stubValidSession } from 'ember-twiddle/tests/helpers/torii';
-import { find, click, visit } from 'ember-native-dom-helpers';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import runGist from '../helpers/run-gist';
 
-const twiddleMenu = ".test-twiddle-menu";
-const menuTrigger = ".ember-basic-dropdown-trigger button";
-const deleteGistSelector = '.test-delete-twiddle';
+module('Acceptance | delete gist', function(hooks) {
+  setupApplicationTest(hooks);
+  setupMirage(hooks);
 
-moduleForAcceptance('Acceptance | delete gist', {
-  beforeEach() {
+  hooks.beforeEach(function() {
+    this.cacheConfirm = window.confirm;
+    window.confirm = () => true;
     server.create('user', { login: 'octocat' });
-  }
-});
-
-test('can delete a gist', function(assert) {
-  // set owner of gist as currently logged in user
-  stubValidSession(this.application, {
-    currentUser: {login: "Gaurav0"},
-    "github-oauth2": {}
   });
 
-  runGist([
-    {
-      filename: 'application.template.hbs',
-      content: 'hello world!'
-    }
-  ]);
+  hooks.afterEach(function() {
+    window.confirm = this.cacheConfirm;
+  });
 
-  let menu;
-
-  return visit('/35de43cb81fc35ddffb2')
-    .then(() => {
-      menu = find(twiddleMenu, document.body);
-      let el = find(menuTrigger, menu);
-      return click(el, menu);
-    })
-    .then(() => {
-      let el = find(deleteGistSelector, menu);
-      return click(el, menu);
-    })
-    .then(() => {
-      assert.ok(currentRouteName(), 'gist.new', 'New twiddle created');
+  test('can delete a gist', async function(assert) {
+    // set owner of gist as currently logged in user
+    stubValidSession(this, {
+      currentUser: {login: "Gaurav0"},
+      "github-oauth2": {}
     });
+
+    await runGist([
+      {
+        filename: 'application.template.hbs',
+        content: 'hello world!'
+      }
+    ]);
+
+    await visit('/35de43cb81fc35ddffb2');
+
+    let menu = find('.test-twiddle-menu', document.body);
+    let el = find('.ember-basic-dropdown-trigger button', menu);
+    await click(el, menu);
+
+    let deleteEl = find('.test-delete-twiddle', menu);
+    await click(deleteEl, menu);
+
+    assert.equal(currentRouteName(), 'gist.new', 'New twiddle created');
+  });
 });

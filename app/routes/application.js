@@ -33,7 +33,7 @@ export default Ember.Route.extend({
     },
 
     titleUpdated() {
-      this.get('router').updateTitle();
+      this._router.updateTitle();
     },
 
     setEditorKeyMap(keyMap) {

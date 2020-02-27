@@ -13,12 +13,12 @@ export default Ember.Component.extend({
   currentRevision: config.currentRevision,
 
   v: computed('version', function() {
-    return this.get('version').charAt(0) === "v" ? "" : "v";
+    return this.version.charAt(0) === "v" ? "" : "v";
   }),
 
   currentVersionLink: computed('environment', 'v', 'version', 'currentRevision', function() {
     var baseLink = "https://github.com/ember-cli/ember-twiddle";
-    var { environment, currentRevision, v, version } = this.getProperties('environment', 'currentRevision', 'v', 'version');
+    var { environment, currentRevision, v, version } = this;
     var tagName = `${v}${version}`;
 
     switch (environment) {
