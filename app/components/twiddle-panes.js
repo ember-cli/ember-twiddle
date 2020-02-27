@@ -18,7 +18,7 @@ export default Component.extend({
   },
 
   setupHandles() {
-    if (!this.get('media.isMobile')) {
+    if (!this.media.isMobile) {
       this.$('.twiddle-pane').after('<div class="handle"></div>');
       this.$('.handle').last().remove();
       this.$('.handle').drags({ pane: '.twiddle-pane', min: 20 });
