@@ -21,7 +21,6 @@ const twiddleAppName = 'twiddle';
 const oldTwiddleAppNames = ['demo-app', 'app'];
 const hbsPlugin = new HbsPlugin(Babel);
 const newModulesPlugin = new NewModulesPlugin(Babel);
-const debugMacrosPlugin = new DebugMacrosPlugin(Babel);
 
 // These files will be included if not present
 const boilerPlateJs = [
