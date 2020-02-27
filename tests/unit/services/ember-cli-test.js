@@ -99,7 +99,7 @@ module('Unit | Service | ember cli', function(hooks) {
     var template = "`stuff`";
     var service = this.owner.lookup('service:ember-cli');
     var result = service.compileHbs(template, 'some-path');
-    var mungedCode = "\\`stuff\\`";
+    var mungedCode = '"`stuff`"';
 
     assert.ok(result.indexOf(mungedCode) > -1, 'munged template included');
   });

@@ -75,11 +75,8 @@ module.exports = function(defaults) {
       'path-browser': {
         import: ['path.js']
       },
-      'babel-standalone': {
+      '@babel/standalone': {
         import: ['babel.js']
-      },
-      'babel-preset-env-standalone': {
-        import: ['babel-preset-env.js']
       }
     },
     'ember-cli-babel': {
