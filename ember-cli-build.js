@@ -78,8 +78,7 @@ module.exports = function(defaults) {
     autoImport: {
       exclude: [
         'babel-plugin-ember-modules-api-polyfill',
-        'babel-plugin-debug-macros',
-        '@babel/types'
+        'babel-plugin-debug-macros'
       ]
     },
     'ember-cli-babel': {
@@ -116,14 +115,6 @@ module.exports = function(defaults) {
     using: [{
       transformation: 'cjs',
       as: 'babel-plugin-debug-macros',
-      plugins: [nodeBuiltins()]
-    }]
-  });
-
-  app.import('node_modules/@babel/types/lib/index.js', {
-    using: [{
-      transformation: 'cjs',
-      as: '@babel/types',
       plugins: [nodeBuiltins()]
     }]
   });
