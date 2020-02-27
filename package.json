@@ -24,6 +24,7 @@
     "@ember/test-helpers": "~0.7.18",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-json": "^4.0.2",
+    "babel-plugin-debug-macros": "^0.3.3",
     "babel-plugin-ember-modules-api-polyfill": "^2.12.0",
     "broccoli-asset-rev": "^2.7.0",
     "broccoli-babel-transpiler": "^7.4.0",
