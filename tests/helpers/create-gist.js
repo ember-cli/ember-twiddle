@@ -1,5 +1,5 @@
 import { isArray } from '@ember/array';
-import { faker } from "ember-cli-mirage";
+import faker from 'faker';
 
 export default function(options) {
   if (isArray(options)) {
