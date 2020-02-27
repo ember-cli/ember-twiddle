@@ -1,2 +1,10 @@
-{{input class="test-description-input" value=value autoresize=true focus-in="inputFocusIn" focus-out="inputFocusOut" enter="removeFocus" placeholder='New Twiddle'}}
+{{input
+  class="test-description-input"
+  value=value
+  autoresize=true
+  focus-in=(action "inputFocusIn")
+  focus-out=(action "inputFocusOut")
+  enter=(action "removeFocus")
+  placeholder='New Twiddle'
+}}
 {{paper-icon 'mode edit' size=17}}
