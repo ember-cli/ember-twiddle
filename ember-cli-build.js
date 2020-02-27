@@ -97,8 +97,8 @@ module.exports = function(defaults) {
   app.import('vendor/bootstrap-dropdown-submenu-fix.css');
   app.import('vendor/hint.css');
 
-  const nodeBuiltins = require('rollup-plugin-node-builtins');
-  const json = require('rollup-plugin-json');
+  const nodeBuiltins = require('rollup-plugin-node-builtins-brofs');
+  const json = require('@rollup/plugin-json');
 
   app.import('node_modules/babel-plugin-ember-modules-api-polyfill/src/index.js', {
     using: [{
