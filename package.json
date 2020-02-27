@@ -33,6 +33,7 @@
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^3.0.0",
     "broccoli-rollup": "^4.1.1",
+    "broccoli-stew": "^3.0.0",
     "browserify": "^16.2.0",
     "compare-versions": "^3.2.1",
     "dedent": "~0.7.0",

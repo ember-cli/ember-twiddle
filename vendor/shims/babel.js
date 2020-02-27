@@ -2,6 +2,7 @@
   function vendorModule() {
     'use strict';
 
+    self.process = { env: {} };
     return { 'default': self['Babel'] };
   }
 
