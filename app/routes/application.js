@@ -1,8 +1,8 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import $ from 'jquery';
 import config from '../config/environment';
 import Settings from '../models/settings';
-
 
 export default Route.extend({
   notify: service(),
@@ -55,7 +55,7 @@ export default Route.extend({
     transitionTo() {
       let args = [].slice.call(arguments, 0);
 
-      if (args[args.length - 1] instanceof Ember.$.Event) {
+      if (args[args.length - 1] instanceof $.Event) {
         args = args.slice(0, -1);
       }
 
