@@ -2,7 +2,7 @@
   {{#unless fullScreen}}
     {{#each columns as |column index|}}
       {{#if column.show}}
-        <div class="twiddle-pane code {{if column.active 'active'}}" data-test-columns='{{column.col}}'>
+        <div class="twiddle-pane code {{if column.active 'active'}}" data-test-columns={{column.col}}>
           {{file-editor-column col=column.col
             sidebarToggle=sidebarToggle
             isFirstColumn=(eq index 0)
@@ -12,8 +12,8 @@
             numColumns=numColumns
             fileTreeShown=fileTreeShown
             activeEditorCol=activeEditorCol
-            renameFile=(action this.attrs.renameFile)
-            removeFile=(action this.attrs.removeFile)
+            renameFile=(action @renameFile)
+            removeFile=(action @removeFile)
             focusEditor=(action this.focusEditor)
             selectFile=(action this.selectFile)
             contentChanged=(action this.updateColumn)

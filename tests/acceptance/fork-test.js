@@ -6,12 +6,6 @@ import Mirage from 'ember-cli-mirage';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import runGist from '../helpers/run-gist';
 
-
-const twiddleMenu = ".test-twiddle-menu";
-const menuTrigger = ".ember-basic-dropdown-trigger button";
-const forkTwiddleSelector = '.test-fork-twiddle';
-
-
 module('Acceptance | fork gist', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
