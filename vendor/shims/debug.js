@@ -10,10 +10,10 @@
       runInDebug,
       warn
     } = Ember;
-    const {
-      registerDeprecationHandler,
-      registerWarnHandler
-    } = Debug;
+    let registerDeprecationHandler, registerWarnHandler;
+    if (Debug) {
+      ({ registerDeprecationHandler, registerWarnHandler } = Debug);
+    }
     return {
       assert,
       debug,
