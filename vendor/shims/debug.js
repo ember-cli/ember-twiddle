@@ -6,11 +6,14 @@
       assert,
       debug,
       deprecate,
-      registerDeprecationHandler,
-      registerWarnHandler,
+      Debug,
       runInDebug,
       warn
     } = Ember;
+    const {
+      registerDeprecationHandler,
+      registerWarnHandler
+    } = Debug;
     return {
       assert,
       debug,
