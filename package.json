@@ -21,7 +21,7 @@
     "@babel/standalone": "^7.8.4",
     "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.6.3",
-    "@ember/test-helpers": "~0.7.18",
+    "@ember/test-helpers": "~1.3.2",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-json": "^4.0.2",
     "babel-plugin-debug-macros": "^0.3.3",
