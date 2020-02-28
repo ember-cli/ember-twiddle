@@ -5,7 +5,7 @@ import config from '../../../config/environment';
 import { module, test } from 'qunit';
 
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | file tree', function(hooks) {
