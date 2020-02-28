@@ -106,7 +106,7 @@
     "torii": "~0.10.1"
   },
   "resolutions": {
-    "ember-cli-shims/ember-cli-version-checker": "2.2.0"
+    "ember-cli-version-checker": "4.1.0"
   },
   "engines": {
     "node": ">= 10.*"
