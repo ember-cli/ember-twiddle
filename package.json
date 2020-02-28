@@ -84,7 +84,7 @@
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-moment": "^8.0.0",
     "ember-notify": "^6.0.0",
-    "ember-qunit": "^3.4.1",
+    "ember-qunit": "^4.6.0",
     "ember-resolver": "^5.0.1",
     "ember-responsive": "^3.0.5",
     "ember-rfc176-data": "~0.3.2",
