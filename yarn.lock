@@ -4754,14 +4754,16 @@ ember-auto-import@^1.2.19, ember-auto-import@^1.5.3:
     walk-sync "^0.3.3"
     webpack "~4.28"
 
-ember-autoresize@~0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/ember-autoresize/-/ember-autoresize-0.6.1.tgz#8150f7cc03c03dcef9e3d2116f64959d242bb904"
-  integrity sha1-gVD3zAPAPc7549IRb2SVnSQruQQ=
+ember-autoresize@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/ember-autoresize/-/ember-autoresize-1.3.2.tgz#f5a2f6ecad38337675fd82c0acccab69710b6ba1"
+  integrity sha512-lfaCRsHGUwCdnnIAZ88t46jtXtVvU/wavSG82UgDsD97eH8y8rcJB0z0rl4smjb6mUSsNuEuvgbTp3Q+yBCxVQ==
   dependencies:
     dom-ruler "^0.2.5"
-    ember-cli-babel "^6.8.2"
-    ember-cli-node-assets "^0.2.2"
+    ember-cli-babel "^6.6.0"
+    ember-cli-version-checker "^2.1.0"
+    ember-copy "^1.0.0"
+    ember-get-config "^0.2.4"
 
 ember-cli-app-version@^3.2.0:
   version "3.2.0"
@@ -5523,6 +5525,13 @@ ember-concurrency@^1.1.5:
     ember-compatibility-helpers "^1.2.0"
     ember-maybe-import-regenerator "^0.1.6"
 
+ember-copy@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-copy/-/ember-copy-1.0.0.tgz#426554ba6cf65920f31d24d0a3ca2cb1be16e4aa"
+  integrity sha512-aiZNAvOmdemHdvZNn0b5b/0d9g3JFpcOsrDgfhYEbfd7SzE0b69YiaVK2y3wjqfjuuiA54vOllGN4pjSzECNSw==
+  dependencies:
+    ember-cli-babel "^6.6.0"
+
 ember-data@~3.8.0:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-3.8.1.tgz#2d2bda400c9e846e4077e250edc5b16c53fe0772"
@@ -5582,7 +5591,7 @@ ember-factory-for-polyfill@^1.3.1:
   dependencies:
     ember-cli-version-checker "^2.1.0"
 
-ember-get-config@^0.2.2:
+ember-get-config@^0.2.2, ember-get-config@^0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/ember-get-config/-/ember-get-config-0.2.4.tgz#118492a2a03d73e46004ed777928942021fe1ecd"
   integrity sha1-EYSSoqA9c+RgBO13eSiUICH+Hs0=
