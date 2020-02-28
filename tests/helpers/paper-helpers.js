@@ -1,7 +1,6 @@
 import { run } from '@ember/runloop';
 import $ from 'jquery';
-import { find } from 'ember-native-dom-helpers';
-import { settled } from '@ember/test-helpers';
+import { find, settled } from '@ember/test-helpers';
 
 
 function focus(el) {
