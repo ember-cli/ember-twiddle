@@ -391,17 +391,17 @@ export default Service.extend({
       testStuff += `<script type="text/javascript">${moreCode}window.require("${twiddleAppName}/tests/test-helper");</script>`;
     }
 
-    if (testing || isTestingEnabled) {
-      const testJSFiles = ['emberQUnit'];
+    // if (testing || isTestingEnabled) {
+    //   const testJSFiles = ['emberQUnit'];
 
-      testJSFiles.forEach(jsFile => {
-        depScriptTags += `<script type="text/javascript" src="${window.assetMap[jsFile]}"></script>`;
-      });
+    //   testJSFiles.forEach(jsFile => {
+    //     depScriptTags += `<script type="text/javascript" src="${window.assetMap[jsFile]}"></script>`;
+    //   });
 
-      testStuff += `<script type="text/javascript">
-        Ember.Test.adapter = window.require('ember-qunit').QUnitAdapter.create();
-      </script>`;
-    }
+    //   testStuff += `<script type="text/javascript">
+    //     Ember.Test.adapter = window.require('ember-qunit').QUnitAdapter.create();
+    //   </script>`;
+    // }
 
     return { depScriptTags, depCssLinkTags, testStuff };
   },
