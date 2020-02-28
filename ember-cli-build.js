@@ -73,7 +73,10 @@ module.exports = function(defaults) {
       }
     },
     autoImport: {
-      exclude: ['babel-plugin-ember-modules-api-polyfill']
+      exclude: [
+        'babel-plugin-ember-modules-api-polyfill',
+        'babel-plugin-debug-macros'
+      ]
     },
     'ember-cli-babel': {
       includePolyfill: true
@@ -103,6 +106,14 @@ module.exports = function(defaults) {
       transformation: 'cjs',
       as: 'babel-plugin-ember-modules-api-polyfill',
       plugins: [nodeBuiltins(), json()]
+    }]
+  });
+
+  app.import('node_modules/babel-plugin-debug-macros/src/index.js', {
+    using: [{
+      transformation: 'cjs',
+      as: 'babel-plugin-debug-macros',
+      plugins: [nodeBuiltins()]
     }]
   });
 
