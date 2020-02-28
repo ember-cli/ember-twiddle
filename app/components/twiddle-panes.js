@@ -4,6 +4,7 @@ import { run } from '@ember/runloop';
 
 
 export default Component.extend({
+  media: service(),
   resizeableColumns: service(),
   classNames: ['twiddle-panes'],
 
