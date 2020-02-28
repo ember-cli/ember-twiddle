@@ -3,7 +3,7 @@ import Service, { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
 import { run } from '@ember/runloop';
 import $ from 'jquery';
-import Babel from 'babel-core';
+import Babel from '@babel/core';
 import Path from 'path';
 import HbsPlugin from '../plugins/hbs-plugin';
 import NewModulesPlugin from 'babel-plugin-ember-modules-api-polyfill';
@@ -16,6 +16,7 @@ import { pushDeletion } from 'ember-twiddle/utils/push-deletion';
 const {
   testing
 } = Ember;
+
 const twiddleAppName = 'twiddle';
 const oldTwiddleAppNames = ['demo-app', 'app'];
 const hbsPlugin = new HbsPlugin(Babel);
@@ -512,6 +513,7 @@ export default Service.extend({
  * @return {Object}            Babel options
  */
 function babelOpts(moduleName) {
+
   return {
     presets: [['env', {
       targets: {
@@ -536,7 +538,7 @@ function babelOpts(moduleName) {
       'proposal-class-properties',
       'proposal-object-rest-spread',
       hbsPlugin,
-      newModulesPlugin
+      newModulesPlugin,
     ]
   };
 }
