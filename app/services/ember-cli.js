@@ -391,6 +391,7 @@ export default Service.extend({
       testStuff += `<script type="text/javascript">${moreCode}window.require("${twiddleAppName}/tests/test-helper");</script>`;
     }
 
+    // TODO: ilya
     // if (testing || isTestingEnabled) {
     //   const testJSFiles = ['emberQUnit'];
 
