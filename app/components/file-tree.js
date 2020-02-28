@@ -5,6 +5,29 @@ import config from '../config/environment';
 export default Component.extend({
   jsTreeActionReceiver: null,
 
+  init() {
+    this._super(...arguments);
+    this.contextmenuOptions = {
+      items: {
+        rename: {
+          action: this.renameFile,
+          label: 'Rename',
+          icon: 'glyphicon glyphicon-edit'
+        },
+        move: {
+          action: this.renameFile,
+          label: 'Move',
+          icon: 'glyphicon glyphicon-move'
+        },
+        delete: {
+          action: this.removeFile,
+          label: 'Delete',
+          icon: 'glyphicon glyphicon-trash'
+        }
+      }
+    };
+  },
+
   fileTreeHash: computed('model.files.@each.filePath', function() {
     const files = this.get('model.files') || [];
 

@@ -73,8 +73,8 @@ module('Integration | Component | file menu', function(hooks) {
                               activeEditorCol=activeEditorCol
                               activeFile=activeFile
                               addFile=(action "addFile")
-                              renameFile=(action "renameFile")
-                              removeFile=(action "removeFile")
+                              renameFile=(action "renameFile" activeFile)
+                              removeFile=(action "removeFile" activeFile)
                               saveGist=(action "saveGist")
                               fork=(action "fork")
                               copy=(action "copy")
