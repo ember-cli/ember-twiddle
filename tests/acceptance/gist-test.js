@@ -3,6 +3,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import {
   visit,
   find,
+  findAll,
   click,
   fillIn,
   currentURL,
@@ -39,14 +40,14 @@ const displayedFiles = '[data-test-column-files-menu] button .file-path';
 const addColumnButton = '[data-test-column-add-panel="1"] button';
 const displayedFilesNoneSelected = '[data-test-column-none-selected="1"]';
 
-const firstFilePickerFileNames = () => Array.from(findAll(firstFilePickerFiles))
-  .map(file => file.textContent);
-
 let promptValue = '';
 
 module('Acceptance | gist', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+
+  const firstFilePickerFileNames = () => Array.from(findAll(firstFilePickerFiles))
+    .map(file => file.textContent);
 
   hooks.beforeEach(function() {
     this.cacheConfirm = window.confirm;

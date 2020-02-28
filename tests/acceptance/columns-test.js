@@ -46,8 +46,8 @@ module('Acceptance | columns', function(hooks) {
     assert.ok(urlHas('numColumns=0'), 'We are on the correct route for 0 columns');
     assert.equal(findAll(columns).length, 0, 'There are now 0 columns');
   });
-});
 
-function urlHas(text) {
-  return decodeURIComponent(currentURL()).indexOf(text) > 0;
-}
+  function urlHas(text) {
+    return decodeURIComponent(currentURL()).indexOf(text) > 0;
+  }
+});
