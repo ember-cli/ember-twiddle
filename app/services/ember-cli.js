@@ -194,9 +194,11 @@ export default Service.extend({
     // Remove app prefix if present
     let name = filePath.replace(/^app\//, '');
 
-    return Path.join(twiddleAppName,
+    let moduleName = Path.join(twiddleAppName,
       Path.relative('.', Path.dirname(name)),
       Path.basename(name, Path.extname(name)));
+
+    return moduleName;
   },
 
   /**

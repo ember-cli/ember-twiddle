@@ -36,4 +36,20 @@ module('Unit | Model | gist file', function(hooks) {
       await run(() => model.deleteRecord());
     });
   });
+
+  test('correctly determines filePath from fileName', function(assert) {
+    const store = this.owner.lookup('service:store');
+    let file1 = store.createRecord('gist-file', {
+      fileName: 'twiddle\\.json'
+    });
+    assert.equal(file1.filePath, 'twiddle.json');
+    let file2 = store.createRecord('gist-file', {
+      fileName: 'controllers.application\\.js'
+    });
+    assert.equal(file2.filePath, 'controllers/application.js');
+    let file3 = store.createRecord('gist-file', {
+      fileName: 'controllers.app\\.ication\\.js'
+    });
+    assert.equal(file3.filePath, 'controllers/app.ication.js');
+  });
 });

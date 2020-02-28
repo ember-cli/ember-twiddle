@@ -15,25 +15,28 @@ export default DS.Model.extend({
    */
   filePath: computed('fileName', {
     get() {
-      var fileName = this.fileName || '';
+      let fileName = this.fileName || '';
+      let filePath = '';
 
       // If the file name has an escaped `.`, we're using the new version of path
       // encoding that supports multiple periods in a path.
       // If not, we assume the last period separates the file ending and the rest are `/`s.
       // Required for back compat.
       // Ref: https://github.com/ember-cli/ember-twiddle/issues/658
-      var hasEscapedPeriod = /\\\./.test(fileName);
+      let hasEscapedPeriod = /\\\./.test(fileName);
       if (hasEscapedPeriod) {
-        return fileName.replace(/[^\\]\./gi, '/').replace(/\\\./gi, '.');
+        filePath = fileName.replace(/([^\\])\./gi, "$1/").replace(/\\\./gi, '.');
       }
       else {
-        var parts = fileName.split('.');
-        return parts.slice(0, -1).join('/') + '.' + parts.slice(-1);
+        let parts = fileName.split('.');
+        filePath = parts.slice(0, -1).join('/') + '.' + parts.slice(-1);
       }
+      return filePath;
     },
 
     set(key, value) {
-      this.set('fileName', value.replace(/\./gi, '\\.').replace(/\//gi, '.'));
+      let fileName = value.replace(/\./gi, '\\.').replace(/\//gi, '.');
+      this.set('fileName', fileName);
       return value;
     }
   }),
