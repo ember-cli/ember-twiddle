@@ -40,5 +40,9 @@ export function pushDeletion(store, type, id) {
 
 export function pushDeleteAll(store, type) {
   let records = store.peekAll(type);
-  records.forEach(record => pushDeletion(store, type, record.get('id')));
+  records.forEach(record => {
+    if (record.get('id')) {
+      pushDeletion(store, type, record.get('id'));
+    }
+  });
 }
