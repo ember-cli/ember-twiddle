@@ -1,31 +1,38 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import Ember$ from 'jquery';
 
-moduleForComponent('basic-dialog', 'Integration | Component | basic dialog', {
-  integration: true
-});
+module('Integration | Component | basic dialog', function(hooks) {
+  setupRenderingTest(hooks);
 
-test('it renders', function(assert) {
+  hooks.beforeEach(function() {
+    this.actions = {};
+    this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
+  });
 
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
-  this.closed = false;
-  this.on('onClose', () => { this.closed = true; });
+  test('it renders', async function(assert) {
 
-  this.render(hbs`
-    {{#basic-dialog onClose=(action 'onClose') as |dialog|}}
-      {{#dialog.content}}
-        some template text
-      {{/dialog.content}}
-    {{/basic-dialog}}
-  `);
+    // Set any properties with this.set('myProperty', 'value');
+    // Handle any actions with this.on('myAction', function(val) { ... });
+    this.closed = false;
+    this.actions.onClose = () => { this.closed = true; };
 
-  var root = Ember$('#ember-testing');
+    await render(hbs`
+      {{#basic-dialog onClose=(action 'onClose') as |dialog|}}
+        {{#dialog.content}}
+          some template text
+        {{/dialog.content}}
+      {{/basic-dialog}}
+    `);
 
-  assert.equal(root.find('.md-dialog-content').text().trim(), 'some template text');
+    var root = Ember$('#ember-testing');
 
-  root.find('[data-test-close-button]').click();
+    assert.equal(root.find('.md-dialog-content').text().trim(), 'some template text');
 
-  assert.ok(this.closed, 'onClose called');
+    root.find('[data-test-close-button]').click();
+
+    assert.ok(this.closed, 'onClose called');
+  });
 });

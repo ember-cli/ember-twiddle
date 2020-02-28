@@ -1,7 +1,7 @@
 import { run } from '@ember/runloop';
 import $ from 'jquery';
-import wait from 'ember-test-helpers/wait';
 import { find } from 'ember-native-dom-helpers';
+import { settled } from '@ember/test-helpers';
 
 
 function focus(el) {
@@ -61,7 +61,7 @@ function findElement(scope, selector) {
 
 export function clickOption(scope, index, options = {}) {
   nativeClick(findElement(scope, `[data-option-index="${index}"]`), options);
-  return wait();
+  return settled();
 }
 
 export function clickTrigger(selector, options = {}) {
@@ -71,11 +71,11 @@ export function clickTrigger(selector, options = {}) {
   } else {
     nativeClick(findElement(scope, '.ember-basic-dropdown-trigger'), options);
   }
-  return wait();
+  return settled();
 }
 
 export function selectOption(scope, index) {
-  return wait()
+  return settled()
     .then(() => clickTrigger(scope))
     .then(() => clickOption(document.querySelector('#ember-testing'), index));
 }
