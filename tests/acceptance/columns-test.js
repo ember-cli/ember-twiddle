@@ -21,14 +21,14 @@ module('Acceptance | columns', function(hooks) {
     await visit('/');
 
     assert.equal(currentURL(), '/', 'We are on the correct initial route');
-    assert.equal(findAll(columns).length, 1, 'There is one column to start');
-    assert.ok(find(firstColumn).classList.contains('active'), 'The first column starts out active');
+    assert.dom(columns).exists({ count: 1 }, 'There is one column to start');
+    assert.dom(firstColumn).hasClass('active', 'The first column starts out active');
 
     await click(firstColumnActionsMenu);
     await click(addColumnButton);
 
     assert.ok(urlHas('numColumns=2'), 'We are on the correct route for 2 columns');
-    assert.equal(findAll(columns).length, 2, 'There are now 2 columns');
+    assert.dom(columns).exists({ count: 2 }, 'There are now 2 columns');
     assert.ok(urlHas('openFiles=controllers.application.js,templates.application.hbs'),
       'URL contains correct openFiles query parameter 1');
   });
@@ -37,14 +37,14 @@ module('Acceptance | columns', function(hooks) {
     await visit('/');
 
     assert.equal(currentURL(), '/', 'We are on the correct initial route');
-    assert.equal(findAll(columns).length, 1, 'There is one column to start');
-    assert.ok(find(firstColumn).classList.contains('active'), 'The first column starts out active');
+    assert.dom(columns).exists({ count: 1 }, 'There is one column to start');
+    assert.dom(firstColumn).hasClass('active', 'The first column starts out active');
 
     await click(firstColumnActionsMenu);
     await click(removeColumnButton);
 
     assert.ok(urlHas('numColumns=0'), 'We are on the correct route for 0 columns');
-    assert.equal(findAll(columns).length, 0, 'There are now 0 columns');
+    assert.dom(columns).doesNotExist('There are now 0 columns');
   });
 
   function urlHas(text) {

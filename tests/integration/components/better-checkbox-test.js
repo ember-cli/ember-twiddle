@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | better checkbox', function(hooks) {
@@ -39,6 +39,6 @@ module('Integration | Component | better checkbox', function(hooks) {
 
     await render(hbs`{{better-checkbox checked=true}}`);
 
-    assert.ok(this.$('input').prop('checked'), 'checkbox defaults to being checked if checked=true passed in');
+    assert.dom('input').isChecked('checkbox defaults to being checked if checked=true passed in');
   });
 });

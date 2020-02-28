@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
@@ -43,27 +43,27 @@ module('Integration | Component | user profile', function(hooks) {
   });
 
   test('it renders', function(assert) {
-    assert.equal(this.$('.user-info').text().trim(), 'Logged in as octocat');
+    assert.dom('.user-info').hasText('Logged in as octocat');
   });
 
-  test('it calls signOut upon clicking Sign Out', function(assert) {
+  test('it calls signOut upon clicking Sign Out', async function(assert) {
     assert.expect(1);
 
-    this.$('[data-test-sign-out]').click();
+    await click('[data-test-sign-out]');
 
     assert.ok(this.signOutCalled, 'Expected signOut to be called');
   });
 
-  test('it calls showTwiddles upon clicking "My Saved Twiddles"', function(assert) {
+  test('it calls showTwiddles upon clicking "My Saved Twiddles"', async function(assert) {
     assert.expect(1);
 
-    this.$('[data-test-show-twiddles]').click();
+    await click('[data-test-show-twiddles]');
 
     assert.ok(this.showTwiddlesCalled, 'Expected showTwiddles to be called');
   });
 
   test('shows no current version link when in development environment', function(assert) {
-    assert.equal(this.$('.test-current-version-link').length, 0);
+    assert.dom('.test-current-version-link').doesNotExist();
   });
 
   test('shows link to release when in production environment', async function(assert) {

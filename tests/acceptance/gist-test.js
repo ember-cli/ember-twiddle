@@ -8,7 +8,8 @@ import {
   fillIn,
   currentURL,
   triggerEvent,
-  triggerKeyEvent
+  triggerKeyEvent,
+  blur,
 } from '@ember/test-helpers';
 import { findMapText } from 'ember-twiddle/tests/helpers/util';
 import ErrorMessages from 'ember-twiddle/utils/error-messages';
@@ -78,7 +79,7 @@ module('Acceptance | gist', function(hooks) {
     await click(confirmDeleteAction);
 
     assert.dom('.code .CodeMirror').doesNotExist('No code mirror editors active');
-    assert.equal(find(displayedFilesNoneSelected).textContent, 'No file selected', 'Shows message when no file is selected.');
+    assert.dom(displayedFilesNoneSelected).hasText('No file selected', 'Shows message when no file is selected.');
 
     // TODO: Replace brittle for loop test code with "while there are files left..."
     for (var i = 0; i < 2; ++i) {
@@ -124,7 +125,7 @@ module('Acceptance | gist', function(hooks) {
     numFiles = findAll(firstFilePickerFiles).length;
 
     assert.equal(numFiles, origFiles + 2, 'Added second file');
-    click(anyFile);
+    await click(anyFile);
   });
 
   test('can add component (js and hbs)', async function(assert) {
@@ -161,7 +162,7 @@ module('Acceptance | gist', function(hooks) {
     promptValue = "my-comp";
     await visit('/');
     await click(firstColumnFilesMenu);
-    let origFileCount =  find(firstFilePickerFiles).length;
+    let origFileCount =  findAll(firstFilePickerFiles).length;
 
     await click(anyFile);
     await click(firstColumnActionsMenu);
@@ -172,7 +173,7 @@ module('Acceptance | gist', function(hooks) {
     await click(addComponentAction);
     await click(firstColumnFilesMenu);
 
-    let numFiles = find(firstFilePickerFiles).length;
+    let numFiles = findAll(firstFilePickerFiles).length;
     assert.equal(numFiles, origFileCount + 2, 'Added component files');
     let fileNames = findMapText(firstFilePickerFiles);
     let jsFile = `${promptValue}/component.js`;
@@ -254,7 +255,7 @@ module('Acceptance | gist', function(hooks) {
     promptValue = 'helpers/my-helper.js';
     await visit('/');
     await click(firstColumnFilesMenu);
-    let origFileCount = find(firstFilePickerFiles).length;
+    let origFileCount = findAll(firstFilePickerFiles).length;
     await click(anyFile);
 
     await click(firstColumnActionsMenu);
@@ -362,7 +363,7 @@ module('Acceptance | gist', function(hooks) {
 
     await click(firstColumnTextarea());
     await fillIn(firstColumnTextarea(), "\"some text\";");
-    await triggerEvent(firstColumnTextarea(), "blur");
+    await blur(firstColumnTextarea());
     await triggerEvent(firstColumnTextarea(), "focusout");
     await timeout(10);
     assert.dom(indicator).exists({ count: 1 }, "Unsaved indicator reappears after editing");
@@ -395,7 +396,7 @@ module('Acceptance | gist', function(hooks) {
     await click("#live-reload");
     await click(firstColumnTextarea);
     await fillIn(firstColumnTextarea, '<div class="index">some text</div>');
-    await triggerEvent(firstColumnTextarea, "blur");
+    await blur(firstColumnTextarea);
     await triggerEvent(firstColumnTextarea, "focusout");
 
     await timeout(10);

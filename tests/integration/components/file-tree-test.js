@@ -5,7 +5,7 @@ import config from '../../../config/environment';
 import { module, test } from 'qunit';
 
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | file tree', function(hooks) {
@@ -80,12 +80,12 @@ module('Integration | Component | file tree', function(hooks) {
     await render(hbs`{{file-tree model=model
                             didBecomeReady=(action didBecomeReady)}}`);
 
-    return this.get('waitForRender').then(() => {
-      assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 initial nodes");
+    return this.get('waitForRender').then(async () => {
+      assert.dom('.jstree-anchor').exists({ count: 2 }, "There are 2 initial nodes");
 
-      this.$('.jstree-ocl').click();
+      await click('.jstree-ocl');
 
-      assert.equal(this.$('.jstree-anchor').length, 5, "There are 5 nodes once you expand the some folder");
+      assert.dom('.jstree-anchor').exists({ count: 5 }, "There are 5 nodes once you expand the some folder");
     });
   });
 
@@ -96,7 +96,7 @@ module('Integration | Component | file tree', function(hooks) {
                             didBecomeReady=(action didBecomeReady)}}`);
 
     return this.get('waitForRender').then(() => {
-      assert.equal(this.$('.jstree-anchor').length, 9, "All initial nodes are expanded");
+      assert.dom('.jstree-anchor').exists({ count: 9 }, "All initial nodes are expanded");
     });
   });
 
@@ -116,16 +116,16 @@ module('Integration | Component | file tree', function(hooks) {
                             hideFileTree=(action externalHideFileTree)
                             didBecomeReady=(action didBecomeReady)}}`);
 
-    return this.get('waitForRender').then(() => {
-      assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 initial nodes");
+    return this.get('waitForRender').then(async () => {
+      assert.dom('.jstree-anchor').exists({ count: 2 }, "There are 2 initial nodes");
 
-      this.$('.twiddlicon-expand-all').click();
+      await click('.twiddlicon-expand-all');
 
-      assert.equal(this.$('.jstree-anchor').length, 9, "There are 9 nodes once you expand all");
+      assert.dom('.jstree-anchor').exists({ count: 9 }, "There are 9 nodes once you expand all");
 
-      this.$('.twiddlicon-collapse-all').click();
+      await click('.twiddlicon-collapse-all');
 
-      assert.equal(this.$('.jstree-anchor').length, 2, "There are 2 nodes once you collapse all");
+      assert.dom('.jstree-anchor').exists({ count: 2 }, "There are 2 nodes once you collapse all");
     });
   });
 
@@ -138,8 +138,8 @@ module('Integration | Component | file tree', function(hooks) {
                             didBecomeReady=(action didBecomeReady)
                             didChange=(action didChange)}}`);
 
-    return this.get('waitForRender').then(() => {
-      this.$('.twiddlicon-expand-all').click();
+    return this.get('waitForRender').then(async () => {
+      await click('.twiddlicon-expand-all');
 
       assert.equal(this.$('.jstree-anchor').eq(0).text().trim(), "some-path.js");
 

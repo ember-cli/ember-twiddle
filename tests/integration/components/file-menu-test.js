@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | file menu', function(hooks) {
@@ -83,92 +83,92 @@ module('Integration | Component | file menu', function(hooks) {
                               downloadProject=(action "downloadProject")}}`);
   });
 
-  test('it calls addFile on clicking an add file menu item', function(assert) {
+  test('it calls addFile on clicking an add file menu item', async function(assert) {
     assert.expect(2);
 
-    this.$('.test-template-action').click();
+    await click('.test-template-action');
 
     assert.ok(this.addFileCalled, 'addFile was called');
     assert.equal(this.fileType, 'template', 'addFile was called with type parameter');
   });
 
-  test("it calls renameFile on clicking 'Rename'", function(assert) {
+  test("it calls renameFile on clicking 'Rename'", async function(assert) {
     assert.expect(2);
 
-    this.$('.test-rename-action').click();
+    await click('.test-rename-action');
 
     assert.ok(this.renameFileCalled, 'renameFile was called');
     assert.equal(this.renamedFile, this.file, 'renameFile was called with file to rename');
   });
 
-  test("it calls renameFile on clicking 'Move'", function(assert) {
+  test("it calls renameFile on clicking 'Move'", async function(assert) {
     assert.expect(2);
 
-    this.$('.test-move-action').click();
+    await click('.test-move-action');
 
     assert.ok(this.renameFileCalled, 'renameFile was called');
     assert.equal(this.renamedFile, this.file, 'renameFile was called with file to rename');
   });
 
-  test("it calls removeFile on clicking 'Remove'", function(assert) {
+  test("it calls removeFile on clicking 'Remove'", async function(assert) {
     assert.expect(2);
 
-    this.$('.test-remove-action').click();
+    await click('.test-remove-action');
 
     assert.ok(this.removeFileCalled, 'removeFile was called');
     assert.equal(this.removedFile, this.file, 'removeFile was called with file to remove');
   });
 
-  test("it calls saveGist on clicking 'Save to Github'", function(assert) {
+  test("it calls saveGist on clicking 'Save to Github'", async function(assert) {
     assert.expect(2);
 
-    this.$('.test-save-action').click();
+    await click('.test-save-action');
 
     assert.ok(this.saveGistCalled, 'saveGist was called');
     assert.equal(this.gistToSave, this.gist, 'saveGist was called with gist to save');
   });
 
-  test("it calls fork on clicking 'Fork Twiddle'", function(assert) {
+  test("it calls fork on clicking 'Fork Twiddle'", async function(assert) {
     assert.expect(2);
 
-    this.$('.test-fork-action').click();
+    await click('.test-fork-action');
 
     assert.ok(this.forkCalled, 'fork was called');
     assert.equal(this.gistToFork, this.gist, 'fork was called with gist to fork');
   });
 
-  test("it calls copy on clicking 'Copy Twiddle'", function(assert) {
+  test("it calls copy on clicking 'Copy Twiddle'", async function(assert) {
     assert.expect(1);
 
     // logged in user is the same as the owner of the gist
     this.set('session.currentUser.login', 'Gaurav0');
-    this.$('.test-copy-action').click();
+    await click('.test-copy-action');
 
     assert.ok(this.copyCalled, 'copy was called');
   });
 
-  test("it calls deleteGist on clicking 'Delete Twiddle'", function(assert) {
+  test("it calls deleteGist on clicking 'Delete Twiddle'", async function(assert) {
     assert.expect(2);
 
-    this.$('.test-delete-action').click();
+    await click('.test-delete-action');
 
     assert.ok(this.deleteGistCalled, 'deleteGist was called');
     assert.equal(this.gistToDelete, this.gist, 'deleteGist was called with gist to delete');
   });
 
-  test("it calls signInViaGithub when clicking on 'Sign In To Github To Save'", function(assert) {
+  test("it calls signInViaGithub when clicking on 'Sign In To Github To Save'", async function(assert) {
     assert.expect(1);
 
     this.set('session.isAuthenticated', false);
-    this.$('.test-sign-in-action').click();
+    await click('.test-sign-in-action');
 
     assert.ok(this.signInViaGithubCalled, 'signInViaGithub was called');
   });
 
-  test("it calls downloadProject when clicking on 'Download Project'", function(assert) {
+  test("it calls downloadProject when clicking on 'Download Project'", async function(assert) {
     assert.expect(1);
 
-    this.$('.test-download-project-action').click();
+    await click('.test-download-project-action');
 
     assert.ok(this.downloadProjectCalled, 'downloadProject was called');
   });
@@ -176,7 +176,7 @@ module('Integration | Component | file menu', function(hooks) {
   test("it only renders 'New Twiddle' menu item, when no model is specified", async function(assert) {
     await render(hbs`{{file-menu}}`);
 
-    assert.equal(this.$('.dropdown-menu li').length, 1, "only one menu item is rendered");
-    assert.equal(this.$('.dropdown-menu li').text().trim(), "New Twiddle");
+    assert.dom('.dropdown-menu li').exists({ count: 1 }, "only one menu item is rendered");
+    assert.dom('.dropdown-menu li').hasText('New Twiddle');
   });
 });

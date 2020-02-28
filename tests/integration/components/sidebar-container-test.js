@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
@@ -25,7 +25,7 @@ module('Integration | Component | sidebar container', function(hooks) {
 
     await render(hbs`{{sidebar-container}}`);
 
-    assert.equal(this.$().text().trim(), '');
+    assert.dom('*').hasText('');
 
     // Template block usage:
     await render(hbs`
@@ -34,6 +34,6 @@ module('Integration | Component | sidebar container', function(hooks) {
       {{/sidebar-container}}
     `);
 
-    assert.equal(this.$().text().trim(), 'template block text');
+    assert.dom('*').hasText('template block text');
   });
 });

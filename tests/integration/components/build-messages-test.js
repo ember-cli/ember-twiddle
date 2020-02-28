@@ -2,7 +2,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | build messages', function(hooks) {
@@ -28,11 +28,11 @@ module('Integration | Component | build messages', function(hooks) {
 
     await render(hbs`{{build-messages buildErrors=buildErrors isBuilding=isBuilding notify=notify}}`);
 
-    assert.equal(this.$('span').text().replace(/\s+/g, " ").trim(), 'Output ( build ok. )', 'shows build ok when no buildErrors');
+    assert.equal(find('span').textContent.replace(/\s+/g, " ").trim(), 'Output ( build ok. )', 'shows build ok when no buildErrors');
 
     this.set('buildErrors', ['error1', 'error2']);
 
-    assert.equal(this.$('span').text().replace(/\s+/g, " ").trim(), 'Output ( 2 build errors )', 'shows number of build errors');
+    assert.equal(find('span').textContent.replace(/\s+/g, " ").trim(), 'Output ( 2 build errors )', 'shows number of build errors');
   });
 
   test('it calls notify.errpr() when clicking on build errors', async function(assert) {
@@ -53,7 +53,7 @@ module('Integration | Component | build messages', function(hooks) {
 
     await render(hbs`{{build-messages buildErrors=buildErrors isBuilding=isBuilding notify=notify}}`);
 
-    this.$('span a').click();
+    await click('span a');
 
     assert.ok(notifyObject.get('called'), "notify.error() was called");
   });

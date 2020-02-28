@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, fillIn } from '@ember/test-helpers';
+import { render, fillIn, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | file editor column', function(hooks) {
@@ -17,7 +17,7 @@ module('Integration | Component | file editor column', function(hooks) {
       {{file-editor-column col='2' numColumns=2 addColumn=(action externalAction)}}
     `);
 
-    this.$('.glyphicon-plus').click();
+    await click('.glyphicon-plus');
   });
 
   test('it calls removeColumn when the remove column glyph is clicked', async function(assert) {
@@ -31,7 +31,7 @@ module('Integration | Component | file editor column', function(hooks) {
       {{file-editor-column col='2' removeColumn=(action externalAction)}}
     `);
 
-    this.$('.glyphicon-remove').click();
+    await click('.glyphicon-remove');
   });
 
   test('it calls showFileTree when the show file tree glyph is clicked', async function(assert) {
@@ -45,7 +45,7 @@ module('Integration | Component | file editor column', function(hooks) {
       {{file-editor-column col='1' fileTreeShown=false showFileTree=(action externalAction)}}
     `);
 
-    this.$('.glyphicon-chevron-right').click();
+    await click('.glyphicon-chevron-right');
   });
 
   test('it calls contentChanged with true when changing the content via the code editor', async function(assert) {

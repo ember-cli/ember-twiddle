@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | saved state indicator', function(hooks) {
@@ -18,10 +18,10 @@ module('Integration | Component | saved state indicator', function(hooks) {
 
     await render(hbs`{{saved-state-indicator model=model unsaved=unsaved}}`);
 
-    assert.equal(this.$('span.indicator').text().replace(/\s+/g, " ").trim(), "3 files saved to Gist, rev a1b2c3d4");
+    assert.equal(find('span.indicator').textContent.replace(/\s+/g, " ").trim(), "3 files saved to Gist, rev a1b2c3d4");
 
     this.set('unsaved', true);
 
-    assert.equal(this.$('span.indicator').text().trim(), "Unsaved");
+    assert.dom('span.indicator').hasText('Unsaved');
   });
 });

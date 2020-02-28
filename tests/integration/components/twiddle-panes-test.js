@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | twiddle panes', function(hooks) {
@@ -11,7 +11,7 @@ module('Integration | Component | twiddle panes', function(hooks) {
 
     await render(hbs`{{twiddle-panes}}`);
 
-    assert.equal(this.$('.handle').length, 0, 'Still renders if no columns');
+    assert.dom('.handle').doesNotExist('Still renders if no columns');
 
     this.set('numColumns', 4);
 
@@ -24,11 +24,11 @@ module('Integration | Component | twiddle panes', function(hooks) {
       {{/twiddle-panes}}
     `);
 
-    assert.equal(this.$('.handle').length, 3, 'Renders 3 handles if 4 columns');
+    assert.dom('.handle').exists({ count: 3 }, 'Renders 3 handles if 4 columns');
 
     this.$('.twiddle-pane').last().after('<div class="twiddle-pane"></div>');
     this.set('numColumns', 5);
 
-    assert.equal(this.$('.handle').length, 4, 'Increases handles to 4 if a column is inserted');
+    assert.dom('.handle').exists({ count: 4 }, 'Increases handles to 4 if a column is inserted');
   });
 });

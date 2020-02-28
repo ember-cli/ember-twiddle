@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | file tree file', function(hooks) {
@@ -13,7 +13,7 @@ module('Integration | Component | file tree file', function(hooks) {
 
     await render(hbs`{{file-tree-file}}`);
 
-    assert.equal(this.$().text().trim(), '');
+    assert.dom('*').hasText('');
 
     // Template block usage:
     await render(hbs`
@@ -22,6 +22,6 @@ module('Integration | Component | file tree file', function(hooks) {
       {{/file-tree-file}}
     `);
 
-    assert.equal(this.$().text().trim(), 'template block text');
+    assert.dom('*').hasText('template block text');
   });
 });
