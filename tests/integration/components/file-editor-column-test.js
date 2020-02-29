@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, fillIn } from '@ember/test-helpers';
+import { click, render, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | file editor column', function(hooks) {
@@ -8,16 +8,26 @@ module('Integration | Component | file editor column', function(hooks) {
 
   test('it calls addColumn when the add column glyph is clicked', async function(assert) {
     assert.expect(1);
-
-    this.set('externalAction', () => {
-      assert.ok(true, 'addColumn action was called');
-    });
+    this.setProperties({
+      addColumn: () => {
+        assert.ok(true, 'addColumn action was called');
+      },
+      noop: () => {}
+    })
 
     await render(hbs`
-      {{file-editor-column col='2' numColumns=2 addColumn=(action externalAction)}}
+      {{file-editor-column col='2' numColumns=2
+        addColumn=this.addColumn
+        focusEditor=this.noop
+        selectFile=this.noop
+        contentChanged=this.noop
+        removeColumn=this.noop
+        showFileTree=this.noop
+        hideFileTree=this.noop
+      }}
     `);
 
-    this.$('.glyphicon-plus').click();
+    await click('.glyphicon-plus');
   });
 
   test('it calls removeColumn when the remove column glyph is clicked', async function(assert) {
