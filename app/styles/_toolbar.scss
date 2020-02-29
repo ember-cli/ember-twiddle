@@ -1,4 +1,7 @@
 .toolbar {
+  display: flex;
+  flex-direction: column;
+
   .nav-pills > li > a {
     display: block;
     text-decoration: none;
@@ -34,9 +37,6 @@
     display: block;
     border-color: $burnt-orange;
     margin: 1em 0;
-    position: absolute;
-    bottom: 82px;
-    width: 250px;
   }
 
   @media (max-width: $screen-md-min) {
@@ -70,10 +70,7 @@
   }
 
   .file-tree {
-    position: absolute;
-    top: 70px;
-    bottom: 207px;
-    width: 250px;
+    flex: 1.5;
     overflow: auto;
 
     .jstree-default .jstree-hovered {
@@ -88,10 +85,6 @@
   }
 
   .user-menu {
-    position: absolute;
-    bottom: 5px;
-    width: 250px;
-
     a {
       display: block;
     }
@@ -120,9 +113,6 @@
 
   .main-menu {
     text-align: left;
-    bottom: 100px;
-    position: absolute;
-    width: 250px;
 
     a {
       display: block;
@@ -135,9 +125,6 @@
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
-    position: absolute;
-    top: 6px;
-    width: 250px;
 
     h1 {
       margin: 10px;
