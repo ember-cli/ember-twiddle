@@ -1,32 +1,32 @@
 <nav class="navbar-default gist-header">
   <div class="toolbar visible-toolbar">
     <div class="title">
-      {{title-input value=model.description titleChanged=(action titleChanged)}}
-      {{saved-state-indicator model=model unsaved=unsaved isGistSaving=isGistSaving}}
+      {{title-input value=@model.description titleChanged=@titleChanged}}
+      {{saved-state-indicator model=@model unsaved=@unsaved isGistSaving=@isGistSaving}}
     </div>
 
 
     <div class="twiddle-pane file-tree">
       <FileTree
-        @model={{model}}
-        @openFile={{action this.openFile}}
+        @model={{@model}}
+        @openFile={{@openFile}}
       />
     </div>
 
     <ul class="main-menu">
-      {{file-menu model=model
-                  session=session
+      {{file-menu model=@model
+                  session=@session
                   activeEditorCol=activeEditorCol
                   activeFile=activeFile
                   isRevision=isRevision
-                  addFile=(action addFile)
-                  addHelper=(action addHelper)
-                  addComponent=(action addComponent)
-                  addUnitTestFile=(action addUnitTestFile)
-                  addIntegrationTestFile=(action addIntegrationTestFile)
-                  addAcceptanceTestFile=(action addAcceptanceTestFile)
-                  renameFile=(action renameFile)
-                  removeFile=(action removeFile)
+                  addFile=@addFile
+                  addHelper=@addHelper
+                  addComponent=@addComponent
+                  addUnitTestFile=@addUnitTestFile
+                  addIntegrationTestFile=@addIntegrationTestFile
+                  addAcceptanceTestFile=@addAcceptanceTestFile
+                  renameFile=@renameFile
+                  removeFile=@removeFile
                   deleteGist=(route-action "deleteGist")
                   saveGist=(route-action "saveGist")
                   fork=(route-action "fork")
@@ -37,17 +37,13 @@
                   downloadProject=(route-action "downloadProject")
       }}
 
-      {{editor-mode-menu selectedKeyMap=selectedKeyMap setKeyMap=(action setEditorKeyMap)}}
-
-      {{versions-menu versionSelected=(action versionSelected)
-                      emberVersions=emberVersions
-                      emberDataVersions=emberDataVersions
-      }}
+      {{editor-mode-menu selectedKeyMap=@selectedKeyMap setKeyMap=@setEditorKeyMap}}
+      {{versions-menu versionSelected=@versionSelected}}
     </ul>
 
     <hr>
 
-    {{user-menu session=session
+    {{user-menu session=@session
                 signInViaGithub=(route-action "signInViaGithub")
                 signOut=(route-action "signOut")
                 showTwiddles=(route-action "showTwiddles")
