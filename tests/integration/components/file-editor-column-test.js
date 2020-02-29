@@ -13,7 +13,7 @@ module('Integration | Component | file editor column', function(hooks) {
         assert.ok(true, 'addColumn action was called');
       },
       noop: () => {}
-    })
+    });
 
     await render(hbs`
       {{file-editor-column col='2' numColumns=2
@@ -33,44 +33,74 @@ module('Integration | Component | file editor column', function(hooks) {
   test('it calls removeColumn when the remove column glyph is clicked', async function(assert) {
     assert.expect(1);
 
-    this.set('externalAction', () => {
-      assert.ok(true, 'removeColumn action was called');
+    this.setProperties({
+      removeColumn: () => {
+        assert.ok(true, 'removeColumn action was called');
+      },
+      noop: () => {}
     });
 
     await render(hbs`
-      {{file-editor-column col='2' removeColumn=(action externalAction)}}
+      {{file-editor-column col='2'
+        removeColumn=this.removeColumn
+        addColumn=this.noop
+        focusEditor=this.noop
+        selectFile=this.noop
+        contentChanged=this.noop
+        showFileTree=this.noop
+        hideFileTree=this.noop
+      }}
     `);
 
-    this.$('.glyphicon-remove').click();
+    await click('.glyphicon-remove');
   });
 
   test('it calls showFileTree when the show file tree glyph is clicked', async function(assert) {
     assert.expect(1);
 
-    this.set('externalAction', () => {
-      assert.ok(true, 'showFileTree action was called');
+    this.setProperties({
+      showFileTree: () => {
+        assert.ok(true, 'showFileTree action was called');
+      },
+      noop: () => {}
     });
 
     await render(hbs`
-      {{file-editor-column col='1' fileTreeShown=false showFileTree=(action externalAction)}}
+      {{file-editor-column col='1' fileTreeShown=false
+        showFileTree=this.showFileTree
+        removeColumn=this.noop
+        addColumn=this.noop
+        focusEditor=this.noop
+        selectFile=this.noop
+        contentChanged=this.noop
+        hideFileTree=this.noop
+      }}
     `);
 
-    this.$('.glyphicon-chevron-right').click();
+    await click('.glyphicon-chevron-right');
   });
 
   test('it calls contentChanged with true when changing the content via the code editor', async function(assert) {
     assert.expect(1);
 
-    this.set('externalAction', (isUserChange) => {
-      assert.ok(isUserChange, 'contentChanged was called with isUserChange = true');
+    this.setProperties({
+      file: { content: '' },
+      contentChanged: (isUserChange) => {
+        assert.ok(isUserChange, 'contentChanged was called with isUserChange = true');
+      },
+      noop: () => {}
     });
 
-    this.set('ignoreAction', function() {});
-
-    this.set('file', { content: '' });
-
     await render(hbs`
-      {{file-editor-column col='1' file=file contentChanged=(action externalAction) focusEditor=(action ignoreAction)}}
+      {{file-editor-column col='1' file=file
+        contentChanged=this.contentChanged
+        showFileTree=this.noop
+        removeColumn=this.noop
+        addColumn=this.noop
+        focusEditor=this.noop
+        selectFile=this.noop
+        hideFileTree=this.noop
+      }}
     `);
 
     let textboxNode = '.CodeMirror textarea';
@@ -80,14 +110,24 @@ module('Integration | Component | file editor column', function(hooks) {
   test('it calls contentChanged with false when changing the content programatically', async function(assert) {
     assert.expect(1);
 
-    this.set('externalAction', (isUserChange) => {
-      assert.notOk(isUserChange, 'contentChanged was called with isUserChange = false');
+    this.setProperties({
+      file: { content: '' },
+      contentChanged: (isUserChange) => {
+        assert.notOk(isUserChange, 'contentChanged was called with isUserChange = false');
+      },
+      noop: () => {}
     });
 
-    this.set('file', { content: '' });
-
     await render(hbs`
-      {{file-editor-column col='1' file=file contentChanged=(action externalAction)}}
+      {{file-editor-column col='1' file=file
+        contentChanged=this.contentChanged
+        showFileTree=this.noop
+        removeColumn=this.noop
+        addColumn=this.noop
+        focusEditor=this.noop
+        selectFile=this.noop
+        hideFileTree=this.noop
+      }}
     `);
 
     this.set('file.content', 'new content');
