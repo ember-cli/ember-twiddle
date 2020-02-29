@@ -32,7 +32,7 @@ export default Component.extend({
   },
 
   actions: {
-    selectAnsSetFile(file) {
+    selectAndSetFile(file) {
       this.set('file', file);
       this.selectFile(file);
     },
