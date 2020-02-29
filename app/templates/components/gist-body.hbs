@@ -1,4 +1,4 @@
-{{#twiddle-panes numColumns=numColumns fullScreen=fullScreen fileTreeShown=fileTreeShown}}
+{{#twiddle-panes numColumns=numColumns fullScreen=fullScreen fileTreeShown=@fileTreeShown}}
   {{#unless fullScreen}}
     {{#each columns as |column|}}
       {{#if column.show}}
@@ -8,14 +8,14 @@
                                allFiles=model.files
                                keyMap=settings.keyMap
                                numColumns=numColumns
-                               fileTreeShown=fileTreeShown
+                               fileTreeShown=@fileTreeShown
                                focusEditor=(action this.focusEditor)
                                selectFile=(action this.selectFile)
                                contentChanged=(action this.updateColumn)
                                removeColumn=(action this.removeColumn)
                                addColumn=(action this.addColumn)
-                               showFileTree=(action this.showFileTree)
-                               hideFileTree=(action this.hideFileTree)
+                               showFileTree=@showFileTree
+                               hideFileTree=@hideFileTree
           }}
         </div>
       {{/if}}
