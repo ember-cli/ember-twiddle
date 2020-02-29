@@ -18,7 +18,8 @@
     bottom: $footer-height;
   }
   @media (max-width: $screen-md-min) {
-    padding-top: $footer-height;
+    // padding-top: $footer-height;
+    position: static;
   }
 
   .twiddle-pane {
@@ -31,6 +32,7 @@
 
     @media (max-width: $screen-md-min) {
       margin-bottom: 60px;
+      min-height: 100vh;
     }
   }
 
@@ -202,6 +204,16 @@
 
   @media (max-width: $screen-md-min) {
     top: $footer-height;
+    position: static;
+    width: 100%;
+
+    &.open {
+      min-height: 100vh;
+    }
+
+    .toggle-mobile {
+      display: block;
+    }
   }
 
   > .visible-toolbar {
