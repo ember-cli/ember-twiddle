@@ -27,10 +27,6 @@ export default Component.extend({
 
   isFirstColumn: equal('col', '1'),
 
-  showFileTreeOpenIcon: computed('isFirstColumn', 'fileTreeShown', function() {
-    return this.isFirstColumn && !this.fileTreeShown;
-  }),
-
   focusIn () {
     this.focusEditor(this);
   },

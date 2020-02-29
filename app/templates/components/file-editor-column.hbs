@@ -1,8 +1,12 @@
 <div class="header">
-  {{#if showFileTreeOpenIcon}}
+  {{#if this.isFirstColumn}}
     <span class="nav-left">
-      <span class="hint--bottom hint--rounded" data-hint="Show project files" >
-        <span class="glyphicon glyphicon-chevron-right" {{action 'showFileTree'}}></span>
+      <span class="hint--bottom hint--rounded" data-hint="{{if @fileTreeShown "Hide" "Show"}} project files and settings" >
+        {{#if @fileTreeShown}}
+          <button class="glyphicon glyphicon-chevron-left" aria-label="Hide Sidebar" {{action @hideFileTree}}></button>
+        {{else}}
+          <button class="glyphicon glyphicon-chevron-right" aria-label="Show Sidebar" {{action @showFileTree}}></button>
+        {{/if}}
       </span>
     </span>
   {{/if}}

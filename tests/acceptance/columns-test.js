@@ -16,7 +16,7 @@ module('Acceptance | columns', function(hooks) {
   const removeGlyph = ".code .glyphicon-remove";
   const outputPlusGlyph = ".output .glyphicon-plus";
   const showFileTreeGlyph = ".code .glyphicon-chevron-right";
-  const hideFileTreeGlyph = ".twiddle-pane:first-of-type .glyphicon-chevron-left";
+  const hideFileTreeGlyph = ".code .glyphicon-chevron-left";
 
   test('you can add and remove columns', async function(assert) {
     await visit('/');

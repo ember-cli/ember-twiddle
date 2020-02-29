@@ -7,9 +7,10 @@
 
 
     <div class="twiddle-pane file-tree">
-      {{file-tree model=model
-                  openFile=(action this.openFile)
-      }}
+      <FileTree
+        @model={{model}}
+        @openFile={{action this.openFile}}
+      />
     </div>
 
     <ul class="main-menu">

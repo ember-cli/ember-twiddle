@@ -5,6 +5,7 @@ import { run } from '@ember/runloop';
 export default Component.extend({
   resizeableColumns: service(),
   classNames: ['row', 'twiddle-panes'],
+  classNameBindings: ['fileTreeShown'],
 
   init() {
     this._super(...arguments);
