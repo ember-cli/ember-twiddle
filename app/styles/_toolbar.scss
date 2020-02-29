@@ -1,30 +1,6 @@
 .toolbar {
   display: flex;
   flex-direction: column;
-
-  .nav-pills > li > a {
-    display: block;
-    text-decoration: none;
-  }
-
-  @media (min-width: $screen-md-min) {
-    height: $topbar-height;
-  }
-
-  .dropdown .caret {
-    position: absolute;
-    right: 10px;
-    top: 13px;
-  }
-
-
-  .dropdown-menu {
-    .dropdown-submenu > .dropdown-menu {
-      top: auto;
-      margin-bottom: -31px;
-    }
-  }
-
   color: #fff;
   font-size: $font-size;
   background: $header-bg;
@@ -33,14 +9,36 @@
   background-repeat: no-repeat;
   background-size: cover;
 
+  @media (max-width: $screen-md-min) {
+    padding: 0;
+  }
+
+  @media (min-width: $screen-md-min) {
+    height: $topbar-height;
+  }
+
+  .nav-pills > li > a {
+    display: block;
+    text-decoration: none;
+  }
+
+  .dropdown .caret {
+    position: absolute;
+    right: 10px;
+    top: 13px;
+  }
+
+  .dropdown-menu {
+    .dropdown-submenu > .dropdown-menu {
+      top: auto;
+      margin-bottom: -31px;
+    }
+  }
+
   hr {
     display: block;
     border-color: $burnt-orange;
     margin: 1em 0;
-  }
-
-  @media (max-width: $screen-md-min) {
-    padding: 0;
   }
 
   button.navbar-toggle {

@@ -198,6 +198,10 @@
   bottom: 0;
   width: 250px;
 
+  .toggle-mobile {
+    display: none;
+  }
+
   @media (min-width: $screen-md-min) {
     bottom: $footer-height;
   }
@@ -208,11 +212,16 @@
     width: 100%;
 
     &.open {
-      min-height: 100vh;
+      .toolbar {
+        min-height: 500px;
+      }
     }
 
     .toggle-mobile {
       display: block;
+      border: none;
+      background-color: transparent;
+      color: white;
     }
   }
 
