@@ -1,14 +1,5 @@
 {{#twiddle-panes numColumns=numColumns fullScreen=fullScreen fileTreeShown=fileTreeShown}}
   {{#unless fullScreen}}
-    {{#if fileTreeShown}}
-      <div class="twiddle-pane file-tree">
-        {{file-tree model=model
-                    openFile=(action this.openFile)
-                    hideFileTree=(action this.hideFileTree)
-        }}
-      </div>
-    {{/if}}
-
     {{#each columns as |column|}}
       {{#if column.show}}
         <div class="twiddle-pane code {{if column.active 'active'}}">

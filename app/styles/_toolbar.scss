@@ -1,9 +1,4 @@
 .toolbar {
-
-  hr {
-    display: none;
-  }
-
   .nav-pills > li > a {
     display: block;
     text-decoration: none;
@@ -63,13 +58,8 @@
         }
       }
     }
-
-    hr {
-      display: block;
-      border-color: $burnt-orange;
-      margin: 1em 0;
-    }
   }
+
   color: #fff;
   font-size: $font-size;
   background: $header-bg;
@@ -77,7 +67,15 @@
   background-position: top center;
   background-repeat: no-repeat;
   background-size: cover;
-  padding: 1rem 0;
+
+  hr {
+    display: block;
+    border-color: $burnt-orange;
+    margin: 1em 0;
+    position: absolute;
+    bottom: 82px;
+    width: 250px;
+  }
 
   @media (max-width: $screen-md-min) {
     padding: 0;
@@ -109,22 +107,31 @@
     padding-left: 0;
   }
 
-  .user-menu {
-    text-align: right;
+  .file-tree {
+    position: absolute;
+    top: 70px;
+    bottom: 207px;
+    width: 250px;
+    overflow: auto;
 
-    @media (min-width: $screen-md-min) {
-      position: absolute;
-      right: 0;
-      top: ($topbar-height - $topbar-control-height) / 2;
+    .jstree-default .jstree-hovered {
+        background: rgba(0, 0, 0, 0.13);
+        box-shadow: none;
     }
 
-    @media (max-width: $screen-md-min) {
-      float: none;
-      text-align: left;
+    .jstree-default .jstree-clicked {
+        background: #b95252;
+        box-shadow: none;
+    }
+  }
 
-      .user-dropdown > .dropdown-toggle {
-        padding-left: 1em;
-      }
+  .user-menu {
+    position: absolute;
+    bottom: 5px;
+    width: 250px;
+
+    a {
+      display: block;
     }
 
     .user-avatar {
@@ -133,7 +140,7 @@
       height: 100%;
       overflow: hidden;
       float: left;
-      margin-right: 10px;
+      margin-right: 5px;
       line-height: normal;
       border-radius: 3px;
 
@@ -144,22 +151,19 @@
 
       &.unauthenticated {
         background: url("../images/github32-inverse-faf2ee.svg");
+        height: 32px;
       }
     }
   }
 
   .main-menu {
     text-align: left;
-    height: 60px;
+    bottom: 100px;
+    position: absolute;
+    width: 250px;
 
-    @media (min-width: $screen-md-min) {
-      position: absolute;
-      left: 0;
-      top: ($topbar-height - $topbar-control-height) / 2;
-    }
-
-    @media (max-width: $screen-md-min) {
-      height: auto;
+    a {
+      display: block;
     }
   }
 
@@ -169,18 +173,9 @@
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
-
-    @media (min-width: $screen-md-min) {
-      position: absolute;
-      top: 6px;
-      left: 50%;
-      margin-left: -400px;
-      width: 800px;
-    }
-
-    @media (max-width: $screen-md-min) {
-      margin-left: 15px;
-    }
+    position: absolute;
+    top: 6px;
+    width: 250px;
 
     h1 {
       margin: 10px;
@@ -276,7 +271,7 @@
 
   .sign-in {
     cursor: pointer;
-    padding: 0 .5em 0 0;
+    padding: 0 .5em;
   }
 
   .signing-in {

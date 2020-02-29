@@ -2,9 +2,9 @@
   margin: 0;
   margin-left: 0;
   position: absolute;
-  top: $topbar-height;
+  top: 0;
   bottom: 0;
-  left: 0;
+  left: 250px;
   right: 0;
 
   @media (min-width: $screen-md-min) {
@@ -185,12 +185,13 @@
 }
 
 .gist-header {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 250px;
 
   > .visible-toolbar {
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 100%;
   }
 }
