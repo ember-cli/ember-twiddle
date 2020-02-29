@@ -32,7 +32,7 @@ export default Component.extend({
   },
 
   actions: {
-    selectFile(file) {
+    selectAnsSetFile(file) {
       this.set('file', file);
       this.selectFile(file);
     },
@@ -40,18 +40,6 @@ export default Component.extend({
     valueUpdated(value, __, changeObj) {
       const isUserChange = changeObj.origin !== 'setValue';
       this.contentChanged(isUserChange, value);
-    },
-
-    removeColumn(col) {
-      this.removeColumn(col);
-    },
-
-    addColumn() {
-      this.addColumn();
-    },
-
-    showFileTree() {
-      this.showFileTree();
     }
   }
 });

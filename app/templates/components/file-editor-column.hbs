@@ -26,7 +26,7 @@
       {{/if}}
       <ul class="dropdown-menu">
         {{#each allFiles as |file|}}
-          <li><a {{action 'selectFile' file}}>{{file.filePath}}</a></li>
+          <li><a {{action 'selectAnsSetFile' file}}>{{file.filePath}}</a></li>
         {{else}}
           <li class="disabled"><a>No files available</a></li>
         {{/each}}
@@ -36,11 +36,11 @@
 
   <span class="nav-right">
     <span class="hint--bottom hint--rounded" data-hint="Hide this panel">
-      <span class="glyphicon glyphicon-remove" {{action 'removeColumn' col}}></span>
+      <span class="glyphicon glyphicon-remove" {{action @removeColumn col}}></span>
     </span>
     {{#if isLastColumn}}
       <span class="hint--bottom hint--rounded" data-hint="Show another panel">
-        <span class="glyphicon glyphicon-plus hint--bottom hint--rounded" {{action 'addColumn'}}></span>
+        <span class="glyphicon glyphicon-plus hint--bottom hint--rounded" {{action @addColumn}}></span>
       </span>
     {{/if}}
   </span>
