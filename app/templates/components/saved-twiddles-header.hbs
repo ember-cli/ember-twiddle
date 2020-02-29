@@ -15,7 +15,7 @@
       <h1 class="saved-twiddles-header">My Saved Twiddles</h1>
     </div>
 
-    {{user-menu session=session
+    {{user-menu session=@session
                 signInViaGithub=(route-action "signInViaGithub")
                 signOut=(route-action "signOut")
     }}
