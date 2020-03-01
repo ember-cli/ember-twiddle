@@ -1,39 +1,31 @@
-{{#twiddle-panes numColumns=numColumns fullScreen=fullScreen fileTreeShown=fileTreeShown}}
-  {{#unless fullScreen}}
-    {{#if fileTreeShown}}
-      <div class="twiddle-pane file-tree">
-        {{file-tree model=model
-                    openFile=(action this.openFile)
-                    hideFileTree=(action this.hideFileTree)
-        }}
-      </div>
-    {{/if}}
-
-    {{#each columns as |column|}}
+{{#twiddle-panes numColumns=@numColumns fullScreen=@fullScreen fileTreeShown=@fileTreeShown}}
+  {{#unless @fullScreen}}
+    {{#each @columns as |column|}}
       {{#if column.show}}
         <div class="twiddle-pane code {{if column.active 'active'}}">
           {{file-editor-column col=column.col
                                file=column.file
-                               allFiles=model.files
-                               keyMap=settings.keyMap
-                               numColumns=numColumns
-                               fileTreeShown=fileTreeShown
-                               focusEditor=(action this.focusEditor)
-                               selectFile=(action this.selectFile)
-                               contentChanged=(action this.updateColumn)
-                               removeColumn=(action this.removeColumn)
-                               addColumn=(action this.addColumn)
-                               showFileTree=(action this.showFileTree)
+                               allFiles=@model.files
+                               keyMap=@settings.keyMap
+                               numColumns=@numColumns
+                               fileTreeShown=@fileTreeShown
+                               focusEditor=@focusEditor
+                               selectFile=@selectFile
+                               contentChanged=@updateColumn
+                               removeColumn=@removeColumn
+                               addColumn=@addColumn
+                               showFileTree=@showFileTree
+                               hideFileTree=@hideFileTree
           }}
         </div>
       {{/if}}
     {{/each}}
   {{/unless}}
 
-  <div class="twiddle-pane output {{if fullScreen 'full-screen'}}">
+  <div class="twiddle-pane output {{if @fullScreen 'full-screen'}}">
     <div class="header">
       {{#if noColumns}}
-        <span class="glyphicon glyphicon-plus" {{action (action this.addColumn)}} title="Show an editor panel"></span>
+        <span class="glyphicon glyphicon-plus" {{action @addColumn}} title="Show an editor panel"></span>
       {{/if}}
       {{build-messages notify=notify
                        isBuilding=isBuilding
@@ -52,8 +44,8 @@
       <div class="load-indicator">Building...</div>
     {{/if}}
     {{dummy-app html=buildOutput isBuilding=isBuilding}}
-    {{#if fullScreen}}
-      <a class="exit-full-screen-link" {{action (action this.exitFullScreen)}}>Edit Twiddle</a>
+    {{#if @fullScreen}}
+      <a class="exit-full-screen-link" {{action @exitFullScreen}}>Edit Twiddle</a>
     {{/if}}
   </div>
 {{/twiddle-panes}}

@@ -2,7 +2,7 @@ import Component from '@ember/component';
 
 export default Component.extend({
   tagName: 'li',
-  classNames: ['dropdown'],
+  classNames: ['dropdown', 'dropup'],
 
   actions: {
     setKeyMap(keyMap) {

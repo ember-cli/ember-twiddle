@@ -1,8 +1,12 @@
 <div class="header">
-  {{#if showFileTreeOpenIcon}}
+  {{#if this.isFirstColumn}}
     <span class="nav-left">
-      <span class="hint--bottom hint--rounded" data-hint="Show project files" >
-        <span class="glyphicon glyphicon-chevron-right" {{action 'showFileTree'}}></span>
+      <span class="hint--bottom hint--rounded" data-hint="{{if @fileTreeShown "Hide" "Show"}} project files and settings" >
+        {{#if @fileTreeShown}}
+          <button class="glyphicon glyphicon-chevron-left" aria-label="Hide Sidebar" {{action @hideFileTree}}></button>
+        {{else}}
+          <button class="glyphicon glyphicon-chevron-right" aria-label="Show Sidebar" {{action @showFileTree}}></button>
+        {{/if}}
       </span>
     </span>
   {{/if}}
@@ -22,7 +26,7 @@
       {{/if}}
       <ul class="dropdown-menu">
         {{#each allFiles as |file|}}
-          <li><a {{action 'selectFile' file}}>{{file.filePath}}</a></li>
+          <li><a {{action 'selectAndSetFile' file}}>{{file.filePath}}</a></li>
         {{else}}
           <li class="disabled"><a>No files available</a></li>
         {{/each}}
@@ -32,11 +36,11 @@
 
   <span class="nav-right">
     <span class="hint--bottom hint--rounded" data-hint="Hide this panel">
-      <span class="glyphicon glyphicon-remove" {{action 'removeColumn' col}}></span>
+      <span class="glyphicon glyphicon-remove" {{action @removeColumn col}}></span>
     </span>
     {{#if isLastColumn}}
       <span class="hint--bottom hint--rounded" data-hint="Show another panel">
-        <span class="glyphicon glyphicon-plus hint--bottom hint--rounded" {{action 'addColumn'}}></span>
+        <span class="glyphicon glyphicon-plus hint--bottom hint--rounded" {{action @addColumn}}></span>
       </span>
     {{/if}}
   </span>

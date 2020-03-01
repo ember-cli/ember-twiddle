@@ -27,16 +27,12 @@ export default Component.extend({
 
   isFirstColumn: equal('col', '1'),
 
-  showFileTreeOpenIcon: computed('isFirstColumn', 'fileTreeShown', function() {
-    return this.isFirstColumn && !this.fileTreeShown;
-  }),
-
   focusIn () {
     this.focusEditor(this);
   },
 
   actions: {
-    selectFile(file) {
+    selectAndSetFile(file) {
       this.set('file', file);
       this.selectFile(file);
     },
@@ -44,18 +40,6 @@ export default Component.extend({
     valueUpdated(value, __, changeObj) {
       const isUserChange = changeObj.origin !== 'setValue';
       this.contentChanged(isUserChange, value);
-    },
-
-    removeColumn(col) {
-      this.removeColumn(col);
-    },
-
-    addColumn() {
-      this.addColumn();
-    },
-
-    showFileTree() {
-      this.showFileTree();
     }
   }
 });

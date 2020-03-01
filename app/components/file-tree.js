@@ -99,20 +99,16 @@ export default Component.extend({
       this.jsTreeActionReceiver.send('toggleNode', node.id);
     },
 
-    didBecomeReady() {
+    didBecomeReadyOptional() {
       if(this.didBecomeReady) {
         this.didBecomeReady();
       }
     },
 
-    didChange() {
+    didChangeOptional() {
       if (this.didChange) {
         this.didChange();
       }
-    },
-
-    hideFileTree() {
-      this.hideFileTree();
     },
 
     expandAll() {

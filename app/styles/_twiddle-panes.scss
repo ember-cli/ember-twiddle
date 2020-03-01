@@ -2,10 +2,15 @@
   margin: 0;
   margin-left: 0;
   position: absolute;
-  top: $topbar-height;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+  transition: left 0.2s;
+
+  &.file-tree-shown {
+    left: 250px;
+  }
 
   @media (min-width: $screen-md-min) {
     display: -webkit-flex;
@@ -13,7 +18,8 @@
     bottom: $footer-height;
   }
   @media (max-width: $screen-md-min) {
-    padding-top: $footer-height;
+    // padding-top: $footer-height;
+    position: static;
   }
 
   .twiddle-pane {
@@ -26,6 +32,7 @@
 
     @media (max-width: $screen-md-min) {
       margin-bottom: 60px;
+      min-height: 100vh;
     }
   }
 
@@ -185,12 +192,40 @@
 }
 
 .gist-header {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 250px;
+
+  .toggle-mobile {
+    display: none;
+  }
+
+  @media (min-width: $screen-md-min) {
+    bottom: $footer-height;
+  }
+
+  @media (max-width: $screen-md-min) {
+    top: $footer-height;
+    position: static;
+    width: 100%;
+
+    &.open {
+      .toolbar {
+        min-height: 500px;
+      }
+    }
+
+    .toggle-mobile {
+      display: block;
+      border: none;
+      background-color: transparent;
+      color: white;
+    }
+  }
 
   > .visible-toolbar {
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 100%;
   }
 }

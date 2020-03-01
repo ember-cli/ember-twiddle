@@ -1,23 +1,27 @@
-{{gist-header model=model
-              session=session
-              unsaved=unsaved
-              isGistSaving=isGistSaving
-              activeEditorCol=activeEditorCol
-              activeFile=activeFile
-              isRevision=isRevision
-              selectedKeyMap=settings.keyMap
-              titleChanged=(action "titleChanged")
-              addFile=(action "addFile")
-              addHelper=(action "addHelper")
-              addComponent=(action "addComponent")
-              addUnitTestFile=(action "addUnitTestFile")
-              addIntegrationTestFile=(action "addIntegrationTestFile")
-              addAcceptanceTestFile=(action "addAcceptanceTestFile")
-              renameFile=(action "renameFile")
-              removeFile=(action "removeFile")
-              setEditorKeyMap=(action "setEditorKeyMap")
-              versionSelected=(action "versionSelected")
-}}
+{{#if this.fileTreeShown}}
+  {{gist-header model=model
+                session=session
+                unsaved=unsaved
+                isGistSaving=isGistSaving
+                activeEditorCol=activeEditorCol
+                activeFile=activeFile
+                isRevision=isRevision
+                selectedKeyMap=settings.keyMap
+                fileTreeShown=fileTreeShown
+                titleChanged=(action "titleChanged")
+                addFile=(action "addFile")
+                addHelper=(action "addHelper")
+                addComponent=(action "addComponent")
+                addUnitTestFile=(action "addUnitTestFile")
+                addIntegrationTestFile=(action "addIntegrationTestFile")
+                addAcceptanceTestFile=(action "addAcceptanceTestFile")
+                renameFile=(action "renameFile")
+                removeFile=(action "removeFile")
+                setEditorKeyMap=(action "setEditorKeyMap")
+                versionSelected=(action "versionSelected")
+                openFile=(action "openFile")
+  }}
+{{/if}}
 
 {{gist-body model=model
             columns=columns
@@ -31,14 +35,13 @@
             applicationUrl=applicationUrl
             buildOutput=buildOutput
             testsEnabled=testsEnabled
-            openFile=(action "openFile")
-            hideFileTree=(action "hideFileTree")
             focusEditor=(action "focusEditor")
             selectFile=(action "selectFile")
             updateColumn=(action "updateColumn")
             removeColumn=(action "removeColumn")
             addColumn=(action "addColumn")
             showFileTree=(action "showFileTree")
+            hideFileTree=(action "hideFileTree")
             liveReloadChanged=(action "liveReloadChanged")
             runNow=(action "runNow")
             exitFullScreen=(action "exitFullScreen")

@@ -5,7 +5,7 @@ import config from '../config/environment';
 
 export default Component.extend({
   tagName: 'ul',
-  classNames: ['nav', 'nav-pills', 'user-menu'],
+  classNames: ['user-menu', 'dropup'],
 
   userName: readOnly('session.currentUser.login'),
 
