@@ -56,3 +56,8 @@
   -moz-border-radius: 6px 0 6px 6px;
   border-radius: 6px 0 6px 6px;
 }
+
+.dropup .dropeven.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  bottom: auto;
+}
