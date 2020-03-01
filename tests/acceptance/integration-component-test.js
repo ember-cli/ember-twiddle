@@ -43,7 +43,10 @@ module('Acceptance | integration-component-test', function(hooks) {
                       "enable-testing": true
                     },
                     "dependencies": {
-                      "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
+                      "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js",
+                      "ember": "3.12.1",
+                      "ember-template-compiler": "3.12.1",
+                      "ember-testing": "3.12.1"
                     }
                   }`
       },
