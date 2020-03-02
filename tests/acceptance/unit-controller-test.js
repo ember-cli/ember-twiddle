@@ -18,7 +18,7 @@ module('Acceptance | unit-controller-test', function(hooks) {
     window.prompt = this.cachePrompt;
   });
 
-  test('A unit test for controllers works', async function(assert) {
+  test('A unit test for controllers works (pre rfc232)', async function(assert) {
     const files = [
       {
         filename: "application.template.hbs",
@@ -85,6 +85,72 @@ module('Acceptance | unit-controller-test', function(hooks) {
                   test('it exists', function(assert) {
                     let controller = this.subject();
                     assert.ok(controller);
+                  });`
+      }
+    ];
+
+    await runGist(files);
+
+    await timeout(250); // TODO: fix and remove this timing hack
+    const outputSpan = 'div#qunit-testresult-display > span.passed';
+
+    assert.equal(outputPane().$(outputSpan).text(), '1', 'unit test passed');
+  });
+
+  test('A unit test for controllers works (rfc232 format)', async function(assert) {
+    const files = [
+      {
+        filename: "application.template.hbs",
+        content: `Welcome to {{appName}}`
+      },
+      {
+        filename: "application.controller.js",
+        content: `import Ember from "ember";
+                  export default Ember.Controller.extend({
+                    appName: 'Ember Twiddle'
+                  });`
+      },
+      {
+        filename: "twiddle.json",
+        content: `{
+                    "version": "0.13.1",
+                    "EmberENV": {
+                      "FEATURES": {}
+                    },
+                    "options": {
+                      "use_pods": false,
+                      "enable-testing": true
+                    },
+                    "dependencies": {
+                      "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
+                    }
+                  }`
+      },
+      {
+        filename: "tests/test-helper.js",
+        content: `import Application from '../app';
+                  import config from '../config/environment';
+                  import { setApplication } from '@ember/test-helpers';
+                  import { assign } from '@ember/polyfills';
+
+                  let attributes = assign({ rootElement: '#main', autoboot: false }, config.APP);
+                  setApplication(Application.create(attributes));
+
+                  window.testModule = 'twiddle/tests/unit/controllers/application-test';
+                  `
+      },
+      {
+        filename: "tests/unit/controllers/application-test.js",
+        content: `import { module, test } from 'qunit';
+                  import { setupTest } from 'ember-qunit';
+
+                  module('controller:application', 'TODO: put something here', function(hooks) {
+                    setupTest(hooks);
+
+                    test('it exists', function(assert) {
+                      let controller = this.owner.lookup('controller:application');
+                      assert.ok(controller);
+                    });
                   });`
       }
     ];
