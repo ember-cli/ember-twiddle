@@ -113,10 +113,10 @@ module('Acceptance | dependencies', function(hooks) {
     await click(findContains('.test-set-ember-data-version', '2.16.4'));
 
     await click('.versions-menu .dropdown-toggle');
-    await click(findContains('.test-set-ember-version', '2.15.3'));
+    await click(findContains('.test-set-ember-version', '2.18.2'));
 
     await waitForLoadedIFrame();
-    assert.equal(outputContents('.ember-version'), '2.15.3');
+    assert.equal(outputContents('.ember-version'), '2.18.2');
     assert.equal(outputContents('.ember-data-version'), '2.16.4');
   });
 });
