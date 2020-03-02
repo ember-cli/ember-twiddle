@@ -30,7 +30,7 @@
 
   .dropdown-menu {
     .dropdown-submenu > .dropdown-menu {
-      top: auto;
+      top: 5px;
       margin-bottom: -31px;
 
       @media (max-width: $screen-md-min) {
