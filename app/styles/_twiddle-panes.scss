@@ -33,6 +33,10 @@
     @media (max-width: $screen-md-min) {
       margin-bottom: 60px;
       min-height: 100vh;
+
+      .file-tree-toggle {
+        display: none;
+      }
     }
   }
 
@@ -220,8 +224,14 @@
     .toggle-mobile {
       display: block;
       border: none;
+      border-radius: 0;
       background-color: transparent;
       color: white;
+
+      &:active:hover {
+        background-color: transparent;
+        color: white;
+      }
     }
   }
 

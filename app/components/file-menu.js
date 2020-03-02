@@ -3,8 +3,7 @@ import { computed } from '@ember/object';
 import DropdownSubmenuFixMixin from "../mixins/dropdown-submenu-fix";
 
 export default Component.extend(DropdownSubmenuFixMixin, {
-  tagName: 'li',
-  classNames: ['dropdown', 'dropup'],
+  classNames: ['file-menu', 'dropdown'],
 
   // show fork option only if does not belong to user and is not a revision, otherwise show copy
   // Github api does not permit forking if you own the gist already

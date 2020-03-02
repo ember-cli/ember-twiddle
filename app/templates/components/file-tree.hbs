@@ -1,5 +1,6 @@
 <div class="header">
-  <div class="nav-left">
+  {{yield}}
+  <div class="controls">
     &nbsp;
     <span class="hint--bottom hint--rounded" data-hint="Expand All">
       <span class="twiddlicon twiddlicon-expand-all" {{action 'expandAll'}}></span>
@@ -12,6 +13,7 @@
 </div>
 
 <EmberJstree
+  class="ember-jstree"
   @data={{this.fileTreeData}}
   @actionReceiver={{this.jsTreeActionReceiver}}
   @eventDidSelectNode={{action "handleSelectTreeNode"}}
