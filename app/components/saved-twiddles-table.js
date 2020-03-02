@@ -4,8 +4,9 @@ import Component from '@ember/component';
 export default Component.extend({
 
   filteredModel: filter('model', function(gist) {
-    return gist.get('files').map(function(file) {
+    let fileNames = gist.get('files').map(function(file) {
       return file.get('fileName');
-    }).includes('twiddle.json');
+    });
+    return fileNames.any(fileName => /twiddle\\?.json/.test(fileName));
   })
 });
