@@ -386,8 +386,8 @@ export default Service.extend({
         <div id="qunit-fixture"></div>
         <div id="ember-testing-container">
           <div id="ember-testing"></div>
-        </div>
-        <div id="test-root"></div>`;
+          <div id="test-root"></div>
+        </div>`;
 
       let moreCode = "window.requirejs.entries['ember-cli/test-loader'] = window.requirejs.entries['ember-cli-test-loader/test-support/index'] || requirejs.entries['assets/test-loader'] || window.requirejs.entries['ember-cli/test-loader'];\n";
       testStuff += `<script type="text/javascript">${moreCode}window.require("${twiddleAppName}/tests/test-helper");</script>`;
