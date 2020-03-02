@@ -1,10 +1,11 @@
-import jQuery from 'jquery';
+/* eslint-disable ember/no-global-jquery */
+
 import config from '../config/environment';
 
 export default {
   name: 'mouse-events',
   initialize: function() {
-    jQuery(window).on("mousemove", function(event) {
+    $(window).on("mousemove", function(event) {
       window.parent.postMessage({
         mousemove: {
           pageX: event.pageX,
@@ -12,7 +13,7 @@ export default {
         }
       }, config.TWIDDLE_ORIGIN);
     });
-    jQuery(window).on("mouseup", function(event) {
+    $(window).on("mouseup", function(event) {
       window.parent.postMessage({
         mouseup: {
           pageX: event.pageX,
