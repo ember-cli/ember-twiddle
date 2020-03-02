@@ -8,7 +8,7 @@ import outputContents from '../helpers/output-contents';
 
 const firstColumn = '.code';
 const firstFilePicker = firstColumn + ' .dropdown-toggle';
-const fileMenu = '.main-menu .dropdown-toggle';
+const fileMenu = '.file-menu .dropdown-toggle';
 const addTemplateAction = '.test-template-action';
 
 module('Acceptance | use pods', function(hooks) {

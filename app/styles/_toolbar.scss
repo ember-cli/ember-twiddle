@@ -30,8 +30,12 @@
 
   .dropdown-menu {
     .dropdown-submenu > .dropdown-menu {
-      top: auto;
+      top: 5px;
       margin-bottom: -31px;
+
+      @media (max-width: $screen-md-min) {
+        left: 80px;
+      }
     }
   }
 
@@ -69,7 +73,33 @@
 
   .file-tree {
     flex: 1.5;
-    overflow: auto;
+
+    .tree {
+      height: 100%;
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .controls {
+          padding: 0.5rem;
+        }
+
+        .file-menu {
+          flex: 0.5;
+
+          .dropdown-toggle {
+            display: block;
+          }
+        }
+      }
+
+      .ember-jstree {
+        height: 100%;
+        overflow: auto;
+      }
+    }
 
     .jstree-default .jstree-hovered {
         background: rgba(0, 0, 0, 0.13);
