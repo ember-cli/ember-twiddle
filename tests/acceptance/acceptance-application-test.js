@@ -18,7 +18,7 @@ module('Acceptance | acceptance-application-test', function(hooks) {
     window.prompt = this.cachePrompt;
   });
 
-  test('An acceptance test for an application works', async function(assert) {
+  test('An acceptance test for an application works (pre rfc232)', async function(assert) {
     const files = [
       {
         filename: "application.template.hbs",
@@ -143,6 +143,87 @@ module('Acceptance | acceptance-application-test', function(hooks) {
                     visit('/');
 
                     andThen(function() {
+                      assert.equal(currentURL(), '/', 'route loaded correctly');
+                    });
+                  });`
+      }
+    ];
+
+    await runGist(files);
+
+    await timeout(500); // TODO: fix and remove this timing hack
+    const outputSpan = 'div#qunit-testresult-display > span.passed';
+
+    assert.equal(outputPane().$(outputSpan).text(), '1', 'acceptance test passed');
+  });
+
+
+
+  test('An acceptance test for an application works (rfc232 format)', async function(assert) {
+    const files = [
+      {
+        filename: "application.template.hbs",
+        content: `Welcome to {{appName}}`
+      },
+      {
+        filename: "application.controller.js",
+        content: `import Ember from "ember";
+                  export default Ember.Controller.extend({
+                    appName: 'Ember Twiddle'
+                  });`
+      },
+      {
+        filename: "twiddle.json",
+        content: `{
+                    "version": "0.13.1",
+                    "EmberENV": {
+                      "FEATURES": {}
+                    },
+                    "options": {
+                      "use_pods": false,
+                      "enable-testing": true
+                    },
+                    "dependencies": {
+                      "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
+                    }
+                  }`
+      },
+      {
+        filename: "components/my-component.js",
+        content: `import Ember from 'ember';
+
+                  export default Ember.Component.extend({
+                  });`
+      },
+      {
+        filename: "templates/components/my-component.hbs",
+        content: `{{yield}}`
+      },
+      {
+        filename: "tests/test-helper.js",
+        content: `import Application from '../app';
+                  import config from '../config/environment';
+                  import { setApplication } from '@ember/test-helpers';
+                  import { assign } from '@ember/polyfills';
+
+                  let attributes = assign({ rootElement: '#main', autoboot: false }, config.APP);
+                  setApplication(Application.create(attributes));
+
+                  window.testModule = 'twiddle/tests/acceptance/application-test';
+                  `
+      },
+      {
+        filename: "tests/acceptance/application-test.js",
+        content: `import { module, test } from 'qunit';
+                  import { setupApplicationTest } from 'ember-qunit';
+                  import { visit, currentURL } from '@ember/test-helpers';
+
+                  module('TODO: put something here', function(hooks) {
+                    setupApplicationTest(hooks);
+
+                    test('visiting /', async function(assert) {
+                      await visit('/');
+
                       assert.equal(currentURL(), '/', 'route loaded correctly');
                     });
                   });`

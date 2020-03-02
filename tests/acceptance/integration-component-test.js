@@ -18,7 +18,7 @@ module('Acceptance | integration-component-test', function(hooks) {
     window.prompt = this.cachePrompt;
   });
 
-  test('An integration test for a component works', async function(assert) {
+  test('An integration test for a component works (pre rfc232)', async function(assert) {
     const files = [
       {
         filename: "application.template.hbs",
@@ -114,6 +114,95 @@ module('Acceptance | integration-component-test', function(hooks) {
                     \`);
 
                     assert.equal(this.$().text().trim(), 'template block text');
+                  });`
+      }
+    ];
+
+    await runGist(files);
+
+    await timeout(500); // TODO: fix and remove this timing hack
+    const outputSpan = 'div#qunit-testresult-display > span.passed';
+
+    assert.equal(outputPane().$(outputSpan).text(), '2', 'integration test passed');
+  });
+  test('An integration test for a component works (rfc232 format)', async function(assert) {
+    const files = [
+      {
+        filename: "application.template.hbs",
+        content: `Welcome to {{appName}}`
+      },
+      {
+        filename: "application.controller.js",
+        content: `import Ember from "ember";
+                  export default Ember.Controller.extend({
+                    appName: 'Ember Twiddle'
+                  });`
+      },
+      {
+        filename: "twiddle.json",
+        content: `{
+                    "version": "0.13.1",
+                    "EmberENV": {
+                      "FEATURES": {}
+                    },
+                    "options": {
+                      "use_pods": false,
+                      "enable-testing": true
+                    },
+                    "dependencies": {
+                      "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.js"
+                    }
+                  }`
+      },
+      {
+        filename: "components/my-component.js",
+        content: `import Ember from 'ember';
+
+                  export default Ember.Component.extend({
+                  });`
+      },
+      {
+        filename: "templates/components/my-component.hbs",
+        content: `{{yield}}`
+      },
+      {
+        filename: "tests/test-helper.js",
+        content: `import Application from '../app';
+                  import config from '../config/environment';
+                  import { setApplication } from '@ember/test-helpers';
+                  import { assign } from '@ember/polyfills';
+
+                  let attributes = assign({ rootElement: '#main', autoboot: false }, config.APP);
+                  setApplication(Application.create(attributes));
+
+                  window.testModule = 'twiddle/tests/integration/components/my-component-test';
+                  `
+      },
+      {
+        filename: "tests/integration/components/my-component-test.js",
+        content: `import { module, test } from 'qunit';
+                  import { render } from '@ember/test-helpers';
+                  import { setupRenderingTest } from 'ember-qunit';
+                  import hbs from 'htmlbars-inline-precompile';
+
+                  module('my-component', 'TODO: put something here', function(hooks) {
+                    setupRenderingTest(hooks);
+
+                    test('it renders', async function(assert) {
+
+                      await render(hbs\`{{my-component}}\`);
+
+                      assert.equal(this.element.textContent.trim(), '');
+
+                      // Template block usage:
+                      await render(hbs\`
+                        {{#my-component}}
+                          template block text
+                        {{/my-component}}
+                      \`);
+
+                      assert.equal(this.element.textContent.trim(), 'template block text');
+                    });
                   });`
       }
     ];
