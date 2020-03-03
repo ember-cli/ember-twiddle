@@ -1,6 +1,7 @@
-import DS from 'ember-data';
+import { EmbeddedRecordsMixin } from '@ember-data/serializer/rest';
+import JSONSerializer from '@ember-data/serializer/json';
 
-export default DS.JSONSerializer.extend(DS.EmbeddedRecordsMixin, {
+export default JSONSerializer.extend(EmbeddedRecordsMixin, {
   isNewSerializerAPI: true,
 
   keyForAttribute(key) {

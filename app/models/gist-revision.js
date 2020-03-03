@@ -1,7 +1,5 @@
-import DS from 'ember-data';
+import { attr } from '@ember-data/model';
 import GistModel from "./gist";
-
-const { attr } = DS;
 
 export default GistModel.extend({
   revId: attr('string'),

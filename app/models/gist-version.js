@@ -1,9 +1,7 @@
+import Model, { belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
-import DS from 'ember-data';
 
-const { attr, belongsTo } = DS;
-
-export default DS.Model.extend({
+export default Model.extend({
   url: attr('string'),
   committedAt: attr('date'),
   gist: belongsTo('gist'),

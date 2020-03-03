@@ -1,8 +1,8 @@
+import RESTAdapter from '@ember-data/adapter/rest';
 import { computed } from '@ember/object';
-import DS from 'ember-data';
 import config from '../config/environment';
 
-export default DS.RESTAdapter.extend({
+export default RESTAdapter.extend({
 
   host: config.host,
 

@@ -1,9 +1,7 @@
+import Model, { attr } from '@ember-data/model';
 import { computed } from '@ember/object';
-import DS from 'ember-data';
 
-const { attr } = DS;
-
-export default DS.Model.extend({
+export default Model.extend({
   login: attr('string'),
   name: attr('string'),
   avatarUrl: attr('string'),

@@ -1,10 +1,8 @@
+import Model, { belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
-import DS from 'ember-data';
 import Path from 'path';
 
-const { attr, belongsTo } = DS;
-
-export default DS.Model.extend({
+export default Model.extend({
   fileType: attr('string'),
   fileName: attr('string'),
   content: attr('string'),
