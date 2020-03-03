@@ -10,8 +10,7 @@ import { task, timeout } from 'ember-concurrency';
 import compareVersions from 'compare-versions';
 
 const {
-  deprecate,
-  testing
+  deprecate
 } = Ember;
 
 const EMBER_VERSIONS = ['3.14.3', '3.13.4', '3.12.2', '3.11.1', '3.10.2', '3.9.1', '3.8.3', '3.7.3', '3.6.1', '3.5.1', '3.4.3', '3.3.2', '3.2.2', '3.1.4', '3.0.0', '2.18.2', '2.17.2', '2.16.2'];
@@ -82,7 +81,7 @@ export default Service.extend({
           if (addon.status === 'build_success') {
             dependencies[name+'_js'] = addon.addon_js;
             dependencies[name+'_css'] = addon.addon_css;
-            if (!testing) {
+            if (!Ember.testing) {
               console.log(`Addon ${name} is loaded...`);
             }
             delete addons[name];
@@ -154,7 +153,7 @@ export default Service.extend({
 
     if (name === 'ember-data') {
       const msg = 'It is recommended you use ember-data as an addon';
-      deprecate(msg, testing, {
+      deprecate(msg, Ember.testing, {
         id: 'ember-twiddle.deprecate-ember-data-as-dependency',
         until: '0.16.0',
       });
@@ -165,7 +164,7 @@ export default Service.extend({
 
     if (compareVersions(version, '2.16.0') === -1) {
       const msg = 'Versions of Ember prior to 2.16.0 are no longer supported in Ember Twiddle';
-      deprecate(msg, testing, {
+      deprecate(msg, Ember.testing, {
         id: 'ember-twiddle.deprecate-ember-versions-before-2-16',
         until: '0.17.0',
       });
