@@ -13,10 +13,6 @@ import moment from 'moment';
 import _template from "lodash/template";
 import { pushDeletion } from 'ember-twiddle/utils/push-deletion';
 
-const {
-  testing
-} = Ember;
-
 const twiddleAppName = 'twiddle';
 const oldTwiddleAppNames = ['demo-app', 'app'];
 const hbsPlugin = new HbsPlugin(Babel);
@@ -313,7 +309,7 @@ export default Service.extend({
     let EmberENV = twiddleJSON.EmberENV || {};
     const isTestingEnabled = testingEnabled(twiddleJSON);
 
-    if (testing && !isTestingEnabled) {
+    if (Ember.testing && !isTestingEnabled) {
       depScriptTags += `<script type="text/javascript" src="https://code.jquery.com/qunit/qunit-2.6.1.js"></script>`;
       depScriptTags += `<script type="text/javascript">QUnit.config.autostart = false;</script>`;
     }
@@ -335,7 +331,7 @@ export default Service.extend({
       }
     });
 
-    if (testing && isTestingEnabled) {
+    if (Ember.testing && isTestingEnabled) {
       testStuff += `
         <script type="text/javascript">
           // Hack around dealing with multiple global QUnits!
@@ -393,7 +389,7 @@ export default Service.extend({
       testStuff += `<script type="text/javascript">${moreCode}window.require("${twiddleAppName}/tests/test-helper");</script>`;
     }
 
-    if (testing || isTestingEnabled) {
+    if (Ember.testing || isTestingEnabled) {
       const testJSFiles = ['emberQUnit'];
 
       testJSFiles.forEach(jsFile => {
