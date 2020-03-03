@@ -8,6 +8,7 @@ import {
   currentURL,
   settled
 } from '@ember/test-helpers';
+import { timeout } from 'ember-concurrency';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import runGist from '../helpers/run-gist';
@@ -95,6 +96,7 @@ module('Acceptance | routing', function(hooks) {
 
     if (!find(addressBar).value) {
       this.registerWaiter();
+      await settled();
     }
     assert.dom(addressBar).hasValue('/', "Correct URL is shown in address bar 0");
     assert.ok(decodeURIComponent(currentURL()).indexOf("route=") === -1, "URL is not added to route query string parameter 0");
@@ -123,13 +125,13 @@ module('Acceptance | routing', function(hooks) {
 
     await click(addressBar);
     await fillIn(addressBar, '/about');
-    await triggerKeyEvent(addressBar, 'keyup', 13);
+    await triggerKeyPressEvent(addressBar, 13);
     assert.equal(outputContents(outletText), 'About Page', 'Changing the URL to /about and pressing enter leads to the About Page being displayed');
     assert.dom(addressBar).hasValue('/about', "Correct URL is shown in address bar 1");
 
     await click(addressBar);
     await fillIn(addressBar, '/');
-    await triggerKeyEvent(addressBar, 'keyup', 13);
+    await triggerKeyPressEvent(addressBar, 13);
     assert.equal(outputContents(outletText), 'Main Page', 'Changing the URL to / and pressing enter leads to the Main Page being displayed');
     assert.dom(addressBar).hasValue('/', "Correct URL is shown in address bar 2");
   });
@@ -153,4 +155,12 @@ async function clickInIframe(selector) {
   let iframeWindow = outputPane();
   let el = iframeWindow.document.querySelector(selector);
   await click(el);
+}
+
+async function triggerKeyPressEvent(selector, keyCode) {
+  await triggerKeyEvent(selector, 'keydown', keyCode);
+  await triggerKeyEvent(selector, 'keyup', keyCode);
+  await triggerKeyEvent(selector, 'keypress', keyCode);
+  await timeout(10);
+  await settled();
 }
