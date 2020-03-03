@@ -1,12 +1,10 @@
+import Model, { belongsTo, hasMany, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
 import { on } from '@ember/object/evented';
-import DS from 'ember-data';
 import { memberAction } from 'ember-api-actions';
 
-const { attr, hasMany, belongsTo } = DS;
-
-export default DS.Model.extend({
+export default Model.extend({
   url: attr('string'),
   description: attr('string'),
   htmlUrl: attr('string'),
