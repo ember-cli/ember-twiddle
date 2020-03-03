@@ -30,7 +30,7 @@
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-babel-transpiler": "^7.4.0",
     "broccoli-concat": "^4.2.3",
-    "broccoli-funnel": "^2.0.1",
+    "broccoli-funnel": "^3.0.2",
     "broccoli-merge-trees": "^4.1.0",
     "broccoli-rollup": "^4.1.1",
     "broccoli-stew": "^3.0.0",

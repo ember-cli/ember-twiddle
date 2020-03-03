@@ -120,13 +120,15 @@ module.exports = function(defaults) {
   });
 
   let loaderTree = funnel(path.dirname(require.resolve('loader.js')), {
-    files: ['loader.js'],
-    destDir: '/assets'
+    include: ['**/loader.js'],
+    getDestinationPath() {
+      return 'assets/loader.js'
+    }
   });
 
   let testLoaderTree = funnel("node_modules/ember-cli-test-loader/addon-test-support", {
     files: ['index.js'],
-    getDestinationPath: function() {
+    getDestinationPath() {
       return "assets/test-loader.js";
     }
   });
@@ -137,8 +139,8 @@ module.exports = function(defaults) {
   let twiddleVendorTree = buildTwiddleVendorTree();
 
   return app.toTree(mergeTrees([
-    twiddleVendorTree,
     loaderTree,
+    twiddleVendorTree,
     testLoaderTree,
     finalQUnitTree
   ]));
