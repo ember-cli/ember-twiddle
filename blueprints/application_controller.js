@@ -1,5 +1,5 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
-  appName: 'Ember Twiddle'
-});
+export default class ApplicationController extends Controller {
+  appName = 'Ember Twiddle';
+}
