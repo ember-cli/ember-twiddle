@@ -74,7 +74,7 @@ module('Unit | Service | ember cli', function(hooks) {
   });
 
   test("buildProperties() works as expected with replacements", function (assert) {
-    assert.expect(5);
+    assert.expect(4);
 
     var service = this.owner.lookup('service:ember-cli');
     var props = service.buildProperties('helper', {
@@ -85,7 +85,6 @@ module('Unit | Service | ember cli', function(hooks) {
     assert.ok(props.content, 'has content');
     assert.ok(props.content.indexOf('<%=') === -1, 'No replacement tags in content');
     assert.ok(props.content.indexOf('myHelper(params') !== -1, 'Replacements worked');
-    assert.ok(props.content.indexOf('helper(myHelper)') !== -1, 'Replacements worked if multiple');
   });
 
   test('compileHbs includes moduleName', function(assert) {
