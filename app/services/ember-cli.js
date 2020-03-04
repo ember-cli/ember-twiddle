@@ -286,9 +286,7 @@ export default Service.extend({
 
     let contentForBody = `${depScriptTags}\n${appScriptTag}\n${testStuff}\n`;
 
-    if (!testingEnabled(twiddleJSON) || legacyTesting(twiddleJSON)) {
-      contentForBody += '<div id="root"></div>';
-    }
+    contentForBody += '<div id="root"></div>';
 
     index = index.replace('{{content-for \'body\'}}', contentForBody);
 
@@ -579,7 +577,7 @@ function contentForAppBoot(content, config) {
  */
 function calculateAppConfig(config) {
   let appConfig = config.APP || {};
-  appConfig.rootElement="#root";
+  appConfig.rootElement="#main";
   return JSON.stringify(appConfig);
 }
 

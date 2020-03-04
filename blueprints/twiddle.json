@@ -1,7 +1,10 @@
 {
   "version": "0.17.0",
   "EmberENV": {
-    "FEATURES": {}
+    "FEATURES": {},
+    "_TEMPLATE_ONLY_GLIMMER_COMPONENTS": false,
+    "_APPLICATION_TEMPLATE_WRAPPER": true,
+    "_JQUERY_INTEGRATION": true
   },
   "options": {
     "use_pods": false,
