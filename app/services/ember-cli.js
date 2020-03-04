@@ -112,18 +112,6 @@ const availableBlueprints = {
     blueprint: 'test-helper',
     filePath: 'tests/test-helper.js'
   },
-  'test-start-app': {
-    blueprint: 'test-start-app',
-    filePath: 'tests/helpers/start-app.js'
-  },
-  'test-destroy-app': {
-    blueprint: 'test-destroy-app',
-    filePath: 'tests/helpers/destroy-app.js'
-  },
-  'test-module-for-acceptance': {
-    blueprint: 'test-module-for-acceptance',
-    filePath: 'tests/helpers/module-for-acceptance.js'
-  },
   'controller-test': {
     blueprint: 'controller-test',
     filePath: 'tests/unit/controllers/my-controller-test.js'
