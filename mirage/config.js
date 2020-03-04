@@ -3,9 +3,7 @@ import EmberDataFixture from "./fixtures/ember-data";
 import config from "../config/environment";
 import Mirage from "ember-cli-mirage";
 import faker from 'faker';
-import Ember from "ember";
-
-const { assign } = Ember;
+import { assign } from '@ember/polyfills';
 
 export default function() {}
 

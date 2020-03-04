@@ -24,6 +24,7 @@ module.exports = {
     CodeMirror: false
   },
   rules: {
+    'ember/no-new-mixins': 'off'
   },
   overrides: [
     // node files
