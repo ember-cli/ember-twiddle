@@ -35,6 +35,7 @@ export default Mixin.create({
 
     const fileProperties = this.emberCli.buildProperties(blueprint, {
       dasherizedModuleName: name,
+      moduleName: name,
       friendlyTestDescription: 'TODO: put something here',
       routePathName: name,
       controllerPathName: name,

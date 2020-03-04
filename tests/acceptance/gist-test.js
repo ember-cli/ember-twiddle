@@ -289,7 +289,7 @@ module('Acceptance | gist', function(hooks) {
     await click(firstFilePicker());
 
     let numFiles = firstFilePickerFiles().length;
-    assert.equal(numFiles, origFileCount + 5, 'Added 5 test files');
+    assert.equal(numFiles, origFileCount + 2, 'Added 2 test files');
 
     let fileNames = firstFilePickerFileNames();
     assert.equal(fileNames[fileNames.length - 1], promptValue, 'Added the file with the right name');
