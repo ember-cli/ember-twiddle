@@ -1,20 +1,9 @@
 import Mixin from '@ember/object/mixin';
+import { camelize } from '@ember/string';
 
 export default Mixin.create({
   ensureTestHelperExists() {
     this._ensureExists('tests/test-helper.js', 'test-helper');
-  },
-
-  ensureTestStartAppHelperExists() {
-    this._ensureExists('tests/helpers/start-app.js', 'test-start-app');
-  },
-
-  ensureTestDestroyAppHelperExists() {
-    this._ensureExists('tests/helpers/destroy-app.js', 'test-destroy-app');
-  },
-
-  ensureTestModuleForAcceptanceHelperExists() {
-    this._ensureExists('tests/helpers/module-for-acceptance.js', 'test-module-for-acceptance');
   },
 
   _ensureExists(filePath, blueprint) {
@@ -30,7 +19,9 @@ export default Mixin.create({
     const splitFilePath = filePath.split('/');
     const file = splitFilePath[splitFilePath.length - 1];
     const name = file.replace('-test.js', '');
-    return { filePath, name };
+    let camelizedName = camelize(name);
+    camelizedName = setCharAt(camelizedName, 0, name[0].toUpperCase());
+    return { filePath, name, camelizedName };
   },
 
   ensureTestingEnabled() {
@@ -44,7 +35,11 @@ export default Mixin.create({
 
     const fileProperties = this.emberCli.buildProperties(blueprint, {
       dasherizedModuleName: name,
-      friendlyTestDescription: 'TODO: put something here'
+      moduleName: name,
+      friendlyTestDescription: 'TODO: put something here',
+      routePathName: name,
+      controllerPathName: name,
+      servicePathName: name,
     });
 
     if (this.isPathInvalid(blueprint, filePath)) {
@@ -56,12 +51,19 @@ export default Mixin.create({
   createIntegrationTestFile(type) {
     this.ensureTestHelperExists();
     const blueprint = type + '-test';
-    const { filePath, name } = this.calculateFileVarsForTests(blueprint);
+    const { filePath, camelizedName } = this.calculateFileVarsForTests(blueprint);
+
+    let openComponent = descriptor => `<${descriptor}>`;
+    let closeComponent = descriptor => `</${descriptor}>`;
+    let selfCloseComponent = descriptor => `<${descriptor} />`;
 
     const fileProperties = this.emberCli.buildProperties(blueprint, {
       testType: 'integration',
-      componentPathName: name,
-      friendlyTestDescription: 'TODO: put something here'
+      componentName: camelizedName,
+      friendlyTestDescription: 'TODO: put something here',
+      openComponent,
+      closeComponent,
+      selfCloseComponent
     });
 
     if (this.isPathInvalid(blueprint, filePath)) {
@@ -72,9 +74,6 @@ export default Mixin.create({
 
   createAcceptanceTestFile() {
     this.ensureTestHelperExists();
-    this.ensureTestStartAppHelperExists();
-    this.ensureTestDestroyAppHelperExists();
-    this.ensureTestModuleForAcceptanceHelperExists();
     const blueprint = 'acceptance-test';
     const { filePath, name } = this.calculateFileVarsForTests(blueprint);
 
@@ -90,3 +89,8 @@ export default Mixin.create({
     this.createFile(filePath, fileProperties);
   }
 });
+
+function setCharAt(str, index, char) {
+  if(index > str.length-1) return str;
+  return str.substr(0,index) + char + str.substr(index+1);
+}

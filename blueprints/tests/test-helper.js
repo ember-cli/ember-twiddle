@@ -1,10 +1,16 @@
 import Application from '../app';
 import config from '../config/environment';
 import { setApplication } from '@ember/test-helpers';
-import { start } from 'ember-qunit';
 import { assign } from '@ember/polyfills';
+import { start } from 'ember-qunit';
 
-let attributes = assign({ rootElement: '#main' }, config.APP);
-setApplication(Application.create(attributes));
+let attributes = {
+  rootElement: '#test-root',
+  autoboot: false
+};
+attributes = assign(attributes, config.APP);
+
+let application = Application.create(attributes);
+setApplication(application);
 
 start();
