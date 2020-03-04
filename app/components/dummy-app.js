@@ -65,7 +65,7 @@ export default Component.extend(ResizeMixin, {
     let offset = this.$().offset(), width = this.$().width(),
         height = this.$().height();
 
-    $('#root').css({
+    $('#main').css({
       top:    offset.top,
       left:   offset.left,
       width:  width,
