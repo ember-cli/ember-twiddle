@@ -112,11 +112,21 @@ export default Mixin.create({
     //strip file extension if present
     path = path.replace(/\.[^/.]+$/, "");
 
+    let isGlimmer = false; // TODO: decide how to let user choose
+
     if (this.isPathInvalid('component', path)) {
       return;
     }
     ['js', 'hbs'].forEach((fileExt, i)=>{
-      let fileProperties = this.emberCli.buildProperties(`component-${fileExt}`);
+      let replacements = {};
+      if (fileExt === 'js') {
+        replacements.importComponent = isGlimmer ?
+          `import Component from '@glimmer/component';` :
+          `import Component from '@ember/component';`;
+        replacements.importTemplate = '';
+        replacements.defaultExport = "class extends Component {\n}";
+      }
+      let fileProperties = this.emberCli.buildProperties(`component-${fileExt}`, replacements);
       let notPodPrefix = "components/";
       let filePath;
       if (path.substr(0, notPodPrefix.length) === notPodPrefix) {

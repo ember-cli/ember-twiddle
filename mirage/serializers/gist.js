@@ -1,7 +1,5 @@
 import ApplicationSerializer from './application';
-import Ember from 'ember';
-
-const { isArray } = Ember;
+import { isArray } from '@ember/array';
 
 export default ApplicationSerializer.extend({
   include: ['owner', 'files', 'history'],

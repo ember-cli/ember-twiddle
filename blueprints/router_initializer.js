@@ -1,15 +1,15 @@
 import Router from '../router';
-import Ember from 'ember';
+import { on } from '@ember/object/evented';
 import config from '../config/environment';
 
 Router.reopen({
-  updateUrlBar: Ember.on('didTransition', function() {
+  updateUrlBar: on('didTransition', function() {
     window.parent.postMessage({
       setAppUrl: this.get('url')
     }, config.TWIDDLE_ORIGIN);
   }),
 
-  listenForOutsideAppUrlChanges: Ember.on('init', function() {
+  listenForOutsideAppUrlChanges: on('init', function() {
     var router = this;
 
     function appUrlChanged(event) {
