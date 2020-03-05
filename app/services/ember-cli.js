@@ -565,7 +565,7 @@ function contentForAppBoot(content, config) {
  */
 function calculateAppConfig(config) {
   let appConfig = config.APP || {};
-  appConfig.rootElement="#root";
+  appConfig.rootElement="#main";
   return JSON.stringify(appConfig);
 }
 

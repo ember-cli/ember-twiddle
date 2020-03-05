@@ -26,8 +26,11 @@ export default Component.extend({
       case 'production':
         return `${baseLink}/releases/tag/${tagName}`;
 
-      default:
+      case 'staging':
         return `${baseLink}/commit/${currentRevision}`;
+
+      default:
+        return '';
     }
   }),
 
