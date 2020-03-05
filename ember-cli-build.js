@@ -92,7 +92,7 @@ module.exports = function(defaults) {
   app.import('vendor/ember/ember-template-compiler.js');
   app.import('vendor/ember/ember-testing.js', {
     type: 'vendor',
-    outputFile: 'ember-local-testing.js'
+    outputFile: 'assets/ember-local-testing.js'
   });
   app.import('vendor/shims/babel.js');
   app.import('vendor/shims/path.js');
