@@ -88,13 +88,13 @@ export default Service.extend({
   updateDependencyVersion(gist, dependencyName, version) {
     return this._updateTwiddleJson(gist, (json) => {
 
-      // If Ember Data is brought in as an addon, update addon version,
-      // else update app version.
+      // If Ember Data is brought in as an dependency, update dependency version,
+      // else update addon version.
       if (dependencyName === 'ember-data') {
-        if (json.addons && json.addons[dependencyName]) {
-          json.addons[dependencyName] = version;
-        } else {
+        if (json.dependencies[dependencyName]) {
           json.dependencies[dependencyName] = version;
+        } else {
+          json.addons[dependencyName] = version;
         }
         return json;
       }
