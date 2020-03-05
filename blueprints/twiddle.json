@@ -12,11 +12,11 @@
   },
   "dependencies": {
     "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js",
-    "ember": "3.14.3",
-    "ember-template-compiler": "3.14.3",
-    "ember-testing": "3.14.3"
+    "ember": "3.17.0",
+    "ember-template-compiler": "3.17.0",
+    "ember-testing": "3.17.0"
   },
   "addons": {
-    "ember-data": "3.14.1"
+    "@glimmer/component": "1.0.0"
   }
 }
