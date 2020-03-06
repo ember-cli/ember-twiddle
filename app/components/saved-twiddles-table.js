@@ -2,7 +2,8 @@ import { filter } from '@ember/object/computed';
 import Component from '@ember/component';
 
 export default Component.extend({
-
+  classNames: ['saved-twiddles-table'],
+  
   filteredModel: filter('model', function(gist) {
     let fileNames = gist.get('files').map(function(file) {
       return file.get('fileName');

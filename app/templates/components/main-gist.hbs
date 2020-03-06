@@ -1,5 +1,7 @@
 <SidebarLayout
   @session={{@session}}
+  @isSidebarOpen={{@isSidebarOpen}}
+  @onSidebarUpdated={{@onSidebarUpdated}}
   @sidebarComponent={{component "gist-header"
     model=model
     session=session
@@ -9,7 +11,6 @@
     activeFile=activeFile
     isRevision=isRevision
     selectedKeyMap=settings.keyMap
-    fileTreeShown=fileTreeShown
     titleChanged=(action "titleChanged")
     addFile=(action "addFile")
     addHelper=(action "addHelper")

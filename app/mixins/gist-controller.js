@@ -2,11 +2,11 @@ import Mixin from '@ember/object/mixin';
 import { run } from '@ember/runloop';
 
 export default Mixin.create({
-  queryParams: ['numColumns', 'fullScreen', 'route', 'openFiles', 'fileTreeShown'],
+  queryParams: ['numColumns', 'fullScreen', 'route', 'openFiles', 'isSidebarOpen'],
   numColumns: 1,
   fullScreen: false,
   openFiles: "",
-  fileTreeShown: true,
+  isSidebarOpen: true,
   route: undefined,
   applicationUrl: undefined,
   unsaved: true,

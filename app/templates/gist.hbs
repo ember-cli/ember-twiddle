@@ -1,10 +1,11 @@
 <MainGist
-  @model={{@model}}
+  @model={{this.model}}
   @session={{this.session}}
   @numColumns={{this.numColumns}}
   @fullScreen={{this.fullScreen}}
   @openFiles={{this.openFiles}}
-  @fileTreeShown={{this.fileTreeShown}}
+  @isSidebarOpen={{this.isSidebarOpen}}
+  @onSidebarUpdated={{action (mut this.isSidebarOpen)}}
   @route={{this.route}}
   @applicationUrl={{this.applicationUrl}}
   @unsaved={{this.unsaved}}
