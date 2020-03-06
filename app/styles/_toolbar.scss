@@ -215,21 +215,6 @@
     padding: 0 1em;
   }
 
-  .sign-in {
-    cursor: pointer;
-    padding: 0 .5em;
-  }
-
-  .signing-in {
-    padding: 0 1em;
-    height: $topbar-control-height;
-    line-height: $topbar-control-height - 2;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: $bleached-orange;
-    border: 1px solid transparent;
-  }
-
   &.navbar-collapse {
     @media (max-width: $screen-md-min) {
       background: $header-bg;
