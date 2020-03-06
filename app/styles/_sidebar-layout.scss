@@ -1,0 +1,163 @@
+.sidebar-layout {
+  display: flex;
+  height: 100vh;
+  align-items: stretch;
+
+  @media (min-width: $screen-md-min) {
+    height: calc(100vh - #{$footer-height});
+  }
+
+  .sidebar {
+    width: 25rem;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    font-size: $font-size;
+    background: $header-bg;
+    background-image: url(/images/header.svg);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    @media (max-width: $screen-md-min) {
+      padding: 0;
+    }
+
+    @media (min-width: $screen-md-min) {
+      // height: $topbar-height;
+    }
+
+    .toggle-mobile {
+      display: none;
+    }
+  
+    @media (max-width: $screen-md-min) {  
+      .toggle-mobile {
+        display: block;
+        border: none;
+        border-radius: 0;
+        background-color: transparent;
+        color: white;
+  
+        &:active:hover {
+          background-color: transparent;
+          color: white;
+        }
+      }
+    }
+
+    .toggleable-menu {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .menus {
+      ul {
+        list-style-type: none;
+        margin-left: 0;
+        padding-left: 0;
+      }
+
+      hr {
+        display: block;
+        border-color: $burnt-orange;
+        margin: 1em 0;
+      }
+
+      .dropdown .caret {
+        position: absolute;
+        right: 10px;
+        top: 13px;
+      }
+    
+      .dropdown-menu {
+        .dropdown-submenu > .dropdown-menu {
+          top: 5px !important;
+          margin-bottom: -31px;
+    
+          @media (max-width: $screen-md-min) {
+            left: 80px;
+          }
+        }
+      }
+    }
+
+    .user-menu {
+      a {
+        display: block;
+      }
+
+      .user-avatar {
+        display: inline-block;
+        width: $topbar-control-height;
+        height: 100%;
+        overflow: hidden;
+        float: left;
+        margin-right: 5px;
+        line-height: normal;
+        border-radius: 3px;
+
+        img {
+          width: $topbar-control-height;
+          height: $topbar-control-height;
+        }
+
+        &.unauthenticated {
+          background: url("../images/github32-inverse-faf2ee.svg");
+          height: 32px;
+        }
+      }
+    }
+
+    .dropdown {
+      &.open .dropdown-toggle {
+        background-color: $menu-bg;
+        border: 1px solid transparent;
+      }
+    }
+  
+    .user-dropdown > .dropdown-toggle {
+      padding: 0 1em 0 0;
+    }
+  
+    .dropdown-toggle, .sign-in {
+      height: $topbar-control-height;
+      line-height: $topbar-control-height - 2;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: $bleached-orange;
+      border: 1px solid transparent;
+  
+      &:hover, &:focus {
+        background-color: $menu-hover-bg;
+      }
+    }
+  
+    .dropdown-toggle {
+      padding: 0 1em;
+    }
+  
+    .sign-in {
+      cursor: pointer;
+      padding: 0 .5em;
+    }
+  
+    .signing-in {
+      padding: 0 1em;
+      height: $topbar-control-height;
+      line-height: $topbar-control-height - 2;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: $bleached-orange;
+      border: 1px solid transparent;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex: 1;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+}

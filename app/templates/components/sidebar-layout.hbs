@@ -1,0 +1,41 @@
+<div class="sidebar-layout">
+  {{#if this.isSidebarOpen}}
+    <div class="sidebar">
+      <button class="btn toggle-mobile" {{on "click" (fn (mut this.isOpen) (not this.isOpen))}}>
+        {{if this.isOpen "Close" "Open"}} Menu
+      </button>
+
+      {{#if this.isOpen}}
+        <div class="toggleable-menu">
+          {{#if @sidebarComponent}}
+            {{component @sidebarComponent
+              sidebarApi=(hash
+                showSidebar=(fn (mut this.isSidebarOpen) true)
+                hideSidebar=(fn (mut this.isSidebarOpen) false)
+                isSidebarOpen=this.isSidebarOpen
+              )
+            }}
+          {{/if}}
+
+          <div class="menus">
+            <hr>
+            <UserMenu
+              @session={{@session}}
+              @signInViaGithub={{route-action "signInViaGithub"}}
+              @signOut={{route-action "signOut"}}
+              @showTwiddles={{route-action "showTwiddles"}}
+            />
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
+
+  <div class="content">
+    {{yield (hash
+      showSidebar=(fn (mut this.isSidebarOpen) true)
+      hideSidebar=(fn (mut this.isSidebarOpen) false)
+      isSidebarOpen=this.isSidebarOpen
+    )}}
+  </div>
+</div>

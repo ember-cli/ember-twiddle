@@ -1,6 +1,7 @@
-.toolbar {
+.gist-header {
   display: flex;
   flex-direction: column;
+  flex: 1;
   color: #fff;
   font-size: $font-size;
   background: $header-bg;
