@@ -114,7 +114,7 @@ export default Mixin.create({
 
     let isGlimmer = await this.emberCli.twiddleJson.hasAddon(this.model, '@glimmer/component');
 
-    if (this.isPathInvalid('component', path)) {
+    if (!isGlimmer && this.isPathInvalid('component', path)) {
       return;
     }
 
