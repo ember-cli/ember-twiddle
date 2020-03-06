@@ -149,7 +149,7 @@ module('Acceptance | gist', function(hooks) {
     assert.deepEqual(columnFiles, [jsFile, hbsFile], 'Added files are displayed');
   });
 
-  test('component without hyphen fails', async function(assert) {
+  test('ember component without hyphen fails', async function(assert) {
     assert.expect(2);
 
     let called = false;
@@ -159,7 +159,32 @@ module('Acceptance | gist', function(hooks) {
     };
     promptValue = "components/some-dir/mycomp";
 
-    await visit('/');
+    await runGist([
+      {
+        filename: 'application.template.hbs',
+        content: 'hello world!'
+      },
+      {
+        filename: 'twiddle.json',
+        content: `{
+          "version": "0.17.0",
+          "EmberENV": {
+            "FEATURES": {}
+          },
+          "options": {
+            "use_pods": false,
+            "enable-testing": false
+          },
+          "dependencies": {
+            "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js",
+            "ember": "3.12.1",
+            "ember-template-compiler": "3.12.1",
+            "ember-testing": "3.12.1"
+          },
+          "addons": {}
+        }`
+      }
+    ]);
     await click('.add-component-link');
     await click(firstFilePicker());
     assert.ok(called, "alert was called");
