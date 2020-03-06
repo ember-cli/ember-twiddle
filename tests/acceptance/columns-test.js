@@ -60,15 +60,15 @@ module('Acceptance | columns', function(hooks) {
     assert.equal(findAll(columns).length, 1, 'There are now 1 columns');
 
     assert.equal(findAll('.file-tree').length, 1, "The file tree is shown");
-    assert.ok(!urlHas('fileTreeShown'), 'We are on the correct route when file tree is shown');
+    assert.ok(!urlHas('isSidebarOpen'), 'We are on the correct route when file tree is shown');
 
     await click(hideFileTreeGlyph);
-    assert.ok(urlHas('fileTreeShown=false'), 'We are on the correct route when file tree is shown');
+    assert.ok(urlHas('isSidebarOpen=false'), 'We are on the correct route when file tree is shown');
     assert.equal(findAll('.file-tree').length, 0, "The file tree is hidden");
 
     await click(showFileTreeGlyph);
     assert.equal(findAll('.file-tree').length, 1, "The file tree is shown");
-    assert.ok(!urlHas('fileTreeShown'), 'We are on the correct route when file tree is shown');
+    assert.ok(!urlHas('isSidebarOpen'), 'We are on the correct route when file tree is shown');
   });
 
   function urlHas(text) {
