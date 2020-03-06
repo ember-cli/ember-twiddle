@@ -63,22 +63,43 @@ module('Integration | Component | user menu', function(hooks) {
   });
 
   test('shows no current version link when in development environment', async function(assert) {
-    await render(hbs`{{user-menu}}`);
+    this.set('noop', () => {});
+    await render(hbs`
+      {{user-menu
+        signInViaGithub=this.noop
+        signOut=this.noop
+      }}
+    `);
 
     assert.equal(this.$('.test-current-version-link').length, 0);
   });
 
   test('shows link to release when in production environment', async function(assert) {
-    await render(hbs`{{user-menu environment="production" version="4.0.4" }}`);
-
+    this.set('noop', () => {});
+    await render(hbs`
+      {{user-menu
+        environment="production"
+        version="4.0.4"
+        signInViaGithub=this.noop
+        signOut=this.noop
+      }}
+    `);
     assert.equal(this.$('.test-current-version-link').length, 1);
     assert.equal(this.$('.test-current-version-link').attr('href'), "https://github.com/ember-cli/ember-twiddle/releases/tag/v4.0.4");
     assert.equal(this.$('.test-current-version-link').text().trim(), "Ember Twiddle v4.0.4");
   });
 
   test('shows link to commit when in staging environment', async function(assert) {
-    await render(hbs`{{user-menu environment="staging" version="4.0.4-abc" currentRevision="abcdefg" }}`);
-
+    this.set('noop', () => {});
+    await render(hbs`
+      {{user-menu
+        environment="staging"
+        version="4.0.4-abc"
+        currentRevision="abcdefg"
+        signInViaGithub=this.noop
+        signOut=this.noop
+      }}
+    `);
     assert.equal(this.$('.test-current-version-link').length, 1);
     assert.equal(this.$('.test-current-version-link').attr('href'), "https://github.com/ember-cli/ember-twiddle/commit/abcdefg");
     assert.equal(this.$('.test-current-version-link').text().trim(), "Ember Twiddle v4.0.4-abc");
