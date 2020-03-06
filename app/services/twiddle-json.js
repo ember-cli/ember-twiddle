@@ -130,6 +130,11 @@ export default Service.extend({
     });
   },
 
+  async hasAddon(gist, addonName) {
+    let json = await this._getTwiddleJson(gist);
+    return addonName in json.addons;
+  },
+
   _dedupEmberData(json) {
     if (json.addons && json.addons.hasOwnProperty('ember-data')) {
       if (json.dependencies && json.dependencies.hasOwnProperty('ember-data')) {
