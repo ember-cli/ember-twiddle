@@ -3,8 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 export default class SidebarLayoutComponent extends Component {
-  @tracked isOpen = true;
-  @tracked isSidebarOpen = this.args.isSidebarOpen;
+  @tracked isMobileMenuOpen = true;
 
   @action
   updateSidebar(isOpen) {

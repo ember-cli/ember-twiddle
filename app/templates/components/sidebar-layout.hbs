@@ -1,11 +1,11 @@
 <div class="sidebar-layout" ...attributes>
   {{#if @isSidebarOpen}}
     <div class="sidebar">
-      <button class="btn toggle-mobile" {{on "click" (fn (mut this.isOpen) (not this.isOpen))}}>
-        {{if this.isOpen "Close" "Open"}} Menu
+      <button class="btn toggle-mobile" {{on "click" (fn (mut this.isMobileMenuOpen) (not this.isMobileMenuOpen))}}>
+        {{if this.isMobileMenuOpen "Close" "Open"}} Menu
       </button>
 
-      {{#if this.isOpen}}
+      {{#if this.isMobileMenuOpen}}
         <div class="toggleable-menu">
           {{#if @sidebarComponent}}
             {{component @sidebarComponent
