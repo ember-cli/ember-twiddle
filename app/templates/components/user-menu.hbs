@@ -11,14 +11,16 @@
         {{userName}} <b class="caret"></b>
       </a>
       <ul class="dropdown-menu dropdown-menu-left">
-        <li><a {{action 'showTwiddles'}} class="test-show-twiddles">My Saved Twiddles</a></li>
-        <li role="presentation" class="divider"></li>
-        <li><a {{action 'signOut'}} class="test-sign-out">Sign out</a></li>
+        {{#if @showTwiddles}}
+          <li><a {{on "click" @showTwiddles}} class="test-show-twiddles">My Saved Twiddles</a></li>
+          <li role="presentation" class="divider"></li>
+        {{/if}}
+        <li><a {{on "click" @signOut}} class="test-sign-out">Sign out</a></li>
       </ul>
     </li>
   {{else}}
     <li>
-      <a {{action 'signInViaGithub'}} class="test-sign-in sign-in">
+      <a {{on "click" @signInViaGithub}} class="test-sign-in sign-in">
         <span class="user-avatar unauthenticated"></span>
         Sign in
       </a>

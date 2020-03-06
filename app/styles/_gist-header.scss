@@ -1,6 +1,7 @@
-.toolbar {
+.gist-header {
   display: flex;
   flex-direction: column;
+  flex: 1;
   color: #fff;
   font-size: $font-size;
   background: $header-bg;
@@ -96,7 +97,7 @@
       }
 
       .ember-jstree {
-        height: 100%;
+        height: calc(100% - 50px);
         overflow: auto;
       }
     }
@@ -109,33 +110,6 @@
     .jstree-default .jstree-clicked {
         background: #b95252;
         box-shadow: none;
-    }
-  }
-
-  .user-menu {
-    a {
-      display: block;
-    }
-
-    .user-avatar {
-      display: inline-block;
-      width: $topbar-control-height;
-      height: 100%;
-      overflow: hidden;
-      float: left;
-      margin-right: 5px;
-      line-height: normal;
-      border-radius: 3px;
-
-      img {
-        width: $topbar-control-height;
-        height: $topbar-control-height;
-      }
-
-      &.unauthenticated {
-        background: url("../images/github32-inverse-faf2ee.svg");
-        height: 32px;
-      }
     }
   }
 
@@ -156,11 +130,6 @@
 
     h1 {
       margin: 10px;
-    }
-
-    .saved-twiddles-header {
-      color: $bleached-orange;
-      font-size: $font-size-larger;
     }
 
     .indicator {
@@ -244,21 +213,6 @@
 
   .dropdown-toggle {
     padding: 0 1em;
-  }
-
-  .sign-in {
-    cursor: pointer;
-    padding: 0 .5em;
-  }
-
-  .signing-in {
-    padding: 0 1em;
-    height: $topbar-control-height;
-    line-height: $topbar-control-height - 2;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: $bleached-orange;
-    border: 1px solid transparent;
   }
 
   &.navbar-collapse {

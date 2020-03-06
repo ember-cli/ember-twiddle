@@ -1,3 +1,9 @@
-{{saved-twiddles-header session=session}}
-
-{{saved-twiddles-table model=model}}
+<SidebarLayout
+  class="saved-twiddles-sidebar"
+  @session={{this.session}}
+  @isSidebarOpen={{this.isSidebarOpen}}
+  @onSidebarUpdated={{action (mut this.isSidebarOpen)}}
+  @sidebarComponent={{component "saved-twiddles-header" session=this.session}}
+>
+  <SavedTwiddlesTable @model={{this.model}}/>
+</SidebarLayout>

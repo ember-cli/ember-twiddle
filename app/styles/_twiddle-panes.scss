@@ -1,16 +1,12 @@
+.gist-body {
+  display: flex;
+  flex: 1;
+}
+
 .twiddle-panes {
   margin: 0;
-  margin-left: 0;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  transition: left 0.2s;
-
-  &.file-tree-shown {
-    left: 250px;
-  }
+  height: 100%;
+  width: 100%;
 
   @media (min-width: $screen-md-min) {
     display: -webkit-flex;
@@ -31,7 +27,7 @@
 
     @media (max-width: $screen-md-min) {
       margin-bottom: 60px;
-      min-height: 100vh;
+      height: 100vh;
 
       .file-tree-toggle {
         display: none;
@@ -191,50 +187,5 @@
     text-align: center;
     color: $dropdown-link-color;
     cursor: pointer;
-  }
-}
-
-.gist-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 250px;
-
-  .toggle-mobile {
-    display: none;
-  }
-
-  @media (min-width: $screen-md-min) {
-    bottom: $footer-height;
-  }
-
-  @media (max-width: $screen-md-min) {
-    top: $footer-height;
-    position: static;
-    width: 100%;
-
-    &.open {
-      .toolbar {
-        min-height: 500px;
-      }
-    }
-
-    .toggle-mobile {
-      display: block;
-      border: none;
-      border-radius: 0;
-      background-color: transparent;
-      color: white;
-
-      &:active:hover {
-        background-color: transparent;
-        color: white;
-      }
-    }
-  }
-
-  > .visible-toolbar {
-    height: 100%;
   }
 }

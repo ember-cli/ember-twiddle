@@ -1,3 +1,28 @@
+.saved-twiddles-sidebar {
+  height: 100vh;
+
+  .sidebar .toggleable-menu {
+    justify-content: space-between;
+  }
+}
+
+.saved-twiddles-header {
+  display: flex;
+  flex-direction: column;
+  
+  h1 {
+    font-size: 1.5em;
+    align-self: center;
+    color: $bleached-orange;
+    font-size: $font-size-larger;
+  }
+}
+
+.saved-twiddles-table {
+  overflow-y: auto;
+  width: 100%;
+}
+
 div.table-responsive {
   margin: 20px auto;
 }

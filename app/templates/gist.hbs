@@ -1,15 +1,17 @@
-{{main-gist model=model
-            session=session
-            numColumns=numColumns
-            fullScreen=fullScreen
-            openFiles=openFiles
-            fileTreeShown=fileTreeShown
-            route=route
-            applicationUrl=applicationUrl
-            unsaved=unsaved
-            isGistSaving=isGistSaving
-            saveGist=(route-action "saveGist")
-            isRevision=isRevision
-            transitionQueryParams=(action "transitionQueryParams")
-            titleUpdated=(route-action "titleUpdated")
-}}
+<MainGist
+  @model={{this.model}}
+  @session={{this.session}}
+  @numColumns={{this.numColumns}}
+  @fullScreen={{this.fullScreen}}
+  @openFiles={{this.openFiles}}
+  @isSidebarOpen={{this.isSidebarOpen}}
+  @onSidebarUpdated={{action (mut this.isSidebarOpen)}}
+  @route={{this.route}}
+  @applicationUrl={{this.applicationUrl}}
+  @unsaved={{this.unsaved}}
+  @isGistSaving={{this.isGistSaving}}
+  @isRevision={{this.isRevision}}
+  @saveGist={{route-action "saveGist"}}
+  @transitionQueryParams={{action "transitionQueryParams"}}
+  @titleUpdated={{route-action "titleUpdated"}}
+/>

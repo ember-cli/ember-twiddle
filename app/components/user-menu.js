@@ -32,18 +32,5 @@ export default Component.extend({
       default:
         return '';
     }
-  }),
-
-  actions: {
-    signInViaGithub() {
-      this.signInViaGithub();
-    },
-    signOut() {
-      this.signOut();
-    },
-
-    showTwiddles() {
-      this.showTwiddles();
-    }
-  }
+  })
 });

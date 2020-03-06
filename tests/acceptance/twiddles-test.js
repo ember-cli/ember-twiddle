@@ -54,9 +54,8 @@ module('Acceptance | twiddles', function(hooks) {
 
     await visit('/twiddles');
 
-    assert.equal($('.saved-twiddles-header').text().trim(), "My Saved Twiddles");
-
-    assert.equal($('.saved-twiddles tr').length, 2);
+    assert.dom('.saved-twiddles-header h1').hasText("My Saved Twiddles");
+    assert.dom('.saved-twiddles tr').exists({ count: 2 });
     assert.equal($('.saved-twiddles tr').eq(0).find('.test-gist-id').text().trim(), '35de43cb81fc35ddffb2');
     assert.equal($('.saved-twiddles tr').eq(1).find('.test-gist-id').text().trim(), '74bae9a34142370ff5a3');
 

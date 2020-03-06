@@ -112,10 +112,6 @@ export default Route.extend({
       this.session.close();
     },
 
-    showTwiddles() {
-      this.transitionTo('twiddles');
-    },
-
     urlChanged(newUrl) {
       this.app.postMessage({ newUrl });
     },
