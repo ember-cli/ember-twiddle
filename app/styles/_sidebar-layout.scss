@@ -1,10 +1,14 @@
 .sidebar-layout {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   align-items: stretch;
 
   @media (min-width: $screen-md-min) {
-    height: calc(100vh - #{$footer-height});
+    min-height: calc(100vh - #{$footer-height});
+  }
+
+  @media (max-width: $screen-md-min) {
+    flex-direction: column;
   }
 
   .sidebar {
@@ -21,6 +25,7 @@
 
     @media (max-width: $screen-md-min) {
       padding: 0;
+      width: 100%;
     }
 
     @media (min-width: $screen-md-min) {
