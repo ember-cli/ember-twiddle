@@ -108,15 +108,16 @@ export default Mixin.create({
     run.scheduleOnce('afterRender', this, this.updateOpenFiles);
   },
 
-  addComponent(path) {
+  async addComponent(path) {
     //strip file extension if present
     path = path.replace(/\.[^/.]+$/, "");
 
-    let isGlimmer = false; // TODO: decide how to let user choose
+    let isGlimmer = await this.emberCli.twiddleJson.hasAddon(this.model, '@glimmer/component');
 
     if (this.isPathInvalid('component', path)) {
       return;
     }
+
     ['js', 'hbs'].forEach((fileExt, i)=>{
       let replacements = {};
       if (fileExt === 'js') {
