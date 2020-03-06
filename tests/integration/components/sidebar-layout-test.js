@@ -38,7 +38,7 @@ module('Integration | Component | sidebar-layout', function(hooks) {
     assert.dom('.sidebar').hasText('Close Menu test sidebar Sign in Help GitHub Issue tracker');
     assert.dom('.content').hasText('Close Content Here');
     await click('.close');
-    assert.dom('.sidebar').doesNotExist();
+    assert.dom('.sidebar-open').doesNotExist();
     assert.dom('.content').hasText('Open Content Here');
     await click('.open');
     assert.dom('.content').hasText('Close Content Here');
