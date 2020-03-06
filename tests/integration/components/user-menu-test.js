@@ -1,7 +1,7 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | user menu', function(hooks) {
@@ -26,38 +26,38 @@ module('Integration | Component | user menu', function(hooks) {
       }
     }));
 
-    this.actions.signInViaGithub = () => { this.signInViaGithubCalled = true; };
-    this.actions.signOut = () => { this.signOutCalled = true; };
-    this.actions.showTwiddles = () => { this.showTwiddlesCalled = true; };
+    this.signInViaGithub = () => { this.signInViaGithubCalled = true; };
+    this.signOut = () => { this.signOutCalled = true; };
+    this.showTwiddles = () => { this.showTwiddlesCalled = true; };
 
-    await render(hbs`{{user-menu session=session
-                                signInViaGithub=(action "signInViaGithub")
-                                signOut=(action "signOut")
-                                showTwiddles=(action "showTwiddles")}}`);
+    await render(hbs`{{user-menu session=this.session
+                                signInViaGithub=this.signInViaGithub
+                                signOut=this.signOut
+                                showTwiddles=this.showTwiddles}}`);
   });
 
-  test('it calls signInViaGithub upon clicking Sign In', function(assert) {
+  test('it calls signInViaGithub upon clicking Sign In', async function(assert) {
     assert.expect(1);
 
-    this.$('.test-sign-in').click();
+    await click('.test-sign-in');
 
     assert.ok(this.signInViaGithubCalled, 'signInViaGithub was called');
   });
 
-  test('it calls signOut upon clicking Sign Out', function(assert) {
+  test('it calls signOut upon clicking Sign Out', async function(assert) {
     assert.expect(1);
 
     this.set('session.isAuthenticated', true);
-    this.$('.test-sign-out').click();
+    await click('.test-sign-out');
 
     assert.ok(this.signOutCalled, 'signOut was called');
   });
 
-  test('it calls showTwiddles upon clicking "My Saved Twiddles"', function(assert) {
+  test('it calls showTwiddles upon clicking "My Saved Twiddles"', async function(assert) {
     assert.expect(1);
 
     this.set('session.isAuthenticated', true);
-    this.$('.test-show-twiddles').click();
+    await click('.test-show-twiddles');
 
     assert.ok(this.showTwiddlesCalled, 'showTwiddles was called');
   });
