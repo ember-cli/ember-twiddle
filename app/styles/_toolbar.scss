@@ -113,33 +113,6 @@
     }
   }
 
-  .user-menu {
-    a {
-      display: block;
-    }
-
-    .user-avatar {
-      display: inline-block;
-      width: $topbar-control-height;
-      height: 100%;
-      overflow: hidden;
-      float: left;
-      margin-right: 5px;
-      line-height: normal;
-      border-radius: 3px;
-
-      img {
-        width: $topbar-control-height;
-        height: $topbar-control-height;
-      }
-
-      &.unauthenticated {
-        background: url("../images/github32-inverse-faf2ee.svg");
-        height: 32px;
-      }
-    }
-  }
-
   .main-menu {
     text-align: left;
 
@@ -157,11 +130,6 @@
 
     h1 {
       margin: 10px;
-    }
-
-    .saved-twiddles-header {
-      color: $bleached-orange;
-      font-size: $font-size-larger;
     }
 
     .indicator {
