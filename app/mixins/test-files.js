@@ -56,7 +56,7 @@ export default Mixin.create({
     let openComponent = descriptor => `<${descriptor}>`;
     let closeComponent = descriptor => `</${descriptor}>`;
     let selfCloseComponent = descriptor => `<${descriptor} />`;
-    let hbsImportStatement = `import hbs from 'htmlbars-inline-precomipile';`;
+    let hbsImportStatement = `import hbs from 'htmlbars-inline-precompile';`;
 
     const fileProperties = this.emberCli.buildProperties(blueprint, {
       testType: 'integration',
