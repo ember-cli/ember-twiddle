@@ -23,6 +23,17 @@
     background-repeat: no-repeat;
     background-size: cover;
 
+    @media (min-width: $screen-md-min) {
+      position: relative;
+      left: 0;
+      transition: left 0.2s ease, margin-right 0.2s ease;
+
+      &.sidebar-closed {
+        left: -25rem;
+        margin-right: -25rem;
+      }
+    }
+
     @media (max-width: $screen-md-min) {
       padding: 0;
       width: 100%;
@@ -31,15 +42,15 @@
     .toggle-mobile {
       display: none;
     }
-  
-    @media (max-width: $screen-md-min) {  
+
+    @media (max-width: $screen-md-min) {
       .toggle-mobile {
         display: block;
         border: none;
         border-radius: 0;
         background-color: transparent;
         color: white;
-  
+
         &:active:hover {
           background-color: transparent;
           color: white;
@@ -71,12 +82,12 @@
         right: 10px;
         top: 13px;
       }
-    
+
       .dropdown-menu {
         .dropdown-submenu > .dropdown-menu {
           top: 5px !important;
           margin-bottom: -31px;
-    
+
           @media (max-width: $screen-md-min) {
             left: 80px;
           }
@@ -117,11 +128,11 @@
         border: 1px solid transparent;
       }
     }
-  
+
     .user-dropdown > .dropdown-toggle {
       padding: 0 1em 0 0;
     }
-  
+
     .dropdown-toggle, .sign-in {
       height: $topbar-control-height;
       line-height: $topbar-control-height - 2;
@@ -129,21 +140,21 @@
       font-weight: bold;
       color: $bleached-orange;
       border: 1px solid transparent;
-  
+
       &:hover, &:focus {
         background-color: $menu-hover-bg;
       }
     }
-  
+
     .dropdown-toggle {
       padding: 0 1em;
     }
-  
+
     .sign-in {
       cursor: pointer;
       padding: 0 .5em;
     }
-  
+
     .signing-in {
       padding: 0 1em;
       height: $topbar-control-height;

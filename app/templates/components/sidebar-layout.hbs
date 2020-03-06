@@ -1,35 +1,33 @@
 <div class="sidebar-layout" ...attributes>
-  {{#if @isSidebarOpen}}
-    <div class="sidebar">
-      <button class="btn toggle-mobile" {{on "click" (fn (mut this.isMobileMenuOpen) (not this.isMobileMenuOpen))}}>
-        {{if this.isMobileMenuOpen "Close" "Open"}} Menu
-      </button>
+  <div class="sidebar {{if @isSidebarOpen 'sidebar-open' 'sidebar-closed'}}">
+    <button class="btn toggle-mobile" {{on "click" (fn (mut this.isMobileMenuOpen) (not this.isMobileMenuOpen))}}>
+      {{if this.isMobileMenuOpen "Close" "Open"}} Menu
+    </button>
 
-      {{#if this.isMobileMenuOpen}}
-        <div class="toggleable-menu">
-          {{#if @sidebarComponent}}
-            {{component @sidebarComponent
-              sidebarApi=(hash
-                showSidebar=(fn this.updateSidebar true)
-                hideSidebar=(fn this.updateSidebar false)
-                isSidebarOpen=@isSidebarOpen
-              )
-            }}
-          {{/if}}
+    {{#if this.isMobileMenuOpen}}
+      <div class="toggleable-menu">
+        {{#if @sidebarComponent}}
+          {{component @sidebarComponent
+            sidebarApi=(hash
+              showSidebar=(fn this.updateSidebar true)
+              hideSidebar=(fn this.updateSidebar false)
+              isSidebarOpen=@isSidebarOpen
+            )
+          }}
+        {{/if}}
 
-          <div class="menus">
-            <hr>
-            <UserMenu
-              @session={{@session}}
-              @signInViaGithub={{route-action "signInViaGithub"}}
-              @signOut={{route-action "signOut"}}
-              @showTwiddles={{transition-to "twiddles"}}
-            />
-          </div>
+        <div class="menus">
+          <hr>
+          <UserMenu
+            @session={{@session}}
+            @signInViaGithub={{route-action "signInViaGithub"}}
+            @signOut={{route-action "signOut"}}
+            @showTwiddles={{transition-to "twiddles"}}
+          />
         </div>
-      {{/if}}
-    </div>
-  {{/if}}
+      </div>
+    {{/if}}
+  </div>
 
   <div class="content">
     {{yield (hash
