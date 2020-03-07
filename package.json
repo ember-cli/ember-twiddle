@@ -69,7 +69,6 @@
     "ember-cli-moment-shim": "^3.7.1",
     "ember-cli-node-assets": "~0.2.2",
     "ember-cli-preprocess-registry": "^3.1.1",
-    "ember-cli-release": "1.0.0-beta.2",
     "ember-cli-sass": "^10.0.1",
     "ember-cli-shims": "~1.1.0",
     "ember-cli-sri": "^2.1.1",
@@ -115,7 +114,8 @@
     "torii": "~0.10.1"
   },
   "resolutions": {
-    "ember-cli-version-checker": "4.1.0"
+    "ember-cli-version-checker": "4.1.0",
+    "clean-css": "4.2.3"
   },
   "engines": {
     "node": "10.* || >= 12"
