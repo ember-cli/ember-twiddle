@@ -1,3 +1,26 @@
+### v0.17.0
+#### Pull requests
+
+- [#708](https://github.com/ember-cli/ember-twiddle/pull/708) Fix glimmer integration test bugs ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+- [#707](https://github.com/ember-cli/ember-twiddle/pull/707) Fix\/sidebar layout ([Gaurav Munjal](mailto:Gaurav0@aol.com), [Ilya Radchenko](mailto:knownasilya@gmail.com))
+- [#704](https://github.com/ember-cli/ember-twiddle/pull/704) Update ember to 3.16 ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+- [#703](https://github.com/ember-cli/ember-twiddle/pull/703) Update blueprints ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+- [#702](https://github.com/ember-cli/ember-twiddle/pull/702) Update test blueprints ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+- [#701](https://github.com/ember-cli/ember-twiddle/pull/701) Ember optional features ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+- [#698](https://github.com/ember-cli/ember-twiddle/pull/698) Upgrade ember to 3.12 ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+- [#692](https://github.com/ember-cli/ember-twiddle/pull/692) fix file menu in mobile and medium sizes ([Ilya Radchenko](mailto:knownasilya@gmail.com))
+- [#688](https://github.com/ember-cli/ember-twiddle/pull/688) Support up to Ember 3.14 ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+- [#687](https://github.com/ember-cli/ember-twiddle/pull/687) Sidebar ([Ilya Radchenko](mailto:ilya@burstcreations.com), [Ilya Radchenko](mailto:knownasilya@gmail.com))
+
+#### Commits to master
+
+- [updates to packages with known security vulnerabilities](https://github.com/ember-cli/ember-twiddle/commit/d7f764d62521480559097353a21bb40a39bcab8a) ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+- [generate gimmer components if addon included](https://github.com/ember-cli/ember-twiddle/commit/12c179f806a9d431cf90432dbe6d8c652f12d3cb) ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+- [Support up to Ember 3.17](https://github.com/ember-cli/ember-twiddle/commit/e81c5a8391c2067a340c6ae9f7283d635fa7729b) ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+- [Commit CHANGELOG.md](https://github.com/ember-cli/ember-twiddle/commit/c054ae9cf5635f2339c57ca4eb5ee37ddbf3558a) ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+- [Run ember-data packages codemod](https://github.com/ember-cli/ember-twiddle/commit/b4f32a430763aa50c79d77ce22645a4f51d7c94f) ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+- [+10 more](https://github.com/ember-cli/ember-twiddle/compare/v0.16.1...v0.17.0)
+
 ### v0.16.1
 - [fix missing twiddles in twiddles page](https://github.com/ember-cli/ember-twiddle/commit/eb0a6637a62ea1cbd13b4f580ad263aacad2ba47) ([Gaurav Munjal](mailto:Gaurav0@aol.com))
 - [bump version](https://github.com/ember-cli/ember-twiddle/commit/4386631f72a6bc0fd23e2cc855d41df622eb5d23) ([Gaurav Munjal](mailto:Gaurav0@aol.com))
