@@ -54,16 +54,16 @@
     {{/if}}
     {{#if session.isAuthenticated}}
       <li role="presentation" class="divider"></li>
-      <li><a {{on "click" (fn @saveGist model)}} class="test-save-action">Save to Github Gist</a></li>
+      <li><a {{on "click" (fn @saveGist @model)}} class="test-save-action">Save to Github Gist</a></li>
       {{#unless model.isNew}}
         <li><a {{action 'share'}}>Share Twiddle</a></li>
         <li><a {{action 'embed'}}>Embed Twiddle</a></li>
         {{#if showFork}}
-          <li><a {{on "click" (fn @fork model)}} class="test-fork-action">Fork Twiddle</a></li>
+          <li><a {{on "click" (fn @fork @model)}} class="test-fork-action">Fork Twiddle</a></li>
         {{else}}
           <li><a {{on "click" @copy}} class="test-copy-action">Copy Twiddle</a></li>
         {{/if}}
-        <li><a {{on "click" (fn @deleteGist model)}} class="test-delete-action">Delete Twiddle</a></li>
+        <li><a {{on "click" (fn @deleteGist @model)}} class="test-delete-action">Delete Twiddle</a></li>
         <li role="presentation" class="divider"></li>
         {{#if isRevision}}
           <li><a {{on "click" @showCurrentVersion}} class="test-show-current-version">Show Current Version</a></li>

@@ -114,6 +114,14 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
   },
 
   actions: {
+    addFileWithPrompt() {
+      this.addFile(...arguments);
+    },
+
+    renameFileWithPrompt() {
+      this.renameFile(...arguments);
+    },
+
     contentsChanged() {
       this.set('unsaved', true);
       this.rebuildApp.perform();
