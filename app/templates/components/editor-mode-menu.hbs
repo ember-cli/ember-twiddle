@@ -3,9 +3,9 @@
 </a>
 
 <ul class="dropdown-menu dropdown-menu-left">
-  <li><a {{action 'setKeyMap' 'default'}} class="key-map-option default">Default</a></li>
-  <li><a {{action 'setKeyMap' 'basic'}} class="key-map-option basic">Basic</a></li>
-  <li><a {{action 'setKeyMap' 'vim'}} class="key-map-option vim">Vim</a></li>
-  <li><a {{action 'setKeyMap' 'emacs'}} class="key-map-option emacs">Emacs</a></li>
-  <li><a {{action 'setKeyMap' 'sublime'}} class="key-map-option sublime">Sublime</a></li>
+  <li><a {{on 'click' (fn @setKeyMap 'default')}} class="key-map-option default">Default</a></li>
+  <li><a {{on 'click' (fn @setKeyMap 'basic')}} class="key-map-option basic">Basic</a></li>
+  <li><a {{on 'click' (fn @setKeyMap 'vim')}} class="key-map-option vim">Vim</a></li>
+  <li><a {{on 'click' (fn @setKeyMap 'emacs')}} class="key-map-option emacs">Emacs</a></li>
+  <li><a {{on 'click' (fn @setKeyMap 'sublime')}} class="key-map-option sublime">Sublime</a></li>
 </ul>
