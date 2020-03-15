@@ -73,7 +73,7 @@
               <a data-toggle="dropdown">Previous Revisions</a>
               <ul class="dropdown-menu">
                 {{#each model.history as |version|}}
-                  <li><a {{action "showRevision" version.id}} class="test-version-action">{{version.shortId}}</a></li>
+                  <li><a {{on "click" (fn @showRevision version.id)}} class="test-version-action">{{version.shortId}}</a></li>
                 {{/each}}
               </ul>
             </li>
