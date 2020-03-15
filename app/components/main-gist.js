@@ -114,12 +114,12 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
   },
 
   actions: {
-    addFileWithPrompt() {
-      this.addFile(...arguments);
+    addFileWithPrompt(type) {
+      this.addFile(type);
     },
 
-    renameFileWithPrompt() {
-      this.renameFile(...arguments);
+    renameFileWithPrompt(file) {
+      this.renameFile(file);
     },
 
     contentsChanged() {
