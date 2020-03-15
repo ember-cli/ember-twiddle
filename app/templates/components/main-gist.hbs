@@ -12,17 +12,17 @@
     isRevision=isRevision
     selectedKeyMap=settings.keyMap
     titleChanged=(action "titleChanged")
-    addFile=(action "addFile")
-    addHelper=(action "addHelper")
-    addComponent=(action "addComponent")
+    addFile=@addFile
+    addHelper=(action "addHelperWithPrompt")
+    addComponent=(action "addComponentWithPrompt")
     addUnitTestFile=(action "addUnitTestFile")
     addIntegrationTestFile=(action "addIntegrationTestFile")
     addAcceptanceTestFile=(action "addAcceptanceTestFile")
-    renameFile=(action "renameFile")
-    removeFile=(action "removeFile")
+    renameFile=@renameFile
+    removeFile=(action "removeFileWithConfirm")
     setEditorKeyMap=(action "setEditorKeyMap")
     versionSelected=(action "versionSelected")
-    openFile=(action "openFile")
+    openFile=@openFile
   }}
   as |sidebar|
 >
@@ -41,8 +41,8 @@
               focusEditor=(action "focusEditor")
               selectFile=(action "selectFile")
               updateColumn=(action "updateColumn")
-              removeColumn=(action "removeColumn")
-              addColumn=(action "addColumn")
+              removeColumn=(action "removeColumnAndTransition")
+              addColumn=(action "addColumnAndTransition")
               showFileTree=sidebar.showSidebar
               hideFileTree=sidebar.hideSidebar
               liveReloadChanged=(action "liveReloadChanged")

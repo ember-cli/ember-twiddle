@@ -143,10 +143,6 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
       run.scheduleOnce('afterRender', this, this.updateOpenFiles);
     },
 
-    openFile(filePath) {
-      this.openFile(filePath);
-    },
-
     runNow () {
       this.buildApp.perform();
     },
@@ -164,7 +160,7 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
       this.set('fileTreeShown', false);
     },
 
-    addComponent() {
+    addComponentWithPrompt() {
       const defaultPath = this.get('emberCli.usePods') ? 'my-component' : 'components/my-component';
       let path = prompt('Component path (without file extension)', defaultPath);
       if (isBlank(path)){
@@ -174,7 +170,7 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
       this.addComponent(path);
     },
 
-    addHelper() {
+    addHelperWithPrompt() {
       let type = 'helper';
       let fileProperties = this.emberCli.buildProperties(type);
       let filePath = prompt('File path', fileProperties.filePath);
@@ -182,49 +178,34 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
       this.addHelper(type, filePath);
     },
 
-    addUnitTestFile(type) {
-      this.ensureTestingEnabled().then(() => {
-        this.createUnitTestFile(type);
-      });
+    async addUnitTestFile(type) {
+      await this.ensureTestingEnabled();
+      this.createUnitTestFile(type);
     },
 
-    addIntegrationTestFile(type) {
-      this.ensureTestingEnabled().then(() => {
-        this.createIntegrationTestFile(type);
-      });
+    async addIntegrationTestFile(type) {
+      await this.ensureTestingEnabled();
+      this.createIntegrationTestFile(type);
     },
 
-    addAcceptanceTestFile() {
-      this.ensureTestingEnabled().then(() => {
-        this.createAcceptanceTestFile();
-      });
+    async addAcceptanceTestFile() {
+      await this.ensureTestingEnabled();
+      this.createAcceptanceTestFile();
     },
 
-    /**
-     * Add a new file to the model
-     * @param {String|null} type Blueprint name or null for empty file
-     */
-    addFile (type) {
-      this.addFile(type);
-    },
-
-    renameFile (file) {
-      this.renameFile(file);
-    },
-
-    removeFile (file) {
-      if(confirm(`Are you sure you want to remove this file?\n\n${file.get('filePath')}`)) {
+    removeFileWithConfirm(file) {
+      if (confirm(`Are you sure you want to remove this file?\n\n${file.get('filePath')}`)) {
         this.removeFile(file);
       }
     },
 
-    removeColumn (col) {
+    removeColumnAndTransition(col) {
       this.removeColumn(col);
       run.scheduleOnce('afterRender', this, this.updateOpenFiles);
       this.transitionQueryParams({numColumns: this.realNumColumns - 1});
     },
 
-    addColumn() {
+    addColumnAndTransition() {
       let numColumns = this.realNumColumns;
 
       this.transitionQueryParams({
@@ -252,7 +233,7 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
       });
     },
 
-    setEditorKeyMap (keyMap) {
+    setEditorKeyMap(keyMap) {
       const settings = this.settings;
       settings.set('keyMap', keyMap);
       settings.save();
