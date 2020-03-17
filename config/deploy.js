@@ -5,19 +5,6 @@ module.exports = function(deployTarget) {
     },
     'revision-data': {
       type: 'version-commit'
-    },
-    slack: {
-      webhookURL: process.env.SLACK_WEB_HOOK_URL,
-      channel: '#-ember-twiddle',
-      username: 'ember-twiddle-deploy-notifications',
-      didDeploy: function(context) {
-        var deployMessage = _getHumanDeployMessage(context);
-        return function(slack) {
-          return slack.notify({
-            text: deployMessage
-          });
-        };
-      }
     }
   };
 
@@ -56,22 +43,3 @@ module.exports = function(deployTarget) {
 
   return ENV;
 };
-
-
-function _getHumanDeployMessage(context) {
-  var revision;
-  if (context.revisionData) {
-    revision = context.revisionData['revisionKey'] || context.revisionData['activatedRevisionKey'];
-  }
-
-  var projectName = context.project.name();
-
-  var message;
-  if (revision) {
-    message = projectName + ' revision ' + revision;
-  } else {
-    message = projectName;
-  }
-
-  return message + " to " + context.deployTarget + " target";
-}
