@@ -11,6 +11,7 @@ import blueprints from '../lib/blueprints';
 import Ember from 'ember';
 import moment from 'moment';
 import _template from "lodash/template";
+import md5 from 'blueimp-md5';
 import { pushDeletion } from 'ember-twiddle/utils/push-deletion';
 
 const twiddleAppName = 'twiddle';
@@ -198,7 +199,9 @@ export default Service.extend({
 
     this.checkRequiredFiles(out, gist);
 
-    gist.get('files').forEach(file => {
+    let processedFiles = this.handleColocatedComponents(gist);
+
+    processedFiles.forEach(file => {
       this.compileFile(file, errors, out, cssOut);
     });
 
@@ -225,6 +228,61 @@ export default Service.extend({
         );
         return this.buildHtml(gist, out.join('\n'), cssOut.join('\n'), twiddleJSON);
       });
+  },
+
+  handleColocatedComponents(gist) {
+    let colocatedTemplatesRegex = /components\/([^/]+\/)*[^/]+\.hbs/
+
+    let files = gist.get('files').toArray();
+    let filePaths = files.map(file => file.get('filePath'));
+
+    let newFiles = [...files];
+
+    files.forEach(file => {
+      let hbsFilePath = file.get('filePath');
+      if (colocatedTemplatesRegex.test(hbsFilePath)) {
+        let jsFilePath = hbsFilePath.substr(0, hbsFilePath.lastIndexOf('.')) + '.js';
+        //let hbsFileName = hbsFilePath.substring(hbsFilePath.lastIndexOf('/'), hbsFilePath.lastIndexOf('.'));
+        if (filePaths.includes(jsFilePath)) {
+          let jsFile = files.findBy('filePath', jsFilePath);
+          let hbsFile = file;
+          let jsFileName = jsFilePath.substring(jsFilePath.lastIndexOf('/'), jsFilePath.lastIndexOf('.'));
+          if (jsFileName === 'index') {
+            // TODO: handle index file
+          }
+          let jsHash = md5(jsFilePath);
+          let hbsHash = md5(hbsFilePath);
+          let prefix = jsFilePath.substr(0, jsFilePath.lastIndexOf('/'))
+          let newJsFilePath = prefix + '/' + jsHash + '.js';
+          let newHbsFilePath = prefix + '/' + hbsHash + '.hbs';
+          let newJsFile = this.store.createRecord('gist-file', {
+            filePath: newJsFilePath,
+            content: jsFile.get('content')
+          });
+          let newHbsFile = this.store.createRecord('gist-file', {
+            filePath: newHbsFilePath,
+            content: hbsFile.get('content')
+          });
+          newFiles.removeObject(jsFile);
+          newFiles.addObject(newJsFile);
+          newFiles.removeObject(hbsFile);
+          newFiles.addObject(newHbsFile);
+          let newEmittedFile = this.store.createRecord('gist-file', {
+            filePath: prefix + '/' + jsFileName + '.js',
+            content: `
+              import Component from './${jsHash}';
+              import Template from './${hbsHash}';
+              export * from './${jsHash}';
+              export default Ember._setComponentTemplate(Template, Component);
+            `
+          });
+          newFiles.addObject(newEmittedFile);
+        } else {
+          // TODO: handle template only component
+        }
+      }
+    });
+    return newFiles;
   },
 
   compileFile(file, errors, out, cssOut) {
