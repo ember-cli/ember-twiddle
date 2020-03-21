@@ -231,7 +231,7 @@ export default Service.extend({
   },
 
   handleColocatedComponents(gist) {
-    let colocatedTemplatesRegex = /components\/([^/]+\/)*[^/]+\.hbs/
+    let colocatedTemplatesRegex = /^components\/([^/]+\/)*[^/]+\.hbs$/
 
     let files = gist.get('files').toArray();
     let filePaths = files.map(file => file.get('filePath'));
