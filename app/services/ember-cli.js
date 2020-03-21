@@ -247,9 +247,6 @@ export default Service.extend({
           let jsFile = files.findBy('filePath', jsFilePath);
           let hbsFile = file;
           let jsFileName = jsFilePath.substring(jsFilePath.lastIndexOf('/'), jsFilePath.lastIndexOf('.'));
-          if (jsFileName === 'index') {
-            // TODO: handle index file
-          }
           let jsHash = md5(jsFilePath);
           let hbsHash = md5(hbsFilePath);
           let prefix = jsFilePath.substr(0, jsFilePath.lastIndexOf('/'));
@@ -267,15 +264,30 @@ export default Service.extend({
           newFiles.addObject(newJsFile);
           newFiles.removeObject(hbsFile);
           newFiles.addObject(newHbsFile);
-          let newEmittedFile = this.store.createRecord('gist-file', {
-            filePath: prefix + '/' + jsFileName + '.js',
-            content: `
-              import Component from './${jsHash}';
-              import Template from './${hbsHash}';
-              export * from './${jsHash}';
-              export default Ember._setComponentTemplate(Template, Component);
-            `
-          });
+
+          let newEmittedFile;
+          if (jsFileName === 'index') {
+            let dirName = prefix.substr(prefix.lastIndexOf('/'));
+            newEmittedFile = this.store.createRecord('gist-file', {
+              filePath: prefix + '.js',
+              content: `
+                import Component from './${dirName}/${jsHash}';
+                import Template from './${dirName}/${hbsHash}';
+                export * from './${jsHash}';
+                export default Ember._setComponentTemplate(Template, Component);
+              `
+            });
+          } else {
+            newEmittedFile = this.store.createRecord('gist-file', {
+              filePath: prefix + '/' + jsFileName + '.js',
+              content: `
+                import Component from './${jsHash}';
+                import Template from './${hbsHash}';
+                export * from './${jsHash}';
+                export default Ember._setComponentTemplate(Template, Component);
+              `
+            });
+          }
           newFiles.addObject(newEmittedFile);
         } else {
           if (hbsFileName === 'index') {
@@ -291,14 +303,27 @@ export default Service.extend({
           });
           newFiles.removeObject(hbsFile);
           newFiles.addObject(newHbsFile);
-          let newEmittedFile = this.store.createRecord('gist-file', {
-            filePath: prefix + '/' + hbsFileName + '.js',
-            content: `
-              import Template from './${hbsHash}';
-              const Component = Ember._templateOnlyComponent("${prefix + '/' + hbsHash}");
-              export default Ember._setComponentTemplate(Template, Component);
-            `
-          });
+          let newEmittedFile;
+          if (hbsFileName === 'index') {
+            let dirName = prefix.substr(prefix.lastIndexOf('/'));
+            newEmittedFile = this.store.createRecord('gist-file', {
+              filePath: prefix + '.js',
+              content: `
+                import Template from './${dirName}/${hbsHash}';
+                const Component = Ember._templateOnlyComponent("${prefix + '/' + hbsHash}");
+                export default Ember._setComponentTemplate(Template, Component);
+              `
+            });
+          } else {
+            newEmittedFile = this.store.createRecord('gist-file', {
+              filePath: prefix + '/' + hbsFileName + '.js',
+              content: `
+                import Template from './${hbsHash}';
+                const Component = Ember._templateOnlyComponent("${prefix + '/' + hbsHash}");
+                export default Ember._setComponentTemplate(Template, Component);
+              `
+            });
+          }
           newFiles.addObject(newEmittedFile);
         }
       }

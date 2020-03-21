@@ -66,4 +66,44 @@ module('Acceptance | template-colocation', function(hooks) {
 
     assert.equal(outputContents(), 'My Component', 'Colocated template is displayed');
   });
+
+  test('template colocation works with index.hbs file only', async function(assert) {
+
+    let newFiles = files();
+    newFiles.removeObject(newFiles.findBy('filename', 'components.my-component.js'));
+    let componentFile = newFiles.findBy('filename', 'components.my-component.hbs');
+    let newComponentFile = {
+      filename: 'components.my-component.index.hbs',
+      content: componentFile.content
+    }
+    newFiles.removeObject(componentFile);
+    newFiles.addObject(newComponentFile);
+
+    await runGist(newFiles);
+
+    assert.equal(outputContents(), 'My Component', 'Colocated template is displayed');
+  });
+
+  test('template colocation works with index.js file and index.hbs file', async function(assert) {
+
+    let newFiles = files();
+    let jsFile = newFiles.findBy('filename', 'components.my-component.js');
+    let hbsFile = newFiles.findBy('filename', 'components.my-component.hbs');
+    let newHbsFile = {
+      filename: 'components.my-component.index.hbs',
+      content: hbsFile.content
+    };
+    let newJsFile = {
+      filename: 'components.my-component.index.js',
+      content: jsFile.content
+    };
+    newFiles.removeObject(hbsFile);
+    newFiles.addObject(newHbsFile);
+    newFiles.removeObject(jsFile);
+    newFiles.addObject(newJsFile);
+
+    await runGist(newFiles);
+
+    assert.equal(outputContents(), 'My Component', 'Colocated template is displayed');
+  });
 });
