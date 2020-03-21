@@ -1,5 +1,6 @@
 import AddonFixture from "./fixtures/addon";
 import EmberDataFixture from "./fixtures/ember-data";
+import GlimmerComponentFixture from "./fixtures/glimmer-component";
 import config from "../config/environment";
 import Mirage from "ember-cli-mirage";
 import faker from 'faker';
@@ -58,6 +59,8 @@ export function testConfig() {
   this.get(config.addonUrl, function(schema, request) {
     if (request.queryParams.addon === 'ember-data') {
       return EmberDataFixture;
+    } else if (request.queryParams.addon === '@glimmer/component') {
+      return GlimmerComponentFixture;
     }
     return AddonFixture;
   });
