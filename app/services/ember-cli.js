@@ -242,7 +242,7 @@ export default Service.extend({
       let hbsFilePath = file.get('filePath');
       if (colocatedTemplatesRegex.test(hbsFilePath)) {
         let jsFilePath = hbsFilePath.substr(0, hbsFilePath.lastIndexOf('.')) + '.js';
-        //let hbsFileName = hbsFilePath.substring(hbsFilePath.lastIndexOf('/'), hbsFilePath.lastIndexOf('.'));
+        let hbsFileName = hbsFilePath.substring(hbsFilePath.lastIndexOf('/'), hbsFilePath.lastIndexOf('.'));
         if (filePaths.includes(jsFilePath)) {
           let jsFile = files.findBy('filePath', jsFilePath);
           let hbsFile = file;
@@ -252,7 +252,7 @@ export default Service.extend({
           }
           let jsHash = md5(jsFilePath);
           let hbsHash = md5(hbsFilePath);
-          let prefix = jsFilePath.substr(0, jsFilePath.lastIndexOf('/'))
+          let prefix = jsFilePath.substr(0, jsFilePath.lastIndexOf('/'));
           let newJsFilePath = prefix + '/' + jsHash + '.js';
           let newHbsFilePath = prefix + '/' + hbsHash + '.hbs';
           let newJsFile = this.store.createRecord('gist-file', {
@@ -278,7 +278,28 @@ export default Service.extend({
           });
           newFiles.addObject(newEmittedFile);
         } else {
-          // TODO: handle template only component
+          if (hbsFileName === 'index') {
+            // TODO: handle index file
+          }
+          let hbsFile = file;
+          let prefix = hbsFilePath.substr(0, hbsFilePath.lastIndexOf('/'));
+          let hbsHash = md5(hbsFilePath);
+          let newHbsFilePath = prefix + '/' + hbsHash + '.hbs';
+          let newHbsFile = this.store.createRecord('gist-file', {
+            filePath: newHbsFilePath,
+            content: hbsFile.get('content')
+          });
+          newFiles.removeObject(hbsFile);
+          newFiles.addObject(newHbsFile);
+          let newEmittedFile = this.store.createRecord('gist-file', {
+            filePath: prefix + '/' + hbsFileName + '.js',
+            content: `
+              import Template from './${hbsHash}';
+              const Component = Ember._templateOnlyComponent("${prefix + '/' + hbsHash}");
+              export default Ember._setComponentTemplate(Template, Component);
+            `
+          });
+          newFiles.addObject(newEmittedFile);
         }
       }
     });

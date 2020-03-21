@@ -4,7 +4,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import runGist from '../helpers/run-gist';
 import outputContents from '../helpers/output-contents';
 
-let files = [
+let files = () => [
   {
     filename: "templates.application.hbs",
     content: `<MyComponent />`
@@ -50,9 +50,19 @@ module('Acceptance | template-colocation', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  test('template only glimmer components on', async function(assert) {
+  test('template colocation works with both js and hbs file', async function(assert) {
 
-    await runGist(files);
+    await runGist(files());
+
+    assert.equal(outputContents(), 'My Component', 'Colocated template is displayed');
+  });
+
+  test('template colocation works with hbs file only', async function(assert) {
+
+    let newFiles = files();
+    newFiles.removeObject(newFiles.findBy('filename', 'components.my-component.js'));
+
+    await runGist(newFiles);
 
     assert.equal(outputContents(), 'My Component', 'Colocated template is displayed');
   });
