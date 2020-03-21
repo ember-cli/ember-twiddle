@@ -211,6 +211,8 @@ export default Service.extend({
 
     this.addBoilerPlateFiles(out, gist);
 
+    this.deleteTempFiles(processedFiles);
+
     return this.twiddleJson.getTwiddleJson(gist)
       .then(twiddleJSON => {
         this.addConfig(out, gist, twiddleJSON);
@@ -253,10 +255,12 @@ export default Service.extend({
           let newJsFilePath = prefix + '/' + jsHash + '.js';
           let newHbsFilePath = prefix + '/' + hbsHash + '.hbs';
           let newJsFile = this.store.createRecord('gist-file', {
+            isTemp: true,
             filePath: newJsFilePath,
             content: jsFile.get('content')
           });
           let newHbsFile = this.store.createRecord('gist-file', {
+            isTemp: true,
             filePath: newHbsFilePath,
             content: hbsFile.get('content')
           });
@@ -269,6 +273,7 @@ export default Service.extend({
           if (jsFileName === 'index') {
             let dirName = prefix.substr(prefix.lastIndexOf('/'));
             newEmittedFile = this.store.createRecord('gist-file', {
+              isTemp: true,
               filePath: prefix + '.js',
               content: `
                 import Component from './${dirName}/${jsHash}';
@@ -279,6 +284,7 @@ export default Service.extend({
             });
           } else {
             newEmittedFile = this.store.createRecord('gist-file', {
+              isTemp: true,
               filePath: prefix + '/' + jsFileName + '.js',
               content: `
                 import Component from './${jsHash}';
@@ -298,6 +304,7 @@ export default Service.extend({
           let hbsHash = md5(hbsFilePath);
           let newHbsFilePath = prefix + '/' + hbsHash + '.hbs';
           let newHbsFile = this.store.createRecord('gist-file', {
+            isTemp: true,
             filePath: newHbsFilePath,
             content: hbsFile.get('content')
           });
@@ -307,6 +314,7 @@ export default Service.extend({
           if (hbsFileName === 'index') {
             let dirName = prefix.substr(prefix.lastIndexOf('/'));
             newEmittedFile = this.store.createRecord('gist-file', {
+              isTemp: true,
               filePath: prefix + '.js',
               content: `
                 import Template from './${dirName}/${hbsHash}';
@@ -316,6 +324,7 @@ export default Service.extend({
             });
           } else {
             newEmittedFile = this.store.createRecord('gist-file', {
+              isTemp: true,
               filePath: prefix + '/' + hbsFileName + '.js',
               content: `
                 import Template from './${hbsHash}';
@@ -592,6 +601,14 @@ export default Service.extend({
 
   setTesting(gist, enabled = true) {
     this.twiddleJson.setTesting(gist, enabled);
+  },
+
+  deleteTempFiles(files) {
+    files.forEach(file => {
+      if (file.isTemp) {
+        run(() => pushDeletion(this.store, 'gist-file', file.get('fileName')));
+      }
+    });
   }
 });
 
