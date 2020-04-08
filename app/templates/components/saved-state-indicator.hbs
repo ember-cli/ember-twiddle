@@ -1,7 +1,7 @@
 {{#if isGistSaving}}
   <span>Saving...</span>
 {{else if unsaved}}
-  <span class="test-unsaved-indicator">Unsaved</span>
+  <span data-test-unsaved-indicator>Unsaved</span>
 {{else}}
   <span>{{model.files.length}} files</span>
   {{#unless model.isNew}}

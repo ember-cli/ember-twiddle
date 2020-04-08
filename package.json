@@ -94,6 +94,7 @@
     "ember-route-action-helper": "^2.0.6",
     "ember-router-helpers": "^0.2.0",
     "ember-source": "~3.16.3",
+    "ember-test-selectors": "^4.0.0",
     "ember-test-waiters": "^2.0.0",
     "eslint-plugin-ember": "^7.7.2",
     "eslint-plugin-node": "^11.0.0",

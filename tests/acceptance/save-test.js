@@ -37,16 +37,16 @@ module('Acceptance | save gist', function(hooks) {
 
     await visit('/35de43cb81fc35ddffb2');
 
-    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
+    assert.dom('[data-test-unsaved-indicator]').doesNotExist("No unsaved indicator shown");
 
     await fillIn('.title input', "my twiddle");
 
     assert.dom('.title input').hasValue("my twiddle");
-    assert.dom('.test-unsaved-indicator').exists({ count: 1 }, "Changing title triggers unsaved indicator");
+    assert.dom('[data-test-unsaved-indicator]').exists({ count: 1 }, "Changing title triggers unsaved indicator");
 
     await click('.test-save-action');
 
-    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
+    assert.dom('[data-test-unsaved-indicator]').doesNotExist("No unsaved indicator shown");
   });
 
   test('can save a gist without an id', async function(assert) {
@@ -58,16 +58,16 @@ module('Acceptance | save gist', function(hooks) {
 
     await visit('/');
 
-    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
+    assert.dom('[data-test-unsaved-indicator]').doesNotExist("No unsaved indicator shown");
 
     await fillIn('.title input', "my twiddle");
 
     assert.dom('.title input').hasValue("my twiddle");
-    assert.dom('.test-unsaved-indicator').exists({ count: 1 }, "Changing title triggers unsaved indicator");
+    assert.dom('[data-test-unsaved-indicator]').exists({ count: 1 }, "Changing title triggers unsaved indicator");
 
     await click('.test-save-action');
 
-    assert.dom('.test-unsaved-indicator').doesNotExist("No unsaved indicator shown");
+    assert.dom('[data-test-unsaved-indicator]').doesNotExist("No unsaved indicator shown");
   });
 
   test('gist save on cmd+s shortcut', async function(assert) {
