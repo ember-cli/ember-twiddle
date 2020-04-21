@@ -131,8 +131,8 @@ export default Service.extend({
   },
 
   async hasAddon(gist, addonName) {
-    let json = await this._getTwiddleJson(gist);
-    return addonName in json.addons;
+    let { addons = {} } = await this._getTwiddleJson(gist);
+    return addonName in addons;
   },
 
   _dedupEmberData(json) {

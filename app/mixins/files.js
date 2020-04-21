@@ -65,8 +65,19 @@ export default Mixin.create({
     run.scheduleOnce('afterRender', this, this.updateOpenFiles);
   },
 
-  addFile(type) {
-    let fileProperties = type ? this.emberCli.buildProperties(type) : {filePath:'file.js'};
+  async addFile(type) {
+    let replacements = {};
+    let isGlimmer = await this.emberCli.twiddleJson.hasAddon(this.model, '@glimmer/component');
+
+    if (type === 'component-js') {
+      replacements.importComponent = isGlimmer ?
+        `import Component from '@glimmer/component';` :
+        `import Component from '@ember/component';`;
+      replacements.importTemplate = '';
+      replacements.defaultExport = "class extends Component {\n}";
+    }
+
+    let fileProperties = type ? this.emberCli.buildProperties(type, replacements) : {filePath:'file.js'};
     let filePath = fileProperties.filePath;
 
     if (['twiddle.json','router', 'css'].indexOf(type)===-1) {
