@@ -1,5 +1,5 @@
 {
-  "version": "0.17.0",
+  "version": "0.17.1",
   "EmberENV": {
     "FEATURES": {},
     "_TEMPLATE_ONLY_GLIMMER_COMPONENTS": false,
@@ -11,10 +11,10 @@
     "enable-testing": false
   },
   "dependencies": {
-    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js",
-    "ember": "3.17.0",
-    "ember-template-compiler": "3.17.0",
-    "ember-testing": "3.17.0"
+    "jquery": "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js",
+    "ember": "3.18.1",
+    "ember-template-compiler": "3.18.1",
+    "ember-testing": "3.18.1"
   },
   "addons": {
     "@glimmer/component": "1.0.0"
