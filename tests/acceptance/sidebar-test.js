@@ -22,6 +22,6 @@ module('Acceptance | Sidebar', function(hooks) {
     let selector = '[data-test-file-tree] #application .jstree-children .jstree-anchor';
     await triggerEvent(selector, 'contextmenu');
 
-    assert.dom('[data-test-file-tree] .vakata-context li').exists({ count: 3 }, 'The context menu should contain 3 items')
+    assert.equal(document.querySelectorAll('.vakata-context li').length, 3, 'The context menu should contain 3 items');
   });
 });
