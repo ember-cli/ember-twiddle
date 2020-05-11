@@ -4,34 +4,38 @@
 </div>
 
 <div class="file-tree">
-  <FileTree
-    class="tree"
-    @model={{@model}}
-    @openFile={{@openFile}}
-  >
-    {{file-menu model=@model
-              session=@session
-              activeEditorCol=@activeEditorCol
-              activeFile=@activeFile
-              isRevision=@isRevision
-              addFile=@addFile
-              addHelper=@addHelper
-              addComponent=@addComponent
-              addUnitTestFile=@addUnitTestFile
-              addIntegrationTestFile=@addIntegrationTestFile
-              addAcceptanceTestFile=@addAcceptanceTestFile
-              renameFile=@renameFile
-              removeFile=@removeFile
-              deleteGist=(route-action "deleteGist")
-              saveGist=(route-action "saveGist")
-              fork=(route-action "fork")
-              copy=(route-action "copy")
-              signInViaGithub=(route-action "signInViaGithub")
-              showRevision=(route-action "showRevision")
-              showCurrentVersion=(route-action "showCurrentVersion")
-              downloadProject=(route-action "downloadProject")
-    }}
-  </FileTree>
+  {{#let (fn @renameFile @activeFile) (fn @removeFile @activeFile) as |_renameFile _removeFile|}}
+    <FileTree
+      class="tree"
+      @model={{@model}}
+      @openFile={{@openFile}}
+      @renameFile={{_renameFile}}
+      @removeFile={{_removeFile}}
+    >
+      {{file-menu model=@model
+                session=@session
+                activeEditorCol=@activeEditorCol
+                activeFile=@activeFile
+                isRevision=@isRevision
+                addFile=@addFile
+                addHelper=@addHelper
+                addComponent=@addComponent
+                addUnitTestFile=@addUnitTestFile
+                addIntegrationTestFile=@addIntegrationTestFile
+                addAcceptanceTestFile=@addAcceptanceTestFile
+                renameFile=_renameFile
+                removeFile=_removeFile
+                deleteGist=(route-action "deleteGist")
+                saveGist=(route-action "saveGist")
+                fork=(route-action "fork")
+                copy=(route-action "copy")
+                signInViaGithub=(route-action "signInViaGithub")
+                showRevision=(route-action "showRevision")
+                showCurrentVersion=(route-action "showCurrentVersion")
+                downloadProject=(route-action "downloadProject")
+      }}
+    </FileTree>
+  {{/let}}
 </div>
 
 <div class="menus">

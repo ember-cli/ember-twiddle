@@ -31,12 +31,6 @@ export default Component.extend(DropdownSubmenuFixMixin, {
     addAcceptanceTestFile() {
       this.addAcceptanceTestFile();
     },
-    renameFile(file) {
-      this.renameFile(file);
-    },
-    removeFile(file) {
-      this.removeFile(file);
-    },
     saveGist(model) {
       this.saveGist(model);
     },

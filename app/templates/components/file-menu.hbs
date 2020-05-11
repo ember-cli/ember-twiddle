@@ -48,9 +48,9 @@
       </ul>
     </li>
     {{#if activeEditorCol}}
-      <li><a {{action 'renameFile' activeFile}} class="test-rename-action">Rename {{activeFile.filePath}}</a></li>
-      <li><a {{action 'renameFile' activeFile}} class="test-move-action">Move {{activeFile.filePath}}</a></li>
-      <li><a {{action 'removeFile' activeFile}} class="test-remove-action">Delete {{activeFile.filePath}}</a></li>
+      <li><a {{action this.renameFile}} class="test-rename-action">Rename {{activeFile.filePath}}</a></li>
+      <li><a {{action this.renameFile}} class="test-move-action">Move {{activeFile.filePath}}</a></li>
+      <li><a {{action this.removeFile}} class="test-remove-action">Delete {{activeFile.filePath}}</a></li>
     {{/if}}
     {{#if session.isAuthenticated}}
       <li role="presentation" class="divider"></li>

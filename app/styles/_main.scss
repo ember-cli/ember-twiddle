@@ -23,3 +23,16 @@ body {
 .flip-horizontal {
   transform: scale(-1, 1);
 }
+
+// Overriding the default context menu UI
+.vakata-context {
+  box-shadow: 2px 2px 2px $burnt-orange;
+  border: none;
+  border-radius: 3px;
+  margin-top: 3px;
+
+  li a:hover, .vakata-context-hover a {
+    box-shadow: none;
+    background-color: #f7e4de;
+  }
+}

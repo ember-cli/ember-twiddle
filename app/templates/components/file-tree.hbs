@@ -14,9 +14,12 @@
 
 <EmberJstree
   class="ember-jstree"
+  @plugins="contextmenu"
+  @contextmenuOptions={{contextmenuOptions}}
   @data={{this.fileTreeData}}
   @actionReceiver={{this.jsTreeActionReceiver}}
   @eventDidSelectNode={{action "handleSelectTreeNode"}}
   @eventDidBecomeReady={{action "didBecomeReadyOptional"}}
   @eventDidChange={{action "didChangeOptional"}}
+  data-test-file-tree
 />
