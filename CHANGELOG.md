@@ -1,3 +1,17 @@
+### v0.17.1
+#### Pull requests
+
+- [#714](https://github.com/ember-cli/ember-twiddle/pull/714) Template colocation ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+
+#### Commits to master
+
+- [support ember 3.18 \(\#720\)](https://github.com/ember-cli/ember-twiddle/commit/5466983d9de23505e6db0d0027aaf0f40315e976) ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+- [Bump jquery from 3.4.1 to 3.5.0 \(\#719\)](https://github.com/ember-cli/ember-twiddle/commit/1d2e7c06007926eec311762478e4526c85e1cc5e) ([dependabot[bot]](mailto:49699333+dependabot[bot]@users.noreply.github.com))
+- [Fix content while creating a "js only" component \(\#718\)](https://github.com/ember-cli/ember-twiddle/commit/3aa300249b65829baf4bff292c01b6f883621033) ([RajaSK05](mailto:42798645+RajaSK05@users.noreply.github.com))
+- [introduces data test selector instead of css selectors](https://github.com/ember-cli/ember-twiddle/commit/833cc4c88a0059d5ea0110162d22dff42a48f604) ([Gokul Kathirvel](mailto:gokul.kathirvel@zohocorp.com))
+- [fix bug with reloading colocated templates](https://github.com/ember-cli/ember-twiddle/commit/70d5f6b64eb9df7c3f3e5b1911300ed05a78bae3) ([Gaurav Munjal](mailto:Gaurav0@aol.com))
+- [+4 more](https://github.com/ember-cli/ember-twiddle/compare/v0.17.0...v0.17.1)
+
 ### v0.17.0
 #### Pull requests
 
