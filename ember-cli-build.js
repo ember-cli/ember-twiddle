@@ -143,7 +143,7 @@ module.exports = function(defaults) {
     twiddleVendorTree,
     testLoaderTree,
     finalQUnitTree
-  ]));
+  ], { overwrite: true }));
 };
 
 
