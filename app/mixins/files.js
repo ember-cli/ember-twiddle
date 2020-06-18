@@ -83,7 +83,7 @@ export default Mixin.create({
     if (['twiddle.json','router', 'css'].indexOf(type)===-1) {
       filePath = prompt('File path', filePath);
     }
-    if (this.isPathInvalid(type, filePath)) {
+    if (!isGlimmer && this.isPathInvalid(type, filePath)) {
       return;
     }
     this.createFile(filePath, fileProperties);
