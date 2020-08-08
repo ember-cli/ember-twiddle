@@ -110,7 +110,7 @@
     "rollup": "^1.31.1",
     "rollup-plugin-node-builtins-brofs": "^2.1.3",
     "sass": "^1.26.1",
-    "torii": "~0.10.1"
+    "torii": "Gaurav0/torii#532ca96934808d75c91c5ddd658c678edabef29d"
   },
   "resolutions": {
     "ember-cli-version-checker": "4.1.0",
