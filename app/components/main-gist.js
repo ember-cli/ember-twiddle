@@ -260,8 +260,6 @@ export default Component.extend(AppBuilderMixin, ColumnsMixin, FilesMixin, TestF
 
     switchTests(testsEnabled) {
       this.ensureTestHelperExists();
-      this.ensureTestStartAppHelperExists();
-      this.ensureTestDestroyAppHelperExists();
 
       this.emberCli.setTesting(this.model, testsEnabled);
       this.rebuildApp.perform();
