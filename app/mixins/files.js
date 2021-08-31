@@ -1,6 +1,5 @@
 import Mixin from '@ember/object/mixin';
 import { run } from '@ember/runloop';
-import ErrorMessages from "../utils/error-messages";
 import { pushDeletion } from "../utils/push-deletion";
 
 export default Mixin.create({
@@ -30,23 +29,6 @@ export default Mixin.create({
       this.send('contentsChanged');
       run.scheduleOnce('afterRender', this, this.updateOpenFiles);
     }
-  },
-
-  /*
-   *  Test whether path is valid.  Presently only tests whether components are hyphenated.
-   */
-  isPathInvalid(type, path){
-    let errorMsg = null;
-    if (/^component/.test(type)) {
-      if (!/[^/]+-[^/]+(\/(component\.js|template\.hbs))?$/.test(path)) {
-        errorMsg = ErrorMessages.componentsNeedHyphens;
-      }
-    }
-    if (errorMsg) {
-      window.alert(errorMsg);
-      return true;
-    }
-    return false;
   },
 
   updateOpenFiles() {
@@ -83,7 +65,7 @@ export default Mixin.create({
     if (['twiddle.json','router', 'css'].indexOf(type)===-1) {
       filePath = prompt('File path', filePath);
     }
-    if (!isGlimmer && this.isPathInvalid(type, filePath)) {
+    if (!isGlimmer) {
       return;
     }
     this.createFile(filePath, fileProperties);
@@ -125,7 +107,7 @@ export default Mixin.create({
 
     let isGlimmer = await this.emberCli.twiddleJson.hasAddon(this.model, '@glimmer/component');
 
-    if (!isGlimmer && this.isPathInvalid('component', path)) {
+    if (!isGlimmer) {
       return;
     }
 
@@ -160,9 +142,6 @@ export default Mixin.create({
       camelizedModuleName: name
     });
 
-    if (this.isPathInvalid(type, filePath)) {
-      return;
-    }
     this.createFile(filePath, fileProperties);
   }
 });
