@@ -102,7 +102,7 @@
     "file-saver": "^2.0.2",
     "ivy-codemirror": "IvyApp/ivy-codemirror#ff753f16557a7b222737575c66b3ae3ae7d484ce",
     "loader.js": "^4.7.0",
-    "moment": "^2.22.0",
+    "moment": "^2.29.2",
     "moment-timezone": "~0.5.14",
     "path-browser": "^2.2.1",
     "pretender": "^3.3.1",
